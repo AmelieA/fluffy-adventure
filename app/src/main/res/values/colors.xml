@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Bouton orange gradient -->
+    <color name="gradient_normal_start">#f47a20</color>
+    <color name="gradient_normal_end">#faa51a</color>
+    <color name="gradient_focused_start">#f88e11</color>
+    <color name="gradient_focused_end">#f06015</color>
+    <color name="gradient_pressed_start">#faa51a</color>
+    <color name="gradient_pressed_end">#f47a20</color>
+    <color name="gradient_disabled_start">#919191</color>
+    <color name="gradient_disabled_end">#F0F0F0</color>
+    <color name="gradient_disabled_focused_start">#F0F0F0</color>
+    <color name="gradient_disabled_focused_end">#919191</color>
+    <color name="border">#3D5229</color>
+
+    <!-- Logo -->
+    <color name="logo_color">#faa51a</color>
+    <color name="logo_shadow">#3D5229</color>
+</resources>

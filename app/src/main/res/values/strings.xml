@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FluffyAdventure</string>
+    <string name="logo1">Fluffy</string>
+    <string name="logo2">Adventure</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_carte">Map</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="map_button_text">Carte</string>
+    <string name="text_button_valider">OK !</string>
+
+</resources>
