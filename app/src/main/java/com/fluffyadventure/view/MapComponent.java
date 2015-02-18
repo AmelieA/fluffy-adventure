@@ -129,7 +129,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         Resources resources = getResources();
 
         int fightIcon = resources.getIdentifier("spawn_icon", "drawable", getPackageName());
-        int treasureIcon = resources.getIdentifier("map_treasure", "drawable", getPackageName());
+        int treasureIcon = resources.getIdentifier("treasure_icon", "drawable", getPackageName());
 
         Bitmap icon1 = BitmapFactory.decodeResource(resources, fightIcon);
         Bitmap icon2 = BitmapFactory.decodeResource(resources, treasureIcon);

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Johan on 17/02/2015.
  */
-public class Animal {
+public class Monster {
 
     private String name;
     private String imagePath;
@@ -16,31 +16,13 @@ public class Animal {
     private int accuracy = 0;
     private int evasiveness = 0;
 
-    private List<Integer> succeededSpawns= new ArrayList<>();
 
-    public Animal() {
+    public Monster() {
     }
 
-    public Animal(String name, String imagePath) {
+    public Monster(String name, String imagePath) {
         this.name = name;
         this.imagePath = imagePath;
-    }
-
-    public void success(Integer spawnID) {
-        this.succeededSpawns.add(spawnID);
-    }
-
-    public boolean hasSucceeded(Integer spawnID) {
-        return this.succeededSpawns.contains(spawnID);
-    }
-
-    public int gainHealth(Integer gain) {
-        health += gain;
-        return health;
-    }
-    public int gainStrength(Integer gain) {
-        strength += gain;
-        return strength;
     }
 
     public int getEvasiveness() {
