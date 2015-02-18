@@ -21,20 +21,21 @@
                 android:id="@+id/BtnMap"
                 style="@style/btnStyleOrange"
                 android:singleLine="false"
-                android:layout_marginBottom="10dp"/>
+                android:layout_margin="5dp" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/mail_button_text"
                 android:id="@+id/BtnMail"
                 style="@style/btnStyleOrange"
-                android:singleLine="false"/>
+                android:singleLine="false"
+                android:layout_margin="5dp" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center">
 
             <LinearLayout
@@ -112,13 +113,15 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/BtnMoveHQ"
         style="@style/btnStyleOrange"
-        android:layout_marginBottom="5dp"
         android:text="@string/moveHQ_button_text"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp" />
 </RelativeLayout>
