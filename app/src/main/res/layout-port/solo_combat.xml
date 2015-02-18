@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="10">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5">
+
+            <!--forest background-->
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/forest2" />
+
+            <!--Text-->
+            <!--<TextView-->
+                <!--android:id="@+id/myImageViewText"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignLeft="@+id/myImageView"-->
+                <!--android:layout_alignTop="@+id/myImageView"-->
+                <!--android:layout_alignRight="@+id/myImageView"-->
+                <!--android:layout_alignBottom="@+id/myImageView"-->
+                <!--android:layout_margin="1dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="Hello"-->
+                <!--android:textColor="#000000" />-->
+
+            <!--fighter image-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10">
+
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="6"
+                        android:gravity="top"/>
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="5"
+                        android:layout_marginLeft="-40dp"
+                        android:gravity="bottom"
+                        android:src="@drawable/squirrel1"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--opponent (fighter and panel)-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10">
+
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+
+                    <ImageView
+                        android:id="@+id/myImageView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="3"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/fight_rectangle"/>
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="7"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:gravity="top"/>
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="4"
+                        android:gravity="bottom"
+                        android:src="@drawable/squirrel5"/>
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="5"
+                        android:gravity="top"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--fighter panel-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10">
+
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"/>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="7.3"/>
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="2.7"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/fight_rectangle"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--choose action panel-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="7.5">
+
+            <!--text-->
+            <LinearLayout
+                android:background="#fffff6b0"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+            </LinearLayout>
+
+            <!--top choosing-->
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:background="#FFFF00"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1" />
+                <LinearLayout
+                    android:background="#00FF00"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <!--bottom choosing-->
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:background="#00FF00"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1" />
+                <LinearLayout
+                    android:background="#FFFF00"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
