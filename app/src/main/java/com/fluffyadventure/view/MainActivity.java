@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
+    Button BtnCommencer;
+    Button BtnStatus;
     Button MapBtn;
     Button SlideBtn;
     TextView Logo1;
@@ -49,6 +51,16 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AnimalChoiceSlider.class);
+                startActivity(intent);
+            }
+        });
+
+        BtnStatus = (Button)findViewById(R.id.BtnStatus);
+        BtnStatus.setTypeface(font);
+        BtnStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Status.class);
                 startActivity(intent);
             }
         });
