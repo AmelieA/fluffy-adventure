@@ -56,64 +56,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!--opponent (fighter and panel)-->
-            <!--<LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="10">
-
-
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:orientation="vertical"
-                    android:weightSum="10"
-                    android:gravity="top">
-
-                    <ImageView
-                        android:layout_width="fill_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="3"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/fight_rectangle"/>
-                    <ImageView
-                        android:layout_width="fill_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="7"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:orientation="vertical"
-                    android:weightSum="10"
-                    android:gravity="top">
-                    <ImageView
-                        android:layout_width="fill_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="1"
-                        android:gravity="top"/>
-
-                    <ImageView
-                        android:layout_width="fill_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="4"
-                        android:gravity="bottom"
-                        android:src="@drawable/squirrel5"/>
-
-                    <ImageView
-                        android:layout_width="fill_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="5"
-                        android:gravity="top"/>
-
-                </LinearLayout>
-            </LinearLayout>-->
-
             <!--opponent (fighter and panel) + test name-->
             <LinearLayout
                 android:orientation="horizontal"
@@ -198,10 +140,10 @@
                                 <TextView
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
-                                    android:layout_weight="4.5"
+                                    android:layout_weight="4.4"
                                     android:text="PV"
                                     android:textSize="15sp"
-                                    android:textColor="#fffff200"/>
+                                    android:textColor="#ff000000"/>
                                 <ProgressBar
                                     android:layout_weight="1.8"
                                     android:id="@+id/OpponentLife"
@@ -346,7 +288,7 @@
                                     android:layout_height="fill_parent"
                                     android:layout_weight="4.5"
                                     android:text="PV"
-                                    android:textColor="#fffff200"/>
+                                    android:textColor="#ff000000"/>
                                 <ProgressBar
                                     android:layout_weight="1.7"
                                     android:id="@+id/FighterLife"
@@ -369,15 +311,20 @@
             android:orientation="vertical"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:background="@drawable/wood"
             android:layout_weight="7.5">
 
             <!--text-->
-            <LinearLayout
-                android:background="#fffff6b0"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_weight="1">
-            </LinearLayout>
+            <TextView
+                android:id="@+id/Text"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="What should Fighter do ?"
+                android:background="@drawable/fight_choice_button"
+                android:textColor="#ff000000"/>
 
             <!--top choosing-->
             <LinearLayout
@@ -385,16 +332,24 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1">
 
-                <LinearLayout
-                    android:background="#FFFF00"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1" />
-                <LinearLayout
-                    android:background="#00FF00"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1" />
+                <Button
+                    style="@style/Base.TextAppearance.AppCompat.Button"
+                    android:layout_weight="1"
+                    android:background="@drawable/fight_choice_button"
+                    android:layout_margin="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Choice 1"
+                    android:id="@+id/Action1"/>
+                <Button
+                    style="@style/Base.TextAppearance.AppCompat.Button"
+                    android:layout_weight="1"
+                    android:background="@drawable/fight_choice_button"
+                    android:layout_margin="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Choice 1"
+                    android:id="@+id/Action2"/>
             </LinearLayout>
 
             <!--bottom choosing-->
@@ -403,16 +358,24 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1">
 
-                <LinearLayout
-                    android:background="#00FF00"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1" />
-                <LinearLayout
-                    android:background="#FFFF00"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1" />
+                <Button
+                    style="@style/Base.TextAppearance.AppCompat.Button"
+                    android:layout_weight="1"
+                    android:background="@drawable/fight_choice_button"
+                    android:layout_margin="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Choice 1"
+                    android:id="@+id/Action3"/>
+                <Button
+                    style="@style/Base.TextAppearance.AppCompat.Button"
+                    android:layout_weight="1"
+                    android:background="@drawable/fight_choice_button"
+                    android:layout_margin="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Choice 1"
+                    android:id="@+id/Action4"/>
             </LinearLayout>
 
         </LinearLayout>
