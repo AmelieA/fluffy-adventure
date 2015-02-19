@@ -23,20 +23,6 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/forest2" />
 
-            <!--Text-->
-            <!--<TextView-->
-                <!--android:id="@+id/myImageViewText"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignLeft="@+id/myImageView"-->
-                <!--android:layout_alignTop="@+id/myImageView"-->
-                <!--android:layout_alignRight="@+id/myImageView"-->
-                <!--android:layout_alignBottom="@+id/myImageView"-->
-                <!--android:layout_margin="1dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="Hello"-->
-                <!--android:textColor="#000000" />-->
-
             <!--fighter image-->
             <LinearLayout
                 android:orientation="horizontal"
@@ -71,7 +57,7 @@
             </LinearLayout>
 
             <!--opponent (fighter and panel)-->
-            <LinearLayout
+            <!--<LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -87,12 +73,147 @@
                     android:gravity="top">
 
                     <ImageView
-                        android:id="@+id/myImageView"
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
                         android:layout_weight="3"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/fight_rectangle"/>
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="7"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:gravity="top"/>
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="4"
+                        android:gravity="bottom"
+                        android:src="@drawable/squirrel5"/>
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="5"
+                        android:gravity="top"/>
+
+                </LinearLayout>
+            </LinearLayout>-->
+
+            <!--opponent (fighter and panel) + test name-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10">
+
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="3">
+
+                        <ImageView
+                            android:id="@+id/OpponentPanel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/fight_rectangle"/>
+                        <!--Opponent's name-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="7"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="10"
+                                android:layout_weight="3">
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="9"/>
+                                <TextView
+                                    android:id="@+id/OpponentName"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_alignTop="@+id/OpponentPanel"
+                                    android:gravity="left"
+                                    android:text="Opponent"
+                                    android:textSize="20sp"
+                                    android:textColor="#ff000000" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Life progress bar-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="4.75"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="9"
+                                android:weightSum="10">
+
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4"/>
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4.5"
+                                    android:text="PV"
+                                    android:textSize="15sp"
+                                    android:textColor="#fffff200"/>
+                                <ProgressBar
+                                    android:layout_weight="1.8"
+                                    android:id="@+id/OpponentLife"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:max="100"
+                                    android:progress="2"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:progressDrawable="@drawable/life_progress_bar"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
@@ -154,12 +275,90 @@
                         android:layout_height="0px"
                         android:layout_weight="7.3"/>
 
-                    <ImageView
+                    <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
-                        android:layout_weight="2.7"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/fight_rectangle"/>
+                        android:layout_weight="3">
+
+                        <ImageView
+                            android:id="@+id/FighterPanel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/fight_rectangle"/>
+                        <!--Opponent's name-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="7.65"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="10"
+                                android:layout_weight="2">
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="9"/>
+
+                                <TextView
+                                    android:id="@+id/FighterName"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_alignTop="@+id/FighterPanel"
+                                    android:gravity="left"
+                                    android:text="Fighter"
+                                    android:textSize="25sp"
+                                    android:textColor="#ff000000" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Life progress bar-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="4.75"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="8.8"
+                                android:weightSum="10">
+
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4.1"/>
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4.5"
+                                    android:text="PV"
+                                    android:textColor="#fffff200"/>
+                                <ProgressBar
+                                    android:layout_weight="1.7"
+                                    android:id="@+id/FighterLife"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:max="100"
+                                    android:progress="65"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:progressDrawable="@drawable/life_progress_bar"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
 
                 </LinearLayout>
             </LinearLayout>
