@@ -15,7 +15,8 @@ import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
-    Button BtnCommencer;
+    Button MapBtn;
+    Button SlideBtn;
     TextView Logo1;
     TextView Logo2;
     Class<?> nextIntentClass;
@@ -32,12 +33,22 @@ public class MainActivity extends ActionBarActivity {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
-        BtnCommencer = (Button)findViewById(R.id.BtnCommencer);
-        BtnCommencer.setTypeface(font);
-        BtnCommencer.setOnClickListener(new View.OnClickListener() {
+        MapBtn = (Button)findViewById(R.id.MapBtn);
+        MapBtn.setTypeface(font);
+        MapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MapComponent.class);
+                startActivity(intent);
+            }
+        });
+
+        SlideBtn = (Button)findViewById(R.id.SlideBtn);
+        SlideBtn.setTypeface(font);
+        SlideBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AnimalChoiceSlider.class);
                 startActivity(intent);
             }
         });

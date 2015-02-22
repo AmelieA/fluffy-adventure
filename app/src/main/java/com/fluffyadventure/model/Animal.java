@@ -66,4 +66,12 @@ public class Animal {
     public String getImagePath() {
         return imagePath;
     }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -8,6 +8,13 @@
     <string name="title_activity_carte">Map</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="map_button_text">Carte</string>
+    <string name="slider_button_text">Choix</string>
+    <string name="choice_explaination">Commence par choisir ton compagnon !</string>
     <string name="text_button_valider">OK !</string>
+    <string name="title_activity_animal_choice_slider">AnimalChoiceSlider</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
