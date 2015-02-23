@@ -31,7 +31,7 @@ public class SheepChoice extends Fragment {
                 R.layout.fragment_sheep_choice, container, false);
 
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "GrandHotel-Regular.otf");
-        choice_explaination = (TextView) rootView.findViewById(R.id.choice_explaination);
+        choice_explaination = (TextView) rootView.findViewById(R.id.choice_explaination2);
         choice_explaination.setTypeface(font);
 
         OkBtn = (Button) rootView.findViewById(R.id.OkBtn);

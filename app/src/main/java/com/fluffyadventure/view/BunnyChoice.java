@@ -31,7 +31,7 @@ public class BunnyChoice extends Fragment {
                 R.layout.fragment_bunny_choice, container, false);
 
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "GrandHotel-Regular.otf");
-        choice_explaination = (TextView) rootView.findViewById(R.id.choice_explaination);
+        choice_explaination = (TextView) rootView.findViewById(R.id.choice_explaination1);
         choice_explaination.setTypeface(font);
 
         OkBtn = (Button) rootView.findViewById(R.id.OkBtn);

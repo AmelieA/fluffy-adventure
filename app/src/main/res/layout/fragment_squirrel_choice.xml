@@ -24,11 +24,11 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:gravity="center_horizontal"
-        android:id="@+id/choice_explaination"
+        android:id="@+id/choice_explaination3"
         style="@style/information" />
 
     <LinearLayout
-        android:id="@+id/buttonOK"
+        android:id="@+id/buttonOK3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -49,8 +49,7 @@
         android:id="@+id/scroll_choix"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/choice_explaination"
-        android:layout_above="@id/buttonOK"
+        android:layout_above="@id/buttonOK3"
         android:fadeScrollbars="false"
         android:gravity="center"
         android:layout_marginBottom="5dp">
