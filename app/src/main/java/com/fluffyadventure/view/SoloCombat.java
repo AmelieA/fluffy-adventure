@@ -4,13 +4,31 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class SoloCombat extends ActionBarActivity {
+
+    TextView opponentsName;
+    TextView fightersName;
+    TextView instruction;
+    Button action1;
+    Button action2;
+    Button action3;
+    Button action4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solo_combat);
+
+        opponentsName = (TextView)findViewById(R.id.Instruction);
+        fightersName = (TextView)findViewById(R.id.FightersName);
+        instruction = (TextView)findViewById(R.id.Instruction);
+        action1 = (Button)findViewById(R.id.Action1);
+        action2 = (Button)findViewById(R.id.Action2);
+        action3 = (Button)findViewById(R.id.Action3);
+        action4 = (Button)findViewById(R.id.Action4);
     }
 
 

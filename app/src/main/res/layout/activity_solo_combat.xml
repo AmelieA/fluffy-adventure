@@ -21,7 +21,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/forest2" />
+                android:src="@drawable/forest4" />
 
             <!--fighter image-->
             <LinearLayout
@@ -105,7 +105,7 @@
                                     android:layout_height="fill_parent"
                                     android:layout_weight="9"/>
                                 <TextView
-                                    android:id="@+id/OpponentName"
+                                    android:id="@+id/OpponentsName"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:layout_alignTop="@+id/OpponentPanel"
@@ -146,7 +146,7 @@
                                     android:textColor="#ff000000"/>
                                 <ProgressBar
                                     android:layout_weight="1.8"
-                                    android:id="@+id/OpponentLife"
+                                    android:id="@+id/OpponentsLife"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:max="100"
@@ -251,7 +251,7 @@
                                     android:layout_weight="9"/>
 
                                 <TextView
-                                    android:id="@+id/FighterName"
+                                    android:id="@+id/FightersName"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:layout_alignTop="@+id/FighterPanel"
@@ -291,7 +291,7 @@
                                     android:textColor="#ff000000"/>
                                 <ProgressBar
                                     android:layout_weight="1.7"
-                                    android:id="@+id/FighterLife"
+                                    android:id="@+id/FightersLife"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:max="100"
@@ -316,7 +316,7 @@
 
             <!--text-->
             <TextView
-                android:id="@+id/Text"
+                android:id="@+id/Instruction"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
