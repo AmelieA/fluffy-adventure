@@ -21,6 +21,7 @@
     <string name="title_activity_status">Status</string>
     <string name="mail_button_text">Messagerie</string>
     <string name="moveHQ_button_text">Déménager</string>
+    <string name="mngSkills_button_text">Gérer les sorts</string>
     <string name="text_Health">Vie</string>
     <string name="text_type">Type</string>
     <string name="text_strength">Force</string>

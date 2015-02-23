@@ -112,16 +112,21 @@
             </LinearLayout>
         </LinearLayout>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/BtnMngSkills"
+            style="@style/btnStyleOrange"
+            android:text="@string/mngSkills_button_text"
+            android:layout_margin="5dp" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/BtnMoveHQ"
+            style="@style/btnStyleOrange"
+            android:text="@string/moveHQ_button_text"
+            android:layout_margin="5dp" />
+
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/BtnMoveHQ"
-        style="@style/btnStyleOrange"
-        android:text="@string/moveHQ_button_text"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentRight="true"
-        android:layout_margin="5dp" />
 </RelativeLayout>
