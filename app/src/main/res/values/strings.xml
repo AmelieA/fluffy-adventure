@@ -13,14 +13,14 @@
     <string name="bunny_presentation">Le lapin est rapide et précis, il peut esquiver les attaques ennemies et inflige plus souvent des coups critiques</string>
     <string name="squirrel_presentation">L\'écureuil lance des noisettes à distance ! Elles font plus mal et peuvent toucher deux ennemis à la fois, mais ont une faible chance de rater leur cible.</string>
     <string name="sheep_presentation">Le mouton dispose de nombreux PV et dispose de meilleures capacités de soin</string>
-    <string name="text_button_valider">OK !</string>
+    <string name="chose_name">Choisis lui un nom !</string>
+    <string name="text_button_ok">OK !</string>
     <string name="title_activity_animal_choice_slider">AnimalChoiceSlider</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="hello_world">Hello world!</string>
     <!-- Status Activity -->
-    <string name="title_activity_status">Status</string>
     <string name="mail_button_text">Messagerie</string>
     <string name="moveHQ_button_text">Déménager</string>
     <string name="mngSkills_button_text">Gérer les sorts</string>
@@ -29,5 +29,11 @@
     <string name="text_strength">Force</string>
     <string name="text_accuracy">Précision</string>
     <string name="text_evasiveness">Evasion</string>
+    <string name="title_activity_animal_name">AnimalName</string>
 
+    <!--Login & Sign Up Activities -->
+    <string name="text_user">Utilisateur</string>
+    <string name="text_password">Mot de passe</string>
+    <string name="signin_button_text">Se connecter</string>
+    <string name="signup_button_text">S\'inscrire</string>
 </resources>

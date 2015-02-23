@@ -19,6 +19,7 @@ import com.fluffyadventure.controller.Controller;
 public class BunnyChoice extends Fragment {
 
     TextView choice_explaination;
+    TextView bunny_presentation;
     Button OkBtn;
     RadioGroup radioGroup;
     RadioButton selectedButton;
@@ -31,8 +32,11 @@ public class BunnyChoice extends Fragment {
                 R.layout.fragment_bunny_choice, container, false);
 
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "GrandHotel-Regular.otf");
-        choice_explaination = (TextView) rootView.findViewById(R.id.choice_explaination1);
+        choice_explaination = (TextView) rootView.findViewById(R.id.choice_explaination2);
         choice_explaination.setTypeface(font);
+
+        bunny_presentation = (TextView) rootView.findViewById(R.id.bunny_presentation);
+        bunny_presentation.setTypeface(font);
 
         OkBtn = (Button) rootView.findViewById(R.id.OkBtn);
         OkBtn.setTypeface(font);

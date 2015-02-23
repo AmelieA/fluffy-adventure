@@ -116,8 +116,8 @@
         android:id="@+id/BtnStatus"
         android:text="Statuts"
         style="@style/btnStyleOrange"
-        android:layout_alignBottom="@id/BtnCommencer"
-        android:layout_toLeftOf="@id/BtnCommencer"
+        android:layout_alignBottom="@id/MapBtn"
+        android:layout_toLeftOf="@id/MapBtn"
         android:layout_marginRight="10dp"/>
     <Button
         android:layout_width="wrap_content"

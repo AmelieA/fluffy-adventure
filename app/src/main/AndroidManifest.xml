@@ -53,11 +53,19 @@
             android:label="@string/title_activity_animal_choice_slider" >
         </activity>
         <activity
-            android:name=".Status"
-            android:label="@string/title_activity_status" >
+            android:name=".Status" >
         </activity>
         <activity
             android:name="SoloCombat">
+        </activity>
+        <activity android:name=".LoginActivity" >
+        </activity>
+        <activity
+            android:name=".SignUpActivity" >
+        </activity>
+        <activity
+            android:name=".AnimalName"
+            android:label="@string/title_activity_animal_name" >
         </activity>
     </application>
 
