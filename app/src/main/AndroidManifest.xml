@@ -57,8 +57,7 @@
             android:label="@string/title_activity_status" >
         </activity>
         <activity
-            android:name=".SoloCombat2"
-            android:label="@string/title_activity_solo_combat2" >
+            android:name="SoloCombat">
         </activity>
     </application>
 

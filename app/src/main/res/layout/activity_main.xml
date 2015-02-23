@@ -119,5 +119,15 @@
         android:layout_alignBottom="@id/BtnCommencer"
         android:layout_toLeftOf="@id/BtnCommencer"
         android:layout_marginRight="10dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BtnCombat"
+        android:text="Combat"
+        style="@style/btnStyleOrange"
+        android:layout_marginBottom="60dp"
+        android:layout_alignBottom="@id/BtnCommencer"
+        android:layout_toLeftOf="@id/BtnCommencer"
+        android:layout_marginRight="10dp"/>
 
 </RelativeLayout>
