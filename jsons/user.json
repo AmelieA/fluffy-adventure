@@ -1,0 +1,92 @@
+{
+    "Name": "denis",
+    "Hash_pwd":"bbkabakbakbz",
+    "Animals":
+        [
+            {
+                "Id":"007",
+                "Name":"mab***" ,
+                "Health": "200" ,
+                "Category":"rabbit" ,
+                "Type":"water" ,
+                "Strength":"10" ,
+                "Accuracy":"100" ,
+                "Evasiveness" : "10",
+                "Spells" :
+                {
+                    "Active" :
+                    [
+                        {
+                            "Id": "042" ,
+                            "Name" : "roundhouse kick",
+                            "Strength" : "9001"
+                        }
+                    ],
+
+                    "Unused" : 
+                    [
+                        {
+                            "Id": "666" ,
+                            "Name" : "death",
+                            "Strength" : "666"
+                        }
+
+                    ]
+                }
+
+
+
+            },
+
+            {
+                "Name":"mab***2" ,
+                "Health": "200" ,
+                "Category":"sheep" ,
+                "Type":"time" ,
+                "Strength":"10" ,
+                "Accuracy":"100" ,
+                "Evasiveness" : "0",
+                "Spells" :
+                {
+                    "Active" :
+                    [
+                        {
+                            "Id": "042" ,
+                            "Name" : "beeeeee",
+                            "Strength" : "0000"
+                        }
+                    ],
+
+                    "Unused" : 
+                    [
+                        {
+                            "Id": "33" ,
+                            "Name" : "eat grass",
+                            "Strength" : "0"
+                        }
+
+                    ]
+                }
+
+
+
+            }
+
+            
+        ],
+   "Friends":
+   [
+       {"Id": "10"} ,
+       {"Id": "4096"}
+   ]
+
+
+
+
+}
+
+
+
+
+   
+

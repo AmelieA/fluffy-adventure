@@ -69,13 +69,15 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap map) {
 
+        Log.i("FA", "---------------  MAP READY -----------------");
+
         configureMapOptions(map);
         getQuestsFromDatabaseAndShowThemOnMap(map);
 
     }
 
     /**
-     * Initialise les paramètres de la carte
+     * Init map
      */
     private void configureMapOptions(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
@@ -104,11 +106,12 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
                 Animal animal = Controller.getAnimal();
                 ViewGroup parent = (ViewGroup) findViewById(R.id.map);
                 View v = getLayoutInflater().inflate(R.layout.spawn_tooltip, parent, false);
+                /*
                 Spawn spawn = spawnMarkers.get(marker.getId());
 
                 ((TextView) v.findViewById(R.id.tooltip_name)).setText(spawn.getName());
                 ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
-                ((TextView) v.findViewById(R.id.tooltip_level)).setText(spawn.getLevel());
+                ((TextView) v.findViewById(R.id.tooltip_level)).setText(spawn.getLevel());*/
                 return v;
             }
         });
@@ -118,28 +121,48 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * Place les marqueurs de quêtes sur la carte
+     * Place all the markers on the map
      */
     private void getQuestsFromDatabaseAndShowThemOnMap(GoogleMap map) {
 
         map.clear();
         Resources resources = getResources();
 
+        int fightIcon = resources.getIdentifier("spawn_icon", "drawable", getPackageName());
+        int treasureIcon = resources.getIdentifier("treasure_icon", "drawable", getPackageName());
+
+        Bitmap icon1 = BitmapFactory.decodeResource(resources, fightIcon);
+        Bitmap icon2 = BitmapFactory.decodeResource(resources, treasureIcon);
+
+       map.addMarker(new MarkerOptions()
+                .position(new LatLng(45.781745, 4.872931))
+                .title("FIGHT !")
+                .snippet("Bat le méchant zombie mangeur de carottes !")
+                .icon(BitmapDescriptorFactory.fromBitmap(icon1)));
+
+
+       map.addMarker(new MarkerOptions()
+                .position(new LatLng(45.782347, 4.877629 ))
+                .title("Trésor, much gold")
+                .snippet("Such loot, very intense, wow")
+                .icon(BitmapDescriptorFactory.fromBitmap(icon2)));
+
         List<Spawn> spawns = new ArrayList<>();
        // spawns.addAll(Spawn.listAll(Encounter.class));
        // spawns.addAll(Spawn.listAll(Dunjeon.class));
 
-        for (Spawn spawn : spawns) {
+        /*for (Spawn spawn : spawns) {
             addSpawnToMap(map, resources, spawn);
-        }
+        }*/
     }
 
     /**
      * Place a spawn marker
      */
     private void addSpawnToMap(GoogleMap map, Resources resources, Spawn spawn) {
+
         /*int iconeId = resources.getIdentifier(spawn.getIcone(), "drawable", getPackageName());
-        Animal animal = Controller.getEcureuil();
+        Animal animal = Controller.getAnimal();
 
         if (spawn.getStatut(animal).equals(Spawn.Statut.REUSSIE) ||
                 spawn.getStatut(animal).equals(Spawn.Statut.PREREQUIS_INSATISFAIT)) {
@@ -254,7 +277,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
      */
     private void showTooFarDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Tu es trop loin du départ de la quête.")
+        builder.setMessage("Tu es trop loin de l'objectif.")
                 .setTitle("Rapproche-toi !");
 
         AlertDialog dialog = builder.create();
