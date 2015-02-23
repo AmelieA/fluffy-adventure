@@ -29,7 +29,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_button_valider"
+            android:text="@string/text_button_ok"
             android:id="@+id/OkBtn"
             style="@style/btnStyleOrangePetit"/>
 
@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:gravity="center_horizontal"
-                        android:id="@+id/choice_explaination1"
+                        android:id="@+id/choice_explaination2"
                         style="@style/information" />
 
                     <RadioButton

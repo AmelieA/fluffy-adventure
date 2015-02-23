@@ -110,5 +110,14 @@
         android:layout_alignBottom="@id/MapBtn"
         android:layout_toLeftOf="@id/MapBtn"
         android:layout_marginRight="10dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BtnName"
+        android:text="Nom"
+        style="@style/btnStyleOrange"
+        android:layout_alignBottom="@id/MapBtn"
+        android:layout_toRightOf="@id/MapBtn"
+        android:layout_marginLeft="10dp"/>
 
 </RelativeLayout>

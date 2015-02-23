@@ -13,7 +13,8 @@
     <string name="bunny_presentation">Le lapin est rapide et précis, il peut esquiver les attaques ennemies et inflige plus souvent des coups critiques</string>
     <string name="squirrel_presentation">L\'écureuil lance des noisettes à distance ! Elles font plus mal et peuvent toucher deux ennemis à la fois, mais ont une faible chance de rater leur cible.</string>
     <string name="sheep_presentation">Le mouton dispose de nombreux PV et dispose de meilleures capacités de soin</string>
-    <string name="text_button_valider">OK !</string>
+    <string name="chose_name">Choisis lui un nom !</string>
+    <string name="text_button_ok">OK !</string>
     <string name="title_activity_animal_choice_slider">AnimalChoiceSlider</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>

@@ -1,9 +1,9 @@
 package com.fluffyadventure.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,11 +13,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     Button BtnStatus;
     Button MapBtn;
     Button SlideBtn;
+    Button BtnName;
     TextView Logo1;
     TextView Logo2;
     Class<?> nextIntentClass;
@@ -50,6 +51,16 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AnimalChoiceSlider.class);
+                startActivity(intent);
+            }
+        });
+
+        BtnName = (Button)findViewById(R.id.BtnName);
+        BtnName.setTypeface(font);
+        BtnName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AnimalName.class);
                 startActivity(intent);
             }
         });
