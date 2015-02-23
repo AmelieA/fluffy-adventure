@@ -54,8 +54,7 @@
             android:background="@drawable/edittext_bg"
             android:padding="10dp"
             android:hint="@string/text_user"
-            android:textColorHint="#cccccc"
-            android:editable="true" />
+            android:textColorHint="#cccccc" />
         <EditText
             android:id="@+id/etPass"
             android:layout_width="match_parent"
@@ -65,8 +64,7 @@
             android:padding="10dp"
             android:hint="@string/text_password"
             android:textColorHint="#cccccc"
-            android:password="true"
-            android:editable="true" />
+            android:inputType="textPassword" />
         <Button
             android:id="@+id/btnSingIn"
             android:layout_width="match_parent"
@@ -92,8 +90,7 @@
         android:background="@drawable/edittext_bg"
         android:padding="10dp"
         android:hint="adr. serveur"
-        android:textColorHint="#cccccc"
-        android:editable="true" />
+        android:textColorHint="#cccccc" />
     <EditText
         android:id="@+id/etPort"
         android:layout_width="match_parent"
@@ -102,9 +99,7 @@
         android:layout_marginTop="5dp"
         android:padding="10dp"
         android:hint="port"
-        android:textColorHint="#cccccc"
-        android:password="true"
-        android:editable="true" />
+        android:textColorHint="#cccccc"/>
     </LinearLayout-->
 
 </RelativeLayout>
