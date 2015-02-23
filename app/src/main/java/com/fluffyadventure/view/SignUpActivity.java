@@ -1,41 +1,25 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.fluffyadventure.view.R;
 
-public class Status extends Activity {
-
-    Button MapBtn;
+public class SignUpActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_status);
-        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
-        MapBtn = (Button)findViewById(R.id.MapBtn);
-        MapBtn.setTypeface(font);
-        MapBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Status.this, MapComponent.class);
-                startActivity(intent);
-            }
-        });
+        setContentView(R.layout.activity_sign_up);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_status, menu);
+        getMenuInflater().inflate(R.menu.menu_sign_up, menu);
         return true;
     }
 
