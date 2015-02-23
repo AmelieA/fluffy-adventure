@@ -19,5 +19,16 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_solo_combat2">SoloCombat2</string>
+    <!-- Status Activity -->
+    <string name="title_activity_status">Status</string>
+    <string name="mail_button_text">Messagerie</string>
+    <string name="moveHQ_button_text">Déménager</string>
+    <string name="mngSkills_button_text">Gérer les sorts</string>
+    <string name="text_Health">Vie</string>
+    <string name="text_type">Type</string>
+    <string name="text_strength">Force</string>
+    <string name="text_accuracy">Précision</string>
+    <string name="text_evasiveness">Evasion</string>
 
 </resources>

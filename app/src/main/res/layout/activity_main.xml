@@ -84,6 +84,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/map_button_text"
+        android:id="@+id/BtnCommencer"
+        android:layout_marginBottom="20dp"
+        style="@style/btnStyleOrange"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:singleLine="false" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/map_button_text"
         android:id="@+id/MapBtn"
         android:layout_marginBottom="20dp"
         style="@style/btnStyleOrange"
@@ -100,5 +110,14 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:singleLine="false" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BtnStatus"
+        android:text="Statuts"
+        style="@style/btnStyleOrange"
+        android:layout_alignBottom="@id/BtnCommencer"
+        android:layout_toLeftOf="@id/BtnCommencer"
+        android:layout_marginRight="10dp"/>
 
 </RelativeLayout>

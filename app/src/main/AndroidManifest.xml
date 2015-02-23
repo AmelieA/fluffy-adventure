@@ -52,6 +52,14 @@
             android:name=".AnimalChoiceSlider"
             android:label="@string/title_activity_animal_choice_slider" >
         </activity>
+        <activity
+            android:name=".Status"
+            android:label="@string/title_activity_status" >
+        </activity>
+        <activity
+            android:name=".SoloCombat2"
+            android:label="@string/title_activity_solo_combat2" >
+        </activity>
     </application>
 
 </manifest>

@@ -18,7 +18,7 @@
         android:layout_height="fill_parent"
         android:scaleType="centerCrop"
         android:id="@+id/Background_nid"
-        android:src="@drawable/forest2" />
+        android:src="@drawable/forest4" />
 
     <TextView android:text="@string/choice_explaination"
         android:layout_height="wrap_content"
