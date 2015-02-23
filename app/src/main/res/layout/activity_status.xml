@@ -41,97 +41,198 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:id="@+id/statusHScrollView">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp"
-                android:gravity="center_horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_marginBottom="20dp">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:id="@+id/imgPC"
-                        android:src="@drawable/squirrel1"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Name"
-                        style="@style/Base.TextAppearance.AppCompat.Title"
-                        android:layout_gravity="center_horizontal" />
-                </LinearLayout>
-
-                <TableLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/edittext_bg">
-                    <TableRow android:gravity="center_horizontal">
-                        <TextView
-                            android:text="@string/text_type"
-                            android:padding="5dp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:text="blabla"
-                            android:padding="5dp"/>
-                    </TableRow>
-                    <TableRow android:gravity="center_horizontal">
-                        <TextView
-                            android:text="@string/text_Health"
-                            android:padding="5dp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:text="blabla"
-                            android:padding="5dp"/>
-                    </TableRow>
-                    <TableRow android:gravity="center_horizontal">
-                        <TextView
-                            android:text="@string/text_strength"
-                            android:padding="5dp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:text="blabla"
-                            android:padding="5dp"/>
-                    </TableRow>
-                    <TableRow android:gravity="center_horizontal">
-                        <TextView
-                            android:text="@string/text_accuracy"
-                            android:padding="5dp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:text="blabla"
-                            android:padding="5dp"/>
-                    </TableRow>
-                    <TableRow android:gravity="center_horizontal">
-                        <TextView
-                            android:text="@string/text_evasiveness"
-                            android:padding="5dp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:text="blabla"
-                            android:padding="5dp"/>
-                    </TableRow>
-                </TableLayout>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginBottom="20dp">
 
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/imgPC"
+                            android:src="@drawable/squirrel1"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/status_Name1"
+                            android:text="Name"
+                            style="@style/Base.TextAppearance.AppCompat.Title"
+                            android:layout_gravity="center_horizontal" />
+                    </LinearLayout>
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/edittext_bg">
+                        <TableRow android:gravity="center_horizontal">
+                            <TextView
+                                android:text="@string/text_type"
+                                android:padding="5dp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:text="blabla"
+                                android:id="@+id/status_type1"
+                                android:padding="5dp"/>
+                        </TableRow>
+                        <TableRow android:gravity="center_horizontal">
+                            <TextView
+                                android:text="@string/text_Health"
+                                android:padding="5dp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:text="blabla"
+                                android:id="@+id/status_hlth1"
+                                android:padding="5dp"/>
+                        </TableRow>
+                        <TableRow android:gravity="center_horizontal">
+                            <TextView
+                                android:text="@string/text_strength"
+                                android:padding="5dp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:text="blabla"
+                                android:id="@+id/status_str1"
+                                android:padding="5dp"/>
+                        </TableRow>
+                        <TableRow android:gravity="center_horizontal">
+                            <TextView
+                                android:text="@string/text_accuracy"
+                                android:padding="5dp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:text="blabla"
+                                android:id="@+id/status_acc1"
+                                android:padding="5dp"/>
+                        </TableRow>
+                        <TableRow android:gravity="center_horizontal">
+                            <TextView
+                                android:text="@string/text_evasiveness"
+                                android:padding="5dp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:text="blabla"
+                                android:id="@+id/status_eva1"
+                                android:padding="5dp"/>
+                        </TableRow>
+                    </TableLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginBottom="20dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/imgPC"
+                            android:src="@drawable/squirrel1"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/status_name2"
+                            android:text="Name"
+                            style="@style/Base.TextAppearance.AppCompat.Title"
+                            android:layout_gravity="center_horizontal" />
+                    </LinearLayout>
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/edittext_bg">
+                        <TableRow android:gravity="center_horizontal">
+                            <TextView
+                                android:text="@string/text_type"
+                                android:padding="5dp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:text="blabla"
+                                android:id="@+id/status_type2"
+                                android:padding="5dp"/>
+                        </TableRow>
+                        <TableRow android:gravity="center_horizontal">
+                            <TextView
+                                android:text="@string/text_Health"
+                                android:padding="5dp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:text="blabla"
+                                android:id="@+id/status_hlth2"
+                                android:padding="5dp"/>
+                        </TableRow>
+                        <TableRow android:gravity="center_horizontal">
+                            <TextView
+                                android:text="@string/text_strength"
+                                android:padding="5dp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:text="blabla"
+                                android:id="@+id/status_str2"
+                                android:padding="5dp"/>
+                        </TableRow>
+                        <TableRow android:gravity="center_horizontal">
+                            <TextView
+                                android:text="@string/text_accuracy"
+                                android:padding="5dp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:text="blabla"
+                                android:id="@+id/status_acc2"
+                                android:padding="5dp"/>
+                        </TableRow>
+                        <TableRow android:gravity="center_horizontal">
+                            <TextView
+                                android:text="@string/text_evasiveness"
+                                android:padding="5dp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:text="blabla"
+                                android:id="@+id/status_eva2"
+                                android:padding="5dp"/>
+                        </TableRow>
+                    </TableLayout>
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </HorizontalScrollView>
 
         <Button
             android:layout_width="match_parent"
