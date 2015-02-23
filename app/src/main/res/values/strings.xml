@@ -30,5 +30,6 @@
     <string name="text_strength">Force</string>
     <string name="text_accuracy">Précision</string>
     <string name="text_evasiveness">Evasion</string>
+    <string name="title_activity_animal_name">AnimalName</string>
 
 </resources>

@@ -19,6 +19,7 @@ import com.fluffyadventure.controller.Controller;
 public class SquirrelChoice extends Fragment {
 
     TextView choice_explaination;
+    TextView squirrel_presentation;
     Button OkBtn;
     RadioGroup radioGroup;
     RadioButton selectedButton;
@@ -33,6 +34,9 @@ public class SquirrelChoice extends Fragment {
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "GrandHotel-Regular.otf");
         choice_explaination = (TextView) rootView.findViewById(R.id.choice_explaination3);
         choice_explaination.setTypeface(font);
+
+        squirrel_presentation = (TextView) rootView.findViewById(R.id.squirrel_presentation);
+        squirrel_presentation.setTypeface(font);
 
         OkBtn = (Button) rootView.findViewById(R.id.OkBtn);
         OkBtn.setTypeface(font);

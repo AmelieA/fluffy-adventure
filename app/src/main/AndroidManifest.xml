@@ -60,6 +60,10 @@
             android:name=".SoloCombat2"
             android:label="@string/title_activity_solo_combat2" >
         </activity>
+        <activity
+            android:name=".AnimalName"
+            android:label="@string/title_activity_animal_name" >
+        </activity>
     </application>
 
 </manifest>

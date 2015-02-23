@@ -19,6 +19,7 @@ import com.fluffyadventure.controller.Controller;
 public class SheepChoice extends Fragment {
 
     TextView choice_explaination;
+    TextView sheep_presentation;
     Button OkBtn;
     RadioGroup radioGroup;
     RadioButton selectedButton;
@@ -33,6 +34,9 @@ public class SheepChoice extends Fragment {
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "GrandHotel-Regular.otf");
         choice_explaination = (TextView) rootView.findViewById(R.id.choice_explaination2);
         choice_explaination.setTypeface(font);
+
+        sheep_presentation = (TextView) rootView.findViewById(R.id.sheep_presentation);
+        sheep_presentation.setTypeface(font);
 
         OkBtn = (Button) rootView.findViewById(R.id.OkBtn);
         OkBtn.setTypeface(font);
