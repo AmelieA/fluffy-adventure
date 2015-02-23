@@ -5,6 +5,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.fluffyadventure.view.Status">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/StatusBgd"
+        android:src="@drawable/forest"
+        android:scaleType="centerCrop"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,22 +22,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="10dp">
-            <Button
+
+            <ImageButton
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/map_button_text"
+                android:layout_height="150dp"
                 android:id="@+id/BtnMap"
-                style="@style/btnStyleOrange"
-                android:singleLine="false"
-                android:layout_margin="5dp" />
+                android:background="@drawable/bouton_carte"
+                android:scaleType="fitCenter"/>
+
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mail_button_text"
                 android:id="@+id/BtnMail"
                 style="@style/btnStyleOrange"
                 android:singleLine="false"
-                android:layout_margin="5dp" />
+                android:layout_margin="5dp"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -41,27 +50,38 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
                 android:gravity="center_horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/imgPC"
-                    android:src="@drawable/squirrel1"/>
+                android:paddingRight="20dp"
+                android:layout_marginBottom="20dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Name"
-                    style="@style/Base.TextAppearance.AppCompat.Title"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/imgPC"
+                        android:src="@drawable/squirrel1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        style="@style/Base.TextAppearance.AppCompat.Title"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical">
                     <TableRow android:gravity="center_horizontal">
                         <TextView
                             android:text="@string/text_type"

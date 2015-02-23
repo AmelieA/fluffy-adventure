@@ -1,18 +1,34 @@
 package com.fluffyadventure.view;
 
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.fluffyadventure.view.R;
 
 public class Status extends ActionBarActivity {
 
+    Button MapBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
+        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
+        MapBtn = (Button)findViewById(R.id.MapBtn);
+        MapBtn.setTypeface(font);
+        MapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Status.this, MapComponent.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
