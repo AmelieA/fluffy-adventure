@@ -16,6 +16,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
     Button BtnStatus;
+    Button BtnCombat;
     Button MapBtn;
     Button SlideBtn;
     Button BtnName;
@@ -71,6 +72,16 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Status.class);
+                startActivity(intent);
+            }
+        });
+
+        BtnCombat = (Button)findViewById(R.id.BtnCombat);
+        BtnCombat.setTypeface(font);
+        BtnCombat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SoloCombat.class);
                 startActivity(intent);
             }
         });

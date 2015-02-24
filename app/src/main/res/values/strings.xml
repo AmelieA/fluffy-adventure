@@ -20,7 +20,6 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_solo_combat2">SoloCombat2</string>
     <!-- Status Activity -->
     <string name="mail_button_text">Messagerie</string>
     <string name="moveHQ_button_text">Déménager</string>

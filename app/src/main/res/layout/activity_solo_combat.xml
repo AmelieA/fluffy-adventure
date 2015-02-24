@@ -46,17 +46,18 @@
                         android:gravity="top"/>
 
                     <ImageView
+                        android:id="@+id/FighterImage"
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
                         android:layout_weight="5"
                         android:layout_marginLeft="-40dp"
                         android:gravity="bottom"
-                        android:src="@drawable/squirrel1"/>
+                        android:src="@drawable/sheep5"/>
 
                 </LinearLayout>
             </LinearLayout>
 
-            <!--opponent (fighter and panel) + test name-->
+            <!--opponent (fighter and panel) + name-->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -150,7 +151,7 @@
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:max="100"
-                                    android:progress="2"
+                                    android:progress="100"
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:progressDrawable="@drawable/life_progress_bar"/>
                             </LinearLayout>
@@ -177,6 +178,7 @@
                         android:gravity="top"/>
 
                     <ImageView
+                        android:id="@+id/OpponentImage"
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
                         android:layout_weight="4"
@@ -295,7 +297,7 @@
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:max="100"
-                                    android:progress="65"
+                                    android:progress="100"
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:progressDrawable="@drawable/life_progress_bar"/>
                             </LinearLayout>

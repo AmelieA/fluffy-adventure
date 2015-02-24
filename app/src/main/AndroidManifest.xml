@@ -56,8 +56,7 @@
             android:name=".Status" >
         </activity>
         <activity
-            android:name=".SoloCombat2"
-            android:label="@string/title_activity_solo_combat2" >
+            android:name="SoloCombat">
         </activity>
         <activity android:name=".LoginActivity" >
         </activity>

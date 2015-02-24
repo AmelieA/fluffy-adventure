@@ -101,5 +101,56 @@
         android:hint="port"
         android:textColorHint="#cccccc"/>
     </LinearLayout-->
+    <LinearLayout
+        android:id="@+id/out2"
+        android:weightSum="5"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:weightSum="4.5"
+            android:gravity="bottom">
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/bunny1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:weightSum="4.5"
+            android:gravity="bottom">
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0px"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:src="@drawable/squirrel1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:weightSum="4.5"
+            android:gravity="bottom">
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/sheep1"/>
+
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
