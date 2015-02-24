@@ -190,7 +190,6 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         ColorMatrix matrix = new ColorMatrix();
         matrix.setSaturation(0);
 
-
         Paint p = new Paint();
         ColorMatrix cm = new ColorMatrix();
 

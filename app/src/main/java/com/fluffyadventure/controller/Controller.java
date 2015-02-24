@@ -36,7 +36,7 @@ public class Controller {
         AbstractSpawn dungeon1 = new Dungeon(4,0,0,0,45.7853447, 4.8563660,"Much evil, such dungeon, so dangerous, very intense, wow","L'antre du mal");
         Log.i("FA", dungeon1.toString());
 
-        AbstractSpawn treasure1 = new Treasure(5,0,0,0,45.7853447, 4.8563660,"Mon préééécieeeuux ..","Trésor enfoui");
+        AbstractSpawn treasure1 = new Treasure(5,0,0,0,45.7853447, 4.8563660,"Mon préééécieeeuux ...","Trésor enfoui");
         Log.i("FA", treasure1.toString());
 
     }
