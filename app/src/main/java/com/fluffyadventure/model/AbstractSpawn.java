@@ -35,7 +35,7 @@ public abstract class AbstractSpawn {
     public AbstractSpawn(){
     }
 
-    protected AbstractSpawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double longitude, double latitude, String text, String name, Integer requirement) {
+    protected AbstractSpawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double longitude, double latitude, String text, String name) {
         this.spellReward = spellReward;
         this.healthReward = healthReward;
         this.strengthReward = strengthReward;
@@ -43,7 +43,6 @@ public abstract class AbstractSpawn {
         this.latitude = latitude;
         this.text = text;
         this.name = name;
-        this.requirement = requirement;
         this.spawnId = spawnId;
     }
 
@@ -104,6 +103,10 @@ public abstract class AbstractSpawn {
 
     public Integer getRequirement() {
         return requirement;
+    }
+
+    public void setRequirement(Integer requirement) {
+        this.requirement = requirement;
     }
 
     @Override
