@@ -21,6 +21,8 @@ public class Controller {
     public static void setupObjectives() {
         Log.i("FA", "Setting up objectives");
 
+        objectives = new ArrayList<AbstractSpawn>();
+
         AbstractSpawn fightSpawn1 = new Spawn(0,0,0,0,45.780035, 4.856392,"Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1);
         objectives.add(fightSpawn1);
         Log.i("FA", fightSpawn1.toString());
