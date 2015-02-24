@@ -41,7 +41,6 @@ public class SheepChoice extends Fragment {
         OkBtn = (Button) rootView.findViewById(R.id.OkBtn);
         OkBtn.setTypeface(font);
 
-
         OkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +48,7 @@ public class SheepChoice extends Fragment {
                 selectedButton = (RadioButton) rootView.findViewById(radioGroup.getCheckedRadioButtonId());
                 int idx = radioGroup.indexOfChild(selectedButton) + 1;
                 Controller.getAnimal().setImagePath("sheep" + idx);
-                // Intent intent = new Intent(BunnyChoice.this, MapComponent.class);
+                //Intent intent = new Intent(rootView, AnimalName.class);
                 //startActivity(intent);
             }
         });

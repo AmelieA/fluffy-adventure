@@ -80,16 +80,30 @@
         android:id="@+id/Logo2"
         style="@style/textStyleLogo"
         android:layout_marginBottom="15dp"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/map_button_text"
-        android:id="@+id/BtnCommencer"
-        android:layout_marginBottom="20dp"
-        style="@style/btnStyleOrange"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:singleLine="false" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connec_button_text"
+            android:id="@+id/loginBtn"
+            android:layout_marginBottom="80dp"
+            style="@style/btnStyleOrange"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:singleLine="false" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inscr_button_text"
+            android:id="@+id/signInBtn"
+            android:layout_marginBottom="20dp"
+            style="@style/btnStyleOrange"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:singleLine="false" />
+
+    <!--
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -128,6 +142,6 @@
         android:layout_marginBottom="60dp"
         android:layout_alignBottom="@id/BtnCommencer"
         android:layout_toLeftOf="@id/BtnCommencer"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"/>-->
 
 </RelativeLayout>

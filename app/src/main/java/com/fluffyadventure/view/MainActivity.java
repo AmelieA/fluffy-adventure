@@ -20,6 +20,8 @@ public class MainActivity extends Activity {
     Button BtnStatus;
     Button BtnCombat;
     Button MapBtn;
+    Button loginBtn;
+    Button signinBtn;
     Button SlideBtn;
     TextView Logo1;
     TextView Logo2;
@@ -30,17 +32,16 @@ public class MainActivity extends Activity {
         Log.i("FA", "Starting...");
 
         //nextIntentClass = XXX.class;
-        // checkFirstLaunchAndSetupApplication();
+        //checkFirstLaunchAndSetupApplication();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //checkFirstLaunchAndSetupApplication();
         setupApplication();
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
-        MapBtn = (Button)findViewById(R.id.MapBtn);
+        /*MapBtn = (Button)findViewById(R.id.MapBtn);
         MapBtn.setTypeface(font);
         MapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +77,26 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SoloCombat.class);
+                startActivity(intent);
+            }
+        });*/
+
+        loginBtn = (Button)findViewById(R.id.loginBtn);
+        loginBtn.setTypeface(font);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        signinBtn = (Button)findViewById(R.id.signInBtn);
+        signinBtn.setTypeface(font);
+        signinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
                 startActivity(intent);
             }
         });
