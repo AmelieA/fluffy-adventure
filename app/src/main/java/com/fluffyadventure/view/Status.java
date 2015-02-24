@@ -14,6 +14,7 @@ import com.fluffyadventure.view.R;
 public class Status extends Activity {
 
     Button MapBtn;
+    Button btnMngSkills;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,16 @@ public class Status extends Activity {
         MapBtn = (Button)findViewById(R.id.MapBtn);
         MapBtn.setTypeface(font);
         MapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Status.this, MapComponent.class);
+                startActivity(intent);
+            }
+        });
+
+        btnMngSkills = (Button)findViewById(R.id.BtnMngSkills);
+        btnMngSkills.setTypeface(font);
+        btnMngSkills.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Status.this, MapComponent.class);

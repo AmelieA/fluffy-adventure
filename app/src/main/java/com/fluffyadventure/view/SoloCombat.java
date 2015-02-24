@@ -2,13 +2,12 @@ package com.fluffyadventure.view;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.Rect;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,15 +16,13 @@ import android.widget.ImageView;
 
 public class SoloCombat extends Activity {
 
-    private static final int PROGRESS = 0x1;
-
     private TextView opponentsName;
     private ProgressBar opponentsLife;
-    private int opponentsLifeStatus = 100;
+    private int opponentsLifePoint = 100;
     private ImageView opponentImage;
     private TextView fightersName;
     private ProgressBar fightersLife;
-    private int fightersLifeStatus = 100;
+    private int fightersLifePoint = 100;
     private TextView instruction;
     private ImageView fighterImage;
     private Button action1;
@@ -78,23 +75,34 @@ public class SoloCombat extends Activity {
 //                    }
 //                }).start();
 
-            LosesLifeAnimation(opponentsLife, opponentsLifeStatus, 50);
+            opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15);
             }
         });
 
 
     }
 
-    public void LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarStatus, int lifePointLost) {
+    public int LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointLost) {
 
-        ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", lifeProgressBarStatus, lifeProgressBarStatus-lifePointLost);
-        animation.setDuration(990);
+        ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", lifeProgressBarPoint, lifeProgressBarPoint-lifePointLost);
+        animation.setDuration(lifePointLost*15);
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
+        lifeProgressBarPoint-=lifePointLost;
 
-        if (lifeProgressBarStatus<15){
-
+        Resources res = getResources();
+        Rect bounds = lifeProgressBar.getProgressDrawable().getBounds();
+        if (lifeProgressBarPoint<50){
+            if (lifeProgressBarPoint<25){
+                lifeProgressBar.setProgressDrawable(res.getDrawable(R.drawable.red_progress_bar));
+            }else {
+                lifeProgressBar.setProgressDrawable(res.getDrawable(R.drawable.orange_progress_bar));
+            }
         }
+        lifeProgressBar.getProgressDrawable().setBounds(bounds);
+        lifeProgressBar.setProgress(lifeProgressBarPoint);
+
+        return (lifeProgressBarPoint);
 
     }
 

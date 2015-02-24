@@ -56,15 +56,15 @@ public class MainActivity extends Activity {
             }
         });
 
-        BtnName = (Button)findViewById(R.id.BtnName);
-        BtnName.setTypeface(font);
-        BtnName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AnimalName.class);
-                startActivity(intent);
-            }
-        });
+//        BtnName = (Button)findViewById(R.id.BtnName);
+//        BtnName.setTypeface(font);
+//        BtnName.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, AnimalName.class);
+//                startActivity(intent);
+//            }
+//        });
 
         BtnStatus = (Button)findViewById(R.id.BtnStatus);
         BtnStatus.setTypeface(font);
@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
         BtnCombat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SoloCombat.class);
+                Intent intent = new Intent(MainActivity.this, AttackChoice.class);
                 startActivity(intent);
             }
         });
