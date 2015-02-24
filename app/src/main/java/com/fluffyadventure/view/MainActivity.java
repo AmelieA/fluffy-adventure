@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fluffyadventure.controller.Controller;
+
 
 public class MainActivity extends Activity {
 
@@ -19,7 +21,6 @@ public class MainActivity extends Activity {
     Button BtnCombat;
     Button MapBtn;
     Button SlideBtn;
-    Button BtnName;
     TextView Logo1;
     TextView Logo2;
     Class<?> nextIntentClass;
@@ -33,6 +34,9 @@ public class MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //checkFirstLaunchAndSetupApplication();
+        setupApplication();
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
@@ -52,16 +56,6 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AnimalChoiceSlider.class);
-                startActivity(intent);
-            }
-        });
-
-        BtnName = (Button)findViewById(R.id.BtnName);
-        BtnName.setTypeface(font);
-        BtnName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AnimalName.class);
                 startActivity(intent);
             }
         });
@@ -128,14 +122,15 @@ public class MainActivity extends Activity {
 
     private  void setupApplication() {
 
-        //Controleur.setupDatabase();
+        Controller.setupBob();
+        Controller.setupObjectives();
 
         //nextIntentClass = XXX.class;
 
-        SharedPreferences settings = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("firstLaunch", false);
-        editor.commit();
+       // SharedPreferences settings = getPreferences(MODE_PRIVATE);
+       // SharedPreferences.Editor editor = settings.edit();
+       // editor.putBoolean("firstLaunch", false);
+       // editor.commit();
     }
 
 

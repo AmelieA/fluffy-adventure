@@ -16,12 +16,10 @@ import java.util.ArrayList;
 public class Controller {
 
     private static Animal animal;
-    private static ArrayList<AbstractSpawn> objectives;
+    private static ArrayList<AbstractSpawn> objectives = new ArrayList<AbstractSpawn>();
 
     public static void setupObjectives() {
         Log.i("FA", "Setting up objectives");
-
-        objectives = new ArrayList<AbstractSpawn>();
 
         AbstractSpawn fightSpawn1 = new Spawn(0,0,0,0,45.780035, 4.856392,"Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1);
         objectives.add(fightSpawn1);
