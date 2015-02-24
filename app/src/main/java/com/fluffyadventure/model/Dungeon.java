@@ -8,8 +8,8 @@ public class Dungeon extends AbstractSpawn {
     public Dungeon(){
     }
 
-    public Dungeon( Integer spawnId, int spellReward, int healthReward, int strengthReward, double longitude, double latitude, String text, String name) {
-        super(spawnId, spellReward, healthReward, strengthReward, longitude, latitude, text, name);
+    public Dungeon( Integer spawnId, int spellReward, int healthReward, int strengthReward, double longitude, double latitude, String text, String name, Integer level) {
+        super(spawnId, spellReward, healthReward, strengthReward, longitude, latitude, text, name, level);
     }
 
     @Override

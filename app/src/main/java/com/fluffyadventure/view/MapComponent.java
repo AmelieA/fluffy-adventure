@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
+import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Spawn;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -44,8 +45,8 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     public final static String QUETE_ID = "com.fluffyadventure.QUETE_ID";
     //TODO : changer pour la release
     private final static float MAX_DISTANCE_BETWEEN_QUEST_AND_PLAYER = 30;
-    private final Map<String, Spawn> spawnMarkers = new HashMap<>();
-    private Spawn selectedSpawn = null;
+    private final Map<String, AbstractSpawn> spawnMarkers = new HashMap<>();
+    private AbstractSpawn selectedSpawn = null;
     private Button button_go;
 
 
@@ -106,12 +107,12 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
                 Animal animal = Controller.getAnimal();
                 ViewGroup parent = (ViewGroup) findViewById(R.id.map);
                 View v = getLayoutInflater().inflate(R.layout.spawn_tooltip, parent, false);
-                /*
-                Spawn spawn = spawnMarkers.get(marker.getId());
+
+                AbstractSpawn spawn = spawnMarkers.get(marker.getId());
 
                 ((TextView) v.findViewById(R.id.tooltip_name)).setText(spawn.getName());
                 ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
-                ((TextView) v.findViewById(R.id.tooltip_level)).setText(spawn.getLevel());*/
+                ((TextView) v.findViewById(R.id.tooltip_level)).setText(spawn.getLevel());
                 return v;
             }
         });
@@ -128,58 +129,38 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         map.clear();
         Resources resources = getResources();
 
-        int fightIcon = resources.getIdentifier("spawn_icon", "drawable", getPackageName());
-        int treasureIcon = resources.getIdentifier("treasure_icon", "drawable", getPackageName());
+        List<AbstractSpawn> spawns = Controller.getObjectives();
 
-        Bitmap icon1 = BitmapFactory.decodeResource(resources, fightIcon);
-        Bitmap icon2 = BitmapFactory.decodeResource(resources, treasureIcon);
-
-       map.addMarker(new MarkerOptions()
-                .position(new LatLng(45.781745, 4.872931))
-                .title("FIGHT !")
-                .snippet("Bat le méchant zombie mangeur de carottes !")
-                .icon(BitmapDescriptorFactory.fromBitmap(icon1)));
-
-
-       map.addMarker(new MarkerOptions()
-                .position(new LatLng(45.782347, 4.877629 ))
-                .title("Trésor, much gold")
-                .snippet("Such loot, very intense, wow")
-                .icon(BitmapDescriptorFactory.fromBitmap(icon2)));
-
-        List<Spawn> spawns = new ArrayList<>();
-       // spawns.addAll(Spawn.listAll(Encounter.class));
-       // spawns.addAll(Spawn.listAll(Dunjeon.class));
-
-        /*for (Spawn spawn : spawns) {
+        for (AbstractSpawn spawn : spawns) {
             addSpawnToMap(map, resources, spawn);
-        }*/
+        }
     }
 
     /**
      * Place a spawn marker
      */
-    private void addSpawnToMap(GoogleMap map, Resources resources, Spawn spawn) {
+    private void addSpawnToMap(GoogleMap map, Resources resources, AbstractSpawn spawn) {
 
-        /*int iconeId = resources.getIdentifier(spawn.getIcone(), "drawable", getPackageName());
+        int iconId = resources.getIdentifier(spawn.getIcon(), "drawable", getPackageName());
         Animal animal = Controller.getAnimal();
 
-        if (spawn.getStatut(animal).equals(Spawn.Statut.REUSSIE) ||
-                spawn.getStatut(animal).equals(Spawn.Statut.PREREQUIS_INSATISFAIT)) {
+        if (spawn.getStatus(animal).equals(Spawn.Status.DONE) ||
+                spawn.getStatus(animal).equals(Spawn.Status.REQUIREMENT_NOT_MET)) {
             return;
         }
 
-        Bitmap icone = BitmapFactory.decodeResource(resources, iconeId);
-        if (spawn.getStatut(animal).equals(Spawn.Statut.COMPETENCES_INSUFFISANTES)) {
-            icone = convertToGrayscale(icone);
-        }
+        Bitmap icon = BitmapFactory.decodeResource(resources, iconId);
+
+       /* if (spawn.getStatus(animal).equals(Spawn.Status.COMPETENCES_INSUFFISANTES)) {
+            icon = convertToGrayscale(icon);
+        }*/
 
         Marker marker = map.addMarker(new MarkerOptions()
                 .position(new LatLng(spawn.latitude, spawn.longitude))
-                .title(spawn.getStatut(animal) + " - " + spawn.titre)
+                .title(spawn.getStatus(animal) + " - " + spawn.getName())
                 .snippet(spawn.getText())
-                .icon(BitmapDescriptorFactory.fromBitmap(icone)));
-        spawnMarkers.put(marker.getId(), spawn);*/
+                .icon(BitmapDescriptorFactory.fromBitmap(icon)));
+        spawnMarkers.put(marker.getId(), spawn);
     }
 
     /**
@@ -208,18 +189,16 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     /**
      * Select a spawn when the player cliks on a marker
      */
-    private void selectSpawn(Spawn spawn) {
-      /*  Animal animal = Controller.getAnimal();
+    private void selectSpawn(AbstractSpawn spawn) {
+        Animal animal = Controller.getAnimal();
         selectedSpawn = spawn;
-        if (quete.getStatut(animal).equals(Spawn.Statut.DISPONIBLE)) {
-            button_go.setText("Commencer la quête !");
+        if (spawn.getStatus(animal).equals(Spawn.Status.AVAILABLE)) {
+            button_go.setText("Engager le combat !");
             button_go.setEnabled(true);
-        } else if (quete.getStatut(animal).equals(Spawn.Statut.COMPETENCES_INSUFFISANTES)) {
+        } /*else if (quete.getStatut(animal).equals(Spawn.Statut.COMPETENCES_INSUFFISANTES)) {
             button_go.setText("Compétences insuffisantes");
             button_go.setEnabled(false);
         }*/
-
-
     }
 
     /**
@@ -251,7 +230,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     /**
      * Check if the player is too far to start a fight
      */
-    private boolean isPlayerTooFar(Spawn spawn) {
+    private boolean isPlayerTooFar(AbstractSpawn spawn) {
         float distance = getDistanceBetweenSpawnAndPlayer(spawn);
         return distance >= MAX_DISTANCE_BETWEEN_QUEST_AND_PLAYER;
     }
@@ -259,7 +238,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     /**
      * Get the distance between the player and a spawn
      */
-    private float getDistanceBetweenSpawnAndPlayer(Spawn spawn) {
+    private float getDistanceBetweenSpawnAndPlayer(AbstractSpawn spawn) {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
         float distance = 10000;

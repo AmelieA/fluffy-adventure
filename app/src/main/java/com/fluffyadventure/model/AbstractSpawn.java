@@ -35,7 +35,7 @@ public abstract class AbstractSpawn {
     public AbstractSpawn(){
     }
 
-    protected AbstractSpawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double longitude, double latitude, String text, String name) {
+    protected AbstractSpawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double longitude, double latitude, String text, String name, Integer level) {
         this.spellReward = spellReward;
         this.healthReward = healthReward;
         this.strengthReward = strengthReward;
@@ -44,6 +44,7 @@ public abstract class AbstractSpawn {
         this.text = text;
         this.name = name;
         this.spawnId = spawnId;
+        this.level = level;
     }
 
     public String getStatus(Animal animal){
@@ -103,6 +104,10 @@ public abstract class AbstractSpawn {
 
     public Integer getRequirement() {
         return requirement;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public void setRequirement(Integer requirement) {
