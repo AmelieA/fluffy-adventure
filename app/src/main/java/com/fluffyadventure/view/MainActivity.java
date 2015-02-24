@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
     Button SlideBtn;
     TextView Logo1;
     TextView Logo2;
+    Button BtnSignUp;
     Class<?> nextIntentClass;
 
     @Override
@@ -46,6 +47,7 @@ public class MainActivity extends Activity {
         MapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, MapComponent.class);
                 startActivity(intent);
             }
@@ -94,6 +96,16 @@ public class MainActivity extends Activity {
         signinBtn = (Button)findViewById(R.id.signInBtn);
         signinBtn.setTypeface(font);
         signinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        BtnSignUp = (Button)findViewById(R.id.BtnSignUp);
+        BtnSignUp.setTypeface(font);
+        BtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SignUpActivity.class);

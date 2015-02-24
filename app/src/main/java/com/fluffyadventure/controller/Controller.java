@@ -1,9 +1,13 @@
 package com.fluffyadventure.controller;
 
+
+import android.os.AsyncTask;
+
 import android.util.Log;
 
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.User;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Treasure;
@@ -16,10 +20,27 @@ import java.util.ArrayList;
 public class Controller {
 
     private static Animal animal;
-    private static ArrayList<AbstractSpawn> objectives = new ArrayList<AbstractSpawn>();
+    private static Server server = new Server();
+    private static User user;
+    private static ArrayList<AbstractSpawn> objectives;
+
+
+    public static void createUser(String name, String password) {
+        CreateUserTask task = new CreateUserTask(name,password);
+        try {
+            user = task.execute().get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
+    }
 
     public static void setupObjectives() {
         Log.i("FA", "Setting up objectives");
+
+        objectives = new ArrayList<AbstractSpawn>();
 
         AbstractSpawn fightSpawn1 = new Spawn(0,0,0,0,45.780035, 4.856392,"Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1);
         objectives.add(fightSpawn1);
@@ -57,4 +78,20 @@ public class Controller {
     public static ArrayList<AbstractSpawn> getObjectives() {
         return objectives;
     }
+    public static User getUser() { return user; }
+
+    private static class CreateUserTask extends AsyncTask<Void, Void, User> {
+        private String username;
+        private String password;
+
+        public CreateUserTask(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
+         protected User doInBackground(Void... params){
+             return server.createUser(username,password);
+         }
+
+    }
+
 }
