@@ -36,7 +36,7 @@ public class SignUpActivity extends Activity {
             @Override
             public void onClick(View v) {
         Controller.createUser(etUserName.getText().toString(), etPass.getText().toString());
-        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+        Intent intent = new Intent(SignUpActivity.this, AnimalChoiceSlider.class);
         startActivity(intent);
 
             }

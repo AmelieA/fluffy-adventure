@@ -103,15 +103,6 @@ public class MainActivity extends Activity {
             }
         });
 
-        BtnSignUp = (Button)findViewById(R.id.BtnSignUp);
-        BtnSignUp.setTypeface(font);
-        BtnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
 
         Logo1 = (TextView)findViewById(R.id.Logo1);
         Logo1.setTypeface(font);

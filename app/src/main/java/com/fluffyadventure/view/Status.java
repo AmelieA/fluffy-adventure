@@ -13,16 +13,16 @@ import com.fluffyadventure.view.R;
 
 public class Status extends Activity {
 
-    Button MapBtn;
+    Button BtnMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
-        MapBtn = (Button)findViewById(R.id.MapBtn);
-        MapBtn.setTypeface(font);
-        MapBtn.setOnClickListener(new View.OnClickListener() {
+        BtnMap = (Button)findViewById(R.id.BtnMap);
+        BtnMap.setTypeface(font);
+        BtnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Status.this, MapComponent.class);
