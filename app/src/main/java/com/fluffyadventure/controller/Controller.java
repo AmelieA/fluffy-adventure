@@ -76,18 +76,14 @@ public class Controller {
     }
     public static User getUser() { return user; }
 
-    private static class CreateUserTask extends AsyncTask<Void, Void, User> {
-        private String username;
-        private String password;
-
-        public CreateUserTask(String username, String password) {
-            this.username = username;
-            this.password = password;
+    public static Boolean login(String name, String password) {
+        user =  server.login(name,password);
+        if (user == null) {
+            return false;
         }
-         protected User doInBackground(Void... params){
-             return server.createUser(username,password);
-         }
-
+        return true;
     }
+
+
 
 }
