@@ -71,7 +71,7 @@ public class SignUpActivity extends Activity {
         }
 
         protected void onPreExecute(){
-            this.dialog.setTitle("Creating user...");
+            this.dialog.setTitle("Création...");
             this.dialog.show();
 
         }

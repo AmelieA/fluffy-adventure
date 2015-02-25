@@ -94,7 +94,7 @@ public class LoginActivity extends Activity {
         }
 
         protected void onPreExecute(){
-            this.dialog.setTitle("Logging in...");
+            this.dialog.setTitle("Connexion...");
             this.dialog.show();
 
         }

@@ -1,5 +1,8 @@
 package com.fluffyadventure.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by amelie on 2/25/15.
  */
@@ -14,6 +17,12 @@ public class Spell {
         Name = name;
         Description = description;
     }
+    public Spell(JSONObject json) throws JSONException {
+        this.id = json.getInt("Id");
+        this.Name = json.getString("Name");
+        this.Description = json.getString("Description");
+    }
+
 
     public String getName() {
         return Name;
@@ -25,5 +34,13 @@ public class Spell {
 
     public String getDescription() {
         return Description;
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("Name", this.getName());
+        json.put("Id",this.getId());
+        json.put("Description",this.getDescription());
+        return json;
     }
 }
