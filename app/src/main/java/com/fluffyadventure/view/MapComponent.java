@@ -79,6 +79,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 Intent intent = new Intent(MapComponent.this, Status.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -107,7 +108,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
      * Init map
      */
     private void configureMapOptions(GoogleMap map) {
-        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setMyLocationEnabled(true);
         map.getUiSettings().setCompassEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(false);
@@ -212,7 +213,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * Select a spawn when the player cliks on a marker
+     * Select a spawn when the player clicks on a marker
      */
     private void selectSpawn(AbstractSpawn spawn) {
         selectedSpawn = spawn;
@@ -245,6 +246,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         Intent intent = new Intent(this, targetActivity);
         intent.putExtra(SPAWN_ID, selectedSpawn.getSpawnId());
         startActivity(intent);
+        finish();
 
         /*if (selectedSpawn == null) {
             return;

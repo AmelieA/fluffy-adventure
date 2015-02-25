@@ -8,25 +8,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.fluffyadventure.view.R;
 
 public class Status extends Activity {
 
-    Button BtnMap;
+    ImageButton BtnMap;
+    Button btnMngSkills;
+    Button btnMoveHQ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
-        BtnMap = (Button)findViewById(R.id.BtnMap);
-        BtnMap.setTypeface(font);
+
+        btnMngSkills = (Button) findViewById(R.id.BtnMngSkills);
+        btnMngSkills.setTypeface(font);
+
+        btnMoveHQ = (Button) findViewById(R.id.BtnMoveHQ);
+        btnMoveHQ.setTypeface(font);
+
+        BtnMap = (ImageButton)findViewById(R.id.BtnMap);
         BtnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Status.this, MapComponent.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

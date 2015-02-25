@@ -57,8 +57,9 @@ public class AnimalChoiceSlider extends FragmentActivity {
     }
 
     public void chooseName(View view) {
-        //Intent intent = new Intent(this, XXX.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, AnimalName.class);
+        startActivity(intent);
+        finish();
     }
 
       /**
