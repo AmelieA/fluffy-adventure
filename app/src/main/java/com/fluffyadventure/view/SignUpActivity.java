@@ -1,8 +1,6 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -12,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.User;
@@ -25,14 +23,13 @@ public class SignUpActivity extends Activity {
     Button btnSignIn;
     EditText etUserName;
     EditText etPass;
-    //ProgressBar progressBar;
+    TextView Logo1;
+    TextView Logo2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        //progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        //progressBar.setVisibility(View.GONE);
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel" +
                 "" +
@@ -49,6 +46,10 @@ public class SignUpActivity extends Activity {
                 task.execute();
             }
         });
+        Logo1 = (TextView)findViewById(R.id.Logo1);
+        Logo1.setTypeface(font);
+        Logo2 = (TextView)findViewById(R.id.Logo2);
+        Logo2.setTypeface(font);
 
     }
 
@@ -91,6 +92,8 @@ public class SignUpActivity extends Activity {
             System.out.println("Activitychange");
             startActivity(intent);
         }
+
+
 
     }
 
