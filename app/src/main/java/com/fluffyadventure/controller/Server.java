@@ -2,6 +2,8 @@ package com.fluffyadventure.controller;
 
 import android.util.Base64;
 
+import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Spell;
 import com.fluffyadventure.model.User;
 import com.google.android.gms.analytics.i;
 
@@ -139,6 +141,111 @@ public class Server {
 
     }
 
+    public Animal createAnimal(User user, Animal animal) {
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/add_animal";
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setDoOutput(true);
+            urlConnection.setDoInput(true);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Accept", "application/json");
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+
+
+            OutputStream out = urlConnection.getOutputStream();
+
+
+            JSONObject json = new JSONObject();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            writer.write(json.toString());
+            System.out.println(json.toString());
+            System.out.println("yy");
+            //System.out.println(out.toString());
+            writer.flush();
+            writer.close();
+            out.close();
+
+            urlConnection = this.connect(urlConnection,user, HttpURLConnection.HTTP_OK);
+
+            int httpResult = urlConnection.getResponseCode();
+
+            if (httpResult == HttpURLConnection.HTTP_CREATED) {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+
+                JSONObject inputJson = new JSONObject(inputString.toString());
+                System.out.println(inputJson.toString());
+                //User user = new User(name, password, inputJson.getInt("Id"));
+                //return user;
+
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+
+
+        }
+    private HttpURLConnection connect(HttpURLConnection urlConnection, User user, int responseCode) throws IOException {
+        String encoded;
+        if (user.getToken() != "")
+        {
+            encoded = Base64.encodeToString((String.format("%s:%s", user.getToken(), "unused")).getBytes(), Base64.NO_WRAP);
+            urlConnection.setRequestProperty("Authorization", String.format("Basic %s", encoded));
+            urlConnection.connect();
+            if (urlConnection.getResponseCode() == responseCode){
+                return urlConnection;
+            }
+        }
+        encoded = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
+        urlConnection.setRequestProperty("Authorization", String.format("Basic %s", encoded));
+        urlConnection.connect();
+        return urlConnection;
+
+    }
+    public Spell get_spell(int id){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(id);
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setDoInput(true);
+            urlConnection.setRequestProperty("Accept", "application/json");
+
+            urlConnection.connect();
+
+            int httpResult = urlConnection.getResponseCode();
+
+            if (httpResult == HttpURLConnection.HTTP_OK) {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+
+                JSONObject inputJson = new JSONObject(inputString.toString());
+                System.out.println(inputJson.toString());
+                Spell spell = new Spell(inputJson);
+                return spell;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
 
