@@ -96,6 +96,7 @@ public class SignUpActivity extends Activity {
             Intent intent = new Intent(SignUpActivity.this, AnimalChoiceSlider.class);
             System.out.println("Activitychange");
             startActivity(intent);
+            finish();
         }
 
 

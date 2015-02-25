@@ -127,6 +127,7 @@ public class LoginActivity extends Activity {
 
                 System.out.println("Activitychange");
                 startActivity(intent);
+                finish();
             }
         }
 
