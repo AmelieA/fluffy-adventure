@@ -61,7 +61,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
 
         button_go = (Button) findViewById(R.id.map_button_go);
 
-        homeBtn = (Button)findViewById(R.id.BtnStatus);
+        homeBtn = (Button)findViewById(R.id.homeBtn);
 
         if (animal1.getType().equals("Rabbit")) {
             homeBtn.setText("Terrier");
