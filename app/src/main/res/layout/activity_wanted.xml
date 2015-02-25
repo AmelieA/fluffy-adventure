@@ -79,19 +79,13 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/wood"
-        android:layout_alignParentBottom="true"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="10dp"
-        android:id="@+id/WantedBtnMap"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentEnd="false"
+    <ImageButton
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/BtnMapWanted"
+        android:background="@drawable/bouton_carte"
+        android:scaleType="fitCenter"
         android:layout_alignParentBottom="true"
-        android:text="Voir sur la carte"/>
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
