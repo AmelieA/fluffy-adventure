@@ -1,18 +1,46 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.view.R;
 
 public class SignUpActivity extends Activity {
+
+    Button btnSignIn;
+    EditText etUserName;
+    EditText etPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel" +
+                "" +
+                "-Regular.otf");
+
+        etUserName = (EditText)findViewById(R.id.etUserName);
+        etPass = (EditText)findViewById(R.id.etPass);
+        btnSignIn = (Button)findViewById(R.id.btnSignIn);
+        btnSignIn.setTypeface(font);
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+        Controller.createUser(etUserName.getText().toString(), etPass.getText().toString());
+        Intent intent = new Intent(SignUpActivity.this, AnimalChoiceSlider.class);
+        startActivity(intent);
+
+            }
+        });
     }
 
 
@@ -38,3 +66,5 @@ public class SignUpActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+

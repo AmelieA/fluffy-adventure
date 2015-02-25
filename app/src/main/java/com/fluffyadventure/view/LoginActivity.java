@@ -1,6 +1,7 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;

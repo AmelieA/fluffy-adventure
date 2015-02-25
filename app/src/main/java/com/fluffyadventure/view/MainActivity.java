@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
     Button SlideBtn;
     TextView Logo1;
     TextView Logo2;
+    Button BtnSignUp;
     Class<?> nextIntentClass;
 
     @Override
@@ -46,6 +47,7 @@ public class MainActivity extends Activity {
         MapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, MapComponent.class);
                 startActivity(intent);
             }
@@ -100,6 +102,7 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
 
         Logo1 = (TextView)findViewById(R.id.Logo1);
         Logo1.setTypeface(font);
