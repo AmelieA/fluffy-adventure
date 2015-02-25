@@ -48,8 +48,8 @@ public class SheepChoice extends Fragment {
                 selectedButton = (RadioButton) rootView.findViewById(radioGroup.getCheckedRadioButtonId());
                 int idx = radioGroup.indexOfChild(selectedButton) + 1;
                 Controller.getAnimal().setImagePath("sheep" + idx);
-                //Intent intent = new Intent(rootView, AnimalName.class);
-                //startActivity(intent);
+                Intent intent = new Intent(getActivity(), AnimalName.class);
+                startActivity(intent);
             }
         });
 
