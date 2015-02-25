@@ -20,6 +20,9 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="hello_world">Hello world!</string>
+    <string name="connec_button_text">Login</string>
+    <string name="inscr_button_text">S\'inscrire</string>
+
     <!-- Status Activity -->
     <string name="mail_button_text">Messagerie</string>
     <string name="moveHQ_button_text">Déménager</string>

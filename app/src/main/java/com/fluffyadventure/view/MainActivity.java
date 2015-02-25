@@ -12,16 +12,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fluffyadventure.controller.Controller;
+
 
 public class MainActivity extends Activity {
 
     Button BtnStatus;
     Button BtnCombat;
     Button MapBtn;
+    Button loginBtn;
+    Button signinBtn;
     Button SlideBtn;
-    Button BtnName;
     TextView Logo1;
     TextView Logo2;
+    Button BtnSignUp;
     Class<?> nextIntentClass;
 
     @Override
@@ -29,18 +33,21 @@ public class MainActivity extends Activity {
         Log.i("FA", "Starting...");
 
         //nextIntentClass = XXX.class;
-        // checkFirstLaunchAndSetupApplication();
+        //checkFirstLaunchAndSetupApplication();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupApplication();
+
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
-        MapBtn = (Button)findViewById(R.id.MapBtn);
+        /*MapBtn = (Button)findViewById(R.id.MapBtn);
         MapBtn.setTypeface(font);
         MapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, MapComponent.class);
                 startActivity(intent);
             }
@@ -55,16 +62,6 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-
-//        BtnName = (Button)findViewById(R.id.BtnName);
-//        BtnName.setTypeface(font);
-//        BtnName.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, AnimalName.class);
-//                startActivity(intent);
-//            }
-//        });
 
         BtnStatus = (Button)findViewById(R.id.BtnStatus);
         BtnStatus.setTypeface(font);
@@ -81,10 +78,31 @@ public class MainActivity extends Activity {
         BtnCombat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AttackChoice.class);
+                Intent intent = new Intent(MainActivity.this, SoloCombat.class);
+                startActivity(intent);
+            }
+        });*/
+
+        loginBtn = (Button)findViewById(R.id.loginBtn);
+        loginBtn.setTypeface(font);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
+
+        signinBtn = (Button)findViewById(R.id.signInBtn);
+        signinBtn.setTypeface(font);
+        signinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         Logo1 = (TextView)findViewById(R.id.Logo1);
         Logo1.setTypeface(font);
@@ -128,14 +146,15 @@ public class MainActivity extends Activity {
 
     private  void setupApplication() {
 
-        //Controleur.setupDatabase();
+        Controller.setupBob();
+        Controller.setupObjectives();
 
         //nextIntentClass = XXX.class;
 
-        SharedPreferences settings = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("firstLaunch", false);
-        editor.commit();
+       // SharedPreferences settings = getPreferences(MODE_PRIVATE);
+       // SharedPreferences.Editor editor = settings.edit();
+       // editor.putBoolean("firstLaunch", false);
+       // editor.commit();
     }
 
 
