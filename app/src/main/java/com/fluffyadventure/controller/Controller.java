@@ -58,7 +58,7 @@ public class Controller {
         objectives.add(dungeon1);
         Log.i("FA", dungeon1.toString());
 
-        AbstractSpawn treasure1 = new Treasure(5,0,0,0,45.7853447, 4.8563660,"Mon préééécieeeuux ...","Trésor enfoui",0);
+        AbstractSpawn treasure1 = new Treasure(5,0,0,0,45.784153, 4.856175,"Mon préééécieeeuux ...","Trésor enfoui",0);
         objectives.add(treasure1);
         Log.i("FA", treasure1.toString());
 

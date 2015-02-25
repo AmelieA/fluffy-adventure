@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,7 +44,7 @@ import java.util.Map;
 
 
 public class MapComponent extends FragmentActivity implements OnMapReadyCallback {
-    public final static String QUETE_ID = "com.fluffyadventure.QUETE_ID";
+    public final static String SPAWN_ID = "com.fluffyadventure.SPAWN_ID";
     //TODO : changer pour la release
     private final static float MAX_DISTANCE_BETWEEN_QUEST_AND_PLAYER = 30;
     private final Map<String, AbstractSpawn> spawnMarkers = new HashMap<>();
@@ -60,12 +61,9 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
 
         animal1 = Controller.getAnimal();
 
-        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
-
         button_go = (Button) findViewById(R.id.map_button_go);
 
         homeBtn = (Button)findViewById(R.id.homeBtn);
-        homeBtn.setTypeface(font);
 
         if (animal1.getType().equals("Rabbit")) {
             homeBtn.setText("Terrier");
@@ -139,7 +137,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
 
                 ((TextView) v.findViewById(R.id.tooltip_name)).setText(spawn.getName());
                 ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
-                ((TextView) v.findViewById(R.id.tooltip_level)).setText(spawn.getLevel());
+                ((TextView) v.findViewById(R.id.tooltip_level)).setText(String.valueOf(spawn.getLevel()));
                 return v;
             }
         });
@@ -217,12 +215,13 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
      * Select a spawn when the player cliks on a marker
      */
     private void selectSpawn(AbstractSpawn spawn) {
-        Animal animal = Controller.getAnimal();
         selectedSpawn = spawn;
-        if (spawn.getStatus(animal).equals(Spawn.Status.AVAILABLE)) {
+        button_go.setText("Engager le combat !");
+        button_go.setEnabled(true);
+        /* if (spawn.getStatus(animal1).equals(Spawn.Status.AVAILABLE)) {
             button_go.setText("Engager le combat !");
             button_go.setEnabled(true);
-        } /*else if (quete.getStatut(animal).equals(Spawn.Statut.COMPETENCES_INSUFFISANTES)) {
+        }*/ /*else if (quete.getStatut(animal).equals(Spawn.Statut.COMPETENCES_INSUFFISANTES)) {
             button_go.setText("Compétences insuffisantes");
             button_go.setEnabled(false);
         }*/
@@ -233,25 +232,31 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
      */
     @SuppressWarnings("UnusedParameters")
     public void startSelectedObjective(View view) {
-        if (selectedSpawn == null) {
+
+        Class targetActivity;
+        if (selectedSpawn instanceof Dungeon) {
+            targetActivity = SoloCombat.class;
+        } else if (selectedSpawn instanceof Spawn) {
+            targetActivity = SoloCombat.class;
+        } else {
+            return;
+        }
+
+        Intent intent = new Intent(this, targetActivity);
+        intent.putExtra(SPAWN_ID, selectedSpawn.getSpawnId());
+        startActivity(intent);
+
+        /*if (selectedSpawn == null) {
             return;
         }
         if (isPlayerTooFar(selectedSpawn)) {
             showTooFarDialog();
         } else {
 
-            Class targetActivity;
-          /*  if (selectedSpawn instanceof Dunjeon) {
-                targetActivity = Dunjeon_View.class;
-            } else if (selectedSpawn instanceof Encounter) {
-                targetActivity = Fight_View.class;
-            } else {
-                return;
-            }
             Intent intent = new Intent(this, targetActivity);
             intent.putExtra(QUETE_ID, selectedSpawn.getId());
-            startActivity(intent);*/
-        }
+            startActivity(intent);
+        }*/
     }
 
     /**
