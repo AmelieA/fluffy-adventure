@@ -52,20 +52,21 @@
             android:name=".AnimalChoiceSlider"
             android:label="@string/title_activity_animal_choice_slider" >
         </activity>
-        <activity
-            android:name=".Status" >
+        <activity android:name=".Status" >
         </activity>
-        <activity
-            android:name="SoloCombat">
+        <activity android:name=".SoloCombat" >
         </activity>
         <activity android:name=".LoginActivity" >
         </activity>
-        <activity
-            android:name=".SignUpActivity" >
+        <activity android:name=".SignUpActivity" >
         </activity>
         <activity
             android:name=".AnimalName"
             android:label="@string/title_activity_animal_name" >
+        </activity>
+        <activity
+            android:name=".AttackChoice"
+            android:label="@string/title_activity_attack_choice" >
         </activity>
     </application>
 

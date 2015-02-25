@@ -71,17 +71,17 @@ public class MainActivity extends Activity {
                 Intent intent = new Intent(MainActivity.this, Status.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         BtnCombat = (Button)findViewById(R.id.BtnCombat);
         BtnCombat.setTypeface(font);
         BtnCombat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SoloCombat.class);
+                Intent intent = new Intent(MainActivity.this, AttackChoice.class);
                 startActivity(intent);
             }
-        });*/
+        });
 
         loginBtn = (Button)findViewById(R.id.loginBtn);
         loginBtn.setTypeface(font);
