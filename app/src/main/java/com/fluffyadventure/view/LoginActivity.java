@@ -1,16 +1,21 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.view.R;
 
 public class LoginActivity extends Activity {
@@ -19,6 +24,9 @@ public class LoginActivity extends Activity {
     TextView Logo1;
     TextView Logo2;
 
+    EditText etUserName;
+    EditText etPass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +34,16 @@ public class LoginActivity extends Activity {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
+        etUserName = (EditText)findViewById(R.id.etUserName);
+        etPass = (EditText)findViewById(R.id.etPass);
+
         btnSignIn = (Button)findViewById(R.id.btnSignIn);
         btnSignIn.setTypeface(font);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginUserTask task = new LoginUserTask(etUserName.getText().toString(),etPass.getText().toString(), LoginActivity.this);
+                task.execute();
                 Intent intent = new Intent(LoginActivity.this, MapComponent.class);
                 startActivity(intent);
             }
@@ -63,5 +76,57 @@ public class LoginActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class LoginUserTask extends AsyncTask<Void, Void, Boolean> {
+        private String username;
+        private String password;
+        ProgressDialog dialog;
+        Context ctx;
+
+        public LoginUserTask(String username, String password, Context ctx) {
+            this.username = username;
+            this.password = password;
+            this.ctx = ctx;
+            this.dialog = new ProgressDialog(this.ctx);
+            //this.dialog.setCancelable(true);
+
+        }
+
+        protected void onPreExecute(){
+            this.dialog.setTitle("Logging in...");
+            this.dialog.show();
+
+        }
+        protected Boolean doInBackground(Void... params){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Boolean result = Controller.login(username, password);
+
+
+            return result;
+        }
+        protected  void onPostExecute(Boolean unused) {
+            System.out.println("done");
+
+            dialog.dismiss();
+            Intent intent;
+            if (Controller.getAnimal() != null)
+            {
+                intent = new Intent(LoginActivity.this, MapComponent.class);
+            }
+            else {
+                intent = new Intent(LoginActivity.this, AnimalChoiceSlider.class);
+            }
+
+            System.out.println("Activitychange");
+            startActivity(intent);
+        }
+
+
+
     }
 }
