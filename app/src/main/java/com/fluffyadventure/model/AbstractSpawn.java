@@ -35,7 +35,7 @@ public abstract class AbstractSpawn {
     public AbstractSpawn(){
     }
 
-    protected AbstractSpawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double longitude, double latitude, String text, String name, Integer level) {
+    protected AbstractSpawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double latitude, double longitude, String text, String name, Integer level) {
         this.spellReward = spellReward;
         this.healthReward = healthReward;
         this.strengthReward = strengthReward;
