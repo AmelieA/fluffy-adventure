@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.view.R;
@@ -18,6 +19,8 @@ public class SignUpActivity extends Activity {
     Button btnSignIn;
     EditText etUserName;
     EditText etPass;
+    TextView Logo1;
+    TextView Logo2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +38,17 @@ public class SignUpActivity extends Activity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-        Controller.createUser(etUserName.getText().toString(), etPass.getText().toString());
-        Intent intent = new Intent(SignUpActivity.this, AnimalChoiceSlider.class);
-        startActivity(intent);
+                Controller.createUser(etUserName.getText().toString(), etPass.getText().toString());
+                Intent intent = new Intent(SignUpActivity.this, AnimalChoiceSlider.class);
+                startActivity(intent);
 
             }
         });
+
+        Logo1 = (TextView)findViewById(R.id.Logo1);
+        Logo1.setTypeface(font);
+        Logo2 = (TextView)findViewById(R.id.Logo2);
+        Logo2.setTypeface(font);
     }
 
 

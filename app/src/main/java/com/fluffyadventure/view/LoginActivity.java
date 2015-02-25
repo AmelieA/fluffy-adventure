@@ -9,12 +9,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.fluffyadventure.view.R;
 
 public class LoginActivity extends Activity {
 
     Button btnSignIn;
+    TextView Logo1;
+    TextView Logo2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,11 @@ public class LoginActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        Logo1 = (TextView)findViewById(R.id.Logo1);
+        Logo1.setTypeface(font);
+        Logo2 = (TextView)findViewById(R.id.Logo2);
+        Logo2.setTypeface(font);
     }
 
 
