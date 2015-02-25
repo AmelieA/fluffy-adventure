@@ -30,11 +30,13 @@
         android:visibility="visible" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
+        style="@style/btnStyleOrange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
+        android:maxWidth="10dp"
+        android:maxHeight="10dp"
         android:text="Maison"
         android:id="@+id/homeBtn"
         android:layout_alignParentTop="true"

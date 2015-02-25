@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -59,9 +60,12 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
 
         animal1 = Controller.getAnimal();
 
+        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
+
         button_go = (Button) findViewById(R.id.map_button_go);
 
         homeBtn = (Button)findViewById(R.id.homeBtn);
+        homeBtn.setTypeface(font);
 
         if (animal1.getType().equals("Rabbit")) {
             homeBtn.setText("Terrier");
