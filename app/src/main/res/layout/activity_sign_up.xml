@@ -74,6 +74,7 @@
             android:text="@string/signup_button_text"
             style="@style/btnStyleOrange"/>
 
+
     </LinearLayout>
     <!--LinearLayout
         android:layout_width="wrap_content"

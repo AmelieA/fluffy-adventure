@@ -25,16 +25,12 @@ public class Controller {
     private static ArrayList<AbstractSpawn> objectives;
 
 
-    public static void createUser(String name, String password) {
-        CreateUserTask task = new CreateUserTask(name,password);
-        try {
-            user = task.execute().get();
-        }catch (Exception e){
-            e.printStackTrace();
+    public static Boolean createUser(String name, String password) {
+        user = server.createUser(name,password);
+        if (user == null) {
+            return false;
         }
-
-
-
+        return true;
     }
 
     public static void setupObjectives() {

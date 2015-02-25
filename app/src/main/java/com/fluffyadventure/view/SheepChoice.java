@@ -40,7 +40,6 @@ public class SheepChoice extends Fragment {
 
         OkBtn = (Button) rootView.findViewById(R.id.OkBtn);
         OkBtn.setTypeface(font);
-
         OkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
