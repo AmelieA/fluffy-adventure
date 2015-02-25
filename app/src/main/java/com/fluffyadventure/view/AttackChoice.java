@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.fluffyadventure.model.Spell;
 
@@ -28,10 +30,10 @@ public class AttackChoice extends Activity {
     AttackChoiceAdapter deactivateAdapter;
 
     // List of attacks
-    Spell spell = new Spell(0,"attack", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
-    ArrayList<Spell> attacks = new ArrayList<>(Arrays.asList(spell, spell, spell, spell, spell, spell, spell, spell));
+    Spell spell = new Spell(0,"attack", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
+    ArrayList<Spell> attacks = new ArrayList<>(Arrays.asList(spell, spell, spell, spell));
 
-    Spell spell2 = new Spell(0,"attack Deactivated", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
+    Spell spell2 = new Spell(0,"attack Deactivated", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
     ArrayList<Spell> attacks2 = new ArrayList<>(Arrays.asList(spell2, spell2, spell2, spell2, spell2, spell2, spell2, spell2));
 
 
@@ -40,11 +42,11 @@ public class AttackChoice extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attack_choice);
 
-        activateAdapter = new AttackChoiceAdapter(this, attacks);
+        activateAdapter = new AttackChoiceAdapter(this, attacks, true);
         ListView activatedAttackView = (ListView) findViewById(R.id.ActivatedAttackView);
         activatedAttackView.setAdapter(activateAdapter);
 
-        deactivateAdapter = new AttackChoiceAdapter(this, attacks);
+        deactivateAdapter = new AttackChoiceAdapter(this, attacks2, false);
         ListView deactivatedAttackView = (ListView) findViewById(R.id.DeactivatedAttackView);
         deactivatedAttackView.setAdapter(deactivateAdapter);
 
@@ -55,29 +57,31 @@ public class AttackChoice extends Activity {
 
 
     private class AttackChoiceAdapter extends ArrayAdapter<Spell> {
+        private final boolean activated;
         private final Context context;
         private final ArrayList<Spell> values;
 
-        public AttackChoiceAdapter(Context context, ArrayList<Spell> values) {
+        public AttackChoiceAdapter(Context context, ArrayList<Spell> values, boolean activated) {
             super(context, R.layout.attack_choice_row_layout, values);
             this.context = context;
             this.values = values;
+            this.activated = activated;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View rowView = convertView;
             // reuse views
-           // if (rowView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                rowView = inflater.inflate(R.layout.attack_choice_row_layout, parent, false);
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rowView = inflater.inflate(R.layout.attack_choice_row_layout, parent, false);
 
-                TextView attackName = (TextView) rowView.findViewById(R.id.AttackName);
-                attackName.setText(values.get(position).getName());
-                TextView attackDescription = (TextView) rowView.findViewById(R.id.AttackDescription);
-                attackDescription.setText(values.get(position).getDescription());
-            //}
+            TextView attackName = (TextView) rowView.findViewById(R.id.AttackName);
+            attackName.setText(values.get(position).getName());
+            TextView attackDescription = (TextView) rowView.findViewById(R.id.AttackDescription);
+            attackDescription.setText(values.get(position).getDescription());
+            Switch toggleButton = (Switch) rowView.findViewById(R.id.ToggleButton);
+            toggleButton.setChecked(activated);
 
             return rowView;
         }

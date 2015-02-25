@@ -14,6 +14,7 @@
     <string name="squirrel_presentation">L\'écureuil lance des noisettes à distance ! Elles font plus mal et peuvent toucher deux ennemis à la fois, mais ont une faible chance de rater leur cible.</string>
     <string name="sheep_presentation">Le mouton dispose de nombreux PV et dispose de meilleures capacités de soin</string>
     <string name="chose_name">Choisis lui un nom !</string>
+    <string name="chose_attacks">Ton compagnon peut retenir jusqu\'a 4 sort à la fois</string>
     <string name="text_button_ok">OK !</string>
     <string name="title_activity_animal_choice_slider">AnimalChoiceSlider</string>
     <string name="title_section1">Section 1</string>

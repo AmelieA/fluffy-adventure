@@ -2,28 +2,56 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:weightSum="10">
+        android:layout_height="fill_parent">
 
-    <ListView
-        android:id="@+id/ActivatedAttackView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/wood"
-        android:layout_weight="8">
-    </ListView>
-    <ListView
-        android:id="@+id/DeactivatedAttackView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/wood"
-        android:scaleType="matrix"
-        android:layout_weight="2">
-    </ListView>
+        <LinearLayout
+            android:id="@+id/attackLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/wood">
+            <TextView
+                android:id="@+id/attackChoiceText"
+                android:text="@string/chose_attacks"
+                android:textColor="#ffffffff"
+                android:textSize="24sp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentTop="true"
+                android:gravity="center_horizontal"/>
 
-    </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/attackLayout"/>
+
+            <ListView
+                android:id="@+id/ActivatedAttackView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/attackChoiceText"
+                android:scrollbars="none"/>
+            <View
+                android:id="@+id/AttackViewsSeparator"
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/ActivatedAttackView"
+                android:background="#ff000000"/>
+        </LinearLayout>
+        <ListView
+            android:id="@+id/DeactivatedAttackView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/attackLayout"
+            android:background="@drawable/wood"
+            android:scaleType="centerInside"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
