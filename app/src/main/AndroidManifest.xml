@@ -68,6 +68,9 @@
             android:name=".AttackChoice"
             android:label="@string/title_activity_attack_choice" >
         </activity>
+        <activity
+            android:name=".WantedActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -35,23 +35,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imgLog"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/wood"/>
+        android:src="@drawable/wood"
+        android:scaleType="fitXY"
+        android:layout_alignTop="@id/loginBlock"
+        android:layout_alignBottom="@id/loginBlock"
+        android:layout_alignLeft="@id/loginBlock"
+        android:layout_alignRight="@id/loginBlock"/>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:padding="10dp"
-        android:id="@+id/loginBlock">
+        android:id="@+id/loginBlock"
+        android:padding="10dp">
 
         <EditText
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_bg"
+            android:layout_marginBottom="2.5dp"
+            android:layout_marginTop="5dp"
             android:padding="10dp"
             android:hint="@string/text_user"
             android:textColorHint="#cccccc"/>
@@ -60,8 +65,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_bg"
-            android:layout_marginTop="5dp"
             android:padding="10dp"
+            android:layout_marginTop="2.5dp"
+            android:layout_marginBottom="2.5dp"
             android:hint="@string/text_password"
             android:textColorHint="#cccccc"
             android:inputType="textPassword"/>
@@ -70,7 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:layout_margin="4dp"
+            android:layout_marginTop="2.5dp"
+            android:layout_marginBottom="5dp"
             android:text="@string/signin_button_text"
             style="@style/btnStyleOrange"/>
 

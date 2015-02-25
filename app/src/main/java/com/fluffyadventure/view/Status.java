@@ -26,6 +26,14 @@ public class Status extends Activity {
 
         btnMngSkills = (Button) findViewById(R.id.BtnMngSkills);
         btnMngSkills.setTypeface(font);
+        btnMngSkills.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Status.this, AttackChoice.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         btnMoveHQ = (Button) findViewById(R.id.BtnMoveHQ);
         btnMoveHQ.setTypeface(font);

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.User;
@@ -71,7 +72,7 @@ public class SignUpActivity extends Activity {
         }
 
         protected void onPreExecute(){
-            this.dialog.setTitle("Creating user...");
+            this.dialog.setTitle("Création...");
             this.dialog.show();
 
         }
@@ -90,9 +91,12 @@ public class SignUpActivity extends Activity {
             System.out.println("done");
 
             dialog.dismiss();
+
+
             Intent intent = new Intent(SignUpActivity.this, AnimalChoiceSlider.class);
             System.out.println("Activitychange");
             startActivity(intent);
+            finish();
         }
 
 

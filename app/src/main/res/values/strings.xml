@@ -40,5 +40,8 @@
     <string name="text_password">Mot de passe</string>
     <string name="signin_button_text">Se connecter</string>
     <string name="signup_button_text">S\'inscrire</string>
+
     <string name="title_activity_attack_choice">AttackChoice</string>
+
+    <string name="BtnMapWanted_text">Localise ta cible sur la carte :</string>
 </resources>

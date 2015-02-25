@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.view.R;
@@ -44,8 +45,6 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 LoginUserTask task = new LoginUserTask(etUserName.getText().toString(),etPass.getText().toString(), LoginActivity.this);
                 task.execute();
-                Intent intent = new Intent(LoginActivity.this, MapComponent.class);
-                startActivity(intent);
             }
         });
 
@@ -94,7 +93,7 @@ public class LoginActivity extends Activity {
         }
 
         protected void onPreExecute(){
-            this.dialog.setTitle("Logging in...");
+            this.dialog.setTitle("Connexion...");
             this.dialog.show();
 
         }
@@ -109,21 +108,27 @@ public class LoginActivity extends Activity {
 
             return result;
         }
-        protected  void onPostExecute(Boolean unused) {
+        protected  void onPostExecute(Boolean login) {
             System.out.println("done");
-
             dialog.dismiss();
-            Intent intent;
-            if (Controller.getAnimal() != null)
-            {
-                intent = new Intent(LoginActivity.this, MapComponent.class);
+
+            if (!login){
+                Toast.makeText(LoginActivity.this, "Utilisateur inconnu", Toast.LENGTH_LONG).show();
+
             }
             else {
-                intent = new Intent(LoginActivity.this, AnimalChoiceSlider.class);
-            }
 
-            System.out.println("Activitychange");
-            startActivity(intent);
+                Intent intent;
+                if (Controller.getAnimal() != null) {
+                    intent = new Intent(LoginActivity.this, MapComponent.class);
+                } else {
+                    intent = new Intent(LoginActivity.this, AnimalChoiceSlider.class);
+                }
+
+                System.out.println("Activitychange");
+                startActivity(intent);
+                finish();
+            }
         }
 
 
