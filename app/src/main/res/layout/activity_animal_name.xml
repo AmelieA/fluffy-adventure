@@ -44,7 +44,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/BtnOkName"
-            android:id="@+id/choixNom"
+            android:id="@+id/name_choice"
             android:inputType="textPersonName|textCapSentences"
             android:maxLength="15"
             android:hint="Nom"
