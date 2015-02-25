@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="Choisis un objectif sur la carte !"
         android:id="@+id/map_button_go"
-        android:onClick="startQuest"
+        android:onClick="startSelectedObjective"
         android:nestedScrollingEnabled="true"
         android:clickable="true"
         android:enabled="false"
@@ -28,5 +28,19 @@
         android:layout_alignParentStart="true"
         android:textStyle="bold"
         android:visibility="visible" />
+
+    <Button
+        style="@style/btnStyleOrange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:maxWidth="10dp"
+        android:maxHeight="10dp"
+        android:text="Maison"
+        android:id="@+id/homeBtn"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

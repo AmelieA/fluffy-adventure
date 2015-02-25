@@ -10,6 +10,7 @@ public class Animal {
 
     private String name;
     private String imagePath;
+    private String type;
 
     private int health = 0;
     private int strength = 0;
@@ -21,9 +22,10 @@ public class Animal {
     public Animal() {
     }
 
-    public Animal(String name, String imagePath) {
+    public Animal(String name, String imagePath, String type) {
         this.name = name;
         this.imagePath = imagePath;
+        this.type = type;
     }
 
     public void success(Integer spawnID) {
@@ -65,6 +67,10 @@ public class Animal {
 
     public String getImagePath() {
         return imagePath;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public void setImagePath(String imagePath) {

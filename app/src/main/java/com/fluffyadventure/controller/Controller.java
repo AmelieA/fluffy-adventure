@@ -25,16 +25,12 @@ public class Controller {
     private static ArrayList<AbstractSpawn> objectives;
 
 
-    public static void createUser(String name, String password) {
-        CreateUserTask task = new CreateUserTask(name,password);
-        try {
-            user = task.execute().get();
-        }catch (Exception e){
-            e.printStackTrace();
+    public static Boolean createUser(String name, String password) {
+        user = server.createUser(name,password);
+        if (user == null) {
+            return false;
         }
-
-
-
+        return true;
     }
 
     public static void setupObjectives() {
@@ -68,7 +64,7 @@ public class Controller {
 
     }
     public static void setupBob() {
-        animal = new Animal("Bob","");
+        animal = new Animal("Bob","rabbit1","Rabbit");
     }
 
     public static Animal getAnimal() {
@@ -80,18 +76,14 @@ public class Controller {
     }
     public static User getUser() { return user; }
 
-    private static class CreateUserTask extends AsyncTask<Void, Void, User> {
-        private String username;
-        private String password;
-
-        public CreateUserTask(String username, String password) {
-            this.username = username;
-            this.password = password;
+    public static Boolean login(String name, String password) {
+        user =  server.login(name,password);
+        if (user == null) {
+            return false;
         }
-         protected User doInBackground(Void... params){
-             return server.createUser(username,password);
-         }
-
+        return true;
     }
+
+
 
 }

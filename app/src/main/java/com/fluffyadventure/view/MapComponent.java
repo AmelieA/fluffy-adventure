@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -48,13 +49,40 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     private final Map<String, AbstractSpawn> spawnMarkers = new HashMap<>();
     private AbstractSpawn selectedSpawn = null;
     private Button button_go;
+    private Button homeBtn;
+    private Animal animal1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_activity);
+
+        animal1 = Controller.getAnimal();
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
+
         button_go = (Button) findViewById(R.id.map_button_go);
+
+        homeBtn = (Button)findViewById(R.id.homeBtn);
+        homeBtn.setTypeface(font);
+
+        if (animal1.getType().equals("Rabbit")) {
+            homeBtn.setText("Terrier");
+        } else if (animal1.getType().equals("Squirrel")) {
+            homeBtn.setText("Nid");
+        } else if (animal1.getType().equals("Sheep")) {
+            homeBtn.setText("Bergerie");
+        }
+
+        //homeBtn.setTypeface(font);
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapComponent.this, Status.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -104,7 +132,6 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public View getInfoContents(Marker marker) {
-                Animal animal = Controller.getAnimal();
                 ViewGroup parent = (ViewGroup) findViewById(R.id.map);
                 View v = getLayoutInflater().inflate(R.layout.spawn_tooltip, parent, false);
 
@@ -205,7 +232,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
      * Start the selected fight
      */
     @SuppressWarnings("UnusedParameters")
-    public void startSelectedQuest(View view) {
+    public void startSelectedObjective(View view) {
         if (selectedSpawn == null) {
             return;
         }
