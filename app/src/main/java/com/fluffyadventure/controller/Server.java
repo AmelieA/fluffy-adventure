@@ -5,27 +5,18 @@ import android.util.Base64;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Spell;
 import com.fluffyadventure.model.User;
-import com.google.android.gms.analytics.i;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
-import java.net.URLEncoder;
 
 /**
  * Created by denis on 23/02/15.
@@ -35,15 +26,13 @@ public class Server {
     private int port;
 
 
+
     public Server(String ipAddress, int port) {
         this.ipAddress = ipAddress;
         this.port = port;
     }
 
-    public Server() {
-        this.ipAddress = "thulin.fr";
-        this.port = 5000;
-    }
+
 
     public User createUser(String name, String password) {
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/new";
@@ -144,6 +133,28 @@ public class Server {
     public Animal createAnimal(User user, Animal animal) {
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/add_animal";
         try {
+            int spell_id;
+            switch (animal.getType()){
+                case "Squirrel" :
+                    spell_id =1;
+                    break;
+
+                case "Rabbit" :
+                    spell_id = 2;
+                    break;
+
+                case "Sheep" :
+                    spell_id = 3;
+                    break;
+
+                default:
+                    spell_id = 2;
+                    return  null;
+            }
+            Spell spell = this.get_spell(spell_id);
+            animal.addSpell(spell, true);
+
+
             URL url = new URL(uri);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -154,10 +165,12 @@ public class Server {
             urlConnection.setRequestProperty("Content-Type", "application/json");
 
 
+
             OutputStream out = urlConnection.getOutputStream();
 
 
             JSONObject json = new JSONObject();
+            json = animal.toJson();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
             writer.write(json.toString());
             System.out.println(json.toString());
@@ -167,11 +180,11 @@ public class Server {
             writer.close();
             out.close();
 
-            urlConnection = this.connect(urlConnection,user, HttpURLConnection.HTTP_OK);
+            urlConnection = connectWithAuth(urlConnection, user, HttpURLConnection.HTTP_OK);
 
             int httpResult = urlConnection.getResponseCode();
 
-            if (httpResult == HttpURLConnection.HTTP_CREATED) {
+            if (httpResult == HttpURLConnection.HTTP_OK) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuilder inputString = new StringBuilder();
                 String line;
@@ -195,7 +208,7 @@ public class Server {
 
 
         }
-    private HttpURLConnection connect(HttpURLConnection urlConnection, User user, int responseCode) throws IOException {
+    private HttpURLConnection connectWithAuth(HttpURLConnection urlConnection, User user, int responseCode) throws IOException {
         String encoded;
         if (user.getToken() != "")
         {
@@ -245,6 +258,28 @@ public class Server {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Boolean testConnection(){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "online";
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.connect();
+
+            int httpResult = urlConnection.getResponseCode();
+
+            if (httpResult == HttpURLConnection.HTTP_OK) {
+
+                return true;
+
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+
     }
 
 }

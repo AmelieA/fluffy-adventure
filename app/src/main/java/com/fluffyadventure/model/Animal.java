@@ -1,5 +1,6 @@
 package com.fluffyadventure.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +20,7 @@ public class Animal {
     private int strength = 0;
     private int accuracy = 0;
     private int evasiveness = 0;
+
     private List<Spell> activeSpells = new ArrayList<>();
     private List<Spell> unusedSpells = new ArrayList<>();
 
@@ -137,6 +139,14 @@ public class Animal {
         return type;
     }
 
+    public List<Spell> getActiveSpells() {
+        return activeSpells;
+    }
+
+    public List<Spell> getUnusedSpells() {
+        return unusedSpells;
+    }
+
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
@@ -166,6 +176,21 @@ public class Animal {
         json.put("Strength", this.getStrength());
         json.put("Accuracy",this.getAccuracy());
         json.put("Evasiveness",this.getEvasiveness());
+        JSONObject spells_object = new JSONObject();
+        JSONArray active = new JSONArray();
+        for (Spell spell : this.getActiveSpells()){
+            active.put(spell);
+        }
+        spells_object.put("Active",active);
+
+        JSONArray unused = new JSONArray();
+        for (Spell spell: this.getUnusedSpells()){
+            unused.put(spell);
+        }
+
+        spells_object.put("Unused",unused);
+
+        json.put("Spells",spells_object);
 
         return json;
     }

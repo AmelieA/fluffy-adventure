@@ -60,6 +60,8 @@
         </activity>
         <activity android:name=".SignUpActivity" >
         </activity>
+        <activity android:name=".ServerActivity" >
+        </activity>
         <activity
             android:name=".AnimalName"
             android:label="@string/title_activity_animal_name" >

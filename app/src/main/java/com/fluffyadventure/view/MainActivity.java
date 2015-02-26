@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
 
@@ -22,6 +23,7 @@ public class MainActivity extends Activity {
     Button MapBtn;
     Button loginBtn;
     Button signinBtn;
+    Button serverBtn;
     Button SlideBtn;
     TextView Logo1;
     TextView Logo2;
@@ -83,13 +85,29 @@ public class MainActivity extends Activity {
             }
         });
 
+        serverBtn = (Button)findViewById(R.id.serverBtn);
+        serverBtn.setTypeface(font);
+        serverBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ServerActivity.class);
+                startActivity(intent);
+            }
+        });
+
         loginBtn = (Button)findViewById(R.id.loginBtn);
         loginBtn.setTypeface(font);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                if (Controller.getServer() != null){
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Server inconnu", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -98,8 +116,13 @@ public class MainActivity extends Activity {
         signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(intent);
+                if (Controller.getServer() != null){
+                    Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Server inconnu", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class Controller {
 
     private static Animal animal;
-    private static Server server = new Server();
+    private static Server server;
     private static User user;
     private static ArrayList<AbstractSpawn> objectives;
 
@@ -84,6 +84,13 @@ public class Controller {
         return true;
     }
 
+    public static Boolean connectToServer(String name, int port){
+        server = new Server(name,port);
+        return server.testConnection();
 
+    }
 
+    public static Server getServer() {
+        return server;
+    }
 }
