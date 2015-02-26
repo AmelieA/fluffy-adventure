@@ -31,7 +31,7 @@
         style="@style/textStyleLogo"
         android:layout_marginBottom="15dp"/>
 
-    <!--<ImageView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imgLog"
@@ -80,7 +80,7 @@
             android:text="@string/signin_button_text"
             style="@style/btnStyleOrange"/>
 
-    </LinearLayout> -->
+    </LinearLayout>
     <!--LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

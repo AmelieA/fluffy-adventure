@@ -82,7 +82,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/BtnMapWanted"
+        android:layout_above="@+id/BtnMapWanted"
         android:layout_centerHorizontal="true"
         android:text="@string/BtnMapWanted_text"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
@@ -90,7 +90,7 @@
     <ImageButton
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:id="@+id/BtnMapWanted"
+        android:id="@id/BtnMapWanted"
         android:background="@drawable/bouton_carte"
         android:scaleType="fitCenter"
         android:layout_alignParentBottom="true"

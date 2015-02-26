@@ -37,17 +37,17 @@
         android:id="@+id/imgLog"
         android:src="@drawable/wood"
         android:scaleType="fitXY"
-        android:layout_alignTop="@id/loginBlock"
-        android:layout_alignBottom="@id/loginBlock"
-        android:layout_alignLeft="@id/loginBlock"
-        android:layout_alignRight="@id/loginBlock"/>
+        android:layout_alignTop="@+id/signupBlock"
+        android:layout_alignBottom="@id/signupBlock"
+        android:layout_alignLeft="@id/signupBlock"
+        android:layout_alignRight="@id/signupBlock"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:id="@+id/loginBlock"
+        android:id="@id/signupBlock"
         android:padding="10dp">
 
         <EditText
