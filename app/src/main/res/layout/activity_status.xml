@@ -68,7 +68,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/status_Name1"
+                        android:id="@+id/textViewName1"
                         android:text="Name"
                         style="@style/Base.TextAppearance.AppCompat.Title"
                         android:layout_gravity="center_horizontal" />
@@ -87,7 +87,7 @@
                             android:textStyle="bold" />
                         <TextView
                             android:text="blabla"
-                            android:id="@+id/status_type1"
+                            android:id="@+id/textViewType1"
                             android:padding="5dp"/>
                     </TableRow>
                     <TableRow android:gravity="center_horizontal">
@@ -97,7 +97,7 @@
                             android:textStyle="bold" />
                         <TextView
                             android:text="blabla"
-                            android:id="@+id/status_hlth1"
+                            android:id="@+id/textViewHealth1"
                             android:padding="5dp"/>
                     </TableRow>
                     <TableRow android:gravity="center_horizontal">
@@ -107,7 +107,7 @@
                             android:textStyle="bold" />
                         <TextView
                             android:text="blabla"
-                            android:id="@+id/status_str1"
+                            android:id="@+id/textViewStrength1"
                             android:padding="5dp"/>
                     </TableRow>
                     <TableRow android:gravity="center_horizontal">
@@ -117,7 +117,7 @@
                             android:textStyle="bold" />
                         <TextView
                             android:text="blabla"
-                            android:id="@+id/status_acc1"
+                            android:id="@+id/textViewAccuracy1"
                             android:padding="5dp"/>
                     </TableRow>
                     <TableRow android:gravity="center_horizontal">
@@ -127,7 +127,7 @@
                             android:textStyle="bold" />
                         <TextView
                             android:text="blabla"
-                            android:id="@+id/status_eva1"
+                            android:id="@+id/textViewEvasiveness1"
                             android:padding="5dp"/>
                     </TableRow>
                 </TableLayout>
@@ -177,7 +177,7 @@
                             android:textStyle="bold" />
                         <TextView
                             android:text="blabla"
-                            android:id="@+id/status_type2"
+                            android:id="@+id/textViewTyp2"
                             android:padding="5dp"/>
                     </TableRow>
                     <TableRow android:gravity="center_horizontal">
@@ -187,7 +187,7 @@
                             android:textStyle="bold" />
                         <TextView
                             android:text="blabla"
-                            android:id="@+id/status_hlth2"
+                            android:id="@+id/textViewHealth2"
                             android:padding="5dp"/>
                     </TableRow>
                     <TableRow android:gravity="center_horizontal">
@@ -197,7 +197,7 @@
                             android:textStyle="bold" />
                         <TextView
                             android:text="blabla"
-                            android:id="@+id/status_str2"
+                            android:id="@+id/textViewStrength2"
                             android:padding="5dp"/>
                     </TableRow>
                     <TableRow android:gravity="center_horizontal">
@@ -207,7 +207,7 @@
                             android:textStyle="bold" />
                         <TextView
                             android:text="blabla"
-                            android:id="@+id/status_acc2"
+                            android:id="@+id/textViewAccuracy2"
                             android:padding="5dp"/>
                     </TableRow>
                     <TableRow android:gravity="center_horizontal">
@@ -217,7 +217,7 @@
                             android:textStyle="bold" />
                         <TextView
                             android:text="blabla"
-                            android:id="@+id/status_eva2"
+                            android:id="@+id/textViewEvasiveness2"
                             android:padding="5dp"/>
                     </TableRow>
                 </TableLayout>

@@ -40,6 +40,8 @@ public class Server {
             URL url = new URL(uri);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
+
+            //construction du header
             urlConnection.setDoOutput(true);
             urlConnection.setDoInput(true);
             urlConnection.setRequestMethod("POST");
@@ -47,9 +49,8 @@ public class Server {
             urlConnection.setRequestProperty("Content-Type", "application/json");
 
 
+            //construction du json
             OutputStream out = urlConnection.getOutputStream();
-
-
             JSONObject json = new JSONObject();
             json.put("username", name);
             json.put("password", password);
@@ -62,11 +63,14 @@ public class Server {
             writer.close();
             out.close();
 
+
+            //envoi des données
             urlConnection.connect();
 
             int httpResult = urlConnection.getResponseCode();
 
             if (httpResult == HttpURLConnection.HTTP_CREATED) {
+                //utilisateur créé sur le server
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuilder inputString = new StringBuilder();
                 String line;
