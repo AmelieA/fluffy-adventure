@@ -71,6 +71,10 @@ public class Controller {
         return animal;
     }
 
+    public static void setAnimal(Animal animal) {
+        Controller.animal = animal;
+    }
+
     public static ArrayList<AbstractSpawn> getObjectives() {
         return objectives;
     }
@@ -82,6 +86,15 @@ public class Controller {
             return false;
         }
         return true;
+    }
+
+    public static Boolean sendAnimalToServer(String name){
+        Animal my_animal = server.createAnimal(user,animal,name);
+        if (my_animal != null){
+           animal = my_animal;
+            return true;
+        }
+        return false;
     }
 
     public static Boolean connectToServer(String name, int port){

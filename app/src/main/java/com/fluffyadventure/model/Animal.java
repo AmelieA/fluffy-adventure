@@ -26,7 +26,22 @@ public class Animal {
 
     private List<Integer> succeededSpawns= new ArrayList<>();
 
+
     public Animal() {
+
+    }
+
+    public Animal(Animal animal) {
+        this.name = animal.getName();
+        this.imagePath = animal.getImagePath();
+        this.type = animal.getType();
+        this.health = animal.getHealth();
+        this.strength = animal.getStrength();
+        this.accuracy = animal.getAccuracy();
+        this.evasiveness = animal.getEvasiveness();
+        this.activeSpells = new ArrayList<>(animal.getActiveSpells());
+        this.unusedSpells = new ArrayList<>(animal.getUnusedSpells());
+        this.succeededSpawns = new ArrayList<>(animal.getSucceededSpawns());
     }
 
     public Animal(String name, String imagePath, String type) {
@@ -38,13 +53,13 @@ public class Animal {
                 this.health = 125;
                 this.strength = 8;
                 this.accuracy = 100;
-                this.evasiveness = 0;
+                this.evasiveness = 1;
                 break;
             case "Squirrel":
                 this.health = 100;
                 this.strength = 12;
                 this.accuracy = 90;
-                this.evasiveness = 0;
+                this.evasiveness = 1;
                 break;
             case "Rabbit":
                 this.health = 100;
@@ -71,13 +86,13 @@ public class Animal {
                 this.health = 125;
                 this.strength = 8;
                 this.accuracy = 100;
-                this.evasiveness = 0;
+                this.evasiveness = 1;
                 break;
             case "Squirrel":
                 this.health = 100;
                 this.strength = 12;
                 this.accuracy = 90;
-                this.evasiveness = 0;
+                this.evasiveness = 1;
                 break;
             case "Rabbit":
                 this.health = 100;
@@ -148,6 +163,9 @@ public class Animal {
         return unusedSpells;
     }
 
+    public List<Integer> getSucceededSpawns() { return succeededSpawns; }
+
+
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
@@ -180,13 +198,13 @@ public class Animal {
         JSONObject spells_object = new JSONObject();
         JSONArray active = new JSONArray();
         for (Spell spell : this.getActiveSpells()){
-            active.put(spell);
+            active.put(spell.toJson());
         }
         spells_object.put("Active",active);
 
         JSONArray unused = new JSONArray();
         for (Spell spell: this.getUnusedSpells()){
-            unused.put(spell);
+            unused.put(spell.toJson());
         }
 
         spells_object.put("Unused",unused);

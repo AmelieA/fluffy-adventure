@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.fluffyadventure.controller.Controller;
+import com.fluffyadventure.model.Animal;
 
 
 public class SheepChoice extends Fragment {
@@ -46,7 +47,10 @@ public class SheepChoice extends Fragment {
                 radioGroup = (RadioGroup) rootView.findViewById(R.id.radio_group);
                 selectedButton = (RadioButton) rootView.findViewById(radioGroup.getCheckedRadioButtonId());
                 int idx = radioGroup.indexOfChild(selectedButton);
-                Controller.getAnimal().setImagePath("sheep" + idx);
+                String imgPath = "sheep" + idx;
+                Animal animal = new Animal(imgPath,"Sheep");
+                Controller.setAnimal(animal);
+                //Controller.getAnimal().setImagePath("sheep" + idx);
                 Intent intent = new Intent(getActivity(), AnimalName.class);
                 startActivity(intent);
             }
