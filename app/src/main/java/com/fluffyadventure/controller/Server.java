@@ -134,6 +134,83 @@ public class Server {
 
     }
 
+    public Animal getAnimal(User user) {
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/get_animal";
+        try {
+
+
+            URL url = new URL(uri);
+            HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
+            HttpURLConnection urlConnection2 = (HttpURLConnection) url.openConnection();
+
+
+            urlConnection1.setDoInput(true);
+            urlConnection1.setRequestProperty("Accept", "application/json");
+
+            urlConnection2.setDoInput(true);
+            urlConnection2.setRequestProperty("Accept", "application/json");
+
+            String encoded1;
+
+            if (user.getToken() != null) {
+                encoded1 = Base64.encodeToString((String.format("%s:%s", user.getToken(), "unused")).getBytes(), Base64.NO_WRAP);
+
+
+            } else {
+                encoded1 = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
+            }
+            urlConnection1.setRequestProperty("Authorization", String.format("Basic %s", encoded1));
+            urlConnection1.connect();
+
+            int httpResult = urlConnection1.getResponseCode();
+            Boolean firstAttempt = false;
+
+            BufferedReader bufferedReader;
+            if (httpResult == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                String encoded2 = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
+                urlConnection2.setRequestProperty("Authorization", String.format("Basic %s", encoded2));
+                urlConnection2.connect();
+                httpResult = urlConnection2.getResponseCode();
+
+            }
+            else if (httpResult == HttpURLConnection.HTTP_OK){
+
+
+                firstAttempt = true;
+
+            }
+
+            if (httpResult == HttpURLConnection.HTTP_OK) {
+                if (firstAttempt) {
+                    bufferedReader = new BufferedReader(new InputStreamReader(urlConnection1.getInputStream()));
+                }
+                else {
+                    bufferedReader = new BufferedReader(new InputStreamReader(urlConnection2.getInputStream()));
+                }
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+
+                JSONObject inputJson = new JSONObject(inputString.toString());
+                Animal animal = new Animal(inputJson);
+                animal.toJson().toString();
+
+                return animal;
+
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+
+
     public Animal createAnimal(User user, Animal in_animal, String name) {
         Animal animal = new Animal(in_animal);
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/add_animal";

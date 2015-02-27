@@ -85,6 +85,10 @@ public class Controller {
         if (user == null) {
             return false;
         }
+        animal = server.getAnimal(user);
+        if (animal == null) {
+            setupBob();
+        }
         return true;
     }
 
