@@ -1,9 +1,14 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +20,10 @@ import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 
 public class MainActivity extends Activity {
 
@@ -23,7 +32,6 @@ public class MainActivity extends Activity {
     Button MapBtn;
     Button loginBtn;
     Button signinBtn;
-    Button serverBtn;
     Button SlideBtn;
     TextView Logo1;
     TextView Logo2;
@@ -85,15 +93,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        serverBtn = (Button)findViewById(R.id.serverBtn);
-        serverBtn.setTypeface(font);
-        serverBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ServerActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         loginBtn = (Button)findViewById(R.id.loginBtn);
         loginBtn.setTypeface(font);
@@ -172,12 +172,112 @@ public class MainActivity extends Activity {
         Controller.setupBob();
         Controller.setupObjectives();
 
+        Resources resources = this.getResources();
+        AssetManager assetManager = resources.getAssets();
+
+
+        try {
+            InputStream inputStream = assetManager.open("server.properties");
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            String server_name = properties.getProperty("address");
+            int server_port = Integer.parseInt(properties.getProperty("port"));
+            System.out.println(server_name);
+            LoginUserTask task = new LoginUserTask(server_name, server_port, MainActivity.this);
+            task.execute();
+        } catch (IOException e) {
+            System.err.println("Failed to open server property file");
+            e.printStackTrace();
+
+
+        }
+
+
         //nextIntentClass = XXX.class;
 
        // SharedPreferences settings = getPreferences(MODE_PRIVATE);
        // SharedPreferences.Editor editor = settings.edit();
        // editor.putBoolean("firstLaunch", false);
        // editor.commit();
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private class LoginUserTask extends AsyncTask<Void, Void, Boolean> {
+        private String server;
+        private int port;
+        ProgressDialog dialog;
+        Context ctx;
+
+        public LoginUserTask(String server, int port, Context ctx) {
+            this.server = server;
+            this.port = port;
+            this.ctx = ctx;
+            this.dialog = new ProgressDialog(this.ctx);
+            //this.dialog.setCancelable(true);
+
+        }
+
+        protected void onPreExecute(){
+            this.dialog.setTitle("Connexion...");
+            this.dialog.show();
+
+        }
+        protected Boolean doInBackground(Void... params){
+
+            Boolean result = Controller.connectToServer(server, port);
+            //Boolean result = true;
+
+
+            return result;
+        }
+        protected  void onPostExecute(Boolean login) {
+            System.out.println("done");
+            dialog.dismiss();
+
+            if (!login){
+                Toast.makeText(MainActivity.this, "Serveur inconnu", Toast.LENGTH_LONG).show();
+
+            }
+            else
+            {
+                Toast.makeText(MainActivity.this, "Connecté au serveur", Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+
+
     }
 
 

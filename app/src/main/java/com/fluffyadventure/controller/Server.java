@@ -169,8 +169,7 @@ public class Server {
             OutputStream out = urlConnection.getOutputStream();
 
 
-            JSONObject json = new JSONObject();
-            json = animal.toJson();
+            JSONObject json = animal.toJson();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
             writer.write(json.toString());
             System.out.println(json.toString());
