@@ -4,14 +4,16 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:background="@drawable/wood_vertical"
+        android:scaleType="center">
 
         <LinearLayout
             android:id="@+id/attackLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/wood">
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/attackChoiceText"
                 android:text="@string/chose_attacks"
@@ -48,9 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_below="@id/attackLayout"
-            android:background="@drawable/wood"
-            android:scaleType="centerInside"/>
+            android:layout_below="@id/attackLayout"/>
 
     </RelativeLayout>
 
