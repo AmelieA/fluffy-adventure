@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
+import com.fluffyadventure.fluffyadventure.MailBox;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,7 +89,7 @@ public class MainActivity extends Activity {
         BtnCombat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AttackChoice.class);
+                Intent intent = new Intent(MainActivity.this, MailBox.class);
                 startActivity(intent);
             }
         });

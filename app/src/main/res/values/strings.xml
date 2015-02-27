@@ -48,4 +48,5 @@
     <string name="title_activity_attack_choice">AttackChoice</string>
 
     <string name="BtnMapWanted_text">Localise ta cible sur la carte :</string>
+    <string name="title_activity_mail_box">MailBox</string>
 </resources>
