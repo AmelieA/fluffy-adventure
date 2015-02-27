@@ -64,7 +64,7 @@ public class Controller {
 
     }
     public static void setupBob() {
-        animal = new Animal("Bob","rabbit1","Rabbit");
+        animal = new Animal("Bob","bunny1","Rabbit");
     }
 
     public static Animal getAnimal() {

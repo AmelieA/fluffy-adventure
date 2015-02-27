@@ -47,7 +47,7 @@ public class SquirrelChoice extends Fragment {
             public void onClick(View v) {
                 radioGroup = (RadioGroup) rootView.findViewById(R.id.radio_group);
                 selectedButton = (RadioButton) rootView.findViewById(radioGroup.getCheckedRadioButtonId());
-                int idx = radioGroup.indexOfChild(selectedButton) + 1;
+                int idx = radioGroup.indexOfChild(selectedButton);
                 Controller.getAnimal().setImagePath("squirrel" + idx);
                 Intent intent = new Intent(getActivity(), AnimalName.class);
                 startActivity(intent);
