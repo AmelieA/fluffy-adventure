@@ -17,6 +17,7 @@
     <string name="chose_attacks">Ton compagnon peut retenir jusqu\'a 4 sort à la fois</string>
     <string name="text_button_ok">OK !</string>
     <string name="title_activity_animal_choice_slider">AnimalChoiceSlider</string>
+    <string name="save_attack_choice">Enregistrer</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>

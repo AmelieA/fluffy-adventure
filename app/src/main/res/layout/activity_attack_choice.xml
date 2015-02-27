@@ -45,13 +45,27 @@
                 android:layout_below="@id/ActivatedAttackView"
                 android:background="#ff000000"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/attackLayout">
         <ListView
             android:id="@+id/DeactivatedAttackView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/attackLayout"/>
+            android:layout_weight="1"/>
 
+        <Button
+            android:id="@+id/Save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/btnStyleOrange"
+            android:text="@string/save_attack_choice"
+            android:layout_margin="5dp"
+            android:layout_weight="0"/>
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>
