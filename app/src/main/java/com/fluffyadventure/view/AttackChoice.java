@@ -54,6 +54,20 @@ public class AttackChoice extends Activity {
 
     }
 
+    public void updateListViews(int position, boolean isCheck) {
+        if (isCheck){
+            if (activeAttack.size()<4) {
+                Spell toAdd = inactiveAttack.remove(position);
+                activeAttack.add(toAdd);
+            }
+        }else{
+            Spell toAdd =  activeAttack.remove(position);
+            inactiveAttack.add(toAdd);
+        }
+        activateAdapter.notifyDataSetChanged();
+        inactiveAdapter.notifyDataSetChanged();
+    }
+
 
 
 
@@ -69,15 +83,6 @@ public class AttackChoice extends Activity {
             this.context = context;
             this.values = values;
             this.activated = activated;
-        }
-
-        /**
-         * Each listView must know the other lisview to add any item to the other listview after deleting it from its own
-         *
-         * @param otherListView
-         */
-        public void SetOtherListview(AttackChoiceAdapter otherListView){
-            this.otherListView = otherListView;
         }
 
         @Override
@@ -98,6 +103,7 @@ public class AttackChoice extends Activity {
 
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    AttackChoice.this.updateListViews(position, isChecked);
                     if (isChecked){
                         if (AttackChoice.this.activeAttack.size()<4) {
                             Spell toAdd = AttackChoice.this.inactiveAttack.remove(position);
