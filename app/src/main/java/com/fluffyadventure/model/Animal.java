@@ -62,6 +62,7 @@ public class Animal {
         }
     }
 
+
     public Animal(String imagePath, String type) {
         this.imagePath = imagePath;
         this.type = type;
@@ -194,4 +195,32 @@ public class Animal {
 
         return json;
     }
+
+    public Animal(JSONObject json) throws JSONException {
+        JSONObject spells = json.getJSONObject("Spells");
+        JSONArray unused = spells.getJSONArray("Unused");
+        for (int i = 0; i < unused.length(); i++){
+            Spell spell = new Spell(unused.getJSONObject(i));
+            unusedSpells.add(spell);
+        }
+
+        JSONArray active = spells.getJSONArray("Unused");
+        for (int i = 0; i < active.length(); i++){
+            Spell spell = new Spell(active.getJSONObject(i));
+            activeSpells.add(spell);
+        }
+
+        this.name = json.getString("Name");
+        this.imagePath =  json.getString("ImgPath");
+        this.type = json.getString("Type");
+        this.health = json.getInt("Health");
+        this.strength = json.getInt("Strength");
+        this.accuracy = json.getInt("Accuracy");
+        this.evasiveness = json.getInt("Evasiveness");
+
+    }
+
+
+
+
 }
