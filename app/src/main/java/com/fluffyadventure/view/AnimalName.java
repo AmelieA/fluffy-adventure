@@ -11,13 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.view.R;
 
 public class AnimalName extends ActionBarActivity {
 
     EditText name;
     Button btnOkName;
+    ImageView imageViewAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,9 @@ public class AnimalName extends ActionBarActivity {
         btnOkName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                //TODO :  CALL TO CONTROLLER
                 Intent intent = new Intent(AnimalName.this, Status.class);
                 startActivity(intent);
                 finish();
@@ -52,6 +58,10 @@ public class AnimalName extends ActionBarActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
+
+        imageViewAnimal = (ImageView) findViewById(R.id.imageViewAnimal);
+        int imgId = getResources().getIdentifier(Controller.getAnimal().getImagePath(),"drawable",getPackageName());
+        imageViewAnimal.setImageDrawable(getResources().getDrawable(imgId));
     }
 
     public void enableSubmitIfReady() {
