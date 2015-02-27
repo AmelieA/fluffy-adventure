@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.fluffyadventure.controller.Controller;
+import com.fluffyadventure.model.Animal;
 
 
 public class SquirrelChoice extends Fragment {
@@ -47,8 +48,13 @@ public class SquirrelChoice extends Fragment {
             public void onClick(View v) {
                 radioGroup = (RadioGroup) rootView.findViewById(R.id.radio_group);
                 selectedButton = (RadioButton) rootView.findViewById(radioGroup.getCheckedRadioButtonId());
-                int idx = radioGroup.indexOfChild(selectedButton) + 1;
-                Controller.getAnimal().setImagePath("squirrel" + idx);
+
+
+                int idx = radioGroup.indexOfChild(selectedButton);
+                String imgPath = "squirrel" + idx;
+                Animal animal = new Animal(imgPath,"Squirrel");
+                Controller.setAnimal(animal);
+                //Controller.getAnimal().setImagePath("squirrel" + idx);
                 Intent intent = new Intent(getActivity(), AnimalName.class);
                 startActivity(intent);
             }

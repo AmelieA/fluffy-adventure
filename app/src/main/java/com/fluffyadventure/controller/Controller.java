@@ -64,11 +64,15 @@ public class Controller {
 
     }
     public static void setupBob() {
-        animal = new Animal("Bob","rabbit1","Rabbit");
+        animal = new Animal("Bob","bunny1","Rabbit");
     }
 
     public static Animal getAnimal() {
         return animal;
+    }
+
+    public static void setAnimal(Animal animal) {
+        Controller.animal = animal;
     }
 
     public static ArrayList<AbstractSpawn> getObjectives() {
@@ -81,7 +85,20 @@ public class Controller {
         if (user == null) {
             return false;
         }
+        animal = server.getAnimal(user);
+        if (animal == null) {
+            setupBob();
+        }
         return true;
+    }
+
+    public static Boolean sendAnimalToServer(String name){
+        Animal my_animal = server.createAnimal(user,animal,name);
+        if (my_animal != null){
+           animal = my_animal;
+            return true;
+        }
+        return false;
     }
 
     public static Boolean connectToServer(String name, int port){
