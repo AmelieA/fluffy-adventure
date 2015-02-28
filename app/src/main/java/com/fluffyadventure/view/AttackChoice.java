@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class AttackChoice extends Activity {
     }
 
     public void updateListViews(int position, boolean isCheck) {
+        Log.i("TIME", "start of updade listViews");
         if (isCheck){
             if (activeAttack.size()<4) {
                 Spell toAdd = inactiveAttack.remove(position);
@@ -103,18 +105,19 @@ public class AttackChoice extends Activity {
 
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    AttackChoice.this.updateListViews(position, isChecked);
-                    if (isChecked){
-                        if (AttackChoice.this.activeAttack.size()<4) {
-                            Spell toAdd = AttackChoice.this.inactiveAttack.remove(position);
-                            AttackChoice.this.activeAttack.add(toAdd);
-                        }
-                    }else{
-                        Spell toAdd =  AttackChoice.this.activeAttack.remove(position);
-                        AttackChoice.this.inactiveAttack.add(toAdd);
-                    }
-                    AttackChoice.this.activateAdapter.notifyDataSetChanged();
-                    AttackChoice.this.inactiveAdapter.notifyDataSetChanged();
+                    AttackChoice.this.updateListViews(position, isChecked);
+                    Log.i("TIME", "end of updade listViews");
+//                    if (isChecked){
+//                        if (AttackChoice.this.activeAttack.size()<4) {
+//                            Spell toAdd = AttackChoice.this.inactiveAttack.remove(position);
+//                            AttackChoice.this.activeAttack.add(toAdd);
+//                        }
+//                    }else{
+//                        Spell toAdd =  AttackChoice.this.activeAttack.remove(position);
+//                        AttackChoice.this.inactiveAttack.add(toAdd);
+//                    }
+//                    AttackChoice.this.activateAdapter.notifyDataSetChanged();
+//                    AttackChoice.this.inactiveAdapter.notifyDataSetChanged();
                 }
             });
 

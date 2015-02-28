@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
         BtnCombat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MailBox.class);
+                Intent intent = new Intent(MainActivity.this, AttackChoice.class);
                 startActivity(intent);
             }
         });

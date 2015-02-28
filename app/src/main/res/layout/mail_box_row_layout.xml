@@ -16,7 +16,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:background="@drawable/fight_choice_button">
 
             <TextView
                 android:id="@+id/MailHeader"
