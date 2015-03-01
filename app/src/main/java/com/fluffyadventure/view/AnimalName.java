@@ -11,13 +11,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.fluffyadventure.view.R;
+import com.fluffyadventure.controller.Controller;
 
 public class AnimalName extends ActionBarActivity {
 
     EditText name;
     Button btnOkName;
+    TextView nameChoiceDisclaimer;
+    ImageView animalNameImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +30,23 @@ public class AnimalName extends ActionBarActivity {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
+        animalNameImageView = (ImageView) findViewById(R.id.animalNameImageView);
+
+        String imagePath = Controller.getAnimal1().getImagePath();
+
+        animalNameImageView.setImageResource(
+                getResources().getIdentifier(
+                        imagePath, "drawable", getPackageName()));
+
+        nameChoiceDisclaimer = (TextView) findViewById(R.id.nameChoiceDisclaimer);
+        nameChoiceDisclaimer.setTypeface(font);
+
         btnOkName = (Button) findViewById(R.id.BtnOkName);
         btnOkName.setTypeface(font);
         btnOkName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Controller.getAnimal1().setName(name.getText().toString());
                 Intent intent = new Intent(AnimalName.this, Status.class);
                 startActivity(intent);
                 finish();

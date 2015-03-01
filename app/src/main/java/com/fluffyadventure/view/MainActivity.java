@@ -73,15 +73,6 @@ public class MainActivity extends Activity {
             }
         });*/
 
-        BtnCombat = (Button)findViewById(R.id.BtnCombat);
-        BtnCombat.setTypeface(font);
-        BtnCombat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AttackChoice.class);
-                startActivity(intent);
-            }
-        });
 
         loginBtn = (Button)findViewById(R.id.loginBtn);
         loginBtn.setTypeface(font);

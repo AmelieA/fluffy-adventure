@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +41,21 @@ public class SignUpActivity extends Activity {
                 "-Regular.otf");
 
         etUserName = (EditText)findViewById(R.id.etUserName);
+        etUserName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                enableSubmitIfReady();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
         etPass = (EditText)findViewById(R.id.etPass);
         btnSignIn = (Button)findViewById(R.id.btnSignIn);
         btnSignIn.setTypeface(font);
@@ -53,6 +70,12 @@ public class SignUpActivity extends Activity {
         Logo1.setTypeface(font);
         Logo2 = (TextView)findViewById(R.id.Logo2);
         Logo2.setTypeface(font);
+
+    }
+
+    public void enableSubmitIfReady() {
+        boolean isReady = etUserName.getText().toString().length() > 0;
+        btnSignIn.setEnabled(isReady);
 
     }
 

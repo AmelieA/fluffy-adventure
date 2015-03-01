@@ -9,20 +9,53 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.fluffyadventure.view.R;
+import com.fluffyadventure.controller.Controller;
 
 public class Status extends Activity {
 
     ImageButton BtnMap;
     Button btnMngSkills;
     Button btnMoveHQ;
+    ImageView imgPC1;
+    TextView status_name1;
+    TextView status_hlth1;
+    TextView status_str1;
+    TextView status_acc1;
+    TextView status_eva1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
+
+        imgPC1 = (ImageView) findViewById(R.id.imgPC1);
+
+        String imagePath = Controller.getAnimal1().getImagePath();
+
+        imgPC1.setImageResource(
+                getResources().getIdentifier(
+                        imagePath, "drawable", getPackageName()));
+
+        status_name1 = (TextView) findViewById(R.id.status_Name1);
+        status_name1.setTypeface(font);
+        status_name1.setText(Controller.getAnimal1().getName());
+
+        status_hlth1 = (TextView) findViewById(R.id.status_hlth1);
+        status_hlth1.setText(String.valueOf(Controller.getAnimal1().getHealth()));
+
+        status_str1 = (TextView) findViewById(R.id.status_str1);
+        status_str1.setText(String.valueOf(Controller.getAnimal1().getStrength()));
+
+        status_acc1 = (TextView) findViewById(R.id.status_acc1);
+        status_acc1.setText(String.valueOf(Controller.getAnimal1().getAccuracy()));
+
+        status_eva1 = (TextView) findViewById(R.id.status_eva1);
+        status_eva1.setText(String.valueOf(Controller.getAnimal1().getEvasiveness()));
 
         btnMngSkills = (Button) findViewById(R.id.BtnMngSkills);
         btnMngSkills.setTypeface(font);

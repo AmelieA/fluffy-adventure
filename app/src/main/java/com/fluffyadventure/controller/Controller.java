@@ -1,8 +1,6 @@
 package com.fluffyadventure.controller;
 
 
-import android.os.AsyncTask;
-
 import android.util.Log;
 
 import com.fluffyadventure.model.AbstractSpawn;
@@ -19,7 +17,7 @@ import java.util.ArrayList;
  */
 public class Controller {
 
-    private static Animal animal;
+    private static Animal animal1;
     private static Server server = new Server();
     private static User user;
     private static ArrayList<AbstractSpawn> objectives;
@@ -58,17 +56,21 @@ public class Controller {
         objectives.add(dungeon1);
         Log.i("FA", dungeon1.toString());
 
-        AbstractSpawn treasure1 = new Treasure(5,0,0,0,45.784153, 4.856175,"Mon préééécieeeuux ...","Trésor enfoui",0);
+        AbstractSpawn treasure1 = new Treasure(5,0,0,0,45.773716, 4.856081,"Mon préééécieeeuux ...","Trésor enfoui",0);
         objectives.add(treasure1);
         Log.i("FA", treasure1.toString());
 
     }
     public static void setupBob() {
-        animal = new Animal("Bob","rabbit1","Rabbit");
+        animal1 = new Animal("Bob","rabbit1","Rabbit");
     }
 
-    public static Animal getAnimal() {
-        return animal;
+    public static void createAnimal1(String name, String imagePath, String type) {
+        animal1 = new Animal(name,imagePath,type);
+    }
+
+    public static Animal getAnimal1() {
+        return animal1;
     }
 
     public static ArrayList<AbstractSpawn> getObjectives() {
