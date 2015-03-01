@@ -14,14 +14,17 @@
     <string name="squirrel_presentation">L\'écureuil lance des noisettes à distance ! Elles font plus mal et peuvent toucher deux ennemis à la fois, mais ont une faible chance de rater leur cible.</string>
     <string name="sheep_presentation">Le mouton dispose de nombreux PV et dispose de meilleures capacités de soin</string>
     <string name="chose_name">Choisis lui un nom !</string>
+    <string name="chose_attacks">Ton compagnon peut retenir jusqu\'a 4 sort à la fois</string>
     <string name="text_button_ok">OK !</string>
     <string name="title_activity_animal_choice_slider">AnimalChoiceSlider</string>
+    <string name="save_attack_choice">Enregistrer</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="hello_world">Hello world!</string>
     <string name="connec_button_text">Login</string>
     <string name="inscr_button_text">S\'inscrire</string>
+    <string name="server_button_text">Serveur</string>
 
     <!-- Status Activity -->
     <string name="mail_button_text">Messagerie</string>
@@ -37,7 +40,13 @@
     <!--Login & Sign Up Activities -->
     <string name="text_user">Utilisateur</string>
     <string name="text_password">Mot de passe</string>
+    <string name="text_server">Serveur</string>
+    <string name="text_port">Port</string>
     <string name="signin_button_text">Se connecter</string>
     <string name="signup_button_text">S\'inscrire</string>
+
     <string name="title_activity_attack_choice">AttackChoice</string>
+
+    <string name="BtnMapWanted_text">Localise ta cible sur la carte :</string>
+    <string name="title_activity_mail_box">MailBox</string>
 </resources>

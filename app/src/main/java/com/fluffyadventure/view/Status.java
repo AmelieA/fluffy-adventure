@@ -14,18 +14,18 @@ import android.widget.TextView;
 
 import com.fluffyadventure.controller.Controller;
 
+
 public class Status extends Activity {
 
     ImageButton BtnMap;
     Button btnMngSkills;
     Button btnMoveHQ;
     ImageView imgPC1;
-    TextView status_name1;
-    TextView status_hlth1;
-    TextView status_str1;
-    TextView status_acc1;
-    TextView status_eva1;
-
+    TextView textViewHealth1;
+    TextView textViewStrength1;
+    TextView textViewAccuracy1;
+    TextView textViewEvasiveness1;
+    TextView textViewName1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,21 +41,21 @@ public class Status extends Activity {
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
 
-        status_name1 = (TextView) findViewById(R.id.status_Name1);
-        status_name1.setTypeface(font);
-        status_name1.setText(Controller.getAnimal1().getName());
+        textViewName1 = (TextView) findViewById(R.id.textViewName1);
+        textViewName1.setTypeface(font);
+        textViewName1.setText(Controller.getAnimal1().getName());
 
-        status_hlth1 = (TextView) findViewById(R.id.status_hlth1);
-        status_hlth1.setText(String.valueOf(Controller.getAnimal1().getHealth()));
+        textViewHealth1 = (TextView) findViewById(R.id.textViewHealth1);
+        textViewHealth1.setText(String.valueOf(Controller.getAnimal1().getHealth()));
 
-        status_str1 = (TextView) findViewById(R.id.status_str1);
-        status_str1.setText(String.valueOf(Controller.getAnimal1().getStrength()));
+        textViewStrength1 = (TextView) findViewById(R.id.textViewStrength1);
+        textViewStrength1.setText(String.valueOf(Controller.getAnimal1().getStrength()));
 
-        status_acc1 = (TextView) findViewById(R.id.status_acc1);
-        status_acc1.setText(String.valueOf(Controller.getAnimal1().getAccuracy()));
+        textViewAccuracy1 = (TextView) findViewById(R.id.textViewAccuracy1);
+        textViewAccuracy1.setText(String.valueOf(Controller.getAnimal1().getAccuracy()));
 
-        status_eva1 = (TextView) findViewById(R.id.status_eva1);
-        status_eva1.setText(String.valueOf(Controller.getAnimal1().getEvasiveness()));
+        textViewEvasiveness1 = (TextView) findViewById(R.id.textViewEvasiveness1);
+        textViewEvasiveness1.setText(String.valueOf(Controller.getAnimal1().getEvasiveness()));
 
         btnMngSkills = (Button) findViewById(R.id.BtnMngSkills);
         btnMngSkills.setTypeface(font);

@@ -36,9 +36,7 @@ public class SignUpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel" +
-                "" +
-                "-Regular.otf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
         etUserName = (EditText)findViewById(R.id.etUserName);
         etUserName.addTextChangedListener(new TextWatcher() {
@@ -97,6 +95,7 @@ public class SignUpActivity extends Activity {
         protected void onPreExecute(){
             this.dialog.setTitle("Création...");
             this.dialog.show();
+            //affichage de la popup
 
         }
         protected Boolean doInBackground(Void... params){
@@ -114,6 +113,7 @@ public class SignUpActivity extends Activity {
             System.out.println("done");
 
             dialog.dismiss();
+            //disparition de la popup
 
 
             Intent intent = new Intent(SignUpActivity.this, AnimalChoiceSlider.class);

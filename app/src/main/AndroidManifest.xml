@@ -60,6 +60,8 @@
         </activity>
         <activity android:name=".SignUpActivity" >
         </activity>
+        <activity android:name=".ServerActivity" >
+        </activity>
         <activity
             android:name=".AnimalName"
             android:label="@string/title_activity_animal_name" >
@@ -67,6 +69,12 @@
         <activity
             android:name=".AttackChoice"
             android:label="@string/title_activity_attack_choice" >
+        </activity>
+        <activity android:name=".WantedActivity" >
+        </activity>
+        <activity
+            android:name="com.fluffyadventure.fluffyadventure.MailBox"
+            android:label="@string/title_activity_mail_box" >
         </activity>
     </application>
 

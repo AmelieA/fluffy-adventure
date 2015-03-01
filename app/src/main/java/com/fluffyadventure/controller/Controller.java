@@ -1,6 +1,8 @@
 package com.fluffyadventure.controller;
 
 
+import android.os.AsyncTask;
+
 import android.util.Log;
 
 import com.fluffyadventure.model.AbstractSpawn;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 public class Controller {
 
     private static Animal animal1;
-    private static Server server = new Server();
+    private static Server server;
     private static User user;
     private static ArrayList<AbstractSpawn> objectives;
 
@@ -83,9 +85,29 @@ public class Controller {
         if (user == null) {
             return false;
         }
+        animal1 = server.getAnimal(user);
+        if (animal1 == null) {
+            setupBob();
+        }
         return true;
     }
 
+    public static Boolean sendAnimalToServer(String name){
+        Animal my_animal = server.createAnimal(user,animal1,name);
+        if (my_animal != null){
+           animal1 = my_animal;
+            return true;
+        }
+        return false;
+    }
 
+    public static Boolean connectToServer(String name, int port){
+        server = new Server(name,port);
+        return server.testConnection();
 
+    }
+
+    public static Server getServer() {
+        return server;
+    }
 }

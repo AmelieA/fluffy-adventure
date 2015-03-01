@@ -1,5 +1,6 @@
 package com.fluffyadventure.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,12 +20,28 @@ public class Animal {
     private int strength = 0;
     private int accuracy = 0;
     private int evasiveness = 0;
+
     private List<Spell> activeSpells = new ArrayList<>();
     private List<Spell> unusedSpells = new ArrayList<>();
 
     private List<Integer> succeededSpawns= new ArrayList<>();
 
+
     public Animal() {
+
+    }
+
+    public Animal(Animal animal) {
+        this.name = animal.getName();
+        this.imagePath = animal.getImagePath();
+        this.type = animal.getType();
+        this.health = animal.getHealth();
+        this.strength = animal.getStrength();
+        this.accuracy = animal.getAccuracy();
+        this.evasiveness = animal.getEvasiveness();
+        this.activeSpells = new ArrayList<>(animal.getActiveSpells());
+        this.unusedSpells = new ArrayList<>(animal.getUnusedSpells());
+        this.succeededSpawns = new ArrayList<>(animal.getSucceededSpawns());
     }
 
     public Animal(String name, String imagePath, String type) {
@@ -36,13 +53,13 @@ public class Animal {
                 this.health = 125;
                 this.strength = 8;
                 this.accuracy = 100;
-                this.evasiveness = 0;
+                this.evasiveness = 1;
                 break;
             case "Squirrel":
                 this.health = 100;
                 this.strength = 12;
                 this.accuracy = 90;
-                this.evasiveness = 0;
+                this.evasiveness = 1;
                 break;
             case "Rabbit":
                 this.health = 100;
@@ -60,6 +77,7 @@ public class Animal {
         }
     }
 
+
     public Animal(String imagePath, String type) {
         this.imagePath = imagePath;
         this.type = type;
@@ -68,13 +86,13 @@ public class Animal {
                 this.health = 125;
                 this.strength = 8;
                 this.accuracy = 100;
-                this.evasiveness = 0;
+                this.evasiveness = 1;
                 break;
             case "Squirrel":
                 this.health = 100;
                 this.strength = 12;
                 this.accuracy = 90;
-                this.evasiveness = 0;
+                this.evasiveness = 1;
                 break;
             case "Rabbit":
                 this.health = 100;
@@ -137,6 +155,17 @@ public class Animal {
         return type;
     }
 
+    public List<Spell> getActiveSpells() {
+        return activeSpells;
+    }
+
+    public List<Spell> getUnusedSpells() {
+        return unusedSpells;
+    }
+
+    public List<Integer> getSucceededSpawns() { return succeededSpawns; }
+
+
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
@@ -166,7 +195,50 @@ public class Animal {
         json.put("Strength", this.getStrength());
         json.put("Accuracy",this.getAccuracy());
         json.put("Evasiveness",this.getEvasiveness());
+        JSONObject spells_object = new JSONObject();
+        JSONArray active = new JSONArray();
+        for (Spell spell : this.getActiveSpells()){
+            active.put(spell.toJson());
+        }
+        spells_object.put("Active",active);
+
+        JSONArray unused = new JSONArray();
+        for (Spell spell: this.getUnusedSpells()){
+            unused.put(spell.toJson());
+        }
+
+        spells_object.put("Unused",unused);
+
+        json.put("Spells",spells_object);
 
         return json;
     }
+
+    public Animal(JSONObject json) throws JSONException {
+        JSONObject spells = json.getJSONObject("Spells");
+        JSONArray unused = spells.getJSONArray("Unused");
+        for (int i = 0; i < unused.length(); i++){
+            Spell spell = new Spell(unused.getJSONObject(i));
+            unusedSpells.add(spell);
+        }
+
+        JSONArray active = spells.getJSONArray("Unused");
+        for (int i = 0; i < active.length(); i++){
+            Spell spell = new Spell(active.getJSONObject(i));
+            activeSpells.add(spell);
+        }
+
+        this.name = json.getString("Name");
+        this.imagePath =  json.getString("ImgPath");
+        this.type = json.getString("Type");
+        this.health = json.getInt("Health");
+        this.strength = json.getInt("Strength");
+        this.accuracy = json.getInt("Accuracy");
+        this.evasiveness = json.getInt("Evasiveness");
+
+    }
+
+
+
+
 }
