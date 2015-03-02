@@ -176,6 +176,7 @@ public class MainActivity extends Activity {
             task.execute();
         } catch (IOException e) {
             Log.i("Server","Failed to open server property file");
+            Log.i("Server","Failed to open server property file");
             e.printStackTrace();
 
 
@@ -223,7 +224,7 @@ public class MainActivity extends Activity {
             return result;
         }
         protected  void onPostExecute(Boolean login) {
-            System.out.println("done");
+            Log.i("Server","Attempted connection");
             dialog.dismiss();
 
             if (!login){

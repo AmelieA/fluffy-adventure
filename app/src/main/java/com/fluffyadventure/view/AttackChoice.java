@@ -34,10 +34,10 @@ public class AttackChoice extends Activity {
 
     // List of attacks
     Spell spell = new Spell(0,"attack", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
-    ArrayList<Spell> activeAttack = new ArrayList<>(Arrays.asList(spell));
+    ArrayList<Spell> activeAttack;// = new ArrayList<>(Arrays.asList(spell));
 
     Spell spell2 = new Spell(0,"attack Deactivated", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
-    ArrayList<Spell> inactiveAttack = new ArrayList<>(Arrays.asList(spell2));
+    ArrayList<Spell> inactiveAttack;// = new ArrayList<>(Arrays.asList(spell2));
     Button saveBtn;
 
 
@@ -47,8 +47,8 @@ public class AttackChoice extends Activity {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
-//        activeAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getActiveSpells());
-//        inactiveAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getUnusedSpells());
+        activeAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getActiveSpells());
+        inactiveAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getUnusedSpells());
         System.out.println(inactiveAttack.toString());
         System.out.println(activeAttack.toString());
 
