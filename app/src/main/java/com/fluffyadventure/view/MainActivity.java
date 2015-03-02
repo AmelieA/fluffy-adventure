@@ -175,7 +175,7 @@ public class MainActivity extends Activity {
             LoginUserTask task = new LoginUserTask(server_name, server_port, MainActivity.this);
             task.execute();
         } catch (IOException e) {
-            System.err.println("Failed to open server property file");
+            Log.i("Server","Failed to open server property file");
             e.printStackTrace();
 
 
