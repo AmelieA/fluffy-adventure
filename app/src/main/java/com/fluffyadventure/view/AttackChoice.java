@@ -1,18 +1,25 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.Spell;
 
 import java.util.ArrayList;
@@ -27,19 +34,39 @@ public class AttackChoice extends Activity {
 
     // List of attacks
     Spell spell = new Spell(0,"attack", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
-    ArrayList<Spell> activeAttack = new ArrayList<>(Arrays.asList(spell, spell, spell, spell));
+    ArrayList<Spell> activeAttack;// = new ArrayList<>(Arrays.asList(spell, spell, spell, spell));
 
     Spell spell2 = new Spell(0,"attack Deactivated", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
-    ArrayList<Spell> inactiveAttack = new ArrayList<>(Arrays.asList(spell2, spell2, spell2, spell2, spell2, spell2, spell2, spell2));
+    ArrayList<Spell> inactiveAttack;// = new ArrayList<>(Arrays.asList(spell2, spell2, spell2, spell2, spell2, spell2, spell2, spell2));
+    Button saveBtn;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
+
+        activeAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getActiveSpells());
+        inactiveAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getUnusedSpells());
+        System.out.println(inactiveAttack.toString());
+        System.out.println(activeAttack.toString());
+
         //TODO: import attack list
 
         setContentView(R.layout.activity_attack_choice);
+
+        saveBtn = (Button) findViewById(R.id.saveBtn);
+        saveBtn.setTypeface(font);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangeSpellsTask task = new ChangeSpellsTask(activeAttack,inactiveAttack, AttackChoice.this);
+                task.execute();
+
+            }
+        });
 
         activateAdapter = new AttackChoiceAdapter(this, activeAttack, true);
         ListView activatedAttackView = (ListView) findViewById(R.id.ActivatedAttackView);
@@ -59,10 +86,23 @@ public class AttackChoice extends Activity {
                 Spell toAdd = inactiveAttack.remove(position);
                 activeAttack.add(toAdd);
             }
+            else {
+                Toast.makeText(AttackChoice.this, "Maximum 4 sorts actifs", Toast.LENGTH_LONG).show();
+            }
         }else{
+            if (activeAttack.size() > 1)
+            {
             Spell toAdd =  activeAttack.remove(position);
             inactiveAttack.add(toAdd);
+            }
+            else {
+                Toast.makeText(AttackChoice.this, "Minimum 1 sort actif", Toast.LENGTH_LONG).show();
+            }
+
         }
+        System.out.println(inactiveAttack.toString());
+        System.out.println(activeAttack.toString());
+
         activateAdapter.notifyDataSetChanged();
         inactiveAdapter.notifyDataSetChanged();
     }
@@ -122,6 +162,58 @@ public class AttackChoice extends Activity {
 
             return rowView;
         }
+    }
+
+    private class ChangeSpellsTask extends AsyncTask<Void, Void, Boolean> {
+        private ArrayList<Spell> active;
+        private ArrayList<Spell> unused;
+        ProgressDialog dialog;
+        Context ctx;
+
+        public ChangeSpellsTask(ArrayList<Spell> active, ArrayList<Spell> unused, Context ctx) {
+            this.active = active;
+            this.unused = unused;
+            this.ctx = ctx;
+            this.dialog = new ProgressDialog(this.ctx);
+            //this.dialog.setCancelable(true);
+
+        }
+
+        protected void onPreExecute(){
+            this.dialog.setTitle("Connexion...");
+            this.dialog.show();
+
+        }
+        protected Boolean doInBackground(Void... params){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Boolean result = Controller.changeSpells(active,unused);
+
+
+            return result;
+        }
+        protected  void onPostExecute(Boolean login) {
+            System.out.println("done");
+            dialog.dismiss();
+
+            if (!login){
+                Toast.makeText(AttackChoice.this, "Erreur au changement", Toast.LENGTH_LONG).show();
+
+            }
+            else {
+
+                Intent intent = new Intent(AttackChoice.this, Status.class);
+                System.out.println("Activitychange");
+                startActivity(intent);
+                finish();
+            }
+        }
+
+
+
     }
 }
 

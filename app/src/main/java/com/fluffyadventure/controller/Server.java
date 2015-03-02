@@ -6,6 +6,7 @@ import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Spell;
 import com.fluffyadventure.model.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +17,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by denis on 23/02/15.
@@ -289,6 +292,40 @@ public class Server {
         return null;
 
     }
+    public Boolean changeSpells(User user, ArrayList<Spell> active, ArrayList<Spell> unused){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/change_spells";
+        try {
+            URL url = new URL(uri);
+            JSONObject json = new JSONObject();
+            JSONArray activeJson = new JSONArray();
+            for (Spell spell : active){
+                activeJson.put(spell.toJson().toString());
+            }
+            json.put("Active",activeJson);
+
+            JSONArray unusedJson = new JSONArray();
+            for (Spell spell: unused){
+                unusedJson.put(spell.toJson().toString());
+            }
+
+            json.put("Unused", unused);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
+
+            if (returnJson != null){
+
+                return true;
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public Spell get_spell(int id){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(id);
         try {

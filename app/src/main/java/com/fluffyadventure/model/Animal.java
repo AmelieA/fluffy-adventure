@@ -238,7 +238,11 @@ public class Animal {
 
     }
 
+    public void setActiveSpells(List<Spell> activeSpells) {
+        this.activeSpells = activeSpells;
+    }
 
-
-
+    public void setUnusedSpells(List<Spell> unusedSpells) {
+        this.unusedSpells = unusedSpells;
+    }
 }
