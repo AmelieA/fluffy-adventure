@@ -34,10 +34,10 @@ public class AttackChoice extends Activity {
 
     // List of attacks
     Spell spell = new Spell(0,"attack", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
-    ArrayList<Spell> activeAttack;// = new ArrayList<>(Arrays.asList(spell, spell, spell, spell));
+    ArrayList<Spell> activeAttack = new ArrayList<>(Arrays.asList(spell));
 
     Spell spell2 = new Spell(0,"attack Deactivated", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
-    ArrayList<Spell> inactiveAttack;// = new ArrayList<>(Arrays.asList(spell2, spell2, spell2, spell2, spell2, spell2, spell2, spell2));
+    ArrayList<Spell> inactiveAttack = new ArrayList<>(Arrays.asList(spell2));
     Button saveBtn;
 
 
@@ -47,8 +47,8 @@ public class AttackChoice extends Activity {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
-        activeAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getActiveSpells());
-        inactiveAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getUnusedSpells());
+//        activeAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getActiveSpells());
+//        inactiveAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getUnusedSpells());
         System.out.println(inactiveAttack.toString());
         System.out.println(activeAttack.toString());
 
@@ -131,27 +131,20 @@ public class AttackChoice extends Activity {
         }
 
         @Override
-        public View getView(final int position, View rowView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            View rowView = convertView;
+            // reuse views
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rowView = inflater.inflate(R.layout.attack_choice_row_layout, parent, false);
 
-            if(rowView==null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                rowView = inflater.inflate(R.layout.attack_choice_row_layout, parent, false);
-
-                viewHolder = new ViewHolderItem();
-                viewHolder.attackName = (TextView) rowView.findViewById(R.id.AttackName);
-                viewHolder.attackDescription = (TextView) rowView.findViewById(R.id.AttackDescription);
-                viewHolder.toggleButton = (Switch) rowView.findViewById(R.id.ToggleButton);
-                rowView.setTag(viewHolder);
-
-            }else{
-                viewHolder = (ViewHolderItem) rowView.getTag();
-            }
-
-            viewHolder.attackName.setText(values.get(position).getName());
-            viewHolder.attackDescription.setText(values.get(position).getDescription());
-            viewHolder.toggleButton.setChecked(activated);
-            viewHolder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            TextView attackName = (TextView) rowView.findViewById(R.id.AttackName);
+            attackName.setText(values.get(position).getName());
+            TextView attackDescription = (TextView) rowView.findViewById(R.id.AttackDescription);
+            attackDescription.setText(values.get(position).getDescription());
+            final Switch toggleButton = (Switch) rowView.findViewById(R.id.ToggleButton);
+            toggleButton.setChecked(activated);
+            toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
