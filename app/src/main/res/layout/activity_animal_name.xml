@@ -19,12 +19,12 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:gravity="center_horizontal"
-        android:id="@+id/explication_choix"
+        android:id="@+id/nameChoiceDisclaimer"
         style="@style/information"/>
 
 
     <ImageView
-        android:id="@+id/imageViewAnimal"
+        android:id="@+id/animalNameImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

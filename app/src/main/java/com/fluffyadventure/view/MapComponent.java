@@ -1,6 +1,5 @@
 package com.fluffyadventure.view;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -10,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -37,7 +35,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +56,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_activity);
 
-        animal1 = Controller.getAnimal();
+        animal1 = Controller.getAnimal1();
 
         button_go = (Button) findViewById(R.id.map_button_go);
 
@@ -168,7 +165,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     private void addSpawnToMap(GoogleMap map, Resources resources, AbstractSpawn spawn) {
 
         int iconId = resources.getIdentifier(spawn.getIcon(), "drawable", getPackageName());
-        Animal animal = Controller.getAnimal();
+        Animal animal = Controller.getAnimal1();
 
         if (spawn.getStatus(animal).equals(Spawn.Status.DONE) ||
                 spawn.getStatus(animal).equals(Spawn.Status.REQUIREMENT_NOT_MET)) {

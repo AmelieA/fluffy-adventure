@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
@@ -24,7 +26,8 @@ public class AnimalName extends ActionBarActivity {
 
     EditText name;
     Button btnOkName;
-    ImageView imageViewAnimal;
+    TextView nameChoiceDisclaimer;
+    ImageView animalNameImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +36,25 @@ public class AnimalName extends ActionBarActivity {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
+        animalNameImageView = (ImageView) findViewById(R.id.animalNameImageView);
+
+        String imagePath = Controller.getAnimal1().getImagePath();
+
+        animalNameImageView.setImageResource(
+                getResources().getIdentifier(
+                        imagePath, "drawable", getPackageName()));
+
+        nameChoiceDisclaimer = (TextView) findViewById(R.id.nameChoiceDisclaimer);
+        nameChoiceDisclaimer.setTypeface(font);
+
         btnOkName = (Button) findViewById(R.id.BtnOkName);
         btnOkName.setTypeface(font);
         btnOkName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
                 SendAnimalTask task = new SendAnimalTask(name.getText().toString(), AnimalName.this);
                 task.execute();
-
 
             }
         });
@@ -62,10 +74,6 @@ public class AnimalName extends ActionBarActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
-
-        imageViewAnimal = (ImageView) findViewById(R.id.imageViewAnimal);
-        int imgId = getResources().getIdentifier(Controller.getAnimal().getImagePath(),"drawable",getPackageName());
-        imageViewAnimal.setImageDrawable(getResources().getDrawable(imgId));
     }
 
     public void enableSubmitIfReady() {

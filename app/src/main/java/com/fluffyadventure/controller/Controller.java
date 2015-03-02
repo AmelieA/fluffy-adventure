@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class Controller {
 
-    private static Animal animal;
+    private static Animal animal1;
     private static Server server;
     private static User user;
     private static ArrayList<AbstractSpawn> objectives;
@@ -58,21 +58,21 @@ public class Controller {
         objectives.add(dungeon1);
         Log.i("FA", dungeon1.toString());
 
-        AbstractSpawn treasure1 = new Treasure(5,0,0,0,45.784153, 4.856175,"Mon préééécieeeuux ...","Trésor enfoui",0);
+        AbstractSpawn treasure1 = new Treasure(5,0,0,0,45.773716, 4.856081,"Mon préééécieeeuux ...","Trésor enfoui",0);
         objectives.add(treasure1);
         Log.i("FA", treasure1.toString());
 
     }
     public static void setupBob() {
-        animal = new Animal("Bob","bunny1","Rabbit");
+        animal1 = new Animal("Bob","rabbit1","Rabbit");
     }
 
-    public static Animal getAnimal() {
-        return animal;
+    public static void createAnimal1(String name, String imagePath, String type) {
+        animal1 = new Animal(name,imagePath,type);
     }
 
-    public static void setAnimal(Animal animal) {
-        Controller.animal = animal;
+    public static Animal getAnimal1() {
+        return animal1;
     }
 
     public static ArrayList<AbstractSpawn> getObjectives() {
@@ -85,17 +85,17 @@ public class Controller {
         if (user == null) {
             return false;
         }
-        animal = server.getAnimal(user);
-        if (animal == null) {
+        animal1 = server.getAnimal(user);
+        if (animal1 == null) {
             setupBob();
         }
         return true;
     }
 
     public static Boolean sendAnimalToServer(String name){
-        Animal my_animal = server.createAnimal(user,animal,name);
+        Animal my_animal = server.createAnimal(user,animal1,name);
         if (my_animal != null){
-           animal = my_animal;
+           animal1 = my_animal;
             return true;
         }
         return false;

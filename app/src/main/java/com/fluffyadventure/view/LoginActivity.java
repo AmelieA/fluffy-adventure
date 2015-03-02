@@ -5,9 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
-import com.fluffyadventure.view.R;
 
 public class LoginActivity extends Activity {
 
@@ -36,6 +36,21 @@ public class LoginActivity extends Activity {
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
         etUserName = (EditText)findViewById(R.id.etUserName);
+        etUserName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void afterTextChanged(Editable arg0) {
+                    enableSubmitIfReady();
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+            });
+
         etPass = (EditText)findViewById(R.id.etPass);
 
         btnSignIn = (Button)findViewById(R.id.btnSignIn);
@@ -52,6 +67,11 @@ public class LoginActivity extends Activity {
         Logo1.setTypeface(font);
         Logo2 = (TextView)findViewById(R.id.Logo2);
         Logo2.setTypeface(font);
+    }
+
+    public void enableSubmitIfReady() {
+        boolean isReady = etUserName.getText().toString().length() > 0;
+        btnSignIn.setEnabled(isReady);
     }
 
 
@@ -119,7 +139,7 @@ public class LoginActivity extends Activity {
             else {
 
                 Intent intent;
-                if (Controller.getAnimal() != null) {
+                if (Controller.getAnimal1() != null) {
                     intent = new Intent(LoginActivity.this, MapComponent.class);
                 } else {
                     intent = new Intent(LoginActivity.this, AnimalChoiceSlider.class);

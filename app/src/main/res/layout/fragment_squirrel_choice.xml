@@ -52,7 +52,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/buttonOK1"
-                android:fadeScrollbars="true"
+                android:fadeScrollbars="false"
                 android:gravity="center"
                 android:layout_marginBottom="5dp">
                 <RadioGroup

@@ -183,7 +183,7 @@
                         android:layout_height="0px"
                         android:layout_weight="4"
                         android:gravity="bottom"
-                        android:src="@drawable/squirrel5"/>
+                        android:src="@drawable/evilbunny"/>
 
                     <ImageView
                         android:layout_width="fill_parent"

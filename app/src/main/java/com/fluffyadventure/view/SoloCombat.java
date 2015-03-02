@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.widget.ImageView;
 
+import com.fluffyadventure.controller.Controller;
+
 public class SoloCombat extends Activity {
 
     private TextView opponentsName;
@@ -50,6 +52,21 @@ public class SoloCombat extends Activity {
         action2 = (Button) findViewById(R.id.Action2);
         action3 = (Button) findViewById(R.id.Action3);
         action4 = (Button) findViewById(R.id.Action4);
+
+        opponentsName.setText("Evil Bunny");
+
+        String imagePath = "evilbunny";
+
+        opponentImage.setImageResource(
+                getResources().getIdentifier(
+                        imagePath, "drawable", getPackageName()));
+
+        fightersName.setText(Controller.getAnimal1().getName());
+
+        imagePath = Controller.getAnimal1().getImagePath();
+        fighterImage.setImageResource(
+                getResources().getIdentifier(
+                        imagePath, "drawable", getPackageName()));
 
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
