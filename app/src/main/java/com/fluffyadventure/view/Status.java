@@ -1,9 +1,13 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,12 +68,18 @@ public class Status extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(Status.this, AttackChoice.class);
                 startActivity(intent);
-                finish();
             }
         });
 
         btnMoveHQ = (Button) findViewById(R.id.BtnMoveHQ);
         btnMoveHQ.setTypeface(font);
+        btnMoveHQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Status.this, MoveQGActivity.class);
+                startActivity(intent);
+            }
+        });
 
         BtnMap = (ImageButton)findViewById(R.id.BtnMap);
         BtnMap.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +87,6 @@ public class Status extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(Status.this, MapComponent.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -103,5 +112,35 @@ public class Status extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Désirez-vous quitter Fluffy Adventure ?")
+                .setTitle("Quitter l'application ?")
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("EXIT", true);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                })
+                .setNeutralButton("Retour accueil", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                });;
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

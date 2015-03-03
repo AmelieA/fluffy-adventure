@@ -35,6 +35,24 @@ public abstract class AbstractSpawn {
     public AbstractSpawn(){
     }
 
+    public AbstractSpawn(String name, String type){
+        this.spawnId = -1;
+        this.spellReward = 0;
+        this.healthReward = 0;
+        this.strengthReward = 0;
+        this.longitude = 0;
+        this.latitude = 0;
+        this.text = "";
+        if (type.equals("Rabbit")) {
+            this.name = "Terrier de " + name;
+        } else if (type.equals("Squirrel")) {
+            this.name = "Nid de " + name;
+        } else if (type.equals("Sheep")) {
+            this.name = "Bergerie de " + name;
+        }
+        this.level = 0;
+    }
+
     protected AbstractSpawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double latitude, double longitude, String text, String name, Integer level) {
         this.spellReward = spellReward;
         this.healthReward = healthReward;

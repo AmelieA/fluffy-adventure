@@ -26,6 +26,7 @@ import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
+import com.fluffyadventure.model.Treasure;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -133,9 +134,26 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
 
                 AbstractSpawn spawn = spawnMarkers.get(marker.getId());
 
+
                 ((TextView) v.findViewById(R.id.tooltip_name)).setText(spawn.getName());
-                ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
-                ((TextView) v.findViewById(R.id.tooltip_level)).setText(String.valueOf(spawn.getLevel()));
+
+                if (spawn instanceof Dungeon) {
+                    ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
+                    ((TextView) v.findViewById(R.id.tooltip_level)).setText("Finis ce donjon pour pouvoir progresser dans l'aventure !");
+                } else if (spawn instanceof Spawn) {
+                    if (spawn.getSpawnId() != -1)  {
+                        ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
+                        ((TextView) v.findViewById(R.id.tooltip_level)).setText(String.valueOf("Difficulté : " + spawn.getLevel()));
+                    } else {
+                        ((TextView) v.findViewById(R.id.tooltip_text)).setText("Home sweet home");
+                        ((TextView) v.findViewById(R.id.tooltip_level)).setVisibility(View.GONE);
+                    }
+                } else  if (spawn instanceof Treasure) {
+                    ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
+                    ((TextView) v.findViewById(R.id.tooltip_level)).setVisibility(View.GONE);
+                }
+
+
                 return v;
             }
         });
@@ -158,6 +176,17 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
 
         for (AbstractSpawn spawn : spawns) {
             addSpawnToMap(map, resources, spawn);
+        }
+
+        if (Controller.getQGLocation() != null) {
+
+            int iconId = resources.getIdentifier(animal1.getQGImage(), "drawable", getPackageName());
+            Bitmap icon = BitmapFactory.decodeResource(resources, iconId);
+
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(Controller.getQGLocation())
+                    .icon(BitmapDescriptorFactory.fromBitmap(icon)));
+            spawnMarkers.put(marker.getId(), new Spawn(animal1.getName(), animal1.getType()));
         }
     }
 
@@ -189,35 +218,30 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * Convert a bitmap to grayscale
-     */
-    private Bitmap convertToGrayscale(Bitmap icone) {
-
-        ColorMatrix matrix = new ColorMatrix();
-        matrix.setSaturation(0);
-
-        Paint p = new Paint();
-        ColorMatrix cm = new ColorMatrix();
-
-        cm.setSaturation(0);
-        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
-        p.setColorFilter(filter);
-
-        Bitmap iconeNB = Bitmap.createBitmap(icone.getWidth(), icone.getHeight(), icone.getConfig());
-        Canvas canvas = new Canvas(iconeNB);
-
-        canvas.drawBitmap(icone, 0f, 0f, p);
-
-        return iconeNB;
-    }
-
-    /**
      * Select a spawn when the player clicks on a marker
      */
     private void selectSpawn(AbstractSpawn spawn) {
-        selectedSpawn = spawn;
-        button_go.setText("Engager le combat !");
-        button_go.setEnabled(true);
+        if (spawn instanceof Treasure) {
+            selectedSpawn = spawn;
+            button_go.setText("Récupérer le trésor !");
+            button_go.setEnabled(true);
+        } else if (spawn instanceof Spawn) {
+            if (spawn.getSpawnId() != -1) {
+                selectedSpawn = spawn;
+                button_go.setText("Engager le combat !");
+                button_go.setEnabled(true);
+            } else {
+                selectedSpawn = null;
+                button_go.setText("Choisis un objectif sur la carte !");
+                button_go.setEnabled(false);
+            }
+        } else if (spawn instanceof Dungeon) {
+            selectedSpawn = spawn;
+            button_go.setText("Commencer le donjon !");
+            button_go.setEnabled(true);
+        }
+
+
         /* if (spawn.getStatus(animal1).equals(Spawn.Status.AVAILABLE)) {
             button_go.setText("Engager le combat !");
             button_go.setEnabled(true);

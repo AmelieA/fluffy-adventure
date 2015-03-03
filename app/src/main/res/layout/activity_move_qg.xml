@@ -36,9 +36,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="#80000000"
-            android:onClick="testShortcut" />
-    </RelativeLayout>
+            android:background="#80000000" />
+</RelativeLayout>
 
     <Button
         style="@style/btnStyleOrange"

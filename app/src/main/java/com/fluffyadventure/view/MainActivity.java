@@ -42,84 +42,64 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("FA", "Starting...");
-
-        //nextIntentClass = XXX.class;
-        //checkFirstLaunchAndSetupApplication();
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        setupApplication();
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        } else {
+            setContentView(R.layout.activity_main);
 
-        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
+            setupApplication();
 
-        /*MapBtn = (Button)findViewById(R.id.MapBtn);
-        MapBtn.setTypeface(font);
-        MapBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
-                Intent intent = new Intent(MainActivity.this, MapComponent.class);
-                startActivity(intent);
-            }
-        });
-
-        BtnStatus = (Button)findViewById(R.id.BtnStatus);
-        BtnStatus.setTypeface(font);
-        BtnStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Status.class);
-                startActivity(intent);
-            }
-        });*/
-
-        SlideBtn = (Button)findViewById(R.id.SlideBtn);
-        SlideBtn.setTypeface(font);
-        SlideBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MoveQGActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        loginBtn = (Button)findViewById(R.id.loginBtn);
-        loginBtn.setTypeface(font);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Controller.getServer() != null){
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            SlideBtn = (Button)findViewById(R.id.SlideBtn);
+            SlideBtn.setTypeface(font);
+            SlideBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, MoveQGActivity.class);
                     startActivity(intent);
                 }
-                else {
-                    Toast.makeText(MainActivity.this, "Server inconnu", Toast.LENGTH_LONG).show();
+            });
+
+            loginBtn = (Button)findViewById(R.id.loginBtn);
+            loginBtn.setTypeface(font);
+            loginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (Controller.getServer() != null){
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Server inconnu", Toast.LENGTH_LONG).show();
+                    }
+
                 }
+            });
 
-            }
-        });
-
-        signinBtn = (Button)findViewById(R.id.signInBtn);
-        signinBtn.setTypeface(font);
-        signinBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Controller.getServer() != null){
-                    Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                    startActivity(intent);
+            signinBtn = (Button)findViewById(R.id.signInBtn);
+            signinBtn.setTypeface(font);
+            signinBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (Controller.getServer() != null){
+                        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Server inconnu", Toast.LENGTH_LONG).show();
+                    }
                 }
-                else {
-                    Toast.makeText(MainActivity.this, "Server inconnu", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+            });
 
 
-        Logo1 = (TextView)findViewById(R.id.Logo1);
-        Logo1.setTypeface(font);
-        Logo2 = (TextView)findViewById(R.id.Logo2);
-        Logo2.setTypeface(font);
+            Logo1 = (TextView)findViewById(R.id.Logo1);
+            Logo1.setTypeface(font);
+            Logo2 = (TextView)findViewById(R.id.Logo2);
+            Logo2.setTypeface(font);
+        }
     }
 
 

@@ -52,7 +52,6 @@ public class AnimalName extends ActionBarActivity {
         btnOkName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 SendAnimalTask task = new SendAnimalTask(name.getText().toString(), AnimalName.this);
                 task.execute();
 
@@ -148,7 +147,7 @@ public class AnimalName extends ActionBarActivity {
                 Toast.makeText(AnimalName.this, "Animal Créé", Toast.LENGTH_LONG).show();
             }
 
-            Intent intent = new Intent(AnimalName.this, com.fluffyadventure.view.Status.class);
+            Intent intent = new Intent(AnimalName.this, Status.class);
             startActivity(intent);
             finish();
 

@@ -45,19 +45,32 @@ import java.util.Map;
 public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private TextView move_QG_desc;
-    private Button button_go;
+    private Button map_button_go;
     private GoogleMap currentMap;
+    private String homeType;
+    private boolean firstTime;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.map_activity);
+        setContentView(R.layout.activity_move_qg);
 
-        button_go = (Button) findViewById(R.id.map_button_go);
+        Animal animal1 = Controller.getAnimal1();
+        homeType = "";
+
+        if (animal1.getType().equals("Rabbit")) {
+            homeType = "le terrier";
+        } else if (animal1.getType().equals("Squirrel")) {
+            homeType = "le nid";
+        } else if (animal1.getType().equals("Sheep")) {
+            homeType = "la bergerie";
+        }
+
+        map_button_go = (Button) findViewById(R.id.map_button_go);
 
         //homeBtn.setTypeface(font);
-        button_go.setOnClickListener(new View.OnClickListener() {
+        map_button_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MoveQGActivity.this, Status.class);
@@ -65,6 +78,18 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
                 finish();
             }
         });
+
+        move_QG_desc = (TextView) findViewById(R.id.move_QG_desc);
+
+        if (Controller.getQGLocation() == null) {
+            firstTime = true;
+            map_button_go.setText("Choisis un emplacement");
+            move_QG_desc.setText("Choisis un emplacement pour " + homeType + " de " + animal1.getName());
+        } else {
+            firstTime = false;
+            map_button_go.setText("Valider la position");
+            move_QG_desc.setText("Choisis un nouvel emplacement pour " + homeType + " de " + animal1.getName());
+        }
     }
 
     @Override
@@ -101,8 +126,17 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
 
             @Override
             public void onMapClick(LatLng point) {
-                Controller.setQGLocation(point.latitude,point.longitude);
-                placeQGOnMap();
+                if (newPlaceFarEnough(point) || firstTime) {
+                    Controller.setQGLocation(point.latitude,point.longitude);
+                    placeQGOnMap();
+                    map_button_go.setEnabled(true);
+                    map_button_go.setText("Valider la position");
+                    Animal animal1 = Controller.getAnimal1();
+                    move_QG_desc.setText("Choisis un nouvel emplacement pour " + homeType + " de " + animal1.getName());
+                } else {
+                    showTooFarDialog();
+                }
+
             }
         });
 
@@ -121,8 +155,6 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
             currentMap.clear();
             Resources resources = getResources();
 
-            LatLng QG = Controller.getQGLocation();
-
             Animal animal = Controller.getAnimal1();
 
             int iconId = resources.getIdentifier(animal.getQGImage(), "drawable", getPackageName());
@@ -134,9 +166,19 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
         }
     }
 
+    private boolean newPlaceFarEnough(LatLng newPlace) {
+        if (Controller.getQGLocation() == null) {
+            return true;
+        } else {
+            float[] results = new float[3];
+            Location.distanceBetween(Controller.getQGLocation().latitude,Controller.getQGLocation().longitude,newPlace.latitude,newPlace.longitude,results);
+            return results[0] > 999;
+        }
+    }
+
     private void showTooFarDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Le nouvel emplacement est trop près de l'ancien.")
+        builder.setMessage("Le nouvel emplacement est trop près de l'ancien (moins d'1km).")
                 .setTitle("Déménagement impossible");
 
         AlertDialog dialog = builder.create();
