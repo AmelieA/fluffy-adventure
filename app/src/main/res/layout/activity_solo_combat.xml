@@ -182,6 +182,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
                         android:layout_weight="4"
+                        android:interpolator="@anim/death_animation"
                         android:gravity="bottom"
                         android:src="@drawable/evilbunny"/>
 
