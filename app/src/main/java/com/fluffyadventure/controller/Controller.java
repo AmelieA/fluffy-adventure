@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Spell;
 import com.fluffyadventure.model.User;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
@@ -106,6 +107,20 @@ public class Controller {
         server = new Server(name,port);
         return server.testConnection();
 
+    }
+
+    public static Boolean changeSpells(ArrayList<Spell> active, ArrayList<Spell> unused){
+        if (active.equals(animal1.getActiveSpells()) && unused.equals(animal1.getUnusedSpells())){
+            return  true;
+        }
+        Boolean done = server.changeSpells(user, active, unused);
+        if (done){
+            animal1.setActiveSpells(active);
+            animal1.setUnusedSpells(unused);
+            return true;
+        }
+
+        return false;
     }
 
     public static Server getServer() {

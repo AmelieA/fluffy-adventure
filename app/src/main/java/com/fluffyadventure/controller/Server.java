@@ -6,6 +6,7 @@ import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Spell;
 import com.fluffyadventure.model.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +17,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by denis on 23/02/15.
@@ -137,70 +140,14 @@ public class Server {
     public Animal getAnimal(User user) {
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/get_animal";
         try {
-
-
             URL url = new URL(uri);
-            HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
-            HttpURLConnection urlConnection2 = (HttpURLConnection) url.openConnection();
-
-
-            urlConnection1.setDoInput(true);
-            urlConnection1.setRequestProperty("Accept", "application/json");
-
-            urlConnection2.setDoInput(true);
-            urlConnection2.setRequestProperty("Accept", "application/json");
-
-            String encoded1;
-
-            if (user.getToken() != null) {
-                encoded1 = Base64.encodeToString((String.format("%s:%s", user.getToken(), "unused")).getBytes(), Base64.NO_WRAP);
-
-
-            } else {
-                encoded1 = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
-            }
-            urlConnection1.setRequestProperty("Authorization", String.format("Basic %s", encoded1));
-            urlConnection1.connect();
-
-            int httpResult = urlConnection1.getResponseCode();
-            Boolean firstAttempt = false;
-
-            BufferedReader bufferedReader;
-            if (httpResult == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                String encoded2 = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
-                urlConnection2.setRequestProperty("Authorization", String.format("Basic %s", encoded2));
-                urlConnection2.connect();
-                httpResult = urlConnection2.getResponseCode();
-
-            }
-            else if (httpResult == HttpURLConnection.HTTP_OK){
-
-
-                firstAttempt = true;
-
-            }
-
-            if (httpResult == HttpURLConnection.HTTP_OK) {
-                if (firstAttempt) {
-                    bufferedReader = new BufferedReader(new InputStreamReader(urlConnection1.getInputStream()));
-                }
-                else {
-                    bufferedReader = new BufferedReader(new InputStreamReader(urlConnection2.getInputStream()));
-                }
-                StringBuilder inputString = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    inputString.append(line + "\n");
-                }
-                bufferedReader.close();
-
-                JSONObject inputJson = new JSONObject(inputString.toString());
-                Animal animal = new Animal(inputJson);
-                animal.toJson().toString();
-
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, false, null);
+            if (returnJson != null){
+                JSONObject animalJson = returnJson.getJSONObject("json");
+                Animal animal = new Animal(animalJson);
                 return animal;
-
             }
+
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (JSONException ex) {
@@ -237,68 +184,15 @@ public class Server {
             animal.addSpell(spell, true);
             animal.setName(name);
 
-
             URL url = new URL(uri);
-            HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
-            HttpURLConnection urlConnection2 = (HttpURLConnection) url.openConnection();
-
-            urlConnection1.setDoOutput(true);
-            urlConnection1.setDoInput(true);
-            urlConnection1.setRequestMethod("POST");
-            urlConnection1.setRequestProperty("Accept", "application/json");
-            urlConnection1.setRequestProperty("Content-Type", "application/json");
-
-
-            urlConnection2.setDoOutput(true);
-            urlConnection2.setDoInput(true);
-            urlConnection2.setRequestMethod("POST");
-            urlConnection2.setRequestProperty("Accept", "application/json");
-            urlConnection2.setRequestProperty("Content-Type", "application/json");
-            String encoded1;
-
-            if (user.getToken() != null)
-            {
-                encoded1 = Base64.encodeToString((String.format("%s:%s", user.getToken(), "unused")).getBytes(), Base64.NO_WRAP);
-
-
-            }
-            else {
-                encoded1 = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
-            }
-            urlConnection1.setRequestProperty("Authorization", String.format("Basic %s", encoded1));
-            OutputStream out1 = urlConnection1.getOutputStream();
             JSONObject json = animal.toJson();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out1, "UTF-8"));
-            writer.write(json.toString());
-            writer.flush();
-            writer.close();
-            out1.close();
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
 
-            urlConnection1.connect();
-
-            int httpResult = urlConnection1.getResponseCode();
-            if (httpResult != HttpURLConnection.HTTP_OK && user.getToken() != null)
-            {
-
-                String encoded2 = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
-                urlConnection2.setRequestProperty("Authorization", String.format("Basic %s", encoded2));
-                out1 = urlConnection2.getOutputStream();
-                writer = new BufferedWriter(new OutputStreamWriter(out1, "UTF-8"));
-                writer.write(json.toString());
-                writer.flush();
-                writer.close();
-                out1.close();
-
-                urlConnection2.connect();
-                httpResult = urlConnection2.getResponseCode();
-
-            }
-
-            if (httpResult == HttpURLConnection.HTTP_OK) {
+            if (returnJson != null){
 
                 return animal;
-
             }
+
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (JSONException ex) {
@@ -308,28 +202,130 @@ public class Server {
 
 
         }
-    private HttpURLConnection connectWithAuth(HttpURLConnection urlConnection, User user, int responseCode) throws IOException {
-        //TODO: REMOVE DAT SHIT
-        HttpURLConnection urlConnection1 = (HttpURLConnection) urlConnection;
-        urlConnection1.disconnect();
-        HttpURLConnection urlConnection2 = (HttpURLConnection) urlConnection;
-        urlConnection2.disconnect();
-        String encoded;
-        if (user.getToken() != null)
-        {
-            encoded = Base64.encodeToString((String.format("%s:%s", user.getToken(), "unused")).getBytes(), Base64.NO_WRAP);
+    private JSONObject connectWithAuth(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
+        //TODO: Get tokenz!
+        HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
+        if (input) {
+            urlConnection1.setDoInput(true);
+            urlConnection1.setRequestProperty("Accept", "application/json");
+        }
+
+
+        if (output){
+            urlConnection1.setDoOutput(true);
+            urlConnection1.setRequestMethod("POST");
+            urlConnection1.setRequestProperty("Content-Type", "application/json");
+        }
+
+        if ((user.getToken() != null) && (user.getToken() != "")){
+            String encoded = Base64.encodeToString((String.format("%s:%s", user.getToken(), "unused")).getBytes(), Base64.NO_WRAP);
             urlConnection1.setRequestProperty("Authorization", String.format("Basic %s", encoded));
+            if (output){
+                OutputStream out = urlConnection1.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+                writer.write(outputJson.toString());
+                writer.flush();
+                writer.close();
+                out.close();
+            }
             urlConnection1.connect();
             if (urlConnection1.getResponseCode() == responseCode){
-                return urlConnection1;
+                JSONObject inputJson = new JSONObject();
+                if (input){
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection1.getInputStream()));
+                    StringBuilder inputString = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        inputString.append(line + "\n");
+                    }
+                    bufferedReader.close();
+                    inputJson.put("json",new JSONObject(inputString.toString()));
+                }
+                inputJson.put("return",responseCode);
+                return  inputJson;
             }
+            urlConnection1.disconnect();
+
         }
-        encoded = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
-        urlConnection2.setRequestProperty("Authorization", String.format("Basic %s", encoded));
-        urlConnection2.connect();
-        return urlConnection2;
+
+        urlConnection1 = (HttpURLConnection) url.openConnection();
+        if (input) {
+            urlConnection1.setDoInput(true);
+            urlConnection1.setRequestProperty("Accept", "application/json");
+        }
+
+
+        if (output){
+            urlConnection1.setDoOutput(true);
+            urlConnection1.setRequestMethod("POST");
+            urlConnection1.setRequestProperty("Content-Type", "application/json");
+        }
+
+
+        String encoded = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
+        urlConnection1.setRequestProperty("Authorization", String.format("Basic %s", encoded));
+        if (output){
+            OutputStream out = urlConnection1.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            writer.write(outputJson.toString());
+            writer.flush();
+            writer.close();
+            out.close();
+        }
+        urlConnection1.connect();
+        if (urlConnection1.getResponseCode() == responseCode){
+            JSONObject inputJson = new JSONObject();
+            if (input){
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection1.getInputStream()));
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+                inputJson.put("json",new JSONObject(inputString.toString()));
+            }
+            inputJson.put("return",responseCode);
+            return  inputJson;
+        }
+
+        return null;
 
     }
+    public Boolean changeSpells(User user, ArrayList<Spell> active, ArrayList<Spell> unused){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/change_spells";
+        try {
+            URL url = new URL(uri);
+            JSONObject json = new JSONObject();
+            JSONArray activeJson = new JSONArray();
+            for (Spell spell : active){
+                activeJson.put(spell.toJson().toString());
+            }
+            json.put("Active",activeJson);
+
+            JSONArray unusedJson = new JSONArray();
+            for (Spell spell: unused){
+                unusedJson.put(spell.toJson().toString());
+            }
+
+            json.put("Unused", unused);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
+
+            if (returnJson != null){
+
+                return true;
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public Spell get_spell(int id){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(id);
         try {
