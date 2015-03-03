@@ -103,7 +103,16 @@
         android:layout_centerHorizontal="true"
         android:singleLine="false" />
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/slider_button_text"
+        android:id="@+id/SlideBtn"
+        android:layout_marginBottom="140dp"
+        style="@style/btnStyleOrange"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:singleLine="false" />
 
     <!--
     <Button
@@ -112,16 +121,6 @@
         android:text="@string/map_button_text"
         android:id="@+id/MapBtn"
         android:layout_marginBottom="20dp"
-        style="@style/btnStyleOrange"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:singleLine="false" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/slider_button_text"
-        android:id="@+id/SlideBtn"
-        android:layout_marginBottom="80dp"
         style="@style/btnStyleOrange"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

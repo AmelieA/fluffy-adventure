@@ -11,6 +11,7 @@ import com.fluffyadventure.model.User;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Treasure;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public class Controller {
     private static Server server;
     private static User user;
     private static ArrayList<AbstractSpawn> objectives;
-
+    private static LatLng QGLocation;
 
     public static Boolean createUser(String name, String password) {
         user = server.createUser(name,password);
@@ -109,5 +110,13 @@ public class Controller {
 
     public static Server getServer() {
         return server;
+    }
+
+    public static LatLng getQGLocation() {
+        return QGLocation;
+    }
+
+    public static void setQGLocation(double latitude, double longitude) {
+        Controller.QGLocation = new LatLng(latitude,longitude);
     }
 }

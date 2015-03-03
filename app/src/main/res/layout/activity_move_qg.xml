@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fluffyadventure.view.MoveQGActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/out"
+        android:weightSum="6"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.gms.maps.MapFragment"
+            tools:layout="@android:layout/simple_gallery_item"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:id="@+id/move_QG_desc"
+            android:gravity="center"
+            android:text="ToBeChanged"
+            style="@style/information"
+            android:singleLine="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="#80000000"
+            android:onClick="testShortcut" />
+    </RelativeLayout>
+
+    <Button
+        style="@style/btnStyleOrange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ToBeChangedToo"
+        android:id="@+id/map_button_go"
+        android:onClick="startSelectedQuest"
+        android:nestedScrollingEnabled="true"
+        android:clickable="true"
+        android:enabled="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+</RelativeLayout>

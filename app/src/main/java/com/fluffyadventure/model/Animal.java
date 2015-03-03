@@ -14,6 +14,7 @@ public class Animal {
 
     private String name;
     private String imagePath;
+    private String QGImage;
     private String type;
 
     private int health = 0;
@@ -44,61 +45,30 @@ public class Animal {
         this.succeededSpawns = new ArrayList<>(animal.getSucceededSpawns());
     }
 
-    public Animal(String name, String imagePath, String type) {
-        this.name = name;
-        this.imagePath = imagePath;
-        this.type = type;
-        switch (type){
-            case "Sheep":
-                this.health = 125;
-                this.strength = 8;
-                this.accuracy = 100;
-                this.evasiveness = 1;
-                break;
-            case "Squirrel":
-                this.health = 100;
-                this.strength = 12;
-                this.accuracy = 90;
-                this.evasiveness = 1;
-                break;
-            case "Rabbit":
-                this.health = 100;
-                this.strength = 10;
-                this.accuracy = 100;
-                this.evasiveness = 10;
-                break;
-            default:
-                this.health = 100;
-                this.strength = 10;
-                this.accuracy = 100;
-                this.evasiveness = 10;
-                this.type = "Rabbit";
-                break;
-        }
-    }
-
-
     public Animal(String imagePath, String type) {
         this.imagePath = imagePath;
         this.type = type;
         switch (type){
             case "Sheep":
-                this.health = 125;
+                this.health = 135;
                 this.strength = 8;
                 this.accuracy = 100;
-                this.evasiveness = 1;
+                this.evasiveness = 5;
+                this.QGImage = "grassicon";
                 break;
             case "Squirrel":
                 this.health = 100;
                 this.strength = 12;
                 this.accuracy = 90;
-                this.evasiveness = 1;
+                this.evasiveness = 5;
+                this.QGImage = "nuticon";
                 break;
             case "Rabbit":
                 this.health = 100;
                 this.strength = 10;
                 this.accuracy = 100;
-                this.evasiveness = 10;
+                this.evasiveness = 15;
+                this.QGImage = "carroticon";
                 break;
             default:
                 this.health = 100;
@@ -106,8 +76,15 @@ public class Animal {
                 this.accuracy = 100;
                 this.evasiveness = 10;
                 this.type = "Rabbit";
+                this.QGImage = "carroticon";
                 break;
         }
+    }
+
+
+    public Animal(String name, String imagePath, String type) {
+        this(imagePath, type);
+        this.name = name;
     }
 
     public void success(Integer spawnID) {
@@ -163,8 +140,13 @@ public class Animal {
         return unusedSpells;
     }
 
-    public List<Integer> getSucceededSpawns() { return succeededSpawns; }
+    public List<Integer> getSucceededSpawns() {
+        return succeededSpawns;
+    }
 
+    public String getQGImage() {
+        return QGImage;
+    }
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;

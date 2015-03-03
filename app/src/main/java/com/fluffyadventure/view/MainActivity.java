@@ -64,16 +64,6 @@ public class MainActivity extends Activity {
             }
         });
 
-        SlideBtn = (Button)findViewById(R.id.SlideBtn);
-        SlideBtn.setTypeface(font);
-        SlideBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AnimalChoiceSlider.class);
-                startActivity(intent);
-            }
-        });
-
         BtnStatus = (Button)findViewById(R.id.BtnStatus);
         BtnStatus.setTypeface(font);
         BtnStatus.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +74,15 @@ public class MainActivity extends Activity {
             }
         });*/
 
+        SlideBtn = (Button)findViewById(R.id.SlideBtn);
+        SlideBtn.setTypeface(font);
+        SlideBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MoveQGActivity.class);
+                startActivity(intent);
+            }
+        });
 
         loginBtn = (Button)findViewById(R.id.loginBtn);
         loginBtn.setTypeface(font);
