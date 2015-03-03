@@ -159,7 +159,7 @@ public class MainActivity extends Activity {
     private  void setupApplication() {
 
         Controller.setupBob();
-        Controller.setupObjectives();
+        //Controller.setupObjectives();
 
         Resources resources = this.getResources();
         AssetManager assetManager = resources.getAssets();
@@ -218,6 +218,7 @@ public class MainActivity extends Activity {
         protected Boolean doInBackground(Void... params){
 
             Boolean result = Controller.connectToServer(server, port);
+            Controller.setUpObjectivesFromServer();
             //Boolean result = true;
 
 

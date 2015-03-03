@@ -1,9 +1,14 @@
 package com.fluffyadventure.controller;
 
 import android.util.Base64;
+import android.util.Log;
 
+import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Dungeon;
+import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Spell;
+import com.fluffyadventure.model.Treasure;
 import com.fluffyadventure.model.User;
 
 import org.json.JSONArray;
@@ -352,6 +357,57 @@ public class Server {
                 System.out.println(inputJson.toString());
                 Spell spell = new Spell(inputJson);
                 return spell;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<AbstractSpawn> get_spawns(){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spawns";
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setDoInput(true);
+            urlConnection.setRequestProperty("Accept", "application/json");
+
+            urlConnection.connect();
+
+            int httpResult = urlConnection.getResponseCode();
+
+            if (httpResult == HttpURLConnection.HTTP_OK) {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+                ArrayList<AbstractSpawn> spawnList = new ArrayList<AbstractSpawn>();
+                Log.d("input", inputString.toString());
+
+                //JSONObject inputJson = new JSONObject(inputString.toString());
+                JSONArray array = new JSONArray(inputString.toString());
+                for (int i = 0; i < array.length(); i++){
+                    JSONObject object = array.getJSONObject(i);
+                    AbstractSpawn abstractSpawn;
+                    if (object.getString("Type").equals("Spawn")) {
+                        abstractSpawn = new Spawn(object);
+                    }
+                    else if (object.getString("Type").equals("Dungeon")){
+                        abstractSpawn = new Dungeon(object);
+                    }
+                    else {
+                        abstractSpawn = new Treasure(object);
+                    }
+                    spawnList.add(abstractSpawn);
+                }
+                //System.out.println(inputJson.toString());
+                return spawnList;
             }
         } catch (IOException ex) {
             ex.printStackTrace();
