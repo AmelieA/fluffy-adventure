@@ -1,5 +1,7 @@
 package com.fluffyadventure.model;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -204,11 +206,13 @@ public class Animal {
             unusedSpells.add(spell);
         }
 
-        JSONArray active = spells.getJSONArray("Unused");
+        JSONArray active = spells.getJSONArray("Active");
+        Log.d("activeJson", active.toString());
         for (int i = 0; i < active.length(); i++){
             Spell spell = new Spell(active.getJSONObject(i));
             activeSpells.add(spell);
         }
+        Log.d("activetoucour",activeSpells.toString());
 
         this.name = json.getString("Name");
         this.imagePath =  json.getString("ImgPath");

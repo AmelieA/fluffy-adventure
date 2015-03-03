@@ -139,7 +139,7 @@ public class MainActivity extends Activity {
     private  void setupApplication() {
 
         Controller.setupBob();
-        Controller.setupObjectives();
+        //Controller.setupObjectives();
 
         Resources resources = this.getResources();
         AssetManager assetManager = resources.getAssets();
@@ -155,7 +155,8 @@ public class MainActivity extends Activity {
             LoginUserTask task = new LoginUserTask(server_name, server_port, MainActivity.this);
             task.execute();
         } catch (IOException e) {
-            System.err.println("Failed to open server property file");
+            Log.i("Server","Failed to open server property file");
+            Log.i("Server","Failed to open server property file");
             e.printStackTrace();
 
 
@@ -197,13 +198,14 @@ public class MainActivity extends Activity {
         protected Boolean doInBackground(Void... params){
 
             Boolean result = Controller.connectToServer(server, port);
+            Controller.setUpObjectivesFromServer();
             //Boolean result = true;
 
 
             return result;
         }
         protected  void onPostExecute(Boolean login) {
-            System.out.println("done");
+            Log.i("Server","Attempted connection");
             dialog.dismiss();
 
             if (!login){

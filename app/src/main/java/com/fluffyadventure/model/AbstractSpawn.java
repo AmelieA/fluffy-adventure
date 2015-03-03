@@ -2,6 +2,8 @@ package com.fluffyadventure.model;
 
 import android.location.Location;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Johan on 18/02/2015.
@@ -35,24 +37,6 @@ public abstract class AbstractSpawn {
     public AbstractSpawn(){
     }
 
-    public AbstractSpawn(String name, String type){
-        this.spawnId = -1;
-        this.spellReward = 0;
-        this.healthReward = 0;
-        this.strengthReward = 0;
-        this.longitude = 0;
-        this.latitude = 0;
-        this.text = "";
-        if (type.equals("Rabbit")) {
-            this.name = "Terrier de " + name;
-        } else if (type.equals("Squirrel")) {
-            this.name = "Nid de " + name;
-        } else if (type.equals("Sheep")) {
-            this.name = "Bergerie de " + name;
-        }
-        this.level = 0;
-    }
-
     protected AbstractSpawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double latitude, double longitude, String text, String name, Integer level) {
         this.spellReward = spellReward;
         this.healthReward = healthReward;
@@ -63,6 +47,21 @@ public abstract class AbstractSpawn {
         this.name = name;
         this.spawnId = spawnId;
         this.level = level;
+    }
+
+    protected AbstractSpawn(JSONObject json) throws JSONException {
+        this.spellReward = json.getInt("SpellReward");
+        this.healthReward = json.getInt("HealthReward");
+        this.strengthReward = json.getInt("StrengthReward");
+        this.text = json.getString("Text");
+        this.name = json.getString("Name");
+        this.spawnId = json.getInt("Id");
+        this.level = json.getInt("Level");
+    }
+
+    public void setCoordinates(double latitude, double longitude){
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getStatus(Animal animal){
