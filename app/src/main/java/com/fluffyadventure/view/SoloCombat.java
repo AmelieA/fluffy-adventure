@@ -1,6 +1,7 @@
 package com.fluffyadventure.view;
 
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -18,15 +19,19 @@ import android.widget.ImageView;
 
 import com.fluffyadventure.controller.Controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class SoloCombat extends Activity {
 
     private TextView opponentsName;
     private ProgressBar opponentsLife;
-    private int opponentsLifePoint = 100;
+    private int opponentsLifePoint;
     private ImageView opponentImage;
     private TextView fightersName;
     private ProgressBar fightersLife;
-    private int fightersLifePoint = 100;
+    private int fightersLifePoint;
     private TextView instruction;
     private ImageView fighterImage;
     private Button action1;
@@ -60,12 +65,14 @@ public class SoloCombat extends Activity {
         opponentImage.setImageResource(
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
+        opponentsLifePoint=100;
 
         fightersName.setText(Controller.getAnimal1().getName());
         imagePath = Controller.getAnimal1().getImagePath();
         fighterImage.setImageResource(
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
+        fightersLifePoint=100;
 
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -100,40 +107,92 @@ public class SoloCombat extends Activity {
             }
         });
 
+        action3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, 100, opponentImage);
+            }
+        });
+
     }
 
     public int LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointLost, ImageView opponentImage) {
 
-        ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", lifeProgressBarPoint, lifeProgressBarPoint-lifePointLost);
-        animation.setDuration(lifePointLost*15);
-        animation.setInterpolator(new DecelerateInterpolator());
-        animation.start();
-        lifeProgressBarPoint-=lifePointLost;
+        //special animation in case of rapid lost point
+        if (lifePointLost>75) {
+            ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", lifeProgressBarPoint, lifeProgressBarPoint-lifePointLost);
+            animation.setDuration(lifePointLost*15);
+            animation.setInterpolator(new DecelerateInterpolator());
+            animation.start();
+            lifeProgressBarPoint-=lifePointLost;
+//
+//            Resources res = getResources();
+//            Rect bounds = lifeProgressBar.getProgressDrawable().getBounds();
+//            if (lifeProgressBarPoint<50){
+//                if (lifeProgressBarPoint<25){
+//                    lifeProgressBar.setProgressDrawable(res.getDrawable(R.drawable.red_progress_bar));
+//                }else {
+//                    lifeProgressBar.setProgressDrawable(res.getDrawable(R.drawable.orange_progress_bar));
+//                }
+//            }
+//            lifeProgressBar.getProgressDrawable().setBounds(bounds);
+//            lifeProgressBar.setProgress(lifeProgressBarPoint);
+        }else {
+            int offset = 0;
+            Integer[] listTriggerPoints = {100, 50, 25, 0};
+            Integer[] listProgressBarColors = {R.drawable.orange_progress_bar, R.drawable.red_progress_bar, R.drawable.red_progress_bar};
+            for (int i = 0; i < listProgressBarColors.length; i++) {
+                //if life is between two trigger point and you still have life point to loose, programs animation
+                if ((lifeProgressBarPoint > listTriggerPoints[i + 1]) && (lifeProgressBarPoint <= listTriggerPoints[i]) && (lifePointLost >= 0)) {
+                    //pointToLose: point life to lose under this iteration ie with this color progress bar
+                    //lifePointLost act as a global pointToLose
+                    int pointToLose = (lifePointLost <= (listTriggerPoints[i] - listTriggerPoints[i + 1])) ? lifePointLost : listTriggerPoints[i + 1];
+                    LosePointAnimation(lifeProgressBar, lifeProgressBarPoint, lifeProgressBarPoint - pointToLose, offset);
+                    lifePointLost -= pointToLose;
+                    lifeProgressBarPoint -= pointToLose;
+                    offset += pointToLose * 15;
 
-        Resources res = getResources();
-        Rect bounds = lifeProgressBar.getProgressDrawable().getBounds();
-        if (lifeProgressBarPoint<50){
-            if (lifeProgressBarPoint<25){
-                lifeProgressBar.setProgressDrawable(res.getDrawable(R.drawable.red_progress_bar));
-            }else {
-                lifeProgressBar.setProgressDrawable(res.getDrawable(R.drawable.orange_progress_bar));
+                    //change color of the process bar if needed after removal of life point
+                    if (lifeProgressBarPoint <= listTriggerPoints[i + 1]) {
+                        Resources res = getResources();
+                        Rect bounds = lifeProgressBar.getProgressDrawable().getBounds();
+                        lifeProgressBar.setProgressDrawable(res.getDrawable(listProgressBarColors[i]));
+                        lifeProgressBar.getProgressDrawable().setBounds(bounds);
+                        lifeProgressBar.setProgress(lifeProgressBarPoint);
+                    }
+                }
             }
         }
-        lifeProgressBar.getProgressDrawable().setBounds(bounds);
-        lifeProgressBar.setProgress(lifeProgressBarPoint);
 
+        // animate the death of the animal
         if (lifeProgressBarPoint<=0){
-            Animation hyperspaceJump = AnimationUtils.loadAnimation(this, R.anim.death_animation);
-            opponentImage.startAnimation(hyperspaceJump);
+            Animation deadAnimation = AnimationUtils.loadAnimation(this, R.anim.death_animation);
+            deadAnimation.setStartOffset(lifePointLost*15);
+            opponentImage.startAnimation(deadAnimation);
+
+//            animator = ValueAnimator.ofFloat(0, 1); // values from 0 to 1
+//            animator.setDuration(5000); // 5 seconds duration from 0 to 1
+//            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                @Override
+//                public void onAnimationUpdate(ValueAnimator animation) {
+//                    float value = ((Float) (animation.getAnimatedValue()))
+//                            .floatValue();
+//                    // Set translation of your view here. Position can be calculated
+//                    // out of value. This code should move the view in a half circle.
+//                    view.setTranslationX((float) (200.0 * Math.sin(value * Math.PI)));
+//                    view.setTranslationY((float) (200.0 * Math.cos(value * Math.PI)));
+//                }
+//            });
+
         }
 
         return (lifeProgressBarPoint);
-
     }
 
-    @Override
-    public void onBackPressed() {
-        return;
+    private void LosePointAnimation(ProgressBar lifeProgressBar, int start, int end, int timeOffset){
+        ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", start, end);
+        animation.setDuration( Math.abs(start-end)*15);
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.setStartDelay(timeOffset);
+        animation.start();
     }
-
 }
