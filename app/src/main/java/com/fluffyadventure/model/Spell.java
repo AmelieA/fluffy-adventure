@@ -12,6 +12,7 @@ public class Spell {
     private String Name;
     private String Description;
 
+
     public Spell(int id, String name, String description) {
         this.id = id;
         Name = name;
@@ -42,5 +43,10 @@ public class Spell {
         json.put("Id",this.getId());
         json.put("Description",this.getDescription());
         return json;
+    }
+
+    @Override
+    public String toString(){
+        return getName();
     }
 }

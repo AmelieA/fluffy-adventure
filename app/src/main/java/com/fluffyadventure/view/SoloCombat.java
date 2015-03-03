@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
@@ -54,15 +56,12 @@ public class SoloCombat extends Activity {
         action4 = (Button) findViewById(R.id.Action4);
 
         opponentsName.setText("Evil Bunny");
-
         String imagePath = "evilbunny";
-
         opponentImage.setImageResource(
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
 
         fightersName.setText(Controller.getAnimal1().getName());
-
         imagePath = Controller.getAnimal1().getImagePath();
         fighterImage.setImageResource(
                 getResources().getIdentifier(
@@ -70,7 +69,7 @@ public class SoloCombat extends Activity {
 
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                //old way to get the animation of the lost PV.
                 // Start lengthy operation in a background thread
 //                new Thread(new Runnable() {
 //                    public void run() {
@@ -91,15 +90,19 @@ public class SoloCombat extends Activity {
 //                        }
 //                    }
 //                }).start();
-
-            opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15);
+                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage);
             }
         });
 
+        action2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 100, opponentImage);
+            }
+        });
 
     }
 
-    public int LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointLost) {
+    public int LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointLost, ImageView opponentImage) {
 
         ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", lifeProgressBarPoint, lifeProgressBarPoint-lifePointLost);
         animation.setDuration(lifePointLost*15);
@@ -118,6 +121,11 @@ public class SoloCombat extends Activity {
         }
         lifeProgressBar.getProgressDrawable().setBounds(bounds);
         lifeProgressBar.setProgress(lifeProgressBarPoint);
+
+        if (lifeProgressBarPoint<=0){
+            Animation hyperspaceJump = AnimationUtils.loadAnimation(this, R.anim.death_animation);
+            opponentImage.startAnimation(hyperspaceJump);
+        }
 
         return (lifeProgressBarPoint);
 
