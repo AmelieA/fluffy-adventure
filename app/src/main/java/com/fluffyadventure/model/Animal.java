@@ -103,6 +103,22 @@ public class Animal extends Creature{
         this.accuracy = json.getInt("Accuracy");
         this.evasiveness = json.getInt("Evasiveness");
 
+        switch (type){
+            case Creature.SHEEP:
+                this.QGImage = "grassicon";
+                break;
+            case Creature.SQUIRREL:
+                this.QGImage = "nuticon";
+                break;
+            case Creature.RABBIT:
+                this.QGImage = "carroticon";
+                break;
+            default:
+                this.type = Creature.RABBIT;
+                this.QGImage = "carroticon";
+                break;
+        }
+
     }
 
     public void setActiveSpells(List<Spell> activeSpells) {
