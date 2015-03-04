@@ -1,7 +1,6 @@
 package com.fluffyadventure.view;
 
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -18,10 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.ImageView;
 
 import com.fluffyadventure.controller.Controller;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class SoloCombat extends Activity {
 
@@ -118,12 +113,11 @@ public class SoloCombat extends Activity {
     public int LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointLost, ImageView opponentImage) {
 
         //special animation in case of rapid lost point
-        if (lifePointLost>75) {
-            ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", lifeProgressBarPoint, lifeProgressBarPoint-lifePointLost);
-            animation.setDuration(lifePointLost*15);
-            animation.setInterpolator(new DecelerateInterpolator());
-            animation.start();
-            lifeProgressBarPoint-=lifePointLost;
+//            ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", lifeProgressBarPoint, lifeProgressBarPoint-lifePointLost);
+//            animation.setDuration(lifePointLost*15);
+//            animation.setInterpolator(new DecelerateInterpolator());
+//            animation.start();
+//            lifeProgressBarPoint-=lifePointLost;
 //
 //            Resources res = getResources();
 //            Rect bounds = lifeProgressBar.getProgressDrawable().getBounds();
@@ -136,8 +130,15 @@ public class SoloCombat extends Activity {
 //            }
 //            lifeProgressBar.getProgressDrawable().setBounds(bounds);
 //            lifeProgressBar.setProgress(lifeProgressBarPoint);
-        }else {
-            int offset = 0;
+//
+//            }
+
+            //animate injury (blinking animal)
+            Animation injuryAnimation = AnimationUtils.loadAnimation(this, R.anim.injury_animation);
+            injuryAnimation.restrictDuration(20);
+            opponentImage.startAnimation(injuryAnimation);
+
+            int offset = 300;
             Integer[] listTriggerPoints = {100, 50, 25, 0};
             Integer[] listProgressBarColors = {R.drawable.orange_progress_bar, R.drawable.red_progress_bar, R.drawable.red_progress_bar};
             for (int i = 0; i < listProgressBarColors.length; i++) {
@@ -145,7 +146,11 @@ public class SoloCombat extends Activity {
                 if ((lifeProgressBarPoint > listTriggerPoints[i + 1]) && (lifeProgressBarPoint <= listTriggerPoints[i]) && (lifePointLost >= 0)) {
                     //pointToLose: point life to lose under this iteration ie with this color progress bar
                     //lifePointLost act as a global pointToLose
-                    int pointToLose = (lifePointLost <= (listTriggerPoints[i] - listTriggerPoints[i + 1])) ? lifePointLost : listTriggerPoints[i + 1];
+                    int pointToLose = lifePointLost;
+                    //if you need a change of progress bar color in the middle of the lost of point
+                    if ((lifeProgressBarPoint-pointToLose)<listTriggerPoints[i+1]){
+                        pointToLose = lifeProgressBarPoint-listTriggerPoints[i+1];
+                    }
                     LosePointAnimation(lifeProgressBar, lifeProgressBarPoint, lifeProgressBarPoint - pointToLose, offset);
                     lifePointLost -= pointToLose;
                     lifeProgressBarPoint -= pointToLose;
@@ -157,32 +162,16 @@ public class SoloCombat extends Activity {
                         Rect bounds = lifeProgressBar.getProgressDrawable().getBounds();
                         lifeProgressBar.setProgressDrawable(res.getDrawable(listProgressBarColors[i]));
                         lifeProgressBar.getProgressDrawable().setBounds(bounds);
-                        lifeProgressBar.setProgress(lifeProgressBarPoint);
                     }
                 }
             }
-        }
+
 
         // animate the death of the animal
-        if (lifeProgressBarPoint<=0){
-            Animation deadAnimation = AnimationUtils.loadAnimation(this, R.anim.death_animation);
-            deadAnimation.setStartOffset(lifePointLost*15);
+        if (lifeProgressBarPoint<=0) {
+            Animation deadAnimation = AnimationUtils.loadAnimation(this, R.anim.death_opponent_animation);
+            deadAnimation.setStartOffset(offset);
             opponentImage.startAnimation(deadAnimation);
-
-//            animator = ValueAnimator.ofFloat(0, 1); // values from 0 to 1
-//            animator.setDuration(5000); // 5 seconds duration from 0 to 1
-//            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//                @Override
-//                public void onAnimationUpdate(ValueAnimator animation) {
-//                    float value = ((Float) (animation.getAnimatedValue()))
-//                            .floatValue();
-//                    // Set translation of your view here. Position can be calculated
-//                    // out of value. This code should move the view in a half circle.
-//                    view.setTranslationX((float) (200.0 * Math.sin(value * Math.PI)));
-//                    view.setTranslationY((float) (200.0 * Math.cos(value * Math.PI)));
-//                }
-//            });
-
         }
 
         return (lifeProgressBarPoint);
@@ -192,7 +181,7 @@ public class SoloCombat extends Activity {
         ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", start, end);
         animation.setDuration( Math.abs(start-end)*15);
         animation.setInterpolator(new DecelerateInterpolator());
-        animation.setStartDelay(timeOffset);
+        animation.setStartDelay(timeOffset+300);
         animation.start();
     }
 }
