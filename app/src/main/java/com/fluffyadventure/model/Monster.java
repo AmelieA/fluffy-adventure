@@ -1,51 +1,28 @@
 package com.fluffyadventure.model;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Johan on 17/02/2015.
  */
-public class Monster {
+public class Monster extends Creature{
 
-    private String name;
-    private String imagePath;
-
-    private int health = 0;
-    private int strength = 0;
-    private int accuracy = 0;
-    private int evasiveness = 0;
-
+    private List<Spell> spells = new ArrayList<>();
 
     public Monster() {
     }
 
     public Monster(String name, String imagePath) {
-        this.name = name;
-        this.imagePath = imagePath;
+
     }
 
-    public int getEvasiveness() {
-        return evasiveness;
+    public void addSpell(Spell spell, Boolean active){
+        spells.add(spell);
     }
 
-    public int getAccuracy() {
-        return accuracy;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
 }

@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -59,11 +60,11 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
         Animal animal1 = Controller.getAnimal1();
         homeType = "";
 
-        if (animal1.getType().equals("Rabbit")) {
+        if (animal1.getType()== Creature.RABBIT) {
             homeType = "le terrier";
-        } else if (animal1.getType().equals("Squirrel")) {
+        } else if (animal1.getType()== Creature.SQUIRREL) {
             homeType = "le nid";
-        } else if (animal1.getType().equals("Sheep")) {
+        } else if (animal1.getType()== Creature.SHEEP) {
             homeType = "la bergerie";
         }
 

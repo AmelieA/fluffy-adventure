@@ -13,7 +13,7 @@ public class Spawn extends AbstractSpawn {
     public Spawn(){
     }
 
-    public Spawn(String name, String type){
+    public Spawn(String name, int type){
         super (name, type);
     }
 

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.Spell;
 import com.fluffyadventure.model.User;
 import com.fluffyadventure.model.Dungeon;
@@ -15,6 +16,7 @@ import com.fluffyadventure.model.Treasure;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Johan on 17/02/2015.
@@ -27,6 +29,7 @@ public class Controller {
     private static User user;
     private static ArrayList<AbstractSpawn> objectives;
     private static LatLng QGLocation;
+    private static ArrayList<Integer> succeededSpawns= new ArrayList<>();
 
     public static Boolean createUser(String name, String password) {
         user = server.createUser(name,password);
@@ -86,10 +89,10 @@ public class Controller {
 
     }
     public static void setupBob() {
-        animal1 = new Animal("Bob","rabbit1","Rabbit");
+        animal1 = new Animal("Bob","rabbit1", Creature.RABBIT);
     }
 
-    public static void createAnimal1(String name, String imagePath, String type) {
+    public static void createAnimal1(String name, String imagePath, int type) {
         animal1 = new Animal(name,imagePath,type);
     }
 
@@ -161,5 +164,17 @@ public class Controller {
 
     public static void setQGLocation(double latitude, double longitude) {
         Controller.QGLocation = new LatLng(latitude,longitude);
+    }
+
+    public static void success(Integer spawnID) {
+        succeededSpawns.add(spawnID);
+    }
+
+    public static boolean hasSucceeded(Integer spawnID) {
+        return succeededSpawns.contains(spawnID);
+    }
+
+    public static ArrayList<Integer> getSucceededSpawns() {
+        return succeededSpawns;
     }
 }

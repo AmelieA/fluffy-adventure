@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Spell;
@@ -169,15 +170,15 @@ public class Server {
         try {
             int spell_id;
             switch (animal.getType()){
-                case "Squirrel" :
+                case Creature.SQUIRREL :
                     spell_id = 1;
                     break;
 
-                case "Rabbit" :
+                case Creature.RABBIT :
                     spell_id = 2;
                     break;
 
-                case "Sheep" :
+                case Creature.SHEEP :
                     spell_id = 3;
                     break;
 

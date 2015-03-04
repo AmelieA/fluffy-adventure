@@ -12,89 +12,26 @@ import java.util.List;
 /**
  * Created by Johan on 17/02/2015.
  */
-public class Animal {
+public class Animal extends Creature{
 
-    private String name;
-    private String imagePath;
-    private String QGImage;
-    private String type;
-
-    private int health = 0;
-    private int strength = 0;
-    private int accuracy = 0;
-    private int evasiveness = 0;
 
     private List<Spell> activeSpells = new ArrayList<>();
     private List<Spell> unusedSpells = new ArrayList<>();
 
-    private List<Integer> succeededSpawns= new ArrayList<>();
-
-
-    public Animal() {
-
-    }
+    public Animal() {}
 
     public Animal(Animal animal) {
-        this.name = animal.getName();
-        this.imagePath = animal.getImagePath();
-        this.type = animal.getType();
-        this.health = animal.getHealth();
-        this.strength = animal.getStrength();
-        this.accuracy = animal.getAccuracy();
-        this.evasiveness = animal.getEvasiveness();
+        super(animal);
         this.activeSpells = new ArrayList<>(animal.getActiveSpells());
         this.unusedSpells = new ArrayList<>(animal.getUnusedSpells());
-        this.succeededSpawns = new ArrayList<>(animal.getSucceededSpawns());
     }
 
-    public Animal(String imagePath, String type) {
-        this.imagePath = imagePath;
-        this.type = type;
-        switch (type){
-            case "Sheep":
-                this.health = 135;
-                this.strength = 8;
-                this.accuracy = 100;
-                this.evasiveness = 5;
-                this.QGImage = "grassicon";
-                break;
-            case "Squirrel":
-                this.health = 100;
-                this.strength = 12;
-                this.accuracy = 90;
-                this.evasiveness = 5;
-                this.QGImage = "nuticon";
-                break;
-            case "Rabbit":
-                this.health = 100;
-                this.strength = 10;
-                this.accuracy = 100;
-                this.evasiveness = 15;
-                this.QGImage = "carroticon";
-                break;
-            default:
-                this.health = 100;
-                this.strength = 10;
-                this.accuracy = 100;
-                this.evasiveness = 10;
-                this.type = "Rabbit";
-                this.QGImage = "carroticon";
-                break;
-        }
+    public Animal(String imagePath, int type) {
+        super(imagePath, type);
     }
 
-
-    public Animal(String name, String imagePath, String type) {
-        this(imagePath, type);
-        this.name = name;
-    }
-
-    public void success(Integer spawnID) {
-        this.succeededSpawns.add(spawnID);
-    }
-
-    public boolean hasSucceeded(Integer spawnID) {
-        return this.succeededSpawns.contains(spawnID);
+    public Animal(String name, String imagePath, int type) {
+        super(name, imagePath, type);
     }
 
     public int gainHealth(Integer gain) {
@@ -106,68 +43,12 @@ public class Animal {
         return strength;
     }
 
-    public int getEvasiveness() {
-        return evasiveness;
-    }
-
-    public int getAccuracy() {
-        return accuracy;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public String getType() {
-        return type;
-    }
-
     public List<Spell> getActiveSpells() {
         return activeSpells;
     }
 
     public List<Spell> getUnusedSpells() {
         return unusedSpells;
-    }
-
-    public List<Integer> getSucceededSpawns() {
-        return succeededSpawns;
-    }
-
-    public String getQGImage() {
-        return QGImage;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void addSpell(Spell spell, Boolean active){
-        if ((this.activeSpells.indexOf(spell) ==  -1 ) && (this.unusedSpells.indexOf(spell) ==  -1 )) {
-
-            if (active) {
-                this.activeSpells.add(spell);
-            } else {
-                this.unusedSpells.add(spell);
-            }
-        }
-
     }
 
     public JSONObject toJson() throws JSONException {
@@ -216,7 +97,7 @@ public class Animal {
 
         this.name = json.getString("Name");
         this.imagePath =  json.getString("ImgPath");
-        this.type = json.getString("Type");
+        this.type = Integer.parseInt(json.getString("Type"));
         this.health = json.getInt("Health");
         this.strength = json.getInt("Strength");
         this.accuracy = json.getInt("Accuracy");
@@ -230,5 +111,15 @@ public class Animal {
 
     public void setUnusedSpells(List<Spell> unusedSpells) {
         this.unusedSpells = unusedSpells;
+    }
+
+    public void addSpell(Spell spell, Boolean active){
+        if ((this.activeSpells.indexOf(spell) ==  -1 ) && (this.unusedSpells.indexOf(spell) ==  -1 )) {
+            if (active) {
+                this.activeSpells.add(spell);
+            } else {
+                this.unusedSpells.add(spell);
+            }
+        }
     }
 }

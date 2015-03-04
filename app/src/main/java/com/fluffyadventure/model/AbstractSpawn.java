@@ -2,6 +2,8 @@ package com.fluffyadventure.model;
 
 import android.location.Location;
 
+import com.fluffyadventure.controller.Controller;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +39,7 @@ public abstract class AbstractSpawn {
     public AbstractSpawn(){
     }
 
-    public AbstractSpawn(String name, String type){
+    public AbstractSpawn(String name, int type){
         this.spawnId = -1;
         this.spellReward = 0;
         this.healthReward = 0;
@@ -45,11 +47,11 @@ public abstract class AbstractSpawn {
         this.longitude = 0;
         this.latitude = 0;
         this.text = "";
-        if (type.equals("Rabbit")) {
+        if (type == Creature.RABBIT) {
             this.name = "Terrier de " + name;
-        } else if (type.equals("Squirrel")) {
+        } else if (type == Creature.SQUIRREL) {
             this.name = "Nid de " + name;
-        } else if (type.equals("Sheep")) {
+        } else if (type == Creature.SHEEP) {
             this.name = "Bergerie de " + name;
         }
         this.level = 0;
@@ -82,20 +84,6 @@ public abstract class AbstractSpawn {
         this.longitude = longitude;
     }
 
-    public String getStatus(Animal animal){
-        if(animal.hasSucceeded(this.spawnId)){
-            return Status.DONE;
-        }
-
-        if(null != requirement) {
-            if (!animal.hasSucceeded(requirement)) {
-                return Status.REQUIREMENT_NOT_MET;
-            }
-        }
-
-        return Status.AVAILABLE;
-    }
-
      public String getIcon(){
         if(this.icon == null){
             return getStandardIcon();
@@ -109,6 +97,19 @@ public abstract class AbstractSpawn {
         location.setLatitude(latitude);
         location.setLongitude(longitude);
         return  location;
+    }
+
+    public String getStatus(){
+        if(Controller.hasSucceeded(this.spawnId)){
+            return Status.DONE;
+        }
+
+        if(null != requirement) {
+            if (!Controller.hasSucceeded(requirement)) {
+                return Status.REQUIREMENT_NOT_MET;
+            }
+        }
+        return Status.AVAILABLE;
     }
 
     public abstract String getStandardIcon();

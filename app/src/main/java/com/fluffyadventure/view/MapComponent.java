@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Treasure;
@@ -63,11 +64,11 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
 
         homeBtn = (Button)findViewById(R.id.homeBtn);
 
-        if (animal1.getType().equals("Rabbit")) {
+        if (animal1.getType()== Creature.RABBIT) {
             homeBtn.setText("Terrier");
-        } else if (animal1.getType().equals("Squirrel")) {
+        } else if (animal1.getType()== Creature.SQUIRREL) {
             homeBtn.setText("Nid");
-        } else if (animal1.getType().equals("Sheep")) {
+        } else if (animal1.getType()== Creature.SHEEP) {
             homeBtn.setText("Bergerie");
         }
 
@@ -98,7 +99,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         Log.i("FA", "---------------  MAP READY -----------------");
 
         configureMapOptions(map);
-        getQuestsFromDatabaseAndShowThemOnMap(map);
+        placeObjectivesOnMap(map);
 
     }
 
@@ -167,7 +168,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     /**
      * Place all the markers on the map
      */
-    private void getQuestsFromDatabaseAndShowThemOnMap(GoogleMap map) {
+    private void placeObjectivesOnMap(GoogleMap map) {
 
         map.clear();
         Resources resources = getResources();
@@ -198,8 +199,8 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         int iconId = resources.getIdentifier(spawn.getIcon(), "drawable", getPackageName());
         Animal animal = Controller.getAnimal1();
 
-        if (spawn.getStatus(animal).equals(Spawn.Status.DONE) ||
-                spawn.getStatus(animal).equals(Spawn.Status.REQUIREMENT_NOT_MET)) {
+        if (spawn.getStatus().equals(Spawn.Status.DONE) ||
+                spawn.getStatus().equals(Spawn.Status.REQUIREMENT_NOT_MET)) {
             return;
         }
 
@@ -211,7 +212,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
 
         Marker marker = map.addMarker(new MarkerOptions()
                 .position(new LatLng(spawn.latitude, spawn.longitude))
-                .title(spawn.getStatus(animal) + " - " + spawn.getName())
+                .title(spawn.getStatus() + " - " + spawn.getName())
                 .snippet(spawn.getText())
                 .icon(BitmapDescriptorFactory.fromBitmap(icon)));
         spawnMarkers.put(marker.getId(), spawn);
