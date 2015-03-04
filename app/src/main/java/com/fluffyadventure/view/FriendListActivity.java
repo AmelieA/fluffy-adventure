@@ -2,6 +2,8 @@ package com.fluffyadventure.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +23,8 @@ import java.util.Arrays;
 
 public class FriendListActivity extends Activity {
 
+    Button btnInBox;
+
     FriendAdapter friendAdapter;
     Friend friend = new Friend("Un ami","squirrel1");
     ArrayList<Friend> friends = new ArrayList<>(Arrays.asList(friend, friend, friend));
@@ -28,6 +33,20 @@ public class FriendListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
+        btnInBox = (Button)findViewById(R.id.BtnInBox);
+        btnInBox.setTypeface(font);
+        btnInBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FriendListActivity.this, MailBox.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         friendAdapter = new FriendAdapter(this,friends);
         ListView friendsView = (ListView) findViewById(R.id.FriendList);
         friendsView.setAdapter(friendAdapter);

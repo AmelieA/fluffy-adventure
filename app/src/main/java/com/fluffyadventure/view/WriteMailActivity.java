@@ -2,6 +2,7 @@ package com.fluffyadventure.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +29,9 @@ public class WriteMailActivity extends Activity {
 
         mailBody = (EditText)findViewById(R.id.TextMailBody);
 
+        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
         btnCancelMail = (Button)findViewById(R.id.BtnCancelMail);
+        btnCancelMail.setTypeface(font);
         btnCancelMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +41,7 @@ public class WriteMailActivity extends Activity {
         });
 
         btnSendMail = (Button)findViewById(R.id.BtnSendMail);
-
+        btnSendMail.setTypeface(font);
     }
 
 

@@ -2,6 +2,7 @@ package com.fluffyadventure.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,21 +15,33 @@ public class ReadMailActivity extends Activity {
     TextView textMailSender;
     TextView textMailBody;
     Button btnMailBox;
+    Button btnAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_mail);
-
+        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
         textMailBody=(TextView) findViewById(R.id.TextMailBody);
 
         textMailSender=(TextView) findViewById(R.id.TextMailSender);
 
         btnMailBox=(Button) findViewById(R.id.BtnInBox);
+        btnMailBox.setTypeface(font);
         btnMailBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ReadMailActivity.this, MailBox.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        btnAnswer=(Button)findViewById(R.id.BtnAnswer);
+        btnAnswer.setTypeface(font);
+        btnAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReadMailActivity.this, WriteMailActivity.class);
                 startActivity(intent);
                 finish();
             }

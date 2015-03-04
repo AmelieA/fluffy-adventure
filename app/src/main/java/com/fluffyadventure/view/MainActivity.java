@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     if (Controller.getServer() != null){
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        Intent intent = new Intent(MainActivity.this, ReadMailActivity.class);
                         startActivity(intent);
                     }
                     else {
