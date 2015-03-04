@@ -9,9 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.fluffyadventure.fluffyadventure.MailBox;
-import com.fluffyadventure.view.R;
-
 public class ReadMailActivity extends Activity {
 
     TextView textMailSender;

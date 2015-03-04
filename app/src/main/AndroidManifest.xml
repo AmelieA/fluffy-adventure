@@ -92,7 +92,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.fluffyadventure.fluffyadventure.MailBox"
+            android:name=".MailBox"
             android:label="@string/title_activity_mail_box"
             android:screenOrientation="portrait" >
         </activity>

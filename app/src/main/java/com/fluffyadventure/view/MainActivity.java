@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
-import com.fluffyadventure.fluffyadventure.MailBox;
 
 import java.io.IOException;
 import java.io.InputStream;
