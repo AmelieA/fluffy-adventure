@@ -71,27 +71,6 @@ public class SoloCombat extends Activity {
 
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //old way to get the animation of the lost PV.
-                // Start lengthy operation in a background thread
-//                new Thread(new Runnable() {
-//                    public void run() {
-//                        for (int i = 0; i < 50; i++, opponentsLifeStatus--) {
-//
-//                            // Update the progress bar
-//                            try {
-//                                //Display progress slowly
-//                                Thread.sleep(40);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//                            handler.post(new Runnable() {
-//                                public void run() {
-//                                    opponentsLife.setProgress(opponentsLifeStatus);
-//                                }
-//                            });
-//                        }
-//                    }
-//                }).start();
                 opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage);
             }
         });
@@ -184,4 +163,10 @@ public class SoloCombat extends Activity {
         animation.setStartDelay(timeOffset+300);
         animation.start();
     }
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
+
 }
