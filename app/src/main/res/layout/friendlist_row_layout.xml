@@ -27,6 +27,7 @@
             android:text="Friend name"
             android:id="@+id/friendName"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
 </RelativeLayout>
