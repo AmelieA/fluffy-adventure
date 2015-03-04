@@ -298,6 +298,48 @@ public class Server {
         return null;
 
     }
+
+    public String getToken(User user){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "get_token";
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setDoInput(true);
+            urlConnection.setRequestProperty("Accept", "application/json");
+
+
+            String encoded = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
+            urlConnection.setRequestProperty("Authorization", String.format("Basic %s", encoded));
+
+            urlConnection.connect();
+
+            int httpResult = urlConnection.getResponseCode();
+
+            if (httpResult == HttpURLConnection.HTTP_OK) {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+
+                JSONObject inputJson = new JSONObject(inputString.toString());
+                System.out.println(inputJson.toString());
+                String token = inputJson.getString("Token");
+                return token;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+
     public Boolean changeSpells(User user, ArrayList<Spell> active, ArrayList<Spell> unused){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/change_spells";
         try {
