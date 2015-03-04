@@ -1,6 +1,7 @@
 package com.fluffyadventure.view;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -14,6 +15,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -27,6 +29,7 @@ import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
+import com.fluffyadventure.view.Status;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -74,9 +77,8 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
         map_button_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MoveQGActivity.this, Status.class);
-                startActivity(intent);
-                finish();
+                CreateAllTask task = new CreateAllTask(MoveQGActivity.this);
+                task.execute();
             }
         });
 
@@ -184,5 +186,65 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+
+    private class CreateAllTask extends AsyncTask<Void, Void, Boolean> {
+        ProgressDialog dialog;
+        Context ctx;
+
+        public CreateAllTask(Context ctx) {
+            this.ctx = ctx;
+            this.dialog = new ProgressDialog(this.ctx);
+            //this.dialog.setCancelable(true);
+
+        }
+
+        protected void onPreExecute(){
+            this.dialog.setTitle("Création...");
+            this.dialog.show();
+
+        }
+        protected Boolean doInBackground(Void... params){
+            Boolean result;
+            if (!MoveQGActivity.this.firstTime){
+                Log.d("FIRSTTIME","NO");
+                result = Controller.moveHQ();
+            }
+            else {
+                result = Controller.createUserAnimalHQ();
+            }
+
+
+            //Boolean result = true;
+
+
+            return result;
+        }
+        protected  void onPostExecute(Boolean login) {
+            System.out.println("done");
+            dialog.dismiss();
+
+            Intent intent;
+
+            if (!login){
+                Toast.makeText(MoveQGActivity.this, "Echec de la création", Toast.LENGTH_LONG).show();
+                intent = new Intent(MoveQGActivity.this, MainActivity.class);
+
+            }
+            else
+            {
+                Toast.makeText(MoveQGActivity.this, "Création réussie", Toast.LENGTH_LONG).show();
+                intent = new Intent(MoveQGActivity.this, com.fluffyadventure.view.Status.class);
+            }
+            startActivity(intent);
+            finish();
+
+
+
+        }
+
+
+
     }
 }

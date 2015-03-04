@@ -12,7 +12,7 @@ import org.json.JSONObject;
  */
 public abstract class AbstractSpawn {
 
-    public final class Status {
+    public final class SpawnStatus {
         public static final String DONE = "done";
         public static final String AVAILABLE = "available";
         public static final String REQUIREMENT_NOT_MET= "requirement not met";
@@ -101,15 +101,15 @@ public abstract class AbstractSpawn {
 
     public String getStatus(){
         if(Controller.hasSucceeded(this.spawnId)){
-            return Status.DONE;
+            return SpawnStatus.DONE;
         }
 
         if(null != requirement) {
             if (!Controller.hasSucceeded(requirement)) {
-                return Status.REQUIREMENT_NOT_MET;
+                return SpawnStatus.REQUIREMENT_NOT_MET;
             }
         }
-        return Status.AVAILABLE;
+        return SpawnStatus.AVAILABLE;
     }
 
     public abstract String getStandardIcon();

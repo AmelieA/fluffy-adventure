@@ -26,7 +26,7 @@
     <string name="inscr_button_text">S\'inscrire</string>
     <string name="server_button_text">Serveur</string>
 
-    <!-- Status Activity -->
+    <!-- SpawnStatus Activity -->
     <string name="mail_button_text">Messagerie</string>
     <string name="moveHQ_button_text">Déménager</string>
     <string name="mngSkills_button_text">Gérer les sorts</string>

@@ -122,6 +122,11 @@ public class Controller {
         if (animal1 == null) {
             setupBob();
         }
+
+        QGLocation = server.getHQ(user);
+        if (QGLocation == null){
+            return false;
+        }
         return true;
     }
 
@@ -177,4 +182,32 @@ public class Controller {
     public static ArrayList<Integer> getSucceededSpawns() {
         return succeededSpawns;
     }
+
+    public static Boolean userExists(String name) {
+        return server.getUser(name);
+    }
+
+    public static void setUser(User user) {
+        Controller.user = user;
+    }
+
+    public static Boolean createUserAnimalHQ(){
+        user = server.createUser(user.getName(),user.getPassword());
+        if (user == null){
+            return false;
+        }
+        animal1 = server.createAnimal(user,animal1,animal1.getName());
+        if (animal1 == null){
+            return false;
+        }
+        Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
+        return hasHQbeenMoved;
+
+    }
+
+    public static Boolean moveHQ(){
+        Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
+        return hasHQbeenMoved;
+    }
+
 }
