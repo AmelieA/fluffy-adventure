@@ -1,9 +1,11 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +29,13 @@ public class WriteMailActivity extends Activity {
         mailBody = (EditText)findViewById(R.id.TextMailBody);
 
         btnCancelMail = (Button)findViewById(R.id.BtnCancelMail);
+        btnCancelMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WriteMailActivity.this, FriendListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnSendMail = (Button)findViewById(R.id.BtnSendMail);
 
