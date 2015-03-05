@@ -121,7 +121,7 @@ public class Controller {
         }
         animal1 = server.getAnimal(user);
         if (animal1 == null) {
-            setupBob();
+            return false;
         }
 
         QGLocation = server.getHQ(user);
@@ -201,19 +201,24 @@ public class Controller {
         Controller.user = user;
     }
 
-    public static Boolean createUserAnimalHQ(){
+    public static int createUserAnimalHQ(){
         user = server.createUser(user.getName(),user.getPassword());
         if (user == null){
-            return false;
+            return -1;
         }
         animal1 = server.createAnimal(user,animal1,animal1.getName());
         if (animal1 == null){
-            return false;
+            server.deleteUser(user);
+            return -2;
         }
         Log.d("ordre","bon");
 
         Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
-        return hasHQbeenMoved;
+        if (!hasHQbeenMoved){
+            server.deleteUser(user);
+            return -3;
+        }
+        return 0;
 
     }
 

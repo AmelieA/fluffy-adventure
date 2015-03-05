@@ -228,10 +228,8 @@ public class MainActivity extends Activity {
             if (login){
                 Intent intent;
                 intent = new Intent(MainActivity.this, MapComponent.class);
-
-
-                System.out.println("Activitychange");
                 startActivity(intent);
+
             }
             else {
                 Controller.setupBob();

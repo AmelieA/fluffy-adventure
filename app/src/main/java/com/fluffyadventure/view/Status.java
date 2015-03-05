@@ -86,7 +86,9 @@ public class Status extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Status.this, MapComponent.class);
+
                 startActivity(intent);
+
             }
         });
     }
@@ -140,7 +142,7 @@ public class Status extends Activity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
-                });;
+                });
         AlertDialog dialog = builder.create();
         dialog.show();
     }

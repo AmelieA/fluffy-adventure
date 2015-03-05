@@ -315,5 +315,12 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         dialog.show();
     }
 
+    public void onBackPressed() {
+        Intent intent = new Intent(MapComponent.this, Status.class);
+        startActivity(intent);
+        finish();
+
+    }
+
 
 }

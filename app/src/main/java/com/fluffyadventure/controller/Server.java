@@ -172,6 +172,24 @@ public class Server {
         return null;
     }
 
+    public Boolean deleteUser(User user) {
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/delete";
+        try {
+            URL url = new URL(uri);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, false, null);
+            if (returnJson != null){
+                int ret = returnJson.getInt("return");
+                return true;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
 
 
     public Animal createAnimal(User user, Animal in_animal, String name) {

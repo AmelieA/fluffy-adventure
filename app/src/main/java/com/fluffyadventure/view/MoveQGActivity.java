@@ -192,10 +192,12 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
     private class CreateAllTask extends AsyncTask<Void, Void, Boolean> {
         ProgressDialog dialog;
         Context ctx;
+        int ret;
 
         public CreateAllTask(Context ctx) {
             this.ctx = ctx;
             this.dialog = new ProgressDialog(this.ctx);
+            this.ret = 0;
             //this.dialog.setCancelable(true);
 
         }
@@ -213,7 +215,13 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
                 result = Controller.moveHQ();
             }
             else {
-                result = Controller.createUserAnimalHQ();
+                this.ret = Controller.createUserAnimalHQ();
+                if (this.ret == 0){
+                    result = true;
+                }
+                else {
+                    result = false;
+                }
             }
 
 
@@ -229,7 +237,20 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
             Intent intent;
 
             if (!login){
-                Toast.makeText(MoveQGActivity.this, "Echec de la création", Toast.LENGTH_LONG).show();
+                switch (this.ret){
+                    case -1:
+                        Toast.makeText(MoveQGActivity.this, "Echec de la création de l'utilisateur", Toast.LENGTH_LONG).show();
+                        break;
+                    case -2:
+                        Toast.makeText(MoveQGActivity.this, "Echec de la création de l'animal", Toast.LENGTH_LONG).show();
+                        break;
+                    case -3:
+                        Toast.makeText(MoveQGActivity.this, "Echec de la création du QG", Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        Toast.makeText(MoveQGActivity.this, "Echec de la création", Toast.LENGTH_LONG).show();
+                        break;
+                }
                 intent = new Intent(MoveQGActivity.this, MainActivity.class);
 
             }
