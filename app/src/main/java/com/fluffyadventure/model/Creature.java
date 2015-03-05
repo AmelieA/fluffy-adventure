@@ -37,6 +37,7 @@ public abstract class Creature {
         this.strength = creature.getStrength();
         this.accuracy = creature.getAccuracy();
         this.evasiveness = creature.getEvasiveness();
+        this.QGImage = creature.getQGImage();
     }
 
     public Creature(String imagePath, int type) {
@@ -121,5 +122,6 @@ public abstract class Creature {
     }
 
     public abstract void addSpell(Spell spell, Boolean active);
+
 
 }

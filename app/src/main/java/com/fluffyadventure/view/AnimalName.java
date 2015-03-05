@@ -52,8 +52,10 @@ public class AnimalName extends ActionBarActivity {
         btnOkName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SendAnimalTask task = new SendAnimalTask(name.getText().toString(), AnimalName.this);
-                task.execute();
+                Controller.getAnimal1().setName(name.getText().toString());
+                Intent intent = new Intent(AnimalName.this, MoveQGActivity.class);
+                startActivity(intent);
+                finish();
 
             }
         });

@@ -11,6 +11,7 @@ import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Spell;
 import com.fluffyadventure.model.Treasure;
 import com.fluffyadventure.model.User;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,6 +92,9 @@ public class Server {
                 JSONObject inputJson = new JSONObject(inputString.toString());
                 System.out.println(inputJson.toString());
                 User user = new User(name, password, inputJson.getInt("Id"));
+
+                String token = this.getToken(user);
+                user.setToken(token);
                 return user;
 
             }
@@ -132,6 +136,9 @@ public class Server {
                 JSONObject inputJson = new JSONObject(inputString.toString());
                 System.out.println(inputJson.toString());
                 User user = new User(name, password, inputJson.getInt("Id"));
+
+                String token = this.getToken(user);
+                user.setToken(token);
                 return user;
             }
         } catch (IOException ex) {
@@ -142,6 +149,9 @@ public class Server {
         return null;
 
     }
+
+
+
 
     public Animal getAnimal(User user) {
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/get_animal";
@@ -186,7 +196,7 @@ public class Server {
                     spell_id = 2;
                     return  null;
             }
-            Spell spell = this.get_spell(spell_id);
+            Spell spell = this.getSpell(spell_id);
             animal.addSpell(spell, true);
             animal.setName(name);
 
@@ -291,12 +301,56 @@ public class Server {
                 inputJson.put("json",new JSONObject(inputString.toString()));
             }
             inputJson.put("return",responseCode);
+            String token = this.getToken(user);
+            user.setToken(token);
             return  inputJson;
         }
 
         return null;
 
     }
+
+    public String getToken(User user){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "get_token";
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setDoInput(true);
+            urlConnection.setRequestProperty("Accept", "application/json");
+
+
+            String encoded = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
+            urlConnection.setRequestProperty("Authorization", String.format("Basic %s", encoded));
+
+            urlConnection.connect();
+
+            int httpResult = urlConnection.getResponseCode();
+
+            if (httpResult == HttpURLConnection.HTTP_OK) {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+
+                JSONObject inputJson = new JSONObject(inputString.toString());
+                System.out.println(inputJson.toString());
+                String token = inputJson.getString("Token");
+                return token;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+
     public Boolean changeSpells(User user, ArrayList<Spell> active, ArrayList<Spell> unused){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/change_spells";
         try {
@@ -331,7 +385,7 @@ public class Server {
         return false;
     }
 
-    public Spell get_spell(int id){
+    public Spell getSpell(int id){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(id);
         try {
             URL url = new URL(uri);
@@ -438,6 +492,72 @@ public class Server {
         return false;
 
     }
+
+    public Boolean getUser(String username){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/search/"+username;
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.connect();
+
+            int httpResult = urlConnection.getResponseCode();
+
+            if (httpResult == HttpURLConnection.HTTP_OK) {
+
+                return true;
+
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean moveHQ(User user, double latitude, double longitude){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/move_HQ";
+        try {
+
+            URL url = new URL(uri);
+            JSONObject json = new JSONObject();
+            json.put("Latitude",latitude);
+            json.put("Longitude",longitude);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
+
+            if (returnJson != null){
+
+                return true;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public LatLng getHQ(User user) {
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/get_HQ";
+        try {
+            URL url = new URL(uri);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, false, null);
+            if (returnJson != null){
+                JSONObject HQJson = returnJson.getJSONObject("json");
+                LatLng hq = new LatLng(HQJson.getDouble("Latitude"),HQJson.getDouble("Longitude"));
+                return hq;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+
+    
 
 }
 

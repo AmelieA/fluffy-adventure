@@ -30,7 +30,6 @@ public class Controller {
     private static ArrayList<AbstractSpawn> objectives;
     private static LatLng QGLocation;
     private static ArrayList<Integer> succeededSpawns= new ArrayList<>();
-    private static AbstractSpawn currentObjective = null;
 
     public static Boolean createUser(String name, String password) {
         user = server.createUser(name,password);
@@ -123,8 +122,14 @@ public class Controller {
         if (animal1 == null) {
             setupBob();
         }
+
+        QGLocation = server.getHQ(user);
+        if (QGLocation == null){
+            return false;
+        }
         return true;
     }
+
 
     public static Boolean sendAnimalToServer(String name){
         Animal my_animal = server.createAnimal(user,animal1,name);
@@ -186,4 +191,45 @@ public class Controller {
     public static void setCurrentObjective(AbstractSpawn currentObjective) {
         Controller.currentObjective = currentObjective;
     }
+
+    public static Boolean userExists(String name) {
+        return server.getUser(name);
+    }
+
+    public static void setUser(User user) {
+        Controller.user = user;
+    }
+
+    public static Boolean createUserAnimalHQ(){
+        user = server.createUser(user.getName(),user.getPassword());
+        if (user == null){
+            return false;
+        }
+        animal1 = server.createAnimal(user,animal1,animal1.getName());
+        if (animal1 == null){
+            return false;
+        }
+        Log.d("ordre","bon");
+
+        Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
+        return hasHQbeenMoved;
+
+    }
+
+    public static Boolean moveHQ(){
+        Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
+        return hasHQbeenMoved;
+    }
+
+    public static void flush(){
+        animal1 = null;
+        animal2 = null;
+        server = null;
+        user = null;
+        objectives = null;
+        QGLocation =  null;
+        succeededSpawns= new ArrayList<>();
+
+    }
+
 }

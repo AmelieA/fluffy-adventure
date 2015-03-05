@@ -104,22 +104,28 @@ public class SignUpActivity extends Activity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Boolean result = Controller.createUser(username,password);
+            Boolean result = Controller.userExists(username);
 
 
             return result;
         }
-        protected  void onPostExecute(Boolean unused) {
+        protected  void onPostExecute(Boolean result) {
             System.out.println("done");
 
             dialog.dismiss();
             //disparition de la popup
 
+            if (result){
+                Toast.makeText(SignUpActivity.this, "L'utilisateur existe déja", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Controller.setUser(new User(username, password));
 
-            Intent intent = new Intent(SignUpActivity.this, AnimalChoiceSlider.class);
-            System.out.println("Activitychange");
-            startActivity(intent);
-            finish();
+                Intent intent = new Intent(SignUpActivity.this, AnimalChoiceSlider.class);
+                System.out.println("Activitychange");
+                startActivity(intent);
+                finish();
+            }
         }
 
 

@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -198,14 +194,14 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         int iconId = resources.getIdentifier(spawn.getIcon(), "drawable", getPackageName());
         Animal animal = Controller.getAnimal1();
 
-        if (spawn.getStatus().equals(Spawn.Status.DONE) ||
-                spawn.getStatus().equals(Spawn.Status.REQUIREMENT_NOT_MET)) {
+        if (spawn.getStatus().equals(AbstractSpawn.SpawnStatus.DONE) ||
+                spawn.getStatus().equals(AbstractSpawn.SpawnStatus.REQUIREMENT_NOT_MET)) {
             return;
         }
 
         Bitmap icon = BitmapFactory.decodeResource(resources, iconId);
 
-       /* if (spawn.getStatus(animal).equals(Spawn.Status.COMPETENCES_INSUFFISANTES)) {
+       /* if (spawn.getStatus(animal).equals(Spawn.SpawnStatus.COMPETENCES_INSUFFISANTES)) {
             icon = convertToGrayscale(icon);
         }*/
 
@@ -242,7 +238,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         }
 
 
-        /* if (spawn.getStatus(animal1).equals(Spawn.Status.AVAILABLE)) {
+        /* if (spawn.getStatus(animal1).equals(Spawn.SpawnStatus.AVAILABLE)) {
             button_go.setText("Engager le combat !");
             button_go.setEnabled(true);
         }*/ /*else if (quete.getStatut(animal).equals(Spawn.Statut.COMPETENCES_INSUFFISANTES)) {

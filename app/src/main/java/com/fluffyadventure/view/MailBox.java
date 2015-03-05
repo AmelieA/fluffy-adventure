@@ -1,4 +1,4 @@
-package com.fluffyadventure.fluffyadventure;
+package com.fluffyadventure.view;
 
 import android.app.Activity;
 import android.content.Context;
