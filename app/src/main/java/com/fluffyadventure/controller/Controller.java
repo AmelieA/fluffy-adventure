@@ -130,6 +130,7 @@ public class Controller {
         return true;
     }
 
+
     public static Boolean sendAnimalToServer(String name){
         Animal my_animal = server.createAnimal(user,animal1,name);
         if (my_animal != null){
@@ -200,6 +201,8 @@ public class Controller {
         if (animal1 == null){
             return false;
         }
+        Log.d("ordre","bon");
+
         Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
         return hasHQbeenMoved;
 
@@ -208,6 +211,17 @@ public class Controller {
     public static Boolean moveHQ(){
         Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
         return hasHQbeenMoved;
+    }
+
+    public static void flush(){
+        animal1 = null;
+        animal2 = null;
+        server = null;
+        user = null;
+        objectives = null;
+        QGLocation =  null;
+        succeededSpawns= new ArrayList<>();
+
     }
 
 }

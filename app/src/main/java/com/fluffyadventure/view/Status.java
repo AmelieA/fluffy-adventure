@@ -133,8 +133,9 @@ public class Status extends Activity {
                         dialog.dismiss();
                     }
                 })
-                .setNeutralButton("Retour accueil", new DialogInterface.OnClickListener() {
+                .setNeutralButton("Déconnexion", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Controller.flush();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

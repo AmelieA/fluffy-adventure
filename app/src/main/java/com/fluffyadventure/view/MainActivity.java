@@ -48,6 +48,7 @@ public class MainActivity extends Activity {
         } else {
             setContentView(R.layout.activity_main);
 
+
             setupApplication();
 
             Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
@@ -137,7 +138,9 @@ public class MainActivity extends Activity {
 
     private  void setupApplication() {
 
-        Controller.setupBob();
+
+
+        //Controller.setupBob();
         //Controller.setupObjectives();
 
         Resources resources = this.getResources();
@@ -155,7 +158,7 @@ public class MainActivity extends Activity {
             task.execute();
         } catch (IOException e) {
             Log.i("Server","Failed to open server property file");
-            Log.i("Server","Failed to open server property file");
+            Log.i("Server", "Failed to open server property file");
             e.printStackTrace();
 
 
@@ -179,12 +182,14 @@ public class MainActivity extends Activity {
         private int port;
         ProgressDialog dialog;
         Context ctx;
+        Boolean login;
 
         public LoginUserTask(String server, int port, Context ctx) {
             this.server = server;
             this.port = port;
             this.ctx = ctx;
             this.dialog = new ProgressDialog(this.ctx);
+            this.login = false;
             //this.dialog.setCancelable(true);
 
         }
@@ -198,22 +203,38 @@ public class MainActivity extends Activity {
 
             Boolean result = Controller.connectToServer(server, port);
             Controller.setUpObjectivesFromServer();
+            if (Controller.getUser() != null){
+                login = Controller.login(Controller.getUser().getName(),Controller.getUser().getPassword());
+            }
             //Boolean result = true;
 
 
             return result;
         }
-        protected  void onPostExecute(Boolean login) {
+        protected  void onPostExecute(Boolean connected) {
             Log.i("Server","Attempted connection");
             dialog.dismiss();
 
-            if (!login){
+            if (!connected){
                 Toast.makeText(MainActivity.this, "Serveur inconnu", Toast.LENGTH_LONG).show();
 
             }
             else
             {
                 Toast.makeText(MainActivity.this, "Connecté au serveur", Toast.LENGTH_LONG).show();
+            }
+
+
+            if (login){
+                Intent intent;
+                intent = new Intent(MainActivity.this, MapComponent.class);
+
+
+                System.out.println("Activitychange");
+                startActivity(intent);
+            }
+            else {
+                Controller.setupBob();
             }
 
         }
