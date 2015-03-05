@@ -207,7 +207,8 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
         }
         protected Boolean doInBackground(Void... params){
             Boolean result;
-            if (!MoveQGActivity.this.firstTime){
+            Log.d("FirstTime",Boolean.toString(firstTime));
+            if (!firstTime){
                 Log.d("FIRSTTIME","NO");
                 result = Controller.moveHQ();
             }

@@ -92,6 +92,9 @@ public class Server {
                 JSONObject inputJson = new JSONObject(inputString.toString());
                 System.out.println(inputJson.toString());
                 User user = new User(name, password, inputJson.getInt("Id"));
+
+                String token = this.getToken(user);
+                user.setToken(token);
                 return user;
 
             }
@@ -133,6 +136,9 @@ public class Server {
                 JSONObject inputJson = new JSONObject(inputString.toString());
                 System.out.println(inputJson.toString());
                 User user = new User(name, password, inputJson.getInt("Id"));
+
+                String token = this.getToken(user);
+                user.setToken(token);
                 return user;
             }
         } catch (IOException ex) {
@@ -143,6 +149,9 @@ public class Server {
         return null;
 
     }
+
+
+
 
     public Animal getAnimal(User user) {
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/get_animal";
@@ -293,6 +302,8 @@ public class Server {
                 inputJson.put("json",new JSONObject(inputString.toString()));
             }
             inputJson.put("return",responseCode);
+            String token = this.getToken(user);
+            user.setToken(token);
             return  inputJson;
         }
 
