@@ -30,6 +30,7 @@ public class Controller {
     private static ArrayList<AbstractSpawn> objectives;
     private static LatLng QGLocation;
     private static ArrayList<Integer> succeededSpawns= new ArrayList<>();
+    private static AbstractSpawn currentObjective;
 
     public static Boolean createUser(String name, String password) {
         user = server.createUser(name,password);

@@ -77,7 +77,7 @@ public class SoloCombat extends Activity {
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15);
+                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage);
             }
         });
 
