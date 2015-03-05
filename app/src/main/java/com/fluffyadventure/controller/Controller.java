@@ -30,6 +30,7 @@ public class Controller {
     private static ArrayList<AbstractSpawn> objectives;
     private static LatLng QGLocation;
     private static ArrayList<Integer> succeededSpawns= new ArrayList<>();
+    private static AbstractSpawn currentObjective = null;
 
     public static Boolean createUser(String name, String password) {
         user = server.createUser(name,password);
@@ -176,5 +177,13 @@ public class Controller {
 
     public static ArrayList<Integer> getSucceededSpawns() {
         return succeededSpawns;
+    }
+
+    public static AbstractSpawn getCurrentObjective() {
+        return currentObjective;
+    }
+
+    public static void setCurrentObjective(AbstractSpawn currentObjective) {
+        Controller.currentObjective = currentObjective;
     }
 }

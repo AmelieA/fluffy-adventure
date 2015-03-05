@@ -195,7 +195,6 @@ public class Server {
             JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
 
             if (returnJson != null){
-
                 return animal;
             }
 

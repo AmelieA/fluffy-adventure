@@ -47,7 +47,6 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     //TODO : changer pour la release
     private final static float MAX_DISTANCE_BETWEEN_QUEST_AND_PLAYER = 30;
     private final Map<String, AbstractSpawn> spawnMarkers = new HashMap<>();
-    private AbstractSpawn selectedSpawn = null;
     private Button button_go;
     private Button homeBtn;
     private Animal animal1;
@@ -223,21 +222,21 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
      */
     private void selectSpawn(AbstractSpawn spawn) {
         if (spawn instanceof Treasure) {
-            selectedSpawn = spawn;
+            Controller.setCurrentObjective(spawn);
             button_go.setText("Récupérer le trésor !");
             button_go.setEnabled(true);
         } else if (spawn instanceof Spawn) {
             if (spawn.getSpawnId() != -1) {
-                selectedSpawn = spawn;
+                Controller.setCurrentObjective(spawn);
                 button_go.setText("Engager le combat !");
                 button_go.setEnabled(true);
             } else {
-                selectedSpawn = null;
+                Controller.setCurrentObjective(null);
                 button_go.setText("Choisis un objectif sur la carte !");
                 button_go.setEnabled(false);
             }
         } else if (spawn instanceof Dungeon) {
-            selectedSpawn = spawn;
+            Controller.setCurrentObjective(spawn);
             button_go.setText("Commencer le donjon !");
             button_go.setEnabled(true);
         }
@@ -259,16 +258,16 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     public void startSelectedObjective(View view) {
 
         Class targetActivity;
-        if (selectedSpawn instanceof Dungeon) {
+        if (Controller.getCurrentObjective() instanceof Dungeon) {
             targetActivity = SoloCombat.class;
-        } else if (selectedSpawn instanceof Spawn) {
+        } else if (Controller.getCurrentObjective() instanceof Spawn) {
             targetActivity = SoloCombat.class;
         } else {
             return;
         }
 
         Intent intent = new Intent(this, targetActivity);
-        intent.putExtra(SPAWN_ID, selectedSpawn.getSpawnId());
+        intent.putExtra(SPAWN_ID, Controller.getCurrentObjective().getSpawnId());
         startActivity(intent);
         finish();
 

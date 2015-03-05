@@ -7,6 +7,8 @@ import com.fluffyadventure.controller.Controller;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by Johan on 18/02/2015.
  */
@@ -18,6 +20,8 @@ public abstract class AbstractSpawn {
         public static final String REQUIREMENT_NOT_MET= "requirement not met";
         //public static final String COMPETENCES_INSUFFISANTES= "competences insuffisantes";
     }
+
+    private ArrayList<Monster> opponents = new ArrayList<>();
 
     protected Integer spawnId;
 
@@ -148,6 +152,10 @@ public abstract class AbstractSpawn {
 
     public void setRequirement(Integer requirement) {
         this.requirement = requirement;
+    }
+
+    public ArrayList<Monster> getOpponents() {
+        return opponents;
     }
 
     @Override

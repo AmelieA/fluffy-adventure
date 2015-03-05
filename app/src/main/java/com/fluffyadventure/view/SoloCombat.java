@@ -2,6 +2,7 @@ package com.fluffyadventure.view;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -15,31 +16,44 @@ import android.widget.ProgressBar;
 import android.widget.ImageView;
 
 import com.fluffyadventure.controller.Controller;
+import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Creature;
+        import com.fluffyadventure.model.Monster;
+        import com.fluffyadventure.tools.CircularLinkedList;
 
-public class SoloCombat extends Activity {
+        import java.util.ArrayList;
+        import java.util.ResourceBundle;
 
-    private TextView opponentsName;
-    private ProgressBar opponentsLife;
-    private int opponentsLifePoint = 100;
-    private ImageView opponentImage;
-    private TextView fightersName;
-    private ProgressBar fightersLife;
-    private int fightersLifePoint = 100;
-    private TextView instruction;
-    private ImageView fighterImage;
-    private Button action1;
-    private Button action2;
-    private Button action3;
-    private Button action4;
+        public class SoloCombat extends Activity {
 
-    private Handler handler = new Handler();
+            private TextView opponentsName;
+            private ProgressBar opponentsLife;
+            private int opponentsLifePoint = 100;
+            private ImageView opponentImage;
+            private TextView fightersName;
+            private ProgressBar fightersLife;
+            private int fightersLifePoint = 100;
+            private TextView instruction;
+            private ImageView fighterImage;
+            private Button action1;
+            private Button action2;
+            private Button action3;
+            private Button action4;
+            private Animal animal;
+            private int currentOpponentIdx;
+            ArrayList<Monster> opponents = new ArrayList<>();
+
+            private Handler handler = new Handler();
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Log.i("FA", "Solo fight...");
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solo_combat);
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+                Log.i("FA", "Solo fight...");
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_solo_combat);
+
+        opponents = Controller.getCurrentObjective().getOpponents();
+        currentOpponentIdx = 0;
 
         opponentsName = (TextView) findViewById(R.id.OpponentsName);
         opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
@@ -52,6 +66,49 @@ public class SoloCombat extends Activity {
         action2 = (Button) findViewById(R.id.Action2);
         action3 = (Button) findViewById(R.id.Action3);
         action4 = (Button) findViewById(R.id.Action4);
+
+        animal = Controller.getAnimal1();
+
+        setupFight(currentOpponentIdx);
+
+
+        action1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15);
+            }
+        });
+
+        if (animal.getActiveSpells().size() > 1) {
+            action2.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                }
+            });
+        };
+
+        if (animal.getActiveSpells().size() > 2) {
+            action3.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                }
+            });
+        };
+
+        if (animal.getActiveSpells().size() > 3) {
+            action4.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(SoloCombat.this, MapComponent.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        };
+   }
+
+    private void setupFight(int opponentIdx){
+        opponentsLife.setMax(opponents.get(opponentIdx).getHealth());
+        fightersLife.setMax(animal.getHealth());
 
         opponentsName.setText("Evil Bunny");
 
@@ -67,36 +124,6 @@ public class SoloCombat extends Activity {
         fighterImage.setImageResource(
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
-
-        action1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                // Start lengthy operation in a background thread
-//                new Thread(new Runnable() {
-//                    public void run() {
-//                        for (int i = 0; i < 50; i++, opponentsLifeStatus--) {
-//
-//                            // Update the progress bar
-//                            try {
-//                                //Display progress slowly
-//                                Thread.sleep(40);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//                            handler.post(new Runnable() {
-//                                public void run() {
-//                                    opponentsLife.setProgress(opponentsLifeStatus);
-//                                }
-//                            });
-//                        }
-//                    }
-//                }).start();
-
-            opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15);
-            }
-        });
-
-
     }
 
     public int LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointLost) {
