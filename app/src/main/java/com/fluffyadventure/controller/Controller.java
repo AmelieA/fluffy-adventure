@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Johan on 17/02/2015.
@@ -89,6 +90,21 @@ public class Controller {
         }
 
     }
+
+    public  static  void setUpObjectivesWithHq() {
+        objectives = server.get_spawns();
+        if (objectives != null && QGLocation != null){
+            for (int i = 0; i < objectives.size(); i++){
+                double coefLat = Math.cos(i);
+                double coefLong = Math.sin(i);
+                objectives.get(i).setCoordinates(QGLocation.latitude + coefLat * 0.005, QGLocation.longitude + coefLong * 0.005);
+                Log.d("Objective " + Integer.toString(i),objectives.get(i).toString());
+            }
+
+        }
+
+    }
+
     public static void setupBob() {
         animal1 = new Animal("Bob","rabbit1", Creature.RABBIT);
     }
@@ -128,6 +144,8 @@ public class Controller {
         if (QGLocation == null){
             return false;
         }
+        setUpObjectivesWithHq();
+
         return true;
     }
 
@@ -218,12 +236,15 @@ public class Controller {
             server.deleteUser(user);
             return -3;
         }
+
         return 0;
 
     }
 
     public static Boolean moveHQ(){
         Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
+        setUpObjectivesWithHq();
+
         return hasHQbeenMoved;
     }
 

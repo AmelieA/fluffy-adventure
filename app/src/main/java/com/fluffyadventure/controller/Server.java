@@ -235,6 +235,7 @@ public class Server {
 
 
         }
+
     private JSONObject connectWithAuth(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
         //TODO: Get tokenz!
         HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
