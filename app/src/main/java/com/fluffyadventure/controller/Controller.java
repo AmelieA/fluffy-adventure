@@ -1,14 +1,13 @@
 package com.fluffyadventure.controller;
 
 
-import android.os.AsyncTask;
-
 import android.util.Log;
 
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
-import com.fluffyadventure.model.Spell;
+import com.fluffyadventure.model.Monster;
+import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.User;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
@@ -16,8 +15,6 @@ import com.fluffyadventure.model.Treasure;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Johan on 17/02/2015.
@@ -45,29 +42,31 @@ public class Controller {
         Log.i("FA", "Setting up objectives");
 
         objectives = new ArrayList<AbstractSpawn>();
+        ArrayList<Monster> opponents = new ArrayList<Monster>();
+        opponents.add(new Monster("Evil bunny",Creature.EVILBUNNY, 100, 10, 90, 15, new ArrayList<AbstractSpell>()));
 
         AbstractSpawn fightSpawn1 = new Spawn(0,0,0,0,45.780035, 4.856392,
-                "Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1);
+                "Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1,opponents);
         objectives.add(fightSpawn1);
         Log.i("FA", fightSpawn1.toString());
 
         AbstractSpawn fightSpawn2 = new Spawn(1,0,0,0,45.7767953, 4.8482761,
-                "Des monstres s'amusent à chatouiller des chatons, sauve les vite !","Sauver les chatons !",2);
+                "Des monstres s'amusent à chatouiller des chatons, sauve les vite !","Sauver les chatons !",2,opponents);
         objectives.add(fightSpawn2);
         Log.i("FA", fightSpawn2.toString());
 
         AbstractSpawn fightSpawn3 = new Spawn(2,0,0,0,45.7813447, 4.8513660,
-                "Un méchant sorcier a lancé une malédiction sur les arbres de la forêt","Activité bûcheronnage",3);
+                "Un méchant sorcier a lancé une malédiction sur les arbres de la forêt","Activité bûcheronnage",3,opponents);
         objectives.add(fightSpawn3);
         Log.i("FA", fightSpawn3.toString());
 
         AbstractSpawn fightSpawn4 = new Spawn(3,0,0,0,45.780666, 4.856438,
-               "Des zombies échaffaudent un plan de conquète mondiale, arrête les !","Les non-génies du mal",4);
+               "Des zombies échaffaudent un plan de conquète mondiale, arrête les !","Les non-génies du mal",4,opponents);
         objectives.add(fightSpawn4);
         Log.i("FA", fightSpawn4.toString());
 
         AbstractSpawn dungeon1 = new Dungeon(4,0,0,0,45.7853447, 4.8563660,
-                "Much evil, such dungeon, so dangerous, very intense, wow","L'antre du mal",5);
+                "Much evil, such dungeon, so dangerous, very intense, wow","L'antre du mal",5,opponents);
         objectives.add(dungeon1);
         Log.i("FA", dungeon1.toString());
 
@@ -149,7 +148,6 @@ public class Controller {
         return true;
     }
 
-
     public static Boolean sendAnimalToServer(String name){
         Animal my_animal = server.createAnimal(user,animal1,name);
         if (my_animal != null){
@@ -165,7 +163,7 @@ public class Controller {
 
     }
 
-    public static Boolean changeSpells(ArrayList<Spell> active, ArrayList<Spell> unused){
+    public static Boolean changeSpells(ArrayList<AbstractSpell> active, ArrayList<AbstractSpell> unused){
         if (active.equals(animal1.getActiveSpells()) && unused.equals(animal1.getUnusedSpells())){
             return  true;
         }

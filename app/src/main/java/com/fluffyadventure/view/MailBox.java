@@ -2,22 +2,15 @@ package com.fluffyadventure.view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.fluffyadventure.model.Mail;
-import com.fluffyadventure.model.Spell;
-import com.fluffyadventure.view.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

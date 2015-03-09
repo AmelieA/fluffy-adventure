@@ -20,10 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
-import com.fluffyadventure.model.Spell;
+import com.fluffyadventure.model.AbstractSpell;
+import com.fluffyadventure.model.DamageSpell;
+import com.fluffyadventure.model.HealSpell;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class AttackChoice extends Activity {
@@ -33,11 +34,11 @@ public class AttackChoice extends Activity {
     AttackChoiceAdapter inactiveAdapter;
 
     // List of attacks
-    Spell spell = new Spell(0,"attack", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
-    ArrayList<Spell> activeAttack;// = new ArrayList<>(Arrays.asList(spell));
+    AbstractSpell damageSpell = new DamageSpell(0,"Attaque choupie", "Blesse une cible ennemie pour 15pv", false, 15);
+    ArrayList<AbstractSpell> activeAttack;// = new ArrayList<>(Arrays.asList(spell));
 
-    Spell spell2 = new Spell(0,"attack Deactivated", "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.");
-    ArrayList<Spell> inactiveAttack;// = new ArrayList<>(Arrays.asList(spell2));
+    AbstractSpell healSpell = new HealSpell(1,"Soin mignon", "Soigne une cible alliée de 15pv", false, 15);
+    ArrayList<AbstractSpell> inactiveAttack;// = new ArrayList<>(Arrays.asList(spell2));
     Button saveBtn;
 
 
@@ -47,8 +48,8 @@ public class AttackChoice extends Activity {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
 
-        activeAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getActiveSpells());
-        inactiveAttack = new ArrayList<Spell>((ArrayList) Controller.getAnimal1().getUnusedSpells());
+        activeAttack = new ArrayList<AbstractSpell>((ArrayList) Controller.getAnimal1().getActiveSpells());
+        inactiveAttack = new ArrayList<AbstractSpell>((ArrayList) Controller.getAnimal1().getUnusedSpells());
         System.out.println(inactiveAttack.toString());
         System.out.println(activeAttack.toString());
 
@@ -83,7 +84,7 @@ public class AttackChoice extends Activity {
         Log.i("TIME", "start of updade listViews");
         if (isCheck){
             if (activeAttack.size()<4) {
-                Spell toAdd = inactiveAttack.remove(position);
+                AbstractSpell toAdd = inactiveAttack.remove(position);
                 activeAttack.add(toAdd);
             }
             else {
@@ -92,7 +93,7 @@ public class AttackChoice extends Activity {
         }else{
             if (activeAttack.size() > 1)
             {
-            Spell toAdd =  activeAttack.remove(position);
+            AbstractSpell toAdd =  activeAttack.remove(position);
             inactiveAttack.add(toAdd);
             }
             else {
@@ -117,13 +118,13 @@ public class AttackChoice extends Activity {
         Switch toggleButton;
     }
 
-    public class AttackChoiceAdapter extends ArrayAdapter<Spell> {
+    public class AttackChoiceAdapter extends ArrayAdapter<AbstractSpell> {
         private final boolean activated;
         private final Context context;
-        private final ArrayList<Spell> values;
+        private final ArrayList<AbstractSpell> values;
         ViewHolderItem viewHolder;
 
-        public AttackChoiceAdapter(Context context, ArrayList<Spell> values, boolean activated) {
+        public AttackChoiceAdapter(Context context, ArrayList<AbstractSpell> values, boolean activated) {
             super(context, R.layout.attack_choice_row_layout, values);
             this.context = context;
             this.values = values;
@@ -158,12 +159,12 @@ public class AttackChoice extends Activity {
     }
 
     private class ChangeSpellsTask extends AsyncTask<Void, Void, Boolean> {
-        private ArrayList<Spell> active;
-        private ArrayList<Spell> unused;
+        private ArrayList<AbstractSpell> active;
+        private ArrayList<AbstractSpell> unused;
         ProgressDialog dialog;
         Context ctx;
 
-        public ChangeSpellsTask(ArrayList<Spell> active, ArrayList<Spell> unused, Context ctx) {
+        public ChangeSpellsTask(ArrayList<AbstractSpell> active, ArrayList<AbstractSpell> unused, Context ctx) {
             this.active = active;
             this.unused = unused;
             this.ctx = ctx;

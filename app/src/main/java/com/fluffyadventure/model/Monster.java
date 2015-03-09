@@ -1,9 +1,5 @@
 package com.fluffyadventure.model;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +8,7 @@ import java.util.List;
  */
 public class Monster extends Creature{
 
-    private List<Spell> spells = new ArrayList<>();
+    private List<AbstractSpell> spells = new ArrayList<>();
 
     public Monster() {
     }
@@ -21,7 +17,12 @@ public class Monster extends Creature{
 
     }
 
-    public void addSpell(Spell spell, Boolean active){
+    public Monster(String name, int type, int health, int strength, int accuracy, int evasiveness, List<AbstractSpell> spells) {
+        super(name, type, health, strength, accuracy, evasiveness);
+        this.spells = spells;
+    }
+
+    public void addSpell(AbstractSpell spell, Boolean active){
         spells.add(spell);
     }
 

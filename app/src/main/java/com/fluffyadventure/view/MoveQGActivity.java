@@ -166,7 +166,8 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
             if (!isGPSEnabled && !isNWEnabled)
             {
                 // no network provider is enabled
-                return null;
+                Toast.makeText(MoveQGActivity.this, "Activer la localisation GPS", Toast.LENGTH_LONG).show();
+                return new LatLng(45.7814205,4.8729611);
             }
             else
             {
@@ -186,13 +187,13 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
         }
         catch (NullPointerException ne)
         {
-            Log.e("Current Location", "Current Lat Lng is Null");
-            return new LatLng(0, 0);
+            Toast.makeText(MoveQGActivity.this, "Position GPS introuvable", Toast.LENGTH_LONG).show();
+            return new LatLng(45.7814205,4.8729611);
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            return new LatLng(0, 0);
+            return new LatLng(45.7814205,4.8729611);
         }
     }
 
@@ -246,7 +247,6 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
             this.dialog = new ProgressDialog(this.ctx);
             this.ret = 0;
             //this.dialog.setCancelable(true);
-
         }
 
         protected void onPreExecute(){
@@ -254,6 +254,7 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
             this.dialog.show();
 
         }
+
         protected Boolean doInBackground(Void... params){
             Boolean result;
             Log.d("FirstTime",Boolean.toString(firstTime));
@@ -271,9 +272,7 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
                 }
             }
 
-
             //Boolean result = true;
-
 
             return result;
         }

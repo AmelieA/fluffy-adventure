@@ -1,8 +1,5 @@
 package com.fluffyadventure.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Created by Johan on 04/03/2015.
  */
@@ -81,6 +78,15 @@ public abstract class Creature {
         this.name = name;
     }
 
+    protected Creature(String name, int type, int health, int strength, int accuracy, int evasiveness) {
+        this.name = name;
+        this.type = type;
+        this.health = health;
+        this.strength = strength;
+        this.accuracy = accuracy;
+        this.evasiveness = evasiveness;
+    }
+
     public int getEvasiveness() {
         return evasiveness;
     }
@@ -113,15 +119,27 @@ public abstract class Creature {
         return QGImage;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public abstract void addSpell(Spell spell, Boolean active);
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public void setAccuracy(int accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    public void setEvasiveness(int evasiveness) {
+        this.evasiveness = evasiveness;
+    }
+
+    public abstract void addSpell(AbstractSpell spell, Boolean active);
 
 
 }

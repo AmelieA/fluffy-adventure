@@ -177,7 +177,8 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
             if (!isGPSEnabled && !isNWEnabled)
             {
                 // no network provider is enabled
-                return null;
+                Toast.makeText(MapComponent.this, "Activer la localisation GPS", Toast.LENGTH_LONG).show();
+                return new LatLng(45.7814205,4.8729611);
             }
             else
             {
@@ -197,13 +198,13 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         }
         catch (NullPointerException ne)
         {
-            Log.e("Current Location", "Current Lat Lng is Null");
-            return new LatLng(0, 0);
+            Toast.makeText(MapComponent.this, "Position GPS introuvable", Toast.LENGTH_LONG).show();
+            return new LatLng(45.7814205,4.8729611);
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            return new LatLng(0, 0);
+            return new LatLng(45.7814205,4.8729611);
         }
     }
 

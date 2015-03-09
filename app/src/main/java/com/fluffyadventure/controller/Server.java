@@ -4,11 +4,12 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.fluffyadventure.model.AbstractSpawn;
+import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
+import com.fluffyadventure.model.DamageSpell;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
-import com.fluffyadventure.model.Spell;
 import com.fluffyadventure.model.Treasure;
 import com.fluffyadventure.model.User;
 import com.google.android.gms.maps.model.LatLng;
@@ -214,7 +215,7 @@ public class Server {
                     spell_id = 2;
                     return  null;
             }
-            Spell spell = this.getSpell(spell_id);
+            AbstractSpell spell = this.getSpell(spell_id);
             animal.addSpell(spell, true);
             animal.setName(name);
 
@@ -370,19 +371,19 @@ public class Server {
     }
 
 
-    public Boolean changeSpells(User user, ArrayList<Spell> active, ArrayList<Spell> unused){
+    public Boolean changeSpells(User user, ArrayList<AbstractSpell> active, ArrayList<AbstractSpell> unused){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/change_spells";
         try {
             URL url = new URL(uri);
             JSONObject json = new JSONObject();
             JSONArray activeJson = new JSONArray();
-            for (Spell spell : active){
+            for (AbstractSpell spell : active){
                 activeJson.put(spell.toJson().toString());
             }
             json.put("Active",activeJson);
 
             JSONArray unusedJson = new JSONArray();
-            for (Spell spell: unused){
+            for (AbstractSpell spell: unused){
                 unusedJson.put(spell.toJson().toString());
             }
 
@@ -404,7 +405,7 @@ public class Server {
         return false;
     }
 
-    public Spell getSpell(int id){
+    public AbstractSpell getSpell(int id){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(id);
         try {
             URL url = new URL(uri);
@@ -428,7 +429,7 @@ public class Server {
 
                 JSONObject inputJson = new JSONObject(inputString.toString());
                 System.out.println(inputJson.toString());
-                Spell spell = new Spell(inputJson);
+                AbstractSpell spell = new DamageSpell(inputJson);
                 return spell;
             }
         } catch (IOException ex) {

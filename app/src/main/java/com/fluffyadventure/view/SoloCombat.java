@@ -71,13 +71,17 @@ public class SoloCombat extends Activity {
 
         animal = Controller.getAnimal1();
 
-        setupFight(currentOpponentIdx);
-
+        if (opponents.size() > 0){
+            setupFight(currentOpponentIdx);
+        }
 
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                buttonsSetEnabled(false);
+               // animal.getActiveSpells().get(0).use();
 
                 opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage);
+                buttonsSetEnabled(true);
             }
         });
 
@@ -108,20 +112,26 @@ public class SoloCombat extends Activity {
         };
    }
 
-    private void setupFight(int opponentIdx){
-        opponentsLife.setMax(opponents.get(opponentIdx).getHealth());
-        fightersLife.setMax(animal.getHealth());
+    private void buttonsSetEnabled(Boolean bool) {
+        action1.setEnabled(bool);
+        action2.setEnabled(bool);
+        action3.setEnabled(bool);
+        action4.setEnabled(bool);
+    }
 
-        opponentsName.setText("Evil Bunny");
+    private void setupFight(int opponentIdx){
+        opponentsLifePoint = opponents.get(opponentIdx).getHealth();
+        opponentsLife.setMax(opponentsLifePoint);
+        opponentsName.setText(opponents.get(opponentIdx).getName());
         String imagePath = "evilbunny";
         opponentImage.setImageResource(
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
-        opponentsLifePoint=100;
-        fightersLifePoint=100;
 
+        fightersLifePoint = animal.getHealth();
+        fightersLife.setMax(fightersLifePoint);
         fightersName.setText(Controller.getAnimal1().getName());
-        imagePath = Controller.getAnimal1().getImagePath();
+        imagePath = animal.getImagePath();
         fighterImage.setImageResource(
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));

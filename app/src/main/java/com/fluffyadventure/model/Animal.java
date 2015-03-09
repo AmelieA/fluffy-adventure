@@ -15,8 +15,8 @@ import java.util.List;
 public class Animal extends Creature{
 
 
-    private List<Spell> activeSpells = new ArrayList<>();
-    private List<Spell> unusedSpells = new ArrayList<>();
+    private List<AbstractSpell> activeSpells = new ArrayList<>();
+    private List<AbstractSpell> unusedSpells = new ArrayList<>();
 
     public Animal() {}
 
@@ -43,11 +43,11 @@ public class Animal extends Creature{
         return strength;
     }
 
-    public List<Spell> getActiveSpells() {
+    public List<AbstractSpell> getActiveSpells() {
         return activeSpells;
     }
 
-    public List<Spell> getUnusedSpells() {
+    public List<AbstractSpell> getUnusedSpells() {
         return unusedSpells;
     }
 
@@ -62,13 +62,13 @@ public class Animal extends Creature{
         json.put("Evasiveness",this.getEvasiveness());
         JSONObject spells_object = new JSONObject();
         JSONArray active = new JSONArray();
-        for (Spell spell : this.getActiveSpells()){
+        for (AbstractSpell spell : this.getActiveSpells()){
             active.put(spell.toJson());
         }
         spells_object.put("Active",active);
 
         JSONArray unused = new JSONArray();
-        for (Spell spell: this.getUnusedSpells()){
+        for (AbstractSpell spell: this.getUnusedSpells()){
             unused.put(spell.toJson());
         }
 
@@ -83,14 +83,14 @@ public class Animal extends Creature{
         JSONObject spells = json.getJSONObject("Spells");
         JSONArray unused = spells.getJSONArray("Unused");
         for (int i = 0; i < unused.length(); i++){
-            Spell spell = new Spell(unused.getJSONObject(i));
-            unusedSpells.add(spell);
+           AbstractSpell spell = new DamageSpell(unused.getJSONObject(i));
+           unusedSpells.add(spell);
         }
 
         JSONArray active = spells.getJSONArray("Active");
         Log.d("activeJson", active.toString());
         for (int i = 0; i < active.length(); i++){
-            Spell spell = new Spell(active.getJSONObject(i));
+            AbstractSpell spell = new DamageSpell(active.getJSONObject(i));
             activeSpells.add(spell);
         }
         Log.d("activetoucour",activeSpells.toString());
@@ -121,15 +121,15 @@ public class Animal extends Creature{
 
     }
 
-    public void setActiveSpells(List<Spell> activeSpells) {
+    public void setActiveSpells(List<AbstractSpell> activeSpells) {
         this.activeSpells = activeSpells;
     }
 
-    public void setUnusedSpells(List<Spell> unusedSpells) {
+    public void setUnusedSpells(List<AbstractSpell> unusedSpells) {
         this.unusedSpells = unusedSpells;
     }
 
-    public void addSpell(Spell spell, Boolean active){
+    public void addSpell(AbstractSpell spell, Boolean active){
         if ((this.activeSpells.indexOf(spell) ==  -1 ) && (this.unusedSpells.indexOf(spell) ==  -1 )) {
             if (active) {
                 this.activeSpells.add(spell);
