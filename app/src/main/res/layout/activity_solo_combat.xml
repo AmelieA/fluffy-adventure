@@ -23,6 +23,17 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/forest4" />
 
+            <!--Throwable object -->
+            <ImageView
+                android:id="@+id/ThrowableObject"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="350dp"
+                android:visibility="invisible"
+                android:gravity="bottom"
+                android:src="@drawable/interrogation"/>
+
             <!--fighter image-->
             <LinearLayout
                 android:orientation="horizontal"
@@ -52,7 +63,7 @@
                         android:layout_weight="5"
                         android:layout_marginLeft="-40dp"
                         android:gravity="bottom"
-                        android:src="@drawable/sheep5"/>
+                        android:src="@drawable/squirrel5"/>
 
                 </LinearLayout>
             </LinearLayout>
