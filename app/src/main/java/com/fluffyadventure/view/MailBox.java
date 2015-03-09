@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import java.util.Arrays;
 
 public class MailBox extends Activity {
 
+    ImageButton btnCompose;
     MailAdapter mailAdapter;
     Mail mail = new Mail(1, "Title", "Ceci est un mail");
     ArrayList<Mail> mails = new ArrayList<>(Arrays.asList(mail, mail, mail, mail, mail, mail, mail, mail, mail, mail, mail, mail));
@@ -38,6 +40,15 @@ public class MailBox extends Activity {
         mailAdapter = new MailAdapter(this, mails);
         ListView mailsView = (ListView) findViewById(R.id.MailBox);
         mailsView.setAdapter(mailAdapter);
+
+        btnCompose = (ImageButton)findViewById(R.id.BtnCompose);
+        btnCompose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MailBox.this, FriendListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
