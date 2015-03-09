@@ -27,7 +27,7 @@ public class WriteMailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_mail);
 
-        recipient = (Friend) getIntent().getParcelableExtra("friend");
+        recipient = getIntent().getParcelableExtra("friend");
 
         textRecipient = (TextView)findViewById(R.id.TextMailRecipient);
         textRecipient.setText(recipient.getName());

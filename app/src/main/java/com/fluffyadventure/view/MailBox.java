@@ -73,9 +73,9 @@ public class MailBox extends Activity {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.mail_box_row_layout, parent, false);
 
-            TextView mailHeader = (TextView) rowView.findViewById(R.id.MailHeader);
+            TextView mailHeader = (TextView) rowView.findViewById(R.id.MailSender);
             mailHeader.setText(values.get(position).getHeader());
-            TextView message = (TextView) rowView.findViewById(R.id.Message);
+            TextView message = (TextView) rowView.findViewById(R.id.MailSubject);
             message.setText(values.get(position).getMessage());
 
             return rowView;
