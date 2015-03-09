@@ -29,7 +29,8 @@ public class MailBox extends Activity {
 
     ImageButton btnCompose;
     MailAdapter mailAdapter;
-    Mail mail = new Mail(1, "Title", "Ceci est un mail");
+    // Liste bidon de mails pour tester
+    Mail mail = new Mail(1, "Expediteur", "Ceci est un mail");
     ArrayList<Mail> mails = new ArrayList<>(Arrays.asList(mail, mail, mail, mail, mail, mail, mail, mail, mail, mail, mail, mail));
 
     @Override
