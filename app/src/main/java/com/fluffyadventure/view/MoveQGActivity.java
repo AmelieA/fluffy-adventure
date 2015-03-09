@@ -235,6 +235,21 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
         dialog.show();
     }
 
+    public void onBackPressed() {
+        Intent intent;
+        if (firstTime){
+            Controller.flush();
+            intent = new Intent(MoveQGActivity.this, MainActivity.class);
+
+        }
+        else {
+            intent = new Intent(MoveQGActivity.this, com.fluffyadventure.view.Status.class);
+        }
+
+        startActivity(intent);
+        finish();
+    }
+
 
     private class CreateAllTask extends AsyncTask<Void, Void, Boolean> {
         ProgressDialog dialog;
