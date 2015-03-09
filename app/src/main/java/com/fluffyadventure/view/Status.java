@@ -21,7 +21,8 @@ import com.fluffyadventure.controller.Controller;
 
 public class Status extends Activity {
 
-    ImageButton BtnMap;
+    ImageButton btnMap;
+    ImageButton btnMailbox;
     Button btnMngSkills;
     Button btnMoveHQ;
     ImageView imgPC1;
@@ -81,14 +82,23 @@ public class Status extends Activity {
             }
         });
 
-        BtnMap = (ImageButton)findViewById(R.id.BtnMap);
-        BtnMap.setOnClickListener(new View.OnClickListener() {
+        btnMap = (ImageButton)findViewById(R.id.BtnMap);
+        btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Status.this, MapComponent.class);
 
                 startActivity(intent);
 
+            }
+        });
+
+        btnMailbox = (ImageButton)findViewById(R.id.BtnMail);
+        btnMailbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Status.this, MailBox.class);
+                startActivity(intent);
             }
         });
     }
