@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.fluffyadventure.model.Friend;
 import com.fluffyadventure.view.R;
 
 public class WriteMailActivity extends Activity {
@@ -19,13 +20,17 @@ public class WriteMailActivity extends Activity {
     EditText mailBody;
     Button btnCancelMail;
     Button btnSendMail;
+    Friend recipient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_mail);
 
+        recipient = getIntent().getParcelableExtra("friend");
+
         textRecipient = (TextView)findViewById(R.id.TextMailRecipient);
+        textRecipient.setText(recipient.getName());
 
         mailBody = (EditText)findViewById(R.id.TextMailBody);
 
@@ -65,5 +70,12 @@ public class WriteMailActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onBackPressed() {
+        Intent intent = new Intent(WriteMailActivity.this, FriendListActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 }

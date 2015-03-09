@@ -14,4 +14,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="50dp"/>
 
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:id="@+id/BtnCompose"
+        android:background="@drawable/compose"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
 </RelativeLayout>

@@ -20,20 +20,20 @@
             android:background="@drawable/fight_choice_button">
 
             <TextView
-                android:id="@+id/MailHeader"
+                android:id="@+id/MailSender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="Attack Name"
+                android:text="Sender Name"
                 android:textColor="#ffffffff"
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/Message"
+                android:id="@+id/MailSubject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffffff"
-                android:text="What the attack does like how many damage it does. What the attack does like how many damage it does. What the attack does like how many damage it does. What the attack does like how many damage it does."/>
+                android:text="Subject of the mail here"/>
 
 
         </LinearLayout>

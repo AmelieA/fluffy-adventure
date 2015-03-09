@@ -1,5 +1,6 @@
 package com.fluffyadventure.view;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.view.R;
 
-public class AnimalName extends ActionBarActivity {
+public class AnimalName extends Activity {
 
     EditText name;
     Button btnOkName;

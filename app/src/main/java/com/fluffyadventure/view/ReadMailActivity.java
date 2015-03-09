@@ -71,4 +71,11 @@ public class ReadMailActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackPressed() {
+        Intent intent = new Intent(ReadMailActivity.this, MailBox.class);
+        startActivity(intent);
+        finish();
+
+    }
 }

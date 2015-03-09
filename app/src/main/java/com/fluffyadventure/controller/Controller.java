@@ -92,6 +92,7 @@ public class Controller {
 
     public  static  void setUpObjectivesWithHq() {
         objectives = server.get_spawns();
+        Log.d("Objectives","Received");
         if (objectives != null && QGLocation != null){
             for (int i = 0; i < objectives.size(); i++){
                 double coefLat = Math.cos(i);
@@ -229,11 +230,13 @@ public class Controller {
         }
         Log.d("ordre","bon");
 
-        Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
+        Boolean hasHQbeenMoved = moveHQ();
         if (!hasHQbeenMoved){
             server.deleteUser(user);
+            Log.d("ERROR","HQ CREATION");
             return -3;
         }
+        Log.d("User Created","TRUE");
 
         return 0;
 
@@ -242,6 +245,7 @@ public class Controller {
     public static Boolean moveHQ(){
         Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
         setUpObjectivesWithHq();
+
 
         return hasHQbeenMoved;
     }

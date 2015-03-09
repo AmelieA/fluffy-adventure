@@ -528,6 +528,7 @@ public class Server {
                 return true;
 
             }
+            Log.d("HTTP ERRROR",Integer.toString(httpResult));
         } catch (IOException ex) {
             ex.printStackTrace();
         }

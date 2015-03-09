@@ -202,7 +202,7 @@ public class MainActivity extends Activity {
         protected Boolean doInBackground(Void... params){
 
             Boolean result = Controller.connectToServer(server, port);
-            Controller.setUpObjectivesFromServer();
+            //Controller.setUpObjectivesFromServer();
             if (Controller.getUser() != null){
                 login = Controller.login(Controller.getUser().getName(),Controller.getUser().getPassword());
             }
