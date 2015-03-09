@@ -2,6 +2,7 @@ package com.fluffyadventure.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -67,6 +68,13 @@ public class MailBox extends Activity {
 
             return rowView;
         }
+    }
+
+    public void onBackPressed() {
+        Intent intent = new Intent(MailBox.this, Status.class);
+        startActivity(intent);
+        finish();
+
     }
 
 }

@@ -104,4 +104,11 @@ public class FriendListActivity extends Activity {
 
     }
 
+    public void onBackPressed() {
+        Intent intent = new Intent(FriendListActivity.this, MailBox.class);
+        startActivity(intent);
+        finish();
+
+    }
+
 }

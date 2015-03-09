@@ -66,4 +66,11 @@ public class WriteMailActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackPressed() {
+        Intent intent = new Intent(WriteMailActivity.this, FriendListActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
 }
