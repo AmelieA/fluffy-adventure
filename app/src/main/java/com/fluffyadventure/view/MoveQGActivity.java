@@ -143,10 +143,57 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
             }
         });
 
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+        LatLng location = getCurrentLocation();
+
+        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.latitude, location.longitude)));
         map.moveCamera(CameraUpdateFactory.zoomTo(15));
+    }
+
+    public LatLng getCurrentLocation()
+    {
+        try
+        {
+            LocationManager locMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String locProvider = locMgr.getBestProvider(criteria, false);
+            Location location = locMgr.getLastKnownLocation(locProvider);
+
+            // getting GPS status
+            boolean isGPSEnabled = locMgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            // getting network status
+            boolean isNWEnabled = locMgr.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (!isGPSEnabled && !isNWEnabled)
+            {
+                // no network provider is enabled
+                return null;
+            }
+            else
+            {
+                // First get location from Network Provider
+                if (isNWEnabled)
+                    if (locMgr != null)
+                        location = locMgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+                // if GPS Enabled get lat/long using GPS Services
+                if (isGPSEnabled)
+                    if (location == null)
+                        if (locMgr != null)
+                            location = locMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            }
+
+            return new LatLng(location.getLatitude(), location.getLongitude());
+        }
+        catch (NullPointerException ne)
+        {
+            Log.e("Current Location", "Current Lat Lng is Null");
+            return new LatLng(0, 0);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return new LatLng(0, 0);
+        }
     }
 
 
