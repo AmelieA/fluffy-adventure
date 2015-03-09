@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -46,10 +47,25 @@ public class FriendListActivity extends Activity {
             }
         });
 
-
         friendAdapter = new FriendAdapter(this,friends);
         ListView friendsView = (ListView) findViewById(R.id.FriendList);
         friendsView.setAdapter(friendAdapter);
+        friendsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Friend entry = (Friend) parent.getItemAtPosition(position);
+                Intent intent = new Intent(FriendListActivity.this, WriteMailActivity.class);
+                intent.putExtra("friend",friend);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void onBackPressed() {
+        Intent intent = new Intent(FriendListActivity.this, MailBox.class);
+        startActivity(intent);
+        finish();
+
     }
 
 
@@ -101,13 +117,6 @@ public class FriendListActivity extends Activity {
 
             return rowView;
         }
-
-    }
-
-    public void onBackPressed() {
-        Intent intent = new Intent(FriendListActivity.this, MailBox.class);
-        startActivity(intent);
-        finish();
 
     }
 
