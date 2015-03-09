@@ -24,6 +24,7 @@ import com.fluffyadventure.model.Monster;
 import com.fluffyadventure.tools.CircularLinkedList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class SoloCombat extends Activity {
@@ -151,7 +152,7 @@ public class SoloCombat extends Activity {
 
         int offset = 0;
         Integer[] listTriggerPoints = {0, 20, 40, 100};
-        Integer[] listProgressBarColors = {R.drawable.green_progress_bar, R.drawable.green_progress_bar, R.drawable.orange_progress_bar};
+        Integer[] listProgressBarColors = {R.drawable.orange_progress_bar, R.drawable.green_progress_bar, R.drawable.green_progress_bar};
         for (int i = 0; i < listProgressBarColors.length; i++) {
             //if life is between two trigger point and you still have life point to loose, programs animation
             if ((lifeProgressBarPoint < listTriggerPoints[i + 1]) && (lifeProgressBarPoint >= listTriggerPoints[i]) && (lifePointGain >= 0)) {
@@ -172,14 +173,6 @@ public class SoloCombat extends Activity {
                 lifePointGain -= pointToGain;
                 lifeProgressBarPoint += pointToGain;
                 offset += pointToGain * 15;
-
-                //change color of the process bar if needed after removal of life point
-//                if (lifeProgressBarPoint >= listTriggerPoints[i]) {
-//                    Resources res = getResources();
-//                    Rect bounds = lifeProgressBar.getProgressDrawable().getBounds();
-//                    lifeProgressBar.setProgressDrawable(res.getDrawable(listProgressBarColors[i]));
-//                    lifeProgressBar.getProgressDrawable().setBounds(bounds);
-//                }
             }
         }
 
