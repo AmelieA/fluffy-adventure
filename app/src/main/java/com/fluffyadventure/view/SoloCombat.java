@@ -84,7 +84,9 @@ public class SoloCombat extends Activity {
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage);
+                animationOffset=0;
+                throwObject();
+                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
             }
         });
 
@@ -132,29 +134,6 @@ public class SoloCombat extends Activity {
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
         fightersLifePoint=100;
-
-        action1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                animationOffset=0;
-                throwObject();
-                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
-            }
-        });
-
-        action2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                animationOffset=0;
-                opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, 25, opponentImage);
-            }
-        });
-
-        action3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                animationOffset=0;
-                fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, 15, fighterImage, false);
-            }
-        });
-
     }
 
     public int LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointLost, ImageView opponentImage, boolean isOpponent) {
