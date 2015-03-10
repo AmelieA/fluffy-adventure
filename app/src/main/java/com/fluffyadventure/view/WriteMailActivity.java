@@ -26,12 +26,15 @@ public class WriteMailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_mail);
-
-        recipient = getIntent().getParcelableExtra("friend");
-
         textRecipient = (TextView)findViewById(R.id.TextMailRecipient);
-        textRecipient.setText(recipient.getName());
-
+        //Getting recipient from previous activity
+        recipient = getIntent().getParcelableExtra("friend");
+        if (recipient != null){
+            textRecipient.setText(recipient.getName());
+        }else{
+            textRecipient.setText("Destinataire inconnu");
+            //Do something else in this case?
+        }
         mailBody = (EditText)findViewById(R.id.TextMailBody);
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
