@@ -6,6 +6,7 @@ import android.util.Log;
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
+import com.fluffyadventure.model.DamageSpell;
 import com.fluffyadventure.model.Monster;
 import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.User;
@@ -105,8 +106,10 @@ public class Controller {
 
     }
 
-    public static void setupBob() {
-        animal1 = new Animal("Bob","rabbit1", Creature.RABBIT);
+    public static Animal setupBob() {
+        Animal animal1 = new Animal("Bob","rabbit1", Creature.RABBIT);
+        animal1.addSpell(new DamageSpell(1, "zut", "zut", true, 0), true);
+        return animal1;
     }
 
     public static void createAnimal1(String name, String imagePath, int type) {

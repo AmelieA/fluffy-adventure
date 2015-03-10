@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
+import com.fluffyadventure.model.DamageSpell;
 import com.fluffyadventure.model.Monster;
 import com.fluffyadventure.tools.CircularLinkedList;
 
@@ -60,9 +61,6 @@ public class SoloCombat extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solo_combat);
 
-        opponents = Controller.getCurrentObjective().getOpponents();
-        currentOpponentIdx = 0;
-
         opponentsName = (TextView) findViewById(R.id.OpponentsName);
         opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
         opponentImage = (ImageView) findViewById(R.id.OpponentImage);
@@ -76,7 +74,14 @@ public class SoloCombat extends Activity {
         action3 = (Button) findViewById(R.id.Action3);
         action4 = (Button) findViewById(R.id.Action4);
 
-        animal = Controller.getAnimal1();
+        //opponents = Controller.getCurrentObjective().getOpponents();
+        currentOpponentIdx = 0;
+        //animal = Controller.getAnimal1();
+
+        animal=Controller.setupBob();
+        Monster opponent = new Monster("Bob", "evilbunny");
+        opponents.add(0, opponent);
+
 
         if (opponents.size() > 0){
             setupFight(currentOpponentIdx);
