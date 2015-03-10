@@ -20,6 +20,7 @@ public class DamageSpell extends AbstractSpell {
 
     public DamageSpell(JSONObject json) throws JSONException {
         super(json);
+        damage = json.getInt("Health");
     }
 
     public  List<List<Creature>> use(List<Creature> fighters, List<Creature> opponents, Integer target) {
@@ -38,5 +39,13 @@ public class DamageSpell extends AbstractSpell {
         returnedArray.add(opponents);
 
         return returnedArray;
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = super.toJson();
+
+        json.put("Type","Damage");
+        json.put("Health",damage);
+        return json;
     }
 }

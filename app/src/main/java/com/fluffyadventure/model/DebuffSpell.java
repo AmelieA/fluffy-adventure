@@ -24,6 +24,9 @@ public class DebuffSpell extends AbstractSpell {
 
     public DebuffSpell(JSONObject json) throws JSONException {
         super(json);
+        strModif = json.getInt("Strength");
+        accuModif = json.getInt("Accuracy");
+        evaModif = json.getInt("Evasiveness");
     }
 
     public  List<List<Creature>> use(List<Creature> fighters, List<Creature> opponents, Integer target) {
@@ -48,5 +51,14 @@ public class DebuffSpell extends AbstractSpell {
         returnedArray.add(opponents);
 
         return returnedArray;
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = super.toJson();
+        json.put("Strength",strModif);
+        json.put("Accuracy",accuModif);
+        json.put("Evasiveness",evaModif);
+        json.put("Type","Debuff");
+        return json;
     }
 }

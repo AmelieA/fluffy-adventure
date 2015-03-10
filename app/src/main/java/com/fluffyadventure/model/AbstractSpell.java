@@ -32,7 +32,7 @@ public abstract class AbstractSpell {
         this.id = json.getInt("Id");
         this.name = json.getString("Name");
         this.description = json.getString("Description");
-        //this.isAoE = isAoE = json.getString("IsAoE");
+        this.isAoE = isAoE = json.getBoolean("IsAoE");
     }
 
 
@@ -57,7 +57,7 @@ public abstract class AbstractSpell {
         json.put("Name", name);
         json.put("Id",id);
         json.put("Description", description);
-        //json.put("IsAoE",AoE);
+        json.put("IsAoE",isAoE);
         return json;
     }
 

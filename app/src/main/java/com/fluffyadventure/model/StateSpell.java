@@ -24,4 +24,9 @@ public class StateSpell extends AbstractSpell {
 
         return returnedArray;
     }
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = super.toJson();
+        json.put("Type","State");
+        return json;
+    }
 }

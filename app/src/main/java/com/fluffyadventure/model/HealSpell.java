@@ -17,9 +17,9 @@ public class HealSpell extends AbstractSpell {
         super(id, name, description, isAoE);
         this.heal = heal;
     }
-
     public HealSpell(JSONObject json) throws JSONException {
         super(json);
+        heal = json.getInt("Health");
     }
 
     public  List<List<Creature>> use(List<Creature> fighters, List<Creature> opponents, Integer target) {
@@ -38,5 +38,13 @@ public class HealSpell extends AbstractSpell {
         returnedArray.add(opponents);
 
         return returnedArray;
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = super.toJson();
+
+        json.put("Type","Heal");
+        json.put("Health",heal);
+        return json;
     }
 }

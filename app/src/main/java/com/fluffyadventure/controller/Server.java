@@ -6,10 +6,14 @@ import android.util.Log;
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.BuffSpell;
 import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.DamageSpell;
+import com.fluffyadventure.model.DebuffSpell;
 import com.fluffyadventure.model.Dungeon;
+import com.fluffyadventure.model.HealSpell;
 import com.fluffyadventure.model.Spawn;
+import com.fluffyadventure.model.StateSpell;
 import com.fluffyadventure.model.Treasure;
 import com.fluffyadventure.model.User;
 import com.google.android.gms.maps.model.LatLng;
@@ -429,7 +433,27 @@ public class Server {
 
                 JSONObject inputJson = new JSONObject(inputString.toString());
                 System.out.println(inputJson.toString());
-                AbstractSpell spell = new DamageSpell(inputJson);
+                AbstractSpell spell;
+                switch (inputJson.getInt("Type")){
+                    case AbstractSpell.DAMAGE:
+                        spell = new DamageSpell(inputJson);
+                        break;
+                    case AbstractSpell.HEAL:
+                        spell = new HealSpell(inputJson);
+                        break;
+                    case AbstractSpell.BUFF:
+                        spell = new BuffSpell(inputJson);
+                        break;
+                    case AbstractSpell.DEBUFF:
+                        spell = new DebuffSpell(inputJson);
+                        break;
+                    case AbstractSpell.STATE:
+                        spell = new StateSpell(inputJson);
+                        break;
+                    default:
+                        spell = new StateSpell(inputJson);
+
+                }
                 return spell;
             }
         } catch (IOException ex) {
