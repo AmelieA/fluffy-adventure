@@ -2,14 +2,12 @@ package com.fluffyadventure.view;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
@@ -20,36 +18,45 @@ import android.widget.ProgressBar;
 import android.widget.ImageView;
 
 import com.fluffyadventure.controller.Controller;
+import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.Animal;
-import com.fluffyadventure.model.Creature;
-import com.fluffyadventure.model.DamageSpell;
 import com.fluffyadventure.model.Monster;
-import com.fluffyadventure.tools.CircularLinkedList;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.ResourceBundle;
 
 public class SoloCombat extends Activity {
 
+    //opponent
     private TextView opponentsName;
     private ProgressBar opponentsLife;
     private int opponentsLifePoint;
     private ImageView opponentImage;
+    private ImageView opponentsGainLifeFilter;
+
+    //fighter
     private TextView fightersName;
     private ProgressBar fightersLife;
     private int fightersLifePoint;
-    private TextView instruction;
     private ImageView fighterImage;
-    private ImageView throwableObject;
+    private ImageView fightersGainLifeFilter;
+
+    //animation components
+    private ImageView throwableObjectToOpponent;
+    private ImageView throwableObjectToFighter;
+
+    //buttons and texts
+    private TextView instruction;
     private Button action1;
     private Button action2;
     private Button action3;
     private Button action4;
     private Animal animal;
+
+    //needed for services part
     private int currentOpponentIdx;
     ArrayList<Monster> opponents;
 
+    //Time in ms when the last animation is oven from the moment you launch the first animation
     private int animationOffset;
 
     private Handler handler = new Handler();
@@ -64,23 +71,26 @@ public class SoloCombat extends Activity {
         opponentsName = (TextView) findViewById(R.id.OpponentsName);
         opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
         opponentImage = (ImageView) findViewById(R.id.OpponentImage);
+        opponentsGainLifeFilter= (ImageView) findViewById(R.id.OpponentsLifeFilter);
         fightersName = (TextView) findViewById(R.id.FightersName);
         fightersLife = (ProgressBar) findViewById(R.id.FightersLife);
         fighterImage = (ImageView) findViewById(R.id.FighterImage);
+        fightersGainLifeFilter = (ImageView) findViewById(R.id.FightersLifeFilter);
         instruction = (TextView) findViewById(R.id.Instruction);
-        throwableObject = (ImageView) findViewById(R.id.ThrowableObject);
+        throwableObjectToOpponent = (ImageView) findViewById(R.id.ThrowableObjectToOpponent);
+        throwableObjectToFighter = (ImageView) findViewById(R.id.ThrowableObjectToFighter);
         action1 = (Button) findViewById(R.id.Action1);
         action2 = (Button) findViewById(R.id.Action2);
         action3 = (Button) findViewById(R.id.Action3);
         action4 = (Button) findViewById(R.id.Action4);
 
+        Controller.setupBob();
+        Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
+        opponents.add(0, opponent);
+
         //opponents = Controller.getCurrentObjective().getOpponents();
         currentOpponentIdx = 0;
-        //animal = Controller.getAnimal1();
-
-        animal=Controller.setupBob();
-        Monster opponent = new Monster("Bob", "evilbunny");
-        opponents.add(0, opponent);
+        animal = Controller.getAnimal1();
 
 
         if (opponents.size() > 0){
@@ -90,7 +100,7 @@ public class SoloCombat extends Activity {
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 animationOffset=0;
-                throwObject();
+                throwObjectToOpponent();
                 opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
             }
         });
@@ -98,7 +108,8 @@ public class SoloCombat extends Activity {
         if (animal.getActiveSpells().size() > 1) {
             action2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
+                    animationOffset=0;
+                    opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, 25, opponentsGainLifeFilter);
                 }
             });
         };
@@ -106,7 +117,9 @@ public class SoloCombat extends Activity {
         if (animal.getActiveSpells().size() > 2) {
             action3.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
+                    animationOffset=0;
+                    throwObjectToFighter();
+                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, 20, fighterImage, false);
                 }
             });
         };
@@ -114,9 +127,11 @@ public class SoloCombat extends Activity {
         if (animal.getActiveSpells().size() > 3) {
             action4.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent intent = new Intent(SoloCombat.this, MapComponent.class);
-                    startActivity(intent);
-                    finish();
+                    animationOffset=0;
+                    fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, 25, fightersGainLifeFilter);
+//                    Intent intent = new Intent(SoloCombat.this, MapComponent.class);
+//                    startActivity(intent);
+//                    finish();
                 }
             });
         };
@@ -139,14 +154,16 @@ public class SoloCombat extends Activity {
                         imagePath, "drawable", getPackageName()));
     }
 
-    public int LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointLost, ImageView opponentImage, boolean isOpponent) {
+    public int LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointLost, ImageView creatureImage, boolean isOpponent) {
 
+        //you can only have one animation per imageVIew so creating an animationSet of multiple animation
         AnimationSet as = new AnimationSet(true);
+        //please stay dead command
+        as.setFillAfter(true);
 
         //animate injury (blinking animal) last 400ms
         Animation injuryAnimation = AnimationUtils.loadAnimation(this, R.anim.injury_animation);
         injuryAnimation.setStartOffset(animationOffset);
-//        opponentImage.startAnimation(injuryAnimation);
         as.addAnimation(injuryAnimation);
 
         animationOffset += 400;
@@ -186,16 +203,20 @@ public class SoloCombat extends Activity {
                 deadAnimation = AnimationUtils.loadAnimation(this, R.anim.death_fighter_animation);
             }
             deadAnimation.setStartOffset(animationOffset+300);
-//            opponentImage.startAnimation(deadAnimation);
             as.addAnimation(deadAnimation);
         }
 
-        opponentImage.startAnimation(as);
+        creatureImage.startAnimation(as);
 
         return (lifeProgressBarPoint);
     }
 
-    public int GainLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointGain, ImageView opponentImage) {
+    public int GainLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointGain, ImageView lifeFilter) {
+
+
+        Animation lifeAnimation = AnimationUtils.loadAnimation(this, R.anim.gain_life_animation);
+        lifeAnimation.setStartOffset(animationOffset);
+        lifeFilter.startAnimation(lifeAnimation);
 
         Integer[] listTriggerPoints = {0, 20, 40, 100};
         Integer[] listProgressBarColors = {R.drawable.orange_progress_bar, R.drawable.green_progress_bar, R.drawable.green_progress_bar};
@@ -233,9 +254,15 @@ public class SoloCombat extends Activity {
         animation.start();
     }
 
-    public void throwObject(){
-        Animation throwObjectAnimation = AnimationUtils.loadAnimation(this, R.anim.throw_object_animation);
-        throwableObject.startAnimation(throwObjectAnimation);
+    public void throwObjectToOpponent(){
+        Animation throwObjectAnimation = AnimationUtils.loadAnimation(this, R.anim.throw_object_to_opponent_animation);
+        throwableObjectToOpponent.startAnimation(throwObjectAnimation);
+        animationOffset += 400;
+    }
+
+    public void throwObjectToFighter(){
+        Animation throwObjectAnimation = AnimationUtils.loadAnimation(this, R.anim.throw_object_to_fighter_animation);
+        throwableObjectToFighter.startAnimation(throwObjectAnimation);
         animationOffset += 400;
     }
 

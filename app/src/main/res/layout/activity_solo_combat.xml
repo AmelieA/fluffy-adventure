@@ -23,50 +23,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/forest4" />
 
-            <!--Throwable object -->
-            <ImageView
-                android:id="@+id/ThrowableObject"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="350dp"
-                android:visibility="invisible"
-                android:gravity="bottom"
-                android:src="@drawable/interrogation"/>
 
-            <!--fighter image-->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="10">
-
-
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="6"
-                    android:orientation="vertical"
-                    android:weightSum="10"
-                    android:gravity="top">
-
-                    <ImageView
-                        android:layout_width="fill_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="6"
-                        android:gravity="top"/>
-
-                    <ImageView
-                        android:id="@+id/FighterImage"
-                        android:layout_width="fill_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="5"
-                        android:layout_marginLeft="-40dp"
-                        android:gravity="bottom"
-                        android:src="@drawable/squirrel5"/>
-
-                </LinearLayout>
-            </LinearLayout>
 
             <!--opponent (fighter and panel) + name-->
             <LinearLayout
@@ -188,20 +145,100 @@
                         android:layout_weight="1"
                         android:gravity="top"/>
 
-                    <ImageView
-                        android:id="@+id/OpponentImage"
+
+                    <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
-                        android:layout_weight="4"
-                        android:interpolator="@anim/death_opponent_animation"
-                        android:gravity="bottom"
-                        android:src="@drawable/evilbunny"/>
+                        android:layout_weight="4">
+                        <ImageView
+                            android:id="@+id/OpponentImage"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:interpolator="@anim/death_opponent_animation"
+                            android:gravity="bottom"
+                            android:src="@drawable/evilbunny"/>
+
+                        <ImageView
+                            android:id="@+id/OpponentsLifeFilter"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:visibility="invisible"
+                            android:src="@drawable/life4"/>
+
+                    </RelativeLayout>
 
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
                         android:layout_weight="5"
                         android:gravity="top"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--Throwable object to Opponent -->
+            <ImageView
+                android:id="@+id/ThrowableObjectToOpponent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="350dp"
+                android:visibility="invisible"
+                android:gravity="bottom"
+                android:src="@drawable/interrogation"/>
+
+            <!--Throwable object to Fighter -->
+            <ImageView
+                android:id="@+id/ThrowableObjectToFighter"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="250dp"
+                android:layout_marginTop="150dp"
+                android:visibility="invisible"
+                android:gravity="bottom"
+                android:src="@drawable/interrogation"/>
+
+            <!--fighter image-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10">
+
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="6"
+                        android:gravity="top"/>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="5">
+
+                        <ImageView
+                            android:id="@+id/FighterImage"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_marginLeft="-40dp"
+                            android:gravity="bottom"
+                            android:src="@drawable/squirrel5"/>
+                        <ImageView
+                            android:id="@+id/FightersLifeFilter"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:visibility="invisible"
+                            android:src="@drawable/life4"/>
+                    </RelativeLayout>
 
                 </LinearLayout>
             </LinearLayout>

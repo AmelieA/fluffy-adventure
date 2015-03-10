@@ -2,10 +2,7 @@
     android:interpolator="@android:anim/accelerate_interpolator"
     android:fillAfter="true">
 
-    <translate
-        android:fromYDelta="0%p"
-        android:toYDelta="-3%p"
-        android:duration="400" />
+
     <set
         android:startOffset="400">
         <rotate
