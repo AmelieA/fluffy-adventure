@@ -3,7 +3,7 @@
         "Name":"Jet de noisettes",
         "Id":1,
         "Description":"Lance une noisette sur l'énemi" ,
-        "AoE":false ,
+        "IsAoE":false ,
         "Type":4 ,
         "Health":12
     },
@@ -11,7 +11,7 @@
         "Name":"Poing de lapin",
         "Id":2,
         "Description":"Libère ta rage intérieure" ,
-        "AoE":false ,
+        "IsAoE":false ,
         "Type":4 ,
         "Health":10
     },
@@ -19,25 +19,34 @@
         "Name":"Manger HERBE !!!",
         "Id":3,
         "Description":"Le pouvoir des fibres végétales te redonne la vie" ,
-        "AoE":false ,
+        "IsAoE":false ,
         "Type":3 ,
         "Health":10
     },
     {
-        "Name":"Jet de feuille",
+        "Name":"Niark Niark",
         "Id":4,
-        "Description":"Lance une feuille sur l'énemi" ,
-        "AoE":false ,
+        "Description":"L'ennemi utilise les ténèbres pour te faire mal" ,
+        "IsAoE":false ,
+        "Type":4 ,
+        "Health":10
+    },
+
+    {
+        "Name":"Jet de feuille",
+        "Id":5,
+        "Description":"Lance une feuille sur l'ennemi" ,
+        "IsAoE":false ,
         "Type":2 ,
-        "Strength":12,
-        "Accuracy":0,
+        "Strength":0,
+        "Accuracy":12,
         "Evasiveness":0
     },
     {
         "Name":"Carottes sacrées",
-        "Id":5,
+        "Id":6,
         "Description":"Mange une carrote pour augmenter tes statistiques" ,
-        "AoE":false ,
+        "IsAoE":false ,
         "Type":1 ,
         "Strength":12,
         "Accuracy":2,
@@ -45,10 +54,19 @@
     },
     {
         "Name":"Roulade",
-        "Id":6,
+        "Id":7,
         "Description":"Utilise ta laine pour former une boule et anhilier l'adversaire" ,
-        "AoE":false ,
+        "IsAoE":false ,
         "Type":4 ,
         "Health":1000
+    },
+    {
+        "Name":"Fourberie",
+        "Id":8,
+        "Description":"L'ennemi utilise ta nouriture pour se revigorifier" ,
+        "IsAoE":false ,
+        "Type":3 ,
+        "Health":34
     }
+
 ]
