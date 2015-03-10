@@ -116,7 +116,8 @@ public class SoloCombat extends Activity {
                 }
             });
         }else{
-            action2.setActivated(false);
+            action2.setEnabled(false);
+            action2.setText("");
         }
 
         if (animal.getActiveSpells().size() > 2) {
@@ -128,7 +129,10 @@ public class SoloCombat extends Activity {
                     fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, 20, fighterImage, false);
                 }
             });
-        };
+        }else{
+            action3.setEnabled(false);
+            action3.setText("");
+        }
 
         if (animal.getActiveSpells().size() > 3) {
             action4.setText(animal.getActiveSpells().get(3).getName());
@@ -141,7 +145,10 @@ public class SoloCombat extends Activity {
 //                    finish();
                 }
             });
-        };
+        }else{
+            action4.setEnabled(false);
+            action4.setText("");
+        }
    }
 
     private void setupFight(int opponentIdx){
