@@ -23,6 +23,7 @@ import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Monster;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SoloCombat extends Activity {
 
@@ -86,7 +87,7 @@ public class SoloCombat extends Activity {
 
         Controller.setupBob();
         Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
-        opponents.add(0, opponent);
+        opponents = new ArrayList<>(Arrays.asList(opponent));
 
         //opponents = Controller.getCurrentObjective().getOpponents();
         currentOpponentIdx = 0;
@@ -97,34 +98,40 @@ public class SoloCombat extends Activity {
             setupFight(currentOpponentIdx);
         }
 
+        action1.setText(animal.getActiveSpells().get(0).getName());
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 animationOffset=0;
-                throwObjectToOpponent();
+                attackFromFighterAnimation();
                 opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
             }
         });
 
         if (animal.getActiveSpells().size() > 1) {
+            action2.setText(animal.getActiveSpells().get(1).getName());
             action2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
                     opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, 25, opponentsGainLifeFilter);
                 }
             });
-        };
+        }else{
+            action2.setActivated(false);
+        }
 
         if (animal.getActiveSpells().size() > 2) {
+            action3.setText(animal.getActiveSpells().get(2).getName());
             action3.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
-                    throwObjectToFighter();
+                    attackFromOpponentAnimation();
                     fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, 20, fighterImage, false);
                 }
             });
         };
 
         if (animal.getActiveSpells().size() > 3) {
+            action4.setText(animal.getActiveSpells().get(3).getName());
             action4.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
@@ -264,6 +271,18 @@ public class SoloCombat extends Activity {
         Animation throwObjectAnimation = AnimationUtils.loadAnimation(this, R.anim.throw_object_to_fighter_animation);
         throwableObjectToFighter.startAnimation(throwObjectAnimation);
         animationOffset += 400;
+    }
+
+    public void attackFromFighterAnimation(){
+        Animation attackAnimation = AnimationUtils.loadAnimation(this, R.anim.attack_fighter_animation);
+        fighterImage.startAnimation(attackAnimation);
+        animationOffset += 100;
+    }
+
+    public void attackFromOpponentAnimation(){
+        Animation attackAnimation = AnimationUtils.loadAnimation(this, R.anim.attack_opponent_animation);
+        opponentImage.startAnimation(attackAnimation);
+        animationOffset += 100;
     }
 
 //    @Override
