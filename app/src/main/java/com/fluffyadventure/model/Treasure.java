@@ -3,6 +3,8 @@ package com.fluffyadventure.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by Johan on 18/02/2015.
  */
@@ -18,6 +20,10 @@ public class Treasure extends AbstractSpawn {
     public Treasure(JSONObject jsonObject) throws JSONException {
         super(jsonObject);
     }
+
+    public ArrayList<Monster> getOpponents() {
+        return new ArrayList<>();
+    };
 
     @Override
     public String getStandardIcon() {

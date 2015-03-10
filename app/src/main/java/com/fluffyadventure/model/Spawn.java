@@ -29,7 +29,11 @@ public class Spawn extends AbstractSpawn {
             super(jsonObject);
         }
 
-        @Override
+        public ArrayList<Monster> getOpponents() {
+            return opponents;
+        }
+
+    @Override
         public String getStandardIcon() {
             return "spawn_icon";
         }

@@ -21,8 +21,6 @@ public abstract class AbstractSpawn {
         //public static final String COMPETENCES_INSUFFISANTES= "competences insuffisantes";
     }
 
-    private ArrayList<Monster> opponents = new ArrayList<>();
-
     protected Integer spawnId;
 
     public Integer requirement = null;
@@ -154,9 +152,7 @@ public abstract class AbstractSpawn {
         this.requirement = requirement;
     }
 
-    public ArrayList<Monster> getOpponents() {
-        return opponents;
-    }
+    public abstract ArrayList<Monster> getOpponents();
 
     @Override
     public String toString() {

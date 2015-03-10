@@ -43,7 +43,7 @@ public class Controller {
 
         objectives = new ArrayList<AbstractSpawn>();
         ArrayList<Monster> opponents = new ArrayList<Monster>();
-        opponents.add(new Monster("Evil bunny",Creature.EVILBUNNY, 100, 10, 90, 15, new ArrayList<AbstractSpell>()));
+        opponents.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 15, new ArrayList<AbstractSpell>()));
 
         AbstractSpawn fightSpawn1 = new Spawn(0,0,0,0,45.780035, 4.856392,
                 "Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1,opponents);
@@ -144,7 +144,9 @@ public class Controller {
         if (QGLocation == null){
             return false;
         }
-        setUpObjectivesWithHq();
+        //TODO Remplacer une fois que le serveur gèreras les spanws contenant des monstres
+        //setUpObjectivesWithHq();
+        setupObjectives();
 
         return true;
     }
@@ -244,8 +246,8 @@ public class Controller {
 
     public static Boolean moveHQ(){
         Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
-        setUpObjectivesWithHq();
-
+        //setUpObjectivesWithHq();
+        setupObjectives();
 
         return hasHQbeenMoved;
     }

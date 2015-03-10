@@ -23,6 +23,10 @@ public class Dungeon extends AbstractSpawn {
         super(jsonObject);
     }
 
+    public ArrayList<Monster> getOpponents() {
+        return opponents;
+    };
+
 
 
     @Override

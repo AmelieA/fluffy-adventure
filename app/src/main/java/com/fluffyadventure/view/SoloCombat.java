@@ -47,7 +47,7 @@ public class SoloCombat extends Activity {
     private Button action4;
     private Animal animal;
     private int currentOpponentIdx;
-    ArrayList<Monster> opponents = new ArrayList<>();
+    ArrayList<Monster> opponents;
 
     private int animationOffset;
 
