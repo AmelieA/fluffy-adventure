@@ -29,7 +29,7 @@ public class MailBox extends Activity {
     ImageButton btnCompose;
     MailAdapter mailAdapter;
     // Liste bidon de mails pour tester
-    Mail mail = new Mail(1, "Expediteur", "Ceci est un mail");
+    Mail mail = new Mail(1, "Expediteur", "Ceci est un mail","heya",10);
     ArrayList<Mail> mails = new ArrayList<>(Arrays.asList(mail, mail, mail, mail, mail, mail, mail, mail, mail, mail, mail, mail));
 
     @Override
@@ -73,7 +73,7 @@ public class MailBox extends Activity {
             rowView = inflater.inflate(R.layout.mail_box_row_layout, parent, false);
 
             TextView mailHeader = (TextView) rowView.findViewById(R.id.MailSender);
-            mailHeader.setText(values.get(position).getHeader());
+            mailHeader.setText(values.get(position).getSender());
             TextView message = (TextView) rowView.findViewById(R.id.MailSubject);
             message.setText(values.get(position).getMessage());
 
