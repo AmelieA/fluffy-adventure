@@ -1,5 +1,8 @@
 package com.fluffyadventure.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Johan on 04/03/2015.
  */
@@ -23,6 +26,8 @@ public abstract class Creature {
     protected int accuracy = 0;
     protected int evasiveness = 0;
 
+    protected List<AbstractSpell> activeSpells = new ArrayList<>();
+
     public Creature() {
     }
 
@@ -35,6 +40,7 @@ public abstract class Creature {
         this.accuracy = creature.getAccuracy();
         this.evasiveness = creature.getEvasiveness();
         this.QGImage = creature.getQGImage();
+        this.activeSpells = new ArrayList<>(creature.getActiveSpells());
     }
 
     public Creature(String imagePath, int type) {
@@ -137,6 +143,14 @@ public abstract class Creature {
 
     public void setEvasiveness(int evasiveness) {
         this.evasiveness = evasiveness;
+    }
+
+    public List<AbstractSpell> getActiveSpells() {
+        return activeSpells;
+    }
+
+    public void setActiveSpells(List<AbstractSpell> activeSpells) {
+        this.activeSpells = activeSpells;
     }
 
     public abstract void addSpell(AbstractSpell spell, Boolean active);

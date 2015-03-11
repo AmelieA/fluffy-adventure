@@ -152,7 +152,7 @@ public abstract class AbstractSpawn {
         this.requirement = requirement;
     }
 
-    public abstract ArrayList<Monster> getOpponents();
+    public abstract ArrayList<Creature> getOpponents();
 
     @Override
     public String toString() {

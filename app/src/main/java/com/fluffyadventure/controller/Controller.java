@@ -43,8 +43,11 @@ public class Controller {
         Log.i("FA", "Setting up objectives");
 
         objectives = new ArrayList<AbstractSpawn>();
-        ArrayList<Monster> opponents = new ArrayList<Monster>();
-        opponents.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 15, new ArrayList<AbstractSpell>()));
+        ArrayList<Creature> opponents = new ArrayList<Creature>();
+        AbstractSpell evilSpell = new DamageSpell(0,"Attaque pas gentille", "Blesse une cible ennemie pour 10pv", false, 10);
+        ArrayList<AbstractSpell> spells = new ArrayList<>();
+        spells.add(evilSpell);
+        opponents.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 15, spells));
 
         AbstractSpawn fightSpawn1 = new Spawn(0,0,0,0,45.780035, 4.856392,
                 "Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1,opponents);

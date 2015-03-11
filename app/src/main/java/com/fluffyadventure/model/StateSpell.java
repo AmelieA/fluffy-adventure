@@ -19,8 +19,8 @@ public class StateSpell extends AbstractSpell {
         super(json);
     }
 
-    public  List<List<Creature>> use(List<Creature> fighters, List<Creature> opponents, Integer target) {
-        ArrayList<List<Creature>> returnedArray = new ArrayList<>();
+    public  ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer target) {
+        ArrayList<ArrayList<Creature>> returnedArray = new ArrayList<>();
 
         return returnedArray;
     }

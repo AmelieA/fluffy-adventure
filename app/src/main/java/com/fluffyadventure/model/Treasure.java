@@ -21,7 +21,7 @@ public class Treasure extends AbstractSpawn {
         super(jsonObject);
     }
 
-    public ArrayList<Monster> getOpponents() {
+    public ArrayList<Creature> getOpponents() {
         return new ArrayList<>();
     };
 

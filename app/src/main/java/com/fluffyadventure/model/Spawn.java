@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Spawn extends AbstractSpawn {
 
-        private ArrayList<Monster> opponents = new ArrayList<>();
+        private ArrayList<Creature> opponents = new ArrayList<>();
 
         public Spawn(){
         }
@@ -21,7 +21,7 @@ public class Spawn extends AbstractSpawn {
             super (name, type);
         }
 
-        public Spawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double latitude, double longitude, String text, String name, Integer level, ArrayList<Monster> opponents) {
+        public Spawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double latitude, double longitude, String text, String name, Integer level, ArrayList<Creature> opponents) {
             super(spawnId, spellReward, healthReward, strengthReward, latitude, longitude, text, name, level);
             this.opponents = opponents;
         }
@@ -29,7 +29,7 @@ public class Spawn extends AbstractSpawn {
             super(jsonObject);
         }
 
-        public ArrayList<Monster> getOpponents() {
+        public ArrayList<Creature> getOpponents() {
             return opponents;
         }
 

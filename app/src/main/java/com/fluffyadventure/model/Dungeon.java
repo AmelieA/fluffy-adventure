@@ -10,20 +10,21 @@ import java.util.ArrayList;
  */
 public class Dungeon extends AbstractSpawn {
 
-    private ArrayList<Monster> opponents = new ArrayList<>();
+    private ArrayList<Creature> opponents = new ArrayList<>();
 
     public Dungeon(){
     }
 
-    public Dungeon(Integer spawnId, int spellReward, int healthReward, int strengthReward, double latitude, double longitude, String text, String name, Integer level,  ArrayList<Monster> opponents) {
+    public Dungeon(Integer spawnId, int spellReward, int healthReward, int strengthReward, double latitude, double longitude, String text, String name, Integer level,  ArrayList<Creature> opponents) {
         super(spawnId, spellReward, healthReward, strengthReward, latitude, longitude, text, name, level);
         this.opponents = opponents;
     }
+
     public Dungeon(JSONObject jsonObject) throws JSONException {
         super(jsonObject);
     }
 
-    public ArrayList<Monster> getOpponents() {
+    public ArrayList<Creature> getOpponents() {
         return opponents;
     };
 

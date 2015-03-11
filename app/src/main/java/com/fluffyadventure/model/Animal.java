@@ -14,15 +14,12 @@ import java.util.List;
  */
 public class Animal extends Creature{
 
-
-    private List<AbstractSpell> activeSpells = new ArrayList<>();
     private List<AbstractSpell> unusedSpells = new ArrayList<>();
 
     public Animal() {}
 
     public Animal(Animal animal) {
         super(animal);
-        this.activeSpells = new ArrayList<>(animal.getActiveSpells());
         this.unusedSpells = new ArrayList<>(animal.getUnusedSpells());
     }
 
@@ -41,10 +38,6 @@ public class Animal extends Creature{
     public int gainStrength(Integer gain) {
         strength += gain;
         return strength;
-    }
-
-    public List<AbstractSpell> getActiveSpells() {
-        return activeSpells;
     }
 
     public List<AbstractSpell> getUnusedSpells() {
@@ -119,10 +112,6 @@ public class Animal extends Creature{
                 break;
         }
 
-    }
-
-    public void setActiveSpells(List<AbstractSpell> activeSpells) {
-        this.activeSpells = activeSpells;
     }
 
     public void setUnusedSpells(List<AbstractSpell> unusedSpells) {

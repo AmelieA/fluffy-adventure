@@ -61,7 +61,7 @@ public abstract class AbstractSpell {
         return json;
     }
 
-    public abstract List<List<Creature>> use(List<Creature> fighters, List<Creature> opponents, Integer target);
+    public abstract ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer target);
 
     @Override
     public String toString(){

@@ -22,8 +22,8 @@ public class HealSpell extends AbstractSpell {
         heal = json.getInt("Health");
     }
 
-    public  List<List<Creature>> use(List<Creature> fighters, List<Creature> opponents, Integer target) {
-        ArrayList<List<Creature>> returnedArray = new ArrayList<>();
+    public  ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer target) {
+        ArrayList<ArrayList<Creature>> returnedArray = new ArrayList<>();
 
         if ( target != null ) {
             fighters.get(target).setHealth(fighters.get(target).getHealth() + heal);
