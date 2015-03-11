@@ -58,6 +58,9 @@
     <string name="text_recipient">Destinataire :</string>
     <string name="write_mail_hint">Entrez votre message ici</string>
 
+    <string name="combat_instruction_1">Que doit faire </string>
+    <string name="combat_instruction_2"> \?</string>
+
     <string name="Lipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas convallis nulla neque, non imperdiet sem egestas sit amet. Pellentesque ac tempus metus. Vestibulum fringilla mauris in ligula congue ullamcorper. Sed eu gravida nunc, non commodo lacus. Ut fermentum libero fringilla venenatis feugiat. Maecenas vel aliquet justo, quis fringilla dui. In fermentum ex elit, id sodales lorem iaculis a. Duis orci magna, eleifend nec tristique ut, luctus quis justo. Integer tortor tortor, faucibus eget diam at, facilisis tincidunt tellus.  In lacinia mauris consequat est sollicitudin, vitae porttitor sapien aliquam. Aenean posuere commodo nisi vitae posuere. Etiam at malesuada elit. Sed ligula sem, consequat a eros et, malesuada mollis nisl. Vivamus varius rhoncus erat, vitae ultricies nunc efficitur vel. Praesent non ex eros. Fusce erat tortor, scelerisque et nunc in, lacinia molestie augue. Donec dictum vel sapien nec varius. Suspendisse accumsan mollis ipsum eleifend tincidunt. Nullam sed vulputate massa. Duis pharetra ullamcorper erat at dignissim. Duis vitae magna dui. Maecenas sem ex, pretium et convallis eget, consequat et diam. Proin dui lacus, vehicula sed porttitor non, tincidunt sit amet augue.
 
 Suspendisse ac nulla et mauris ornare dignissim. Suspendisse aliquet dapibus imperdiet. Phasellus maximus consequat turpis, nec tempor enim sollicitudin sed. Nulla euismod a lectus vitae eleifend. Aenean ultrices erat et sapien aliquet posuere vel vitae lectus. Duis bibendum, dui vel pellentesque fringilla, libero ipsum congue sapien, sit amet laoreet metus leo et velit. Vestibulum ac magna a quam sollicitudin dignissim a quis leo.

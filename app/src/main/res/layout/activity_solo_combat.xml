@@ -23,8 +23,6 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/forest4" />
 
-
-
             <!--opponent (fighter and panel) + name-->
             <LinearLayout
                 android:orientation="horizontal"
@@ -33,6 +31,7 @@
                 android:weightSum="10">
 
 
+                <!--opponent panel-->
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
@@ -120,6 +119,7 @@
                                     android:layout_height="fill_parent"
                                     android:max="100"
                                     android:progress="100"
+                                    android:layout_marginTop="3.5dp"
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:progressDrawable="@drawable/green_progress_bar"/>
                             </LinearLayout>
@@ -132,6 +132,7 @@
 
                 </LinearLayout>
 
+                <!--opponent image-->
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
@@ -345,6 +346,7 @@
                                     android:id="@+id/FightersLife"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
+                                    android:layout_marginTop="5dp"
                                     android:max="100"
                                     android:progress="100"
                                     style="?android:attr/progressBarStyleHorizontal"

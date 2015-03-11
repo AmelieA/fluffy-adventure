@@ -25,7 +25,6 @@ import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.DamageSpell;
-import com.fluffyadventure.model.HealSpell;
 import com.fluffyadventure.model.Monster;
 
 import java.util.ArrayList;
@@ -97,21 +96,23 @@ public class SoloCombat extends Activity {
         action3 = (Button) findViewById(R.id.Action3);
         action4 = (Button) findViewById(R.id.Action4);
 
+        Controller.setupBob();
+        Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
+        opponents.add(opponents);
+
         //opponents = Controller.getCurrentObjective().getOpponents();
+//        currentOpponentIdx = 0;
+//        animal = Controller.getAnimal1();
+//        animal.clearSpells();
+//        animal.addSpell(new DamageSpell(0, "Charge choupie", "zut", false, 15), true);
+//        animal.addSpell(new DamageSpell(1, "Soin du pas gentil ", "zut", false, 0), true);
+//        animal.addSpell(new DamageSpell(2, "Attaque ennemie", "zut", false, 0), true);
+//        animal.addSpell(new HealSpell(3, "Carotte nom nom", "zut", false, 15), true);
+//        tempAnimal = Controller.getAnimal1();
+//        fighters.add(animal);
+//
+//        opponents = Controller.getCurrentObjective().getOpponents();
         currentOpponentIdx = 0;
-        animal = Controller.getAnimal1();
-        animal.clearSpells();
-        animal.addSpell(new DamageSpell(0, "Charge choupie", "zut", false, 15), true);
-        animal.addSpell(new DamageSpell(1, "Soin du pas gentil ", "zut", false, 0), true);
-        animal.addSpell(new DamageSpell(2, "Attaque ennemie", "zut", false, 0), true);
-        animal.addSpell(new HealSpell(3, "Carotte nom nom", "zut", false, 15), true);
-        tempAnimal = Controller.getAnimal1();
-        fighters.add(animal);
-
-        opponents = Controller.getCurrentObjective().getOpponents();
-        currentOpponentIdx = 0;
-
-        instruction.setText("Que dois faire " + animal.getName() + " ?");
 
         if (opponents.size() > 0){
             setupFight(currentOpponentIdx);
@@ -121,21 +122,7 @@ public class SoloCombat extends Activity {
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 animationOffset=0;
-                //throwObject();
-                /*useSpell(0);
-                if (opponents.get(0).getHealth() > 0)
-                    ennemyAttack();
-                else
-                    win();
-
-                if (fighters.get(0).getHealth() <= 0)
-                    lose();*/
-
-
-
-                //opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
-                attackFromFighterAnimation();
-                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
+                fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, 25, fightersGainLifeFilter);
             }
         });
 
@@ -144,7 +131,8 @@ public class SoloCombat extends Activity {
             action2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
-                    opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, 25, opponentsGainLifeFilter);
+                    throwObjectToOpponent("hezelnut");
+                    opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
                 }
             });
         }else{
@@ -157,8 +145,8 @@ public class SoloCombat extends Activity {
             action3.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
-                    attackFromOpponentAnimation();
-                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, 20, fighterImage, false);
+                    attackFromFighterAnimation();
+                    opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
                 }
             });
         }else{
@@ -198,6 +186,8 @@ public class SoloCombat extends Activity {
         fighterImage.setImageResource(
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
+
+        instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+animal.getName()+" "+getResources().getString(R.string.combat_instruction_2));
     }
 
     private int useSpell(int spellIndex) {
@@ -347,13 +337,17 @@ public class SoloCombat extends Activity {
         animation.start();
     }
 
-    public void throwObjectToOpponent(){
+    public void throwObjectToOpponent(String imageNameToThrow){
+        throwableObjectToOpponent.setImageResource(getResources().getIdentifier(
+                imageNameToThrow, "drawable", getPackageName()));
         Animation throwObjectAnimation = AnimationUtils.loadAnimation(this, R.anim.throw_object_to_opponent_animation);
         throwableObjectToOpponent.startAnimation(throwObjectAnimation);
         animationOffset += 400;
     }
 
-    public void throwObjectToFighter(){
+    public void throwObjectToFighter(String imageNameToThrow){
+        throwableObjectToFighter.setImageResource(getResources().getIdentifier(
+                imageNameToThrow, "drawable", getPackageName()));
         Animation throwObjectAnimation = AnimationUtils.loadAnimation(this, R.anim.throw_object_to_fighter_animation);
         throwableObjectToFighter.startAnimation(throwObjectAnimation);
         animationOffset += 400;
