@@ -19,9 +19,6 @@ import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.User;
-import com.fluffyadventure.view.R;
-
-import java.util.concurrent.ExecutionException;
 
 public class SignUpActivity extends Activity {
 
@@ -55,7 +52,7 @@ public class SignUpActivity extends Activity {
         });
 
         etPass = (EditText)findViewById(R.id.etPass);
-        btnSignIn = (Button)findViewById(R.id.btnSignIn);
+        btnSignIn = (Button)findViewById(R.id.btnAddFriend);
         btnSignIn.setTypeface(font);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

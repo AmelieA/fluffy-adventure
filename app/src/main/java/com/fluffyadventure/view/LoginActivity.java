@@ -53,7 +53,7 @@ public class LoginActivity extends Activity {
 
         etPass = (EditText)findViewById(R.id.etPass);
 
-        btnSignIn = (Button)findViewById(R.id.btnSignIn);
+        btnSignIn = (Button)findViewById(R.id.btnAddFriend);
         btnSignIn.setTypeface(font);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

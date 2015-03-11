@@ -3,16 +3,27 @@ package com.fluffyadventure.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Jérémy on 04/03/2015.
  */
 public class Friend implements Parcelable {
     private String name;
+    private int id;
     private String image;
 
-    public Friend(String name, String image) {
+    public Friend(String name, String image, int id) {
         this.name = name;
         this.image = image;
+        this.id = id;
+    }
+    public Friend(JSONObject jsonObject) throws JSONException {
+        this.name = jsonObject.getString("Name");
+        this.id = jsonObject.getInt("Id");
+        this.image = jsonObject.getString("Img");
+
     }
 
     public String getName() {
@@ -21,6 +32,10 @@ public class Friend implements Parcelable {
 
     public String getImage() {
         return image;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

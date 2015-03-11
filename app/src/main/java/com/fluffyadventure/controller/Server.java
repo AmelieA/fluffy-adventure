@@ -11,6 +11,7 @@ import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.DamageSpell;
 import com.fluffyadventure.model.DebuffSpell;
 import com.fluffyadventure.model.Dungeon;
+import com.fluffyadventure.model.Friend;
 import com.fluffyadventure.model.HealSpell;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.StateSpell;
@@ -220,6 +221,8 @@ public class Server {
                     return  null;
             }
             AbstractSpell spell = this.getSpell(spell_id);
+            animal.addSpell(spell, true);
+            spell = this.getSpell(spell_id+4);
             animal.addSpell(spell, true);
             animal.setName(name);
 
@@ -600,6 +603,61 @@ public class Server {
         }
         return null;
     }
+
+    public Friend addFriend(User user, String friendName) {
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "friends/add";
+        try {
+
+            URL url = new URL(uri);
+            JSONObject json = new JSONObject();
+            json.put("Name",friendName);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
+
+
+            if (returnJson != null){
+                JSONObject jsonObject = returnJson.getJSONObject("json");
+                Log.d("Friend",returnJson.toString());
+                Friend friend = new Friend(jsonObject);
+                return friend;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+
+
+    }
+
+    public ArrayList<Friend> getFriends (User user){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "friends";
+        try {
+
+            URL url = new URL(uri);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, false, null);
+
+            if (returnJson != null){
+                ArrayList<Friend> friends = new ArrayList<>();
+                JSONArray friendsArray = returnJson.getJSONArray("Friends");
+                for (int i = 0; i < friendsArray.length(); i++){
+                    Friend friend = new Friend(friendsArray.getJSONObject(i));
+                    friends.add(friend);
+                }
+                return friends;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+
+
+    }
+
 
 
     

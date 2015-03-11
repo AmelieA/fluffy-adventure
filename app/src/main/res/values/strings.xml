@@ -58,6 +58,11 @@
     <string name="text_recipient">Destinataire :</string>
     <string name="write_mail_hint">Entrez votre message ici</string>
 
+    <string name="btnNewText">Nouveau</string>
+    <string name="addFriendTitle1">Ajoute</string>
+    <string name="addFriendTitle2">Un ami</string>
+    <string name="add_friend_button_text">Ajouter</string>
+
     <string name="combat_instruction_1">Que doit faire </string>
     <string name="combat_instruction_2"> \?</string>
 
@@ -68,4 +73,5 @@ Suspendisse ac nulla et mauris ornare dignissim. Suspendisse aliquet dapibus imp
 Integer lacinia diam sed porta laoreet. Donec non euismod erat. In diam leo, pellentesque vitae lacus eu, blandit placerat dolor. Cras sem urna, gravida eget ullamcorper at, fermentum a tellus. Nulla lobortis magna non finibus lacinia. Vestibulum vitae enim eget sem ullamcorper molestie. Nullam quis tortor aliquet, mollis enim in, venenatis tellus. Duis et dolor ornare, convallis lectus id, auctor magna. Quisque quis est vitae risus elementum tincidunt a a tortor. Donec sit amet mattis nibh. Duis tristique gravida lorem, et ultricies elit. Sed nulla lectus, finibus a orci ac, suscipit fringilla augue. Duis nunc erat, sodales eget gravida non, sollicitudin nec est. Morbi odio purus, fermentum et purus ut, scelerisque dapibus elit. Vestibulum id nunc nunc. Aliquam erat volutpat.
 
 Integer nec euismod tellus. Nulla in ullamcorper tortor. Etiam fringilla elementum nibh condimentum lacinia. Sed vulputate ex tellus, vitae vehicula neque gravida et. Sed eu est non leo posuere porta vel a lectus. Aliquam iaculis lorem in leo viverra vestibulum. Vestibulum et pulvinar purus. Morbi vel tortor odio. Aliquam sodales nunc nec purus venenatis, in cursus eros consequat. Suspendisse elit risus, suscipit quis neque nec, viverra elementum est. Donec auctor vitae erat a feugiat. Nunc tempus dui vitae eros finibus accumsan. Phasellus dolor nisi, dictum eget orci ut, posuere aliquet arcu. </string>
+    <string name="title_activity_add_friend">AddFriendActivity</string>
 </resources>

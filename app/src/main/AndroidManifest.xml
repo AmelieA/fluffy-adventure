@@ -100,8 +100,11 @@
         </activity>
         <activity android:name=".FriendListActivity" >
         </activity>
+        <activity android:name=".WriteMailActivity" >
+        </activity>
         <activity
-            android:name=".WriteMailActivity">
+            android:name=".AddFriendActivity"
+            android:label="@string/title_activity_add_friend" >
         </activity>
     </application>
 

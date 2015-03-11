@@ -6,6 +6,7 @@ import android.util.Log;
 import com.fluffyadventure.model.AbstractSpawn;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
+import com.fluffyadventure.model.Friend;
 import com.fluffyadventure.model.DamageSpell;
 import com.fluffyadventure.model.Monster;
 import com.fluffyadventure.model.AbstractSpell;
@@ -30,6 +31,7 @@ public class Controller {
     private static LatLng QGLocation;
     private static ArrayList<Integer> succeededSpawns= new ArrayList<>();
     private static AbstractSpawn currentObjective;
+    private static ArrayList<Friend> friends = new ArrayList<>();
 
     public static Boolean createUser(String name, String password) {
         user = server.createUser(name,password);
@@ -131,6 +133,10 @@ public class Controller {
         else{
             return animal2;
         }
+    }
+
+    public static ArrayList<Friend> getFriends() {
+        return friends;
     }
 
     public static ArrayList<AbstractSpawn> getObjectives() {
@@ -260,6 +266,15 @@ public class Controller {
         return hasHQbeenMoved;
     }
 
+    public static Boolean addFriend(String name){
+        Friend friend = server.addFriend(user,name);
+        if (friend == null){
+            return false;
+        }
+        friends.add(friend);
+        return true;
+    }
+
     public static void flush(){
         animal1 = null;
         animal2 = null;
@@ -270,5 +285,6 @@ public class Controller {
         succeededSpawns= new ArrayList<>();
 
     }
+
 
 }

@@ -14,6 +14,15 @@
         style="@style/btnStyleOrangePetit"
         android:layout_gravity="left"
         android:layout_margin="5dp"/>
+
+    <Button android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BtnNew"
+        android:text="@string/btnNewText"
+        style="@style/btnStyleOrangePetit"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"/>
     <ListView
         android:id="@+id/FriendList"
         android:layout_width="match_parent"

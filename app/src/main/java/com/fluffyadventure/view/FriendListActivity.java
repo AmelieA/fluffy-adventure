@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.Friend;
 
 import java.util.ArrayList;
@@ -26,14 +27,17 @@ public class FriendListActivity extends Activity {
 
     Button btnInBox;
 
+    Button btnAddFriend;
+
     FriendAdapter friendAdapter;
-    Friend friend = new Friend("Un ami","squirrel1");
+    Friend friend = new Friend("Un ami","squirrel1",13);
     ArrayList<Friend> friends = new ArrayList<>(Arrays.asList(friend, friend, friend));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
+        friends = Controller.getFriends();
 
         Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
         btnInBox = (Button)findViewById(R.id.BtnInBox);
@@ -42,6 +46,17 @@ public class FriendListActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FriendListActivity.this, MailBox.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        btnAddFriend = (Button)findViewById(R.id.BtnNew);
+        btnAddFriend.setTypeface(font);
+        btnAddFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FriendListActivity.this, AddFriendActivity.class);
                 startActivity(intent);
                 finish();
             }

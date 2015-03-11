@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:id="@id/signupBlock"
+        android:id="@+id/signupBlock"
         android:padding="10dp">
 
         <EditText
@@ -72,7 +72,7 @@
             android:textColorHint="#cccccc"
             android:inputType="textPassword"/>
         <Button
-            android:id="@+id/btnSignIn"
+            android:id="@+id/btnAddFriend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"

@@ -32,6 +32,16 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true" />
 
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:text="@string/mail_button_text"
+        android:id="@+id/BtnFriends"
+        android:layout_margin="15dp"
+        android:background="@drawable/friends_icon"
+        android:layout_below="@id/BtnMail"
+        android:layout_alignParentRight="true" />
+
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -224,5 +234,6 @@
         android:text="@string/moveHQ_button_text"
         android:layout_margin="5dp"
         android:layout_alignParentBottom="true" />
+
 
 </RelativeLayout>

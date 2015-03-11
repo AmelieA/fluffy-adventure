@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.fluffyadventure.view.LoginActivity">
+    tools:context="com.fluffyadventure.view.AddFriendActivity">
 
     <ImageView
         android:layout_width="fill_parent"
@@ -17,16 +17,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/logo1"
-        android:id="@+id/Logo1"
+        android:text="@string/addFriendTitle1"
         style="@style/textStyleLogo"
+        android:id="@+id/Logo1"
         android:layout_marginBottom="-5dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/Logo1"
         android:layout_centerHorizontal="true"
-        android:text="@string/logo2"
+        android:text="@string/addFriendTitle2"
         android:id="@+id/Logo2"
         style="@style/textStyleLogo"
         android:layout_marginBottom="15dp"/>
@@ -37,21 +37,23 @@
         android:id="@+id/imgLog"
         android:src="@drawable/wood"
         android:scaleType="fitXY"
-        android:layout_alignTop="@+id/loginBlock"
-        android:layout_alignBottom="@id/loginBlock"
-        android:layout_alignLeft="@id/loginBlock"
-        android:layout_alignRight="@id/loginBlock"/>
+        android:layout_alignBottom="@+id/friendBlock"
+        android:layout_alignLeft="@id/friendBlock"
+        android:layout_alignRight="@id/friendBlock"
+        android:layout_alignTop="@id/friendBlock" />
+
+
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:id="@id/loginBlock"
+        android:id="@+id/friendBlock"
         android:padding="10dp">
 
         <EditText
-            android:id="@+id/etUserName"
+            android:id="@+id/etFriendName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_bg"
@@ -60,17 +62,7 @@
             android:padding="10dp"
             android:hint="@string/text_user"
             android:textColorHint="#cccccc"/>
-        <EditText
-            android:id="@+id/etPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_bg"
-            android:padding="10dp"
-            android:layout_marginTop="2.5dp"
-            android:layout_marginBottom="2.5dp"
-            android:hint="@string/text_password"
-            android:textColorHint="#cccccc"
-            android:inputType="textPassword"/>
+
         <Button
             android:id="@+id/btnAddFriend"
             android:layout_width="match_parent"
@@ -78,37 +70,39 @@
             android:padding="5dp"
             android:layout_marginTop="2.5dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/signin_button_text"
+            android:text="@string/add_friend_button_text"
             style="@style/btnStyleOrange"/>
 
-    </LinearLayout>
-        <!--LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/loginBlock"
-            android:baselineAligned="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp">
-        <EditText
-            android:id="@+id/etServer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_bg"
-            android:padding="10dp"
-            android:hint="adr. serveur"
-            android:textColorHint="#cccccc"/>
-        <EditText
-            android:id="@+id/etPort"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_bg"
-            android:layout_marginTop="5dp"
-            android:padding="10dp"
-            android:hint="port"
-            android:textColorHint="#cccccc"/>
-        </LinearLayout-->
 
+    </LinearLayout>
+
+
+    <!--LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/loginBlock"
+        android:baselineAligned="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+    <EditText
+        android:id="@+id/etServer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_bg"
+        android:padding="10dp"
+        android:hint="adr. serveur"
+        android:textColorHint="#cccccc" />
+    <EditText
+        android:id="@+id/etPort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_bg"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        android:hint="port"
+        android:textColorHint="#cccccc"/>
+    </LinearLayout-->
     <LinearLayout
         android:id="@+id/out2"
         android:weightSum="5"
