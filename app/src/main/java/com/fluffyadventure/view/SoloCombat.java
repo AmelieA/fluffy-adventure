@@ -25,6 +25,7 @@ import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.DamageSpell;
+import com.fluffyadventure.model.HealSpell;
 import com.fluffyadventure.model.Monster;
 
 import java.util.ArrayList;
@@ -100,10 +101,10 @@ public class SoloCombat extends Activity {
         currentOpponentIdx = 0;
         animal = Controller.getAnimal1();
         animal.clearSpells();
-        animal.addSpell(new DamageSpell(1, "Charge choupie", "zut", true, 0), true);
-        animal.addSpell(new DamageSpell(1, "Soin du pas gentil ", "zut", true, 0), true);
-        animal.addSpell(new DamageSpell(1, "Attaque ennemie", "zut", true, 0), true);
-        animal.addSpell(new DamageSpell(1, "Carotte nom nom", "zut", true, 0), true);
+        animal.addSpell(new DamageSpell(0, "Charge choupie", "zut", false, 15), true);
+        animal.addSpell(new DamageSpell(1, "Soin du pas gentil ", "zut", false, 0), true);
+        animal.addSpell(new DamageSpell(2, "Attaque ennemie", "zut", false, 0), true);
+        animal.addSpell(new HealSpell(3, "Carotte nom nom", "zut", false, 15), true);
         tempAnimal = Controller.getAnimal1();
         fighters.add(animal);
 
@@ -121,7 +122,7 @@ public class SoloCombat extends Activity {
             public void onClick(View v) {
                 animationOffset=0;
                 //throwObject();
-               /* useSpell(0);
+                /*useSpell(0);
                 if (opponents.get(0).getHealth() > 0)
                     ennemyAttack();
                 else
