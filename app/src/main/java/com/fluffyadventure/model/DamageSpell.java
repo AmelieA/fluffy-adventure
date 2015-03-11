@@ -44,7 +44,7 @@ public class DamageSpell extends AbstractSpell {
     public JSONObject toJson() throws JSONException {
         JSONObject json = super.toJson();
 
-        json.put("Type","Damage");
+        json.put("Type",AbstractSpell.DAMAGE);
         json.put("Health",damage);
         return json;
     }

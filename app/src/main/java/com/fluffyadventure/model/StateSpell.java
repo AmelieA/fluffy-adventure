@@ -26,7 +26,7 @@ public class StateSpell extends AbstractSpell {
     }
     public JSONObject toJson() throws JSONException {
         JSONObject json = super.toJson();
-        json.put("Type","State");
+        json.put("Type",AbstractSpell.STATE);
         return json;
     }
 }

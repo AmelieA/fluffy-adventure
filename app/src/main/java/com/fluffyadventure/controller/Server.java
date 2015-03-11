@@ -166,6 +166,7 @@ public class Server {
             JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, false, null);
             if (returnJson != null){
                 JSONObject animalJson = returnJson.getJSONObject("json");
+                Log.d("Animal FROM SERVER",animalJson.toString());
                 Animal animal = new Animal(animalJson);
                 return animal;
             }

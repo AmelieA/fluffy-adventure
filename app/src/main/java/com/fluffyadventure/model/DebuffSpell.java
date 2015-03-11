@@ -58,7 +58,7 @@ public class DebuffSpell extends AbstractSpell {
         json.put("Strength",strModif);
         json.put("Accuracy",accuModif);
         json.put("Evasiveness",evaModif);
-        json.put("Type","Debuff");
+        json.put("Type",AbstractSpell.DEBUFF);
         return json;
     }
 }

@@ -83,7 +83,29 @@ public class Animal extends Creature{
         JSONArray active = spells.getJSONArray("Active");
         Log.d("activeJson", active.toString());
         for (int i = 0; i < active.length(); i++){
-            AbstractSpell spell = new DamageSpell(active.getJSONObject(i));
+            AbstractSpell spell;
+            JSONObject inputJson = active.getJSONObject(i);
+            Log.d("Type",active.getJSONObject(i).toString());
+            switch (inputJson.getInt("Type")){
+                case AbstractSpell.DAMAGE:
+                    spell = new DamageSpell(inputJson);
+                    break;
+                case AbstractSpell.HEAL:
+                    spell = new HealSpell(inputJson);
+                    break;
+                case AbstractSpell.BUFF:
+                    spell = new BuffSpell(inputJson);
+                    break;
+                case AbstractSpell.DEBUFF:
+                    spell = new DebuffSpell(inputJson);
+                    break;
+                case AbstractSpell.STATE:
+                    spell = new StateSpell(inputJson);
+                    break;
+                default:
+                    spell = new StateSpell(inputJson);
+
+            }
             activeSpells.add(spell);
         }
         Log.d("activetoucour",activeSpells.toString());

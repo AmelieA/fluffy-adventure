@@ -140,7 +140,7 @@ public class LoginActivity extends Activity {
 
                 Intent intent;
                 if (Controller.getAnimal1() != null) {
-                    intent = new Intent(LoginActivity.this, Status.class);
+                    intent = new Intent(LoginActivity.this, com.fluffyadventure.view.Status.class);
                 } else {
                     intent = new Intent(LoginActivity.this, AnimalChoiceSlider.class);
                 }

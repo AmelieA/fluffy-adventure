@@ -43,7 +43,7 @@ public class HealSpell extends AbstractSpell {
     public JSONObject toJson() throws JSONException {
         JSONObject json = super.toJson();
 
-        json.put("Type","Heal");
+        json.put("Type",AbstractSpell.HEAL);
         json.put("Health",heal);
         return json;
     }
