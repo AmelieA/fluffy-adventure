@@ -14,7 +14,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2.5">
+            android:layout_weight="3">
 
             <!--forest background-->
             <ImageView
@@ -143,14 +143,14 @@
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
-                        android:layout_weight="1"
+                        android:layout_weight="0.5"
                         android:gravity="top"/>
 
 
                     <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
-                        android:layout_weight="4">
+                        android:layout_weight="5">
                         <ImageView
                             android:id="@+id/OpponentImage"
                             android:layout_width="fill_parent"
@@ -218,13 +218,13 @@
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
-                        android:layout_weight="6"
+                        android:layout_weight="5"
                         android:gravity="top"/>
 
                     <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
-                        android:layout_weight="5">
+                        android:layout_weight="6">
 
                         <ImageView
                             android:id="@+id/FighterImage"
@@ -232,7 +232,7 @@
                             android:layout_height="fill_parent"
                             android:layout_marginLeft="-40dp"
                             android:gravity="bottom"
-                            android:src="@drawable/squirrel5"/>
+                            android:src="@drawable/sheep2"/>
                         <ImageView
                             android:id="@+id/FightersLifeFilter"
                             android:layout_width="fill_parent"
@@ -365,17 +365,17 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:background="@drawable/wood"
-            android:layout_weight="7.5">
+            android:layout_weight="7">
 
             <!--text-->
             <TextView
                 android:id="@+id/Instruction"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
+                android:layout_weight="0.75"
                 android:layout_margin="10dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="What should Fighter do ?"
+                android:text="@string/Lipsum"
                 android:background="@drawable/fight_choice_button"
                 android:textColor="#ffffffff"
                 android:textStyle="bold"/>
