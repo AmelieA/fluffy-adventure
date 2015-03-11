@@ -98,7 +98,7 @@ public class SoloCombat extends Activity {
 
         Controller.setupBob();
         Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
-        opponents.add(opponents);
+        opponents.add(opponent);
 
         //opponents = Controller.getCurrentObjective().getOpponents();
 //        currentOpponentIdx = 0;

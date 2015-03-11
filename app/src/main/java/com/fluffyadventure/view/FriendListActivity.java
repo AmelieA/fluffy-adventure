@@ -50,7 +50,6 @@ public class FriendListActivity extends Activity {
         });
 
         btnAddFriend = (Button)findViewById(R.id.BtnNew);
-        btnAddFriend.setTypeface(font);
         btnAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
