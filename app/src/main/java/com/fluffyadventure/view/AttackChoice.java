@@ -24,6 +24,8 @@ import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.DamageSpell;
 import com.fluffyadventure.model.HealSpell;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 
@@ -95,6 +97,7 @@ public class AttackChoice extends Activity {
             {
             AbstractSpell toAdd =  activeAttack.remove(position);
             inactiveAttack.add(toAdd);
+
             }
             else {
                 Toast.makeText(AttackChoice.this, "Minimum 1 sort actif", Toast.LENGTH_LONG).show();
@@ -103,6 +106,7 @@ public class AttackChoice extends Activity {
         }
         System.out.println(inactiveAttack.toString());
         System.out.println(activeAttack.toString());
+
 
         activateAdapter.notifyDataSetChanged();
         inactiveAdapter.notifyDataSetChanged();
@@ -199,7 +203,7 @@ public class AttackChoice extends Activity {
             }
             else {
 
-                Intent intent = new Intent(AttackChoice.this, Status.class);
+                Intent intent = new Intent(AttackChoice.this, com.fluffyadventure.view.Status.class);
                 System.out.println("Activitychange");
                 startActivity(intent);
                 finish();

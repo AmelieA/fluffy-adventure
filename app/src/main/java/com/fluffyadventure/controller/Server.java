@@ -386,16 +386,15 @@ public class Server {
             JSONObject json = new JSONObject();
             JSONArray activeJson = new JSONArray();
             for (AbstractSpell spell : active){
-                activeJson.put(spell.toJson().toString());
+                activeJson.put(spell.toJson());
             }
             json.put("Active",activeJson);
 
             JSONArray unusedJson = new JSONArray();
             for (AbstractSpell spell: unused){
-                unusedJson.put(spell.toJson().toString());
+                unusedJson.put(spell.toJson());
             }
-
-            json.put("Unused", unused);
+            json.put("Unused", unusedJson);
             JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
 
             if (returnJson != null){

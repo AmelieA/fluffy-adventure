@@ -97,7 +97,7 @@ public class SoloCombat extends Activity {
         action4 = (Button) findViewById(R.id.Action4);
 
 
-        Controller.setupBob();
+ //       Controller.setupBob();
         Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
         opponents.add(opponent);
 

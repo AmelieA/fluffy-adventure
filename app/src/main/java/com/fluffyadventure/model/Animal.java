@@ -74,11 +74,6 @@ public class Animal extends Creature{
 
     public Animal(JSONObject json) throws JSONException {
         JSONObject spells = json.getJSONObject("Spells");
-        JSONArray unused = spells.getJSONArray("Unused");
-        for (int i = 0; i < unused.length(); i++){
-           AbstractSpell spell = new DamageSpell(unused.getJSONObject(i));
-           unusedSpells.add(spell);
-        }
 
         JSONArray active = spells.getJSONArray("Active");
         Log.d("activeJson", active.toString());
@@ -108,6 +103,36 @@ public class Animal extends Creature{
             }
             activeSpells.add(spell);
         }
+        JSONArray unused = spells.getJSONArray("Unused");
+        for (int i = 0; i < unused.length(); i++){
+            AbstractSpell spell;
+            Log.d("Animal Creation unused",unused.toString());
+            JSONObject inputJson = unused.getJSONObject(i);
+            Log.d("Type",unused.getJSONObject(i).toString());
+            switch (inputJson.getInt("Type")){
+                case AbstractSpell.DAMAGE:
+                    spell = new DamageSpell(inputJson);
+                    break;
+                case AbstractSpell.HEAL:
+                    spell = new HealSpell(inputJson);
+                    break;
+                case AbstractSpell.BUFF:
+                    spell = new BuffSpell(inputJson);
+                    break;
+                case AbstractSpell.DEBUFF:
+                    spell = new DebuffSpell(inputJson);
+                    break;
+                case AbstractSpell.STATE:
+                    spell = new StateSpell(inputJson);
+                    break;
+                default:
+                    spell = new StateSpell(inputJson);
+
+            }
+           unusedSpells.add(spell);
+        }
+
+
         Log.d("activetoucour",activeSpells.toString());
 
         this.name = json.getString("Name");
