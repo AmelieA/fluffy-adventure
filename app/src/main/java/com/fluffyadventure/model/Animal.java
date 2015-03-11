@@ -127,4 +127,9 @@ public class Animal extends Creature{
             }
         }
     }
+
+    public void clearSpells(){
+        this.unusedSpells = new ArrayList<>();
+        this.activeSpells = new ArrayList<>();
+    }
 }

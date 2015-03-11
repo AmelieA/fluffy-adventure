@@ -27,16 +27,11 @@ import java.util.Properties;
 
 public class MainActivity extends Activity {
 
-    Button BtnStatus;
-    Button BtnCombat;
-    Button MapBtn;
+
     Button loginBtn;
     Button signinBtn;
-    Button SlideBtn;
     TextView Logo1;
     TextView Logo2;
-    Button BtnSignUp;
-    Class<?> nextIntentClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +47,6 @@ public class MainActivity extends Activity {
             setupApplication();
 
             Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
-
-            SlideBtn = (Button)findViewById(R.id.SlideBtn);
-            SlideBtn.setTypeface(font);
-            SlideBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, MoveQGActivity.class);
-                    startActivity(intent);
-                }
-            });
 
             loginBtn = (Button)findViewById(R.id.loginBtn);
             loginBtn.setTypeface(font);

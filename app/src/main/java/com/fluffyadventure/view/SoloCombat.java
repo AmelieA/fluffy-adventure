@@ -2,6 +2,9 @@ package com.fluffyadventure.view;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -20,10 +23,15 @@ import android.widget.ImageView;
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Creature;
+import com.fluffyadventure.model.DamageSpell;
 import com.fluffyadventure.model.Monster;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
+import java.util.ResourceBundle;
 
 public class SoloCombat extends Activity {
 
@@ -54,8 +62,10 @@ public class SoloCombat extends Activity {
     private Animal animal;
 
     //needed for services part
+    private Animal tempAnimal;
     private int currentOpponentIdx;
-    ArrayList<Monster> opponents;
+    ArrayList<Creature> opponents = new ArrayList<>();
+    ArrayList<Creature> fighters= new ArrayList<>();
 
     //Time in ms when the last animation is oven from the moment you launch the first animation
     private int animationOffset;
@@ -68,6 +78,7 @@ public class SoloCombat extends Activity {
         Log.i("FA", "Solo fight...");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solo_combat);
+
 
         opponentsName = (TextView) findViewById(R.id.OpponentsName);
         opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
@@ -85,14 +96,21 @@ public class SoloCombat extends Activity {
         action3 = (Button) findViewById(R.id.Action3);
         action4 = (Button) findViewById(R.id.Action4);
 
-        Controller.setupBob();
-        Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
-        opponents = new ArrayList<>(Arrays.asList(opponent));
-
         //opponents = Controller.getCurrentObjective().getOpponents();
         currentOpponentIdx = 0;
         animal = Controller.getAnimal1();
+        animal.clearSpells();
+        animal.addSpell(new DamageSpell(1, "Charge choupie", "zut", true, 0), true);
+        animal.addSpell(new DamageSpell(1, "Soin du pas gentil ", "zut", true, 0), true);
+        animal.addSpell(new DamageSpell(1, "Attaque ennemie", "zut", true, 0), true);
+        animal.addSpell(new DamageSpell(1, "Carotte nom nom", "zut", true, 0), true);
+        tempAnimal = Controller.getAnimal1();
+        fighters.add(animal);
 
+        opponents = Controller.getCurrentObjective().getOpponents();
+        currentOpponentIdx = 0;
+
+        instruction.setText("Que dois faire " + animal.getName() + " ?");
 
         if (opponents.size() > 0){
             setupFight(currentOpponentIdx);
@@ -102,6 +120,19 @@ public class SoloCombat extends Activity {
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 animationOffset=0;
+                //throwObject();
+               /* useSpell(0);
+                if (opponents.get(0).getHealth() > 0)
+                    ennemyAttack();
+                else
+                    win();
+
+                if (fighters.get(0).getHealth() <= 0)
+                    lose();*/
+
+
+
+                //opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
                 attackFromFighterAnimation();
                 opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
             }
@@ -166,6 +197,53 @@ public class SoloCombat extends Activity {
         fighterImage.setImageResource(
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
+    }
+
+    private int useSpell(int spellIndex) {
+        ArrayList<ArrayList<Creature>> fightResult = animal.getActiveSpells().get(spellIndex).use(fighters,opponents,null);
+        fighters = fightResult.get(0);
+        opponents = fightResult.get(1);
+        return 0;
+    }
+
+    private int ennemyAttack() {
+        Random randomGenerator = new Random();
+        int numberOfSpells = opponents.get(0).getActiveSpells().size();
+        int randomInt = randomGenerator.nextInt(numberOfSpells);
+        ArrayList<ArrayList<Creature>> fightResult = animal.getActiveSpells().get(randomInt).use(opponents,fighters,null);
+        fighters = fightResult.get(1);
+        opponents = fightResult.get(0);
+        return 0;
+    }
+
+    private void win(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Tu as gagné les récompenses suivantes : Rien")
+                .setTitle("Victoire !")
+                .setPositiveButton("Youpi !", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplicationContext(), MapComponent.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void lose(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Ton animal s'éteint dans un mignon petit gazouilli.")
+                .setTitle("Défaite !")
+                .setPositiveButton(":'(", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplicationContext(), MapComponent.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public int LosesLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointLost, ImageView creatureImage, boolean isOpponent) {
@@ -262,7 +340,7 @@ public class SoloCombat extends Activity {
 
     private void LosePointAnimation(ProgressBar lifeProgressBar, int start, int end){
         ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", start, end);
-        animation.setDuration( Math.abs(start-end)*15);
+        animation.setDuration(Math.abs(start - end) * 15);
         animation.setInterpolator(new DecelerateInterpolator());
         animation.setStartDelay(animationOffset+300);
         animation.start();
