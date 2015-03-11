@@ -25,6 +25,7 @@ import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.DamageSpell;
+import com.fluffyadventure.model.HealSpell;
 import com.fluffyadventure.model.Monster;
 
 import java.util.ArrayList;
@@ -79,7 +80,6 @@ public class SoloCombat extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solo_combat);
 
-
         opponentsName = (TextView) findViewById(R.id.OpponentsName);
         opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
         opponentImage = (ImageView) findViewById(R.id.OpponentImage);
@@ -96,23 +96,23 @@ public class SoloCombat extends Activity {
         action3 = (Button) findViewById(R.id.Action3);
         action4 = (Button) findViewById(R.id.Action4);
 
+
         Controller.setupBob();
         Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
         opponents.add(opponent);
 
         //opponents = Controller.getCurrentObjective().getOpponents();
-//        currentOpponentIdx = 0;
-//        animal = Controller.getAnimal1();
+        currentOpponentIdx = 0;
+        animal = Controller.getAnimal1();
 //        animal.clearSpells();
 //        animal.addSpell(new DamageSpell(0, "Charge choupie", "zut", false, 15), true);
 //        animal.addSpell(new DamageSpell(1, "Soin du pas gentil ", "zut", false, 0), true);
 //        animal.addSpell(new DamageSpell(2, "Attaque ennemie", "zut", false, 0), true);
 //        animal.addSpell(new HealSpell(3, "Carotte nom nom", "zut", false, 15), true);
 //        tempAnimal = Controller.getAnimal1();
-//        fighters.add(animal);
+        fighters.add(animal);
 //
 //        opponents = Controller.getCurrentObjective().getOpponents();
-        currentOpponentIdx = 0;
 
         if (opponents.size() > 0){
             setupFight(currentOpponentIdx);
