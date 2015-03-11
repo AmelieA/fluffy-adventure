@@ -10,24 +10,34 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fluffyadventure.controller.Controller;
+import com.fluffyadventure.model.Mail;
+
 public class ReadMailActivity extends Activity {
 
     TextView textMailSender;
     TextView textMailBody;
     Button btnMailBox;
     Button btnAnswer;
+    Mail mail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_mail);
-        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
         textMailBody=(TextView) findViewById(R.id.TextMailBody);
-
         textMailSender=(TextView) findViewById(R.id.TextMailSender);
 
+        mail = getIntent().getParcelableExtra("mail");
+        if (mail != null){
+            textMailSender.setText(mail.getSender());
+            textMailBody.setText(mail.getMessage());
+        } else {
+            textMailSender.clearComposingText();
+            textMailBody.clearComposingText();
+        }
+
         btnMailBox=(Button) findViewById(R.id.BtnInBox);
-        btnMailBox.setTypeface(font);
         btnMailBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,11 +47,12 @@ public class ReadMailActivity extends Activity {
             }
         });
         btnAnswer=(Button)findViewById(R.id.BtnAnswer);
-        btnAnswer.setTypeface(font);
         btnAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ReadMailActivity.this, WriteMailActivity.class);
+                intent.putExtra("recipientId",mail.getSenderId());
+                intent.putExtra("recipientName",mail.getSender());
                 startActivity(intent);
                 finish();
             }

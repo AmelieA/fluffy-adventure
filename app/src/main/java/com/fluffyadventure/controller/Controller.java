@@ -8,6 +8,8 @@ import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.Friend;
 import com.fluffyadventure.model.DamageSpell;
+import com.fluffyadventure.model.Mail;
+import com.fluffyadventure.model.MailWanted;
 import com.fluffyadventure.model.Monster;
 import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.User;
@@ -17,6 +19,7 @@ import com.fluffyadventure.model.Treasure;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Johan on 17/02/2015.
@@ -264,6 +267,16 @@ public class Controller {
         setupObjectives();
 
         return hasHQbeenMoved;
+    }
+
+    public static ArrayList<Mail> getMails(){
+        Mail mail1 = new Mail(1, "Expediteur1", "Ceci est un mail 1","heya1",10);
+        Mail mail2 = new Mail(2, "Expediteur2", "Ceci est un mail 2","heya2",11);
+        Mail mail3 = new Mail(3, "Expediteur3", "Ceci est un mail 3","heya3",12);
+        Mail mail4 = new Mail(4, "Expediteur4", "Ceci est un mail 4","heya4",13);
+        Mail mailWanted = new MailWanted(5,"Mission !","RechercherTartampion","",999,"Bobby","squirrel1","Robert","squirrel2");
+        ArrayList<Mail> mails = new ArrayList<>(Arrays.asList(mail1, mail2, mail3, mail4, mailWanted));
+        return mails;
     }
 
     public static Boolean addFriend(String name){

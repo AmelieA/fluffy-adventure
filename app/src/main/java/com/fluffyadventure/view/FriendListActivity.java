@@ -39,9 +39,7 @@ public class FriendListActivity extends Activity {
         setContentView(R.layout.activity_friend_list);
         friends = Controller.getFriends();
 
-        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
         btnInBox = (Button)findViewById(R.id.BtnInBox);
-        btnInBox.setTypeface(font);
         btnInBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +68,8 @@ public class FriendListActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Friend entry = (Friend) parent.getItemAtPosition(position);
                 Intent intent = new Intent(FriendListActivity.this, WriteMailActivity.class);
-                intent.putExtra("friend",friend);
+                //intent.putExtra("recipientId",entry.getId);
+                intent.putExtra("recipientName",entry.getName());
                 startActivity(intent);
             }
         });

@@ -20,26 +20,32 @@ public class WriteMailActivity extends Activity {
     EditText mailBody;
     Button btnCancelMail;
     Button btnSendMail;
-    Friend recipient;
+    String recipientName;
+    int recipientId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_mail);
         textRecipient = (TextView)findViewById(R.id.TextMailRecipient);
-        //Getting recipient from previous activity
-        recipient = getIntent().getParcelableExtra("friend");
-        if (recipient != null){
-            textRecipient.setText(recipient.getName());
-        }else{
-            textRecipient.setText("Destinataire inconnu");
-            //Do something else in this case?
+        btnSendMail = (Button)findViewById(R.id.BtnSendMail);
+        btnCancelMail = (Button)findViewById(R.id.BtnCancelMail);
+            //Getting recipient from previous activity
+        recipientId = getIntent().getIntExtra("recipientId",-1);
+        recipientName = getIntent().getStringExtra("recipientName");
+        if (recipientId == -1)
+        {
+            textRecipient.setText("Internal Error: recipient not found");
+            btnSendMail.setEnabled(false);
+        } else {
+            if (recipientName != null) {
+                textRecipient.setText(recipientName);
+            } else {
+                textRecipient.setText("Internal Error: recipient name not found");
+            }
         }
         mailBody = (EditText)findViewById(R.id.TextMailBody);
 
-        Typeface font = Typeface.createFromAsset(getAssets(), "GrandHotel-Regular.otf");
-        btnCancelMail = (Button)findViewById(R.id.BtnCancelMail);
-        btnCancelMail.setTypeface(font);
         btnCancelMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,8 +54,13 @@ public class WriteMailActivity extends Activity {
             }
         });
 
-        btnSendMail = (Button)findViewById(R.id.BtnSendMail);
-        btnSendMail.setTypeface(font);
+        btnSendMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String body = mailBody.toString();
+                //Send the message
+            }
+        });
     }
 
 
