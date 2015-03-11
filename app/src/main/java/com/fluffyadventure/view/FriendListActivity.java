@@ -67,7 +67,7 @@ public class FriendListActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Friend entry = (Friend) parent.getItemAtPosition(position);
                 Intent intent = new Intent(FriendListActivity.this, WriteMailActivity.class);
-                //intent.putExtra("recipientId",entry.getId);
+                intent.putExtra("recipientId",entry.getId());
                 intent.putExtra("recipientName",entry.getName());
                 startActivity(intent);
             }
