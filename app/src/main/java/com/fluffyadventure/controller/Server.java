@@ -641,7 +641,8 @@ public class Server {
 
             if (returnJson != null){
                 ArrayList<Friend> friends = new ArrayList<>();
-                JSONArray friendsArray = returnJson.getJSONArray("Friends");
+                Log.d("Friends get",returnJson.toString());
+                JSONArray friendsArray = returnJson.getJSONObject("json").getJSONArray("Friends");
                 for (int i = 0; i < friendsArray.length(); i++){
                     Friend friend = new Friend(friendsArray.getJSONObject(i));
                     friends.add(friend);

@@ -161,6 +161,10 @@ public class Controller {
         if (QGLocation == null){
             return false;
         }
+        friends = server.getFriends(user);
+        if (friends == null){
+            return false;
+        }
         //TODO Remplacer une fois que le serveur gèreras les spanws contenant des monstres
         //setUpObjectivesWithHq();
         setupObjectives();
