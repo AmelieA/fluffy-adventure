@@ -1,5 +1,6 @@
 package com.fluffyadventure.view;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.AbstractSpell;
@@ -111,8 +113,6 @@ public class SoloCombat extends Activity {
 //        animal.addSpell(new HealSpell(3, "Carotte nom nom", "zut", false, 15), true);
 //        tempAnimal = Controller.getAnimal1();
         fighters.add(animal);
-//
-//        opponents = Controller.getCurrentObjective().getOpponents();
 
         if (opponents.size() > 0){
             setupFight(currentOpponentIdx);
@@ -131,7 +131,7 @@ public class SoloCombat extends Activity {
             action2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
-                    throwObjectToOpponent("hezelnut");
+                    throwObjectToOpponent("hazelnut");
                     opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
                 }
             });
@@ -286,8 +286,25 @@ public class SoloCombat extends Activity {
                 deadAnimation = AnimationUtils.loadAnimation(this, R.anim.death_fighter_animation);
             }
             deadAnimation.setStartOffset(animationOffset+300);
+            deadAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Toast.makeText(SoloCombat.this, "You're dead", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
             as.addAnimation(deadAnimation);
         }
+
 
         creatureImage.startAnimation(as);
 
@@ -335,6 +352,29 @@ public class SoloCombat extends Activity {
         animation.setInterpolator(new DecelerateInterpolator());
         animation.setStartDelay(animationOffset+300);
         animation.start();
+
+        animation.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Log.i("ANIMATION","animation ended");
+                Toast.makeText(SoloCombat.this, "animation ended", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     public void throwObjectToOpponent(String imageNameToThrow){

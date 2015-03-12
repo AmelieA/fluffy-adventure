@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="10">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+            <!--forest background-->
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/forest4" />
+
+            <!--opponent (fighter and panel) + name-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10">
+
+
+                <!--opponent panel-->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="3">
+
+                        <ImageView
+                            android:id="@+id/OpponentPanel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/fight_rectangle"/>
+                        <!--Opponent's name-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="7"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="10"
+                                android:layout_weight="3">
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="9"/>
+                                <TextView
+                                    android:id="@+id/OpponentsName"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_alignTop="@+id/OpponentPanel"
+                                    android:gravity="left"
+                                    android:text="Opponent"
+                                    android:textSize="20sp"
+                                    android:textColor="#ff000000" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Life progress bar-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="4.75"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="9"
+                                android:weightSum="10">
+
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4"/>
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4.4"
+                                    android:text="PV"
+                                    android:textSize="12sp"
+                                    android:textColor="#ff000000"/>
+                                <ProgressBar
+                                    android:layout_weight="1.8"
+                                    android:id="@+id/OpponentsLife"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:max="100"
+                                    android:progress="100"
+                                    android:layout_marginTop="3.5dp"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:progressDrawable="@drawable/green_progress_bar"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="7"/>
+
+                </LinearLayout>
+
+                <!--opponent image-->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="0.5"
+                        android:gravity="top"/>
+
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="5">
+                        <ImageView
+                            android:id="@+id/OpponentImage"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:interpolator="@anim/death_opponent_animation"
+                            android:gravity="bottom"
+                            android:src="@drawable/evilbunny"/>
+
+                        <ImageView
+                            android:id="@+id/OpponentsLifeFilter"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:visibility="invisible"
+                            android:src="@drawable/life4"/>
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="5"
+                        android:gravity="top"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--Throwable object to Opponent -->
+            <ImageView
+                android:id="@+id/ThrowableObjectToOpponent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="350dp"
+                android:visibility="invisible"
+                android:gravity="bottom"
+                android:src="@drawable/interrogation"/>
+
+            <!--Throwable object to Fighter -->
+            <ImageView
+                android:id="@+id/ThrowableObjectToFighter"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="250dp"
+                android:layout_marginTop="150dp"
+                android:visibility="invisible"
+                android:gravity="bottom"
+                android:src="@drawable/interrogation"/>
+
+            <!--fighter image-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10">
+
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7.5"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="5"
+                        android:gravity="top"/>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="6">
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent">
+
+                            <ImageView
+                                android:id="@+id/FighterImage"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_marginLeft="-40dp"
+                                android:gravity="bottom"
+                                android:src="@drawable/sheep2"/>
+                            <ImageView
+                                android:id="@+id/FightersLifeFilter"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:visibility="invisible"
+                                android:src="@drawable/life4"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--fighter panel-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10">
+
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"/>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:orientation="vertical"
+                    android:weightSum="10"
+                    android:gravity="top">
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="7.3"/>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="3">
+
+                        <ImageView
+                            android:id="@+id/FighterPanel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/fight_rectangle"/>
+                        <!--Opponent's name-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="7.65"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="10"
+                                android:layout_weight="2">
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="9"/>
+
+                                <TextView
+                                    android:id="@+id/FightersName"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_alignTop="@+id/FighterPanel"
+                                    android:gravity="left"
+                                    android:text="Fighter"
+                                    android:textSize="25sp"
+                                    android:textColor="#ff000000" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Life progress bar-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="4.75"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="8.8"
+                                android:weightSum="10">
+
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4.1"/>
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4.5"
+                                    android:text="PV"
+                                    android:textColor="#ff000000"/>
+                                <ProgressBar
+                                    android:layout_weight="1.7"
+                                    android:id="@+id/FightersLife"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:max="100"
+                                    android:progress="100"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:progressDrawable="@drawable/green_progress_bar"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--choose action panel-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@drawable/wood"
+            android:layout_weight="7">
+
+            <!--text-->
+            <TextView
+                android:id="@+id/Instruction"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.75"
+                android:layout_margin="10dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/Lipsum"
+                android:background="@drawable/fight_choice_button"
+                android:textColor="#ffffffff"
+                android:textStyle="bold"/>
+
+            <!--top choosing-->
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+
+                <Button
+                    style="@style/btnStyleOrangePetit"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Choice 1"
+                    android:id="@+id/Action1"/>
+                <Button
+                    style="@style/btnStyleOrangePetit"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Choice 1"
+                    android:id="@+id/Action2"/>
+            </LinearLayout>
+
+            <!--bottom choosing-->
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+
+                <Button
+                    style="@style/btnStyleOrangePetit"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Choice 1"
+                    android:id="@+id/Action3"/>
+                <Button
+                    style="@style/btnStyleOrangePetit"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Choice 1"
+                    android:id="@+id/Action4"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
