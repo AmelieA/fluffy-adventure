@@ -119,7 +119,7 @@ public class Controller {
         animal1.addSpell(new DamageSpell(1, "Soin", "zut", true, 0), true);
         animal1.addSpell(new DamageSpell(1, "Jet de noisette", "zut", true, 0), true);
         animal1.addSpell(new DamageSpell(1, "Charge", "zut", true, 0), true);
-        //animal1.addSpell(new DamageSpell(1, "+25 bibi", "zut", true, 0), true);
+        animal1.addSpell(new DamageSpell(1, "-25 bibi", "zut", true, 0), true);
     }
 
     public static void createAnimal1(String name, String imagePath, int type) {

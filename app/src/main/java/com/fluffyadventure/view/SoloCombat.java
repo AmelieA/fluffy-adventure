@@ -99,7 +99,7 @@ public class SoloCombat extends Activity {
         action4 = (Button) findViewById(R.id.Action4);
 
 
- //       Controller.setupBob();
+//        Controller.setupBob();
         Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
         opponents.add(opponent);
 
@@ -159,7 +159,7 @@ public class SoloCombat extends Activity {
             action4.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
-                    fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, 25, fightersGainLifeFilter);
+                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, 25, fightersGainLifeFilter, false);
 //                    Intent intent = new Intent(SoloCombat.this, MapComponent.class);
 //                    startActivity(intent);
 //                    finish();
