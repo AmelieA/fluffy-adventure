@@ -64,6 +64,8 @@ public class SoloCombat extends Activity {
     private Button action4;
     private Animal animal;
 
+    private boolean opponnentsTurn = false;
+
     //needed for services part
     private Animal tempAnimal;
     private int currentOpponentIdx;
@@ -98,21 +100,19 @@ public class SoloCombat extends Activity {
         action3 = (Button) findViewById(R.id.Action3);
         action4 = (Button) findViewById(R.id.Action4);
 
-
-//        Controller.setupBob();
-        Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
-        opponents.add(opponent);
-
         //opponents = Controller.getCurrentObjective().getOpponents();
         currentOpponentIdx = 0;
         animal = Controller.getAnimal1();
-//        animal.clearSpells();
-//        animal.addSpell(new DamageSpell(0, "Charge choupie", "zut", false, 15), true);
-//        animal.addSpell(new DamageSpell(1, "Soin du pas gentil ", "zut", false, 0), true);
-//        animal.addSpell(new DamageSpell(2, "Attaque ennemie", "zut", false, 0), true);
-//        animal.addSpell(new HealSpell(3, "Carotte nom nom", "zut", false, 15), true);
-//        tempAnimal = Controller.getAnimal1();
+        animal.clearSpells();
+        animal.addSpell(new HealSpell(0, "Soin", "zut", false, 15, AbstractSpell.HEAL, null), true);
+        animal.addSpell(new DamageSpell(1, "Jet de noisette", "zut", false, 20, AbstractSpell.THROW, "hazelnut"), true);
+        animal.addSpell(new DamageSpell(2, "Charge", "zut", false, 15 , AbstractSpell.ATTACK, null), true);
+
+        tempAnimal = Controller.getAnimal1();
         fighters.add(animal);
+
+        opponents = Controller.getCurrentObjective().getOpponents();
+        currentOpponentIdx = 0;
 
         if (opponents.size() > 0){
             setupFight(currentOpponentIdx);
@@ -122,7 +122,8 @@ public class SoloCombat extends Activity {
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 animationOffset=0;
-                fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, 25, fightersGainLifeFilter);
+                useSpell(0);
+                opponnentsTurn = true;
             }
         });
 
@@ -131,8 +132,8 @@ public class SoloCombat extends Activity {
             action2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
-                    throwObjectToOpponent("hazelnut");
-                    opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
+                    useSpell(1);
+                    opponnentsTurn = true;
                 }
             });
         }else{
@@ -145,8 +146,8 @@ public class SoloCombat extends Activity {
             action3.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
-                    attackFromFighterAnimation();
-                    opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, 15, opponentImage, true);
+                    useSpell(2);
+                    opponnentsTurn = true;
                 }
             });
         }else{
@@ -159,10 +160,8 @@ public class SoloCombat extends Activity {
             action4.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
-                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, 25, fightersGainLifeFilter, false);
-//                    Intent intent = new Intent(SoloCombat.this, MapComponent.class);
-//                    startActivity(intent);
-//                    finish();
+                    useSpell(3);
+                    opponnentsTurn = true;
                 }
             });
         }else{
@@ -190,21 +189,80 @@ public class SoloCombat extends Activity {
         instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+animal.getName()+" "+getResources().getString(R.string.combat_instruction_2));
     }
 
-    private int useSpell(int spellIndex) {
-        ArrayList<ArrayList<Creature>> fightResult = animal.getActiveSpells().get(spellIndex).use(fighters,opponents,null);
+    private void useSpell(int spellIndex) {
+        AbstractSpell spell = animal.getActiveSpells().get(spellIndex);
+        ArrayList<ArrayList<Creature>> fightResult = spell.use(fighters,opponents,null);
         fighters = fightResult.get(0);
         opponents = fightResult.get(1);
-        return 0;
+        int animationType = spell.getAnimationType();
+        switch (animationType){
+            case AbstractSpell.ATTACK:
+                attackFromFighterAnimation();
+                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                break;
+            case AbstractSpell.THROW:
+                throwObjectToOpponent(spell.getThrowedObject());
+                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                break;
+            case AbstractSpell.HEAL:
+                fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fightersGainLifeFilter);
+                break;
+            case AbstractSpell.BUFF:
+                fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fightersGainLifeFilter);
+                break;
+            case AbstractSpell.DEBUFF:
+                attackFromFighterAnimation();
+                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                break;
+            default:
+                attackFromFighterAnimation();
+                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+        }
     }
 
-    private int ennemyAttack() {
+    private void ennemyTurn() {
+        opponnentsTurn = false;
+        if (opponents.get(0).getHealth() > 0)
+            ennemyAttack();
+        else
+            win();
+
+        if (fighters.get(0).getHealth() <= 0)
+            lose();
+    }
+
+    private void ennemyAttack() {
         Random randomGenerator = new Random();
         int numberOfSpells = opponents.get(0).getActiveSpells().size();
         int randomInt = randomGenerator.nextInt(numberOfSpells);
-        ArrayList<ArrayList<Creature>> fightResult = animal.getActiveSpells().get(randomInt).use(opponents,fighters,null);
+        AbstractSpell spell = opponents.get(0).getActiveSpells().get(randomInt);
+        ArrayList<ArrayList<Creature>> fightResult = spell.use(opponents,fighters,null);
         fighters = fightResult.get(1);
         opponents = fightResult.get(0);
-        return 0;
+        int animationType = spell.getAnimationType();
+        switch (animationType){
+            case AbstractSpell.ATTACK:
+                attackFromOpponentAnimation();
+                fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                break;
+            case AbstractSpell.THROW:
+                throwObjectToFighter(spell.getThrowedObject());
+                fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                break;
+            case AbstractSpell.HEAL:
+                opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
+                break;
+            case AbstractSpell.BUFF:
+                opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
+                break;
+            case AbstractSpell.DEBUFF:
+                attackFromOpponentAnimation();
+                fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                break;
+            default:
+                attackFromOpponentAnimation();
+                fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+        }
     }
 
     private void win(){
@@ -213,6 +271,7 @@ public class SoloCombat extends Activity {
                 .setTitle("Victoire !")
                 .setPositiveButton("Youpi !", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Controller.setAnimal1(tempAnimal);
                         Intent intent = new Intent(getApplicationContext(), MapComponent.class);
                         startActivity(intent);
                         finish();
@@ -228,6 +287,7 @@ public class SoloCombat extends Activity {
                 .setTitle("Défaite !")
                 .setPositiveButton(":'(", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Controller.setAnimal1(tempAnimal);
                         Intent intent = new Intent(getApplicationContext(), MapComponent.class);
                         startActivity(intent);
                         finish();
@@ -294,7 +354,8 @@ public class SoloCombat extends Activity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Toast.makeText(SoloCombat.this, "You're dead", Toast.LENGTH_LONG).show();
+                    if (opponnentsTurn)
+                        ennemyTurn();
                 }
 
                 @Override
@@ -361,8 +422,8 @@ public class SoloCombat extends Activity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                Log.i("ANIMATION","animation ended");
-                Toast.makeText(SoloCombat.this, "animation ended", Toast.LENGTH_LONG).show();
+                if (opponnentsTurn)
+                    ennemyTurn();
             }
 
             @Override
@@ -405,9 +466,9 @@ public class SoloCombat extends Activity {
         animationOffset += 100;
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        return;
-//    }
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 
 }
