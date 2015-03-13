@@ -61,6 +61,28 @@
                 android:textStyle="bold"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:text="@string/mail_object"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextMailObject"
+                android:hint="@string/mail_objet_hint"/>
+
+
+        </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,6 +95,7 @@
                 android:id="@+id/TextMailBody"
                 android:hint="@string/write_mail_hint"/>
         </ScrollView>
+
 
     </LinearLayout>
 

@@ -1,16 +1,22 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.Friend;
 import com.fluffyadventure.view.R;
 
@@ -18,6 +24,7 @@ public class WriteMailActivity extends Activity {
 
     TextView textRecipient;
     EditText mailBody;
+    EditText mailObject;
     Button btnCancelMail;
     Button btnSendMail;
     String recipientName;
@@ -28,6 +35,7 @@ public class WriteMailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_mail);
         textRecipient = (TextView)findViewById(R.id.TextMailRecipient);
+        mailObject = (EditText) findViewById(R.id.TextMailObject);
         btnSendMail = (Button)findViewById(R.id.BtnSendMail);
         btnCancelMail = (Button)findViewById(R.id.BtnCancelMail);
             //Getting recipient from previous activity
@@ -57,8 +65,13 @@ public class WriteMailActivity extends Activity {
         btnSendMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String body = mailBody.toString();
+                String object = mailObject.getText().toString();
+                String body = mailBody.getText().toString();
                 //Send the message
+                SendMailTask task = new SendMailTask(recipientName,object,body,WriteMailActivity.this);
+                task.execute();
+                Intent intent = new Intent(WriteMailActivity.this, Status.class);
+                startActivity(intent);
             }
         });
     }
@@ -92,4 +105,52 @@ public class WriteMailActivity extends Activity {
         finish();
 
     }
+
+    private class SendMailTask extends AsyncTask<Void, Void, Boolean> {
+        private String recipient;
+        private String object;
+        private String content;
+
+        public SendMailTask(String recipient, String object, String content, Context ctx) {
+            this.recipient = recipient;
+            this.object =  object;
+            this.content = content;
+            //this.dialog.setCancelable(true);
+
+        }
+
+        protected Boolean doInBackground(Void... params){
+
+
+
+            Boolean result = Controller.sendMail(recipient,object,content);
+            //Controller.setUpObjectivesFromServer();
+
+            //Boolean result = true;
+
+
+            return result;
+        }
+        protected  void onPostExecute(Boolean connected) {
+            Log.i("Server", "Attempted connection");
+            if (!connected){
+                Toast.makeText(WriteMailActivity.this, "Echec de l'envoi du message", Toast.LENGTH_LONG).show();
+
+            }
+            else
+            {
+                Toast.makeText(WriteMailActivity.this, "Message envoyé", Toast.LENGTH_LONG).show();
+            }
+
+
+
+
+        }
+
+
+
+    }
+
+
+
 }

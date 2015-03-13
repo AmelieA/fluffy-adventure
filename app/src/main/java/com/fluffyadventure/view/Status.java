@@ -3,9 +3,12 @@ package com.fluffyadventure.view;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
 
@@ -97,8 +101,9 @@ public class Status extends Activity {
         btnMailbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Status.this, MailBox.class);
-                startActivity(intent);
+
+                GetMailsTask task = new GetMailsTask(Status.this);
+                task.execute();
             }
         });
     }
@@ -156,4 +161,52 @@ public class Status extends Activity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
+    private class GetMailsTask extends AsyncTask<Void, Void, Boolean> {
+        ProgressDialog dialog;
+        Context ctx;
+
+        public GetMailsTask(Context ctx) {
+            this.ctx = ctx;
+            this.dialog = new ProgressDialog(this.ctx);
+            //this.dialog.setCancelable(true);
+
+        }
+
+        protected void onPreExecute(){
+            this.dialog.setTitle("Récupération des mails...");
+            this.dialog.show();
+
+        }
+        protected Boolean doInBackground(Void... params){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Boolean result = Controller.retrieveMailsFromServer();
+
+
+            return result;
+        }
+        protected  void onPostExecute(Boolean login) {
+            System.out.println("done");
+            dialog.dismiss();
+
+            if (!login){
+                Toast.makeText(ctx, "Impossible de récupérer les mails", Toast.LENGTH_LONG).show();
+
+            }
+
+
+            Intent intent = new Intent(ctx, MailBox.class);
+            startActivity(intent);
+
+        }
+
+
+
+    }
 }
+

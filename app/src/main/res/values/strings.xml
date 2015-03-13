@@ -57,6 +57,8 @@
     <string name="btnSendMail_text">Envoyer</string>
     <string name="text_recipient">Destinataire :</string>
     <string name="write_mail_hint">Entrez votre message ici</string>
+    <string name="mail_object">Objet :</string>
+    <string name="mail_objet_hint">Objet</string>
 
     <string name="btnNewText">Nouveau</string>
     <string name="addFriendTitle1">Ajoute</string>

@@ -2,7 +2,6 @@ package com.fluffyadventure.view;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.Mail;
 
 public class ReadMailActivity extends Activity {
@@ -31,7 +29,7 @@ public class ReadMailActivity extends Activity {
         mail = getIntent().getParcelableExtra("mail");
         if (mail != null){
             textMailSender.setText(mail.getSender());
-            textMailBody.setText(mail.getMessage());
+            textMailBody.setText(mail.getContent());
         } else {
             textMailSender.clearComposingText();
             textMailBody.clearComposingText();

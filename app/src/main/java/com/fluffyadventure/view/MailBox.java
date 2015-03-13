@@ -1,30 +1,28 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.Mail;
 import com.fluffyadventure.model.MailWanted;
-import com.fluffyadventure.view.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 
 public class MailBox extends Activity {
@@ -36,6 +34,9 @@ public class MailBox extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mail_box);
+
+        Log.d("Mails from controller", Controller.getMails().toString());
+
 
         mailAdapter = new MailAdapter(this, Controller.getMails());
         ListView mailsView = (ListView) findViewById(R.id.MailBox);
@@ -91,7 +92,7 @@ public class MailBox extends Activity {
             TextView mailHeader = (TextView) rowView.findViewById(R.id.MailSender);
             mailHeader.setText(values.get(position).getSender());
             TextView message = (TextView) rowView.findViewById(R.id.MailSubject);
-            message.setText(values.get(position).getMessage());
+            message.setText(values.get(position).getObject());
 
             return rowView;
         }
@@ -103,5 +104,8 @@ public class MailBox extends Activity {
         finish();
 
     }
+
+
+
 
 }

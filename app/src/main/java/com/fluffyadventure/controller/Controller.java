@@ -16,6 +16,7 @@ import com.fluffyadventure.model.User;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Treasure;
+import com.google.android.gms.internal.m;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class Controller {
     private static ArrayList<Integer> succeededSpawns= new ArrayList<>();
     private static AbstractSpawn currentObjective;
     private static ArrayList<Friend> friends = new ArrayList<>();
+    private static ArrayList<Mail> mails = new ArrayList<>();
 
     public static Boolean createUser(String name, String password) {
         user = server.createUser(name,password);
@@ -165,6 +167,11 @@ public class Controller {
         if (friends == null){
             return false;
         }
+        mails = server.getMails(user);
+        Log.d("Mails login", mails.toString());
+        if (mails == null) {
+            return false;
+        }
         //TODO Remplacer une fois que le serveur gèreras les spanws contenant des monstres
         //setUpObjectivesWithHq();
         setupObjectives();
@@ -272,14 +279,22 @@ public class Controller {
 
         return hasHQbeenMoved;
     }
+    public static Boolean retrieveMailsFromServer(){
+        ArrayList<Mail> mails2 = server.getMails(user);
+        if (mails2 == null) {
+            return false;
+        }
+        mails = mails2;
+        return true;
+    }
 
     public static ArrayList<Mail> getMails(){
-        Mail mail1 = new Mail(1, "Expediteur1", "Ceci est un mail 1","heya1",10);
+        /*Mail mail1 = new Mail(1, "Expediteur1", "Ceci est un mail 1","heya1",10);
         Mail mail2 = new Mail(2, "Expediteur2", "Ceci est un mail 2","heya2",11);
         Mail mail3 = new Mail(3, "Expediteur3", "Ceci est un mail 3","heya3",12);
         Mail mail4 = new Mail(4, "Expediteur4", "Ceci est un mail 4","heya4",13);
         Mail mailWanted = new MailWanted(5,"Mission !","RechercherTartampion","",999,"Bobby","squirrel1","Robert","squirrel2");
-        ArrayList<Mail> mails = new ArrayList<>(Arrays.asList(mail1, mail2, mail3, mail4, mailWanted));
+        ArrayList<Mail> mails = new ArrayList<>(Arrays.asList(mail1, mail2, mail3, mail4, mailWanted));*/
         return mails;
     }
 
@@ -290,6 +305,10 @@ public class Controller {
         }
         friends.add(friend);
         return true;
+    }
+
+    public static Boolean sendMail(String receiver, String object, String content){
+        return server.sendMail(user,receiver,object,content);
     }
 
     public static void flush(){
