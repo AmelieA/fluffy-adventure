@@ -8,8 +8,6 @@ import java.util.List;
  */
 public class Monster extends Creature{
 
-    private List<AbstractSpell> spells = new ArrayList<>();
-
     public Monster() {
     }
 
@@ -19,11 +17,11 @@ public class Monster extends Creature{
 
     public Monster(String name, int type, int health, int strength, int accuracy, int evasiveness, List<AbstractSpell> spells) {
         super(name, type, health, strength, accuracy, evasiveness);
-        this.spells = spells;
+        this.activeSpells = spells;
     }
 
     public void addSpell(AbstractSpell spell, Boolean active){
-        spells.add(spell);
+        activeSpells.add(spell);
     }
 
 }

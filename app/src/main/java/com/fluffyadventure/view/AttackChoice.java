@@ -36,10 +36,8 @@ public class AttackChoice extends Activity {
     AttackChoiceAdapter inactiveAdapter;
 
     // List of attacks
-    AbstractSpell damageSpell = new DamageSpell(0,"Attaque choupie", "Blesse une cible ennemie pour 15pv", false, 15);
     ArrayList<AbstractSpell> activeAttack;// = new ArrayList<>(Arrays.asList(spell));
 
-    AbstractSpell healSpell = new HealSpell(1,"Soin mignon", "Soigne une cible alliée de 15pv", false, 15);
     ArrayList<AbstractSpell> inactiveAttack;// = new ArrayList<>(Arrays.asList(spell2));
     Button saveBtn;
 

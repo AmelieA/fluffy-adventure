@@ -17,22 +17,33 @@ public abstract class AbstractSpell {
     public static final int DAMAGE = 4;
     public static final int STATE = 5;
 
+    public static final int ATTACK = 6;
+    public static final int THROW = 7;
+
+
     private int id;
     private String name;
     private String description;
     Boolean isAoE;
+    private int animationType;
+    private String throwedObject;
+    private int value;
 
-    protected AbstractSpell(int id, String name, String description, boolean isAoE) {
+    protected AbstractSpell(int id, String name, String description, boolean isAoE, int animationType, String throwedObject) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.isAoE = isAoE;
+        this.animationType = animationType;
+        this.throwedObject = throwedObject;
     }
     protected AbstractSpell(JSONObject json) throws JSONException {
         this.id = json.getInt("Id");
         this.name = json.getString("Name");
         this.description = json.getString("Description");
         this.isAoE = isAoE = json.getBoolean("IsAoE");
+        //this.animationType = json.getBoolean("AnimationType");
+        //this.throwedObject = json.getBoolean("ThrowedObject");
     }
 
 
@@ -52,6 +63,14 @@ public abstract class AbstractSpell {
         return description;
     }
 
+    public int getAnimationType() {
+        return animationType;
+    }
+
+    public String getThrowedObject() {
+        return throwedObject;
+    }
+
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
         json.put("Name", name);
@@ -62,6 +81,8 @@ public abstract class AbstractSpell {
     }
 
     public abstract ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer target);
+
+    public abstract int getValue();
 
     @Override
     public String toString(){

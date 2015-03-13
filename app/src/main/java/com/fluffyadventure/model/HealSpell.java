@@ -13,8 +13,8 @@ public class HealSpell extends AbstractSpell {
 
     private int heal;
 
-    public HealSpell(int id, String name, String description, boolean isAoE, int heal) {
-        super(id, name, description, isAoE);
+    public HealSpell(int id, String name, String description, boolean isAoE, int heal, int animationType, String throwedObject) {
+        super(id, name, description, isAoE, animationType, throwedObject);
         this.heal = heal;
     }
     public HealSpell(JSONObject json) throws JSONException {
@@ -38,6 +38,10 @@ public class HealSpell extends AbstractSpell {
         returnedArray.add(opponents);
 
         return returnedArray;
+    }
+
+    public int getValue() {
+        return heal;
     }
 
     public JSONObject toJson() throws JSONException {

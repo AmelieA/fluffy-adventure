@@ -49,7 +49,7 @@ public class Controller {
 
         objectives = new ArrayList<AbstractSpawn>();
         ArrayList<Creature> opponents = new ArrayList<Creature>();
-        AbstractSpell evilSpell = new DamageSpell(42,"Attaque pas gentille", "Blesse une cible ennemie pour 10pv", false, 10);
+        AbstractSpell evilSpell = new DamageSpell(42,"Attaque pas gentille", "Blesse une cible ennemie pour 10pv", false, 10, AbstractSpell.THROW, "hazelnut");
         ArrayList<AbstractSpell> spells = new ArrayList<>();
         spells.add(evilSpell);
         opponents.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 15, spells));
@@ -116,14 +116,22 @@ public class Controller {
 
     public static void setupBob() {
         animal1 = new Animal("Bob","rabbit1", Creature.RABBIT);
-        animal1.addSpell(new DamageSpell(1, "Soin", "zut", true, 0), true);
+        /*animal1.addSpell(new DamageSpell(1, "Soin", "zut", true, 0), true);
         animal1.addSpell(new DamageSpell(1, "Jet de noisette", "zut", true, 0), true);
         animal1.addSpell(new DamageSpell(1, "Charge", "zut", true, 0), true);
-        animal1.addSpell(new DamageSpell(1, "-25 bibi", "zut", true, 0), true);
+        animal1.addSpell(new DamageSpell(1, "-25 bibi", "zut", true, 0), true)*/;
     }
 
     public static void createAnimal1(String name, String imagePath, int type) {
         animal1 = new Animal(name,imagePath,type);
+    }
+
+    public static void setAnimal1(Animal animal1) {
+        Controller.animal1 = animal1;
+    }
+
+    public static void setAnimal2(Animal animal2) {
+        Controller.animal2 = animal2;
     }
 
     public static Animal getAnimal1() {

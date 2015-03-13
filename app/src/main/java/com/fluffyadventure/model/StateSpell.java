@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class StateSpell extends AbstractSpell {
 
-    public StateSpell(int id, String name, String description, boolean isAoE) {
-        super(id, name, description, isAoE);
+    public StateSpell(int id, String name, String description, boolean isAoE, int animationType, String throwedObject) {
+        super(id, name, description, isAoE, animationType, throwedObject);
     }
 
     public StateSpell(JSONObject json) throws JSONException {
@@ -24,6 +24,11 @@ public class StateSpell extends AbstractSpell {
 
         return returnedArray;
     }
+
+    public int getValue() {
+        return 0;
+    }
+
     public JSONObject toJson() throws JSONException {
         JSONObject json = super.toJson();
         json.put("Type",AbstractSpell.STATE);

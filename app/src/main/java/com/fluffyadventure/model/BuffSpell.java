@@ -15,8 +15,8 @@ public class BuffSpell extends AbstractSpell {
     private int accuModif;
     private int evaModif;
 
-    public BuffSpell(int id, String name, String description, boolean isAoE, int strModif, int accuModif, int evaModif) {
-        super(id, name, description, isAoE);
+    public BuffSpell(int id, String name, String description, boolean isAoE, int strModif, int accuModif, int evaModif, int animationType,  String throwedObject) {
+        super(id, name, description, isAoE, animationType, throwedObject);
         this.strModif = strModif;
         this.accuModif = accuModif;
         this.evaModif = evaModif;
@@ -51,6 +51,10 @@ public class BuffSpell extends AbstractSpell {
         returnedArray.add(opponents);
 
         return returnedArray;
+    }
+
+    public int getValue() {
+        return 0;
     }
 
     public JSONObject toJson() throws JSONException {

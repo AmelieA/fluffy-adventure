@@ -13,8 +13,8 @@ public class DamageSpell extends AbstractSpell {
 
     private int damage;
 
-    public DamageSpell(int id, String name, String description, boolean isAoE, int damage) {
-        super(id, name, description, isAoE);
+    public DamageSpell(int id, String name, String description, boolean isAoE, int damage, int animationType, String throwedObject) {
+        super(id, name, description, isAoE,animationType, throwedObject);
         this.damage = damage;
     }
 
@@ -39,6 +39,10 @@ public class DamageSpell extends AbstractSpell {
         returnedArray.add(opponents);
 
         return returnedArray;
+    }
+
+    public int getValue() {
+        return damage;
     }
 
     public JSONObject toJson() throws JSONException {
