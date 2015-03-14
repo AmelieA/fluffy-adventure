@@ -189,8 +189,32 @@ public class SoloCombat extends Activity {
         instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+animal.getName()+" "+getResources().getString(R.string.combat_instruction_2));
     }
 
+    private void setButtonsEnabled(boolean value) {
+        switch (animal.getActiveSpells().size()) {
+            case 1:
+                action1.setEnabled(value);
+                break;
+            case 2:
+                action1.setEnabled(value);
+                action2.setEnabled(value);
+                break;
+            case 3:
+                action1.setEnabled(value);
+                action2.setEnabled(value);
+                action3.setEnabled(value);
+                break;
+            case 4:
+                action1.setEnabled(value);
+                action2.setEnabled(value);
+                action3.setEnabled(value);
+                action4.setEnabled(value);
+        }
+    }
+
     private void useSpell(int spellIndex) {
+        setButtonsEnabled(false);
         AbstractSpell spell = animal.getActiveSpells().get(spellIndex);
+        instruction.setText(animal.getName() + " lance " + spell.getName() + " !");
         ArrayList<ArrayList<Creature>> fightResult = spell.use(fighters,opponents,null);
         fighters = fightResult.get(0);
         opponents = fightResult.get(1);
@@ -236,6 +260,7 @@ public class SoloCombat extends Activity {
         int numberOfSpells = opponents.get(0).getActiveSpells().size();
         int randomInt = randomGenerator.nextInt(numberOfSpells);
         AbstractSpell spell = opponents.get(0).getActiveSpells().get(randomInt);
+        instruction.setText(opponents.get(0).getName() + " lance " + spell.getName() + " !");
         ArrayList<ArrayList<Creature>> fightResult = spell.use(opponents,fighters,null);
         fighters = fightResult.get(1);
         opponents = fightResult.get(0);
@@ -407,7 +432,7 @@ public class SoloCombat extends Activity {
         return (lifeProgressBarPoint);
     }
 
-    private void LosePointAnimation(ProgressBar lifeProgressBar, int start, int end){
+    private void LosePointAnimation(ProgressBar lifeProgressBar, final int start, final int end){
         ObjectAnimator animation = ObjectAnimator.ofInt(lifeProgressBar, "progress", start, end);
         animation.setDuration(Math.abs(start - end) * 15);
         animation.setInterpolator(new DecelerateInterpolator());
@@ -417,13 +442,35 @@ public class SoloCombat extends Activity {
         animation.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
+                int value = start - end;
+                if (value > 0) {
+                    if (opponnentsTurn) {
+                        instruction.setText(opponents.get(0).getName() + " perd " + value + "pv");
+                    }else{
+                        instruction.setText(animal.getName() + " perd " + value + "pv");
+                    }
+                } else {
+                    if (!opponnentsTurn) {
+                        instruction.setText(opponents.get(0).getName() + " gagne " + (end - start) + "pv");
+                    }else{
+                        instruction.setText(animal.getName() + " gagne " + (end - start) + "pv");
+                    }
+                }
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 if (opponnentsTurn)
                     ennemyTurn();
+                else {
+                    setButtonsEnabled(true);
+                    instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+animal.getName()+" "+getResources().getString(R.string.combat_instruction_2));
+                }
             }
 
             @Override
