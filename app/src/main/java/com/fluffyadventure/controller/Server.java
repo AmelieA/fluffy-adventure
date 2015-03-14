@@ -13,6 +13,7 @@ import com.fluffyadventure.model.DebuffSpell;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Friend;
 import com.fluffyadventure.model.HealSpell;
+import com.fluffyadventure.model.Mail;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.StateSpell;
 import com.fluffyadventure.model.Treasure;
@@ -657,6 +658,67 @@ public class Server {
         return null;
 
 
+    }
+
+    public Boolean sendMail(User user, String receiver, String object, String content){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "mails/new";
+        try {
+            URL url = new URL(uri);
+            JSONObject json = new JSONObject();
+            json.put("To",receiver);
+            json.put("Object",object);
+            json.put("Content",content);
+            json.put("Timestamp",System.currentTimeMillis());
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
+
+            if (returnJson != null){
+
+                return true;
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public ArrayList<Mail> getMails(User user){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "mails";
+        try {
+
+            URL url = new URL(uri);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, false, null);
+
+            if (returnJson != null){
+                ArrayList<Mail> mails = new ArrayList<>();
+                Log.d("Mails get",returnJson.toString());
+                if (returnJson.getJSONObject("json").get("Mails") != null) {
+
+                    JSONArray mailsArray = returnJson.getJSONObject("json").getJSONArray("Mails");
+                    Log.d("Mail Array",Integer.toString(mailsArray.length()));
+                    for (int i = 0; i < mailsArray.length(); i++) {
+                        Mail mail = new Mail(mailsArray.getJSONObject(i));
+                        mails.add(mail);
+                        Log.d("Mail:",mail.toJson().toString());
+                    }
+
+                }
+                return mails;
+
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+            ArrayList<Mail> mails = new ArrayList<>();
+            return mails;
+        }
+        return null;
     }
 
 

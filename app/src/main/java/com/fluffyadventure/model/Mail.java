@@ -4,39 +4,72 @@ package com.fluffyadventure.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by amelie on 2/27/15.
  */
 public class Mail implements Parcelable{
 
-    private int id;
+    private int timestamp;
     private String sender;
     private int senderId;
     private String object;
-    private String message;
+    private String content;
+    private boolean read;
 
-    public Mail(int id, String sender, String object, String message, int senderId) {
-        this.id = id;
+    public Mail(int timestamp, String sender, String object, String content, int senderId) {
+        this.timestamp = timestamp;
         this.sender = sender;
-        this.message = message;
+        this.content = content;
         this.object = object;
         this.senderId = senderId;
+        this.read = false;
     }
 
-    public int getId() {
-        return id;
+    public Mail(JSONObject jsonObject) throws JSONException {
+        timestamp = jsonObject.getInt("Timestamp");
+        sender = jsonObject.getString("Sender");
+        senderId = jsonObject.getInt("SenderId");
+        object = jsonObject.getString("Object");
+        content = jsonObject.getString("Content");
+        read = jsonObject.getBoolean("Read");
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Timestamp", timestamp);
+        jsonObject.put("Sender",sender);
+        jsonObject.put("SenderId",senderId);
+        jsonObject.put("Object",object);
+        jsonObject.put("Content",content);
+        jsonObject.put("Read",read);
+        return jsonObject;
+    }
+
+    public int getTimestamp() {
+        return timestamp;
+    }
+
+    public String getObject() {
+        return object;
     }
 
     public String getSender() {
         return sender;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
     public int getSenderId() {
         return senderId;
+    }
+
+    public Boolean getRead(){
+        return read;
     }
 
     @Override
@@ -46,19 +79,19 @@ public class Mail implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeInt(timestamp);
         dest.writeString(sender);
         dest.writeInt(senderId);
         dest.writeString(object);
-        dest.writeString(message);
+        dest.writeString(content);
     }
 
     private Mail(Parcel in){
-        id = in.readInt();
+        timestamp = in.readInt();
         sender = in.readString();
         senderId = in.readInt();
         object = in.readString();
-        message = in.readString();
+        content = in.readString();
     }
     public static final Parcelable.Creator<Mail> CREATOR = new Parcelable.Creator<Mail>() {
         public Mail createFromParcel(Parcel in){return new Mail(in);}
