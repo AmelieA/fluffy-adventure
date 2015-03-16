@@ -29,7 +29,7 @@ public class DebuffSpell extends AbstractSpell {
         evaModif = json.getInt("Evasiveness");
     }
 
-    public  ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer target) {
+    public  ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer source, Integer target) {
         ArrayList<ArrayList<Creature>> returnedArray = new ArrayList<>();
         returnedArray.add(fighters);
 

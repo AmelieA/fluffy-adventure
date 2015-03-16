@@ -22,7 +22,7 @@ public class HealSpell extends AbstractSpell {
         heal = json.getInt("Health");
     }
 
-    public  ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer target) {
+    public  ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer source, Integer target) {
         ArrayList<ArrayList<Creature>> returnedArray = new ArrayList<>();
 
         if ( target != null ) {

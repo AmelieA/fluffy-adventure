@@ -80,7 +80,7 @@ public abstract class AbstractSpell {
         return json;
     }
 
-    public abstract ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer target);
+    public abstract ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer source, Integer target);
 
     public abstract int getValue();
 

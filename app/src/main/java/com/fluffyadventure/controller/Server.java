@@ -15,7 +15,6 @@ import com.fluffyadventure.model.Friend;
 import com.fluffyadventure.model.HealSpell;
 import com.fluffyadventure.model.Mail;
 import com.fluffyadventure.model.Spawn;
-import com.fluffyadventure.model.StateSpell;
 import com.fluffyadventure.model.Treasure;
 import com.fluffyadventure.model.User;
 import com.google.android.gms.maps.model.LatLng;
@@ -451,11 +450,8 @@ public class Server {
                     case AbstractSpell.DEBUFF:
                         spell = new DebuffSpell(inputJson);
                         break;
-                    case AbstractSpell.STATE:
-                        spell = new StateSpell(inputJson);
-                        break;
                     default:
-                        spell = new StateSpell(inputJson);
+                        spell = new DamageSpell(inputJson);
 
                 }
                 return spell;

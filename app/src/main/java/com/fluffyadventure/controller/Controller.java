@@ -51,7 +51,7 @@ public class Controller {
 
         objectives = new ArrayList<AbstractSpawn>();
         ArrayList<Creature> opponents = new ArrayList<Creature>();
-        AbstractSpell evilSpell = new DamageSpell(42,"Attaque pas gentille", "Blesse une cible ennemie pour 10pv", false, 10, AbstractSpell.THROW, "hazelnut");
+        AbstractSpell evilSpell = new DamageSpell(42,"Attaque pas gentille", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut");
         ArrayList<AbstractSpell> spells = new ArrayList<>();
         spells.add(evilSpell);
         opponents.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 15, spells));

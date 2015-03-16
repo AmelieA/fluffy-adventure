@@ -105,8 +105,8 @@ public class SoloCombat extends Activity {
         animal = Controller.getAnimal1();
         animal.clearSpells();
         animal.addSpell(new HealSpell(0, "Soin", "zut", false, 15, AbstractSpell.HEAL, null), true);
-        animal.addSpell(new DamageSpell(1, "Jet de noisette", "zut", false, 20, AbstractSpell.THROW, "hazelnut"), true);
-        animal.addSpell(new DamageSpell(2, "Charge", "zut", false, 15 , AbstractSpell.ATTACK, null), true);
+        animal.addSpell(new DamageSpell(1, "Jet de noisette", "zut", false, 150, AbstractSpell.THROW, "hazelnut"), true);
+        animal.addSpell(new DamageSpell(2, "Charge", "zut", false, 100 , AbstractSpell.ATTACK, null), true);
 
         tempAnimal = Controller.getAnimal1();
         fighters.add(animal);
@@ -215,7 +215,7 @@ public class SoloCombat extends Activity {
         setButtonsEnabled(false);
         AbstractSpell spell = animal.getActiveSpells().get(spellIndex);
         instruction.setText(animal.getName() + " lance " + spell.getName() + " !");
-        ArrayList<ArrayList<Creature>> fightResult = spell.use(fighters,opponents,null);
+        ArrayList<ArrayList<Creature>> fightResult = spell.use(fighters,opponents,0,null);
         fighters = fightResult.get(0);
         opponents = fightResult.get(1);
         int animationType = spell.getAnimationType();
@@ -261,7 +261,7 @@ public class SoloCombat extends Activity {
         int randomInt = randomGenerator.nextInt(numberOfSpells);
         AbstractSpell spell = opponents.get(0).getActiveSpells().get(randomInt);
         instruction.setText(opponents.get(0).getName() + " lance " + spell.getName() + " !");
-        ArrayList<ArrayList<Creature>> fightResult = spell.use(opponents,fighters,null);
+        ArrayList<ArrayList<Creature>> fightResult = spell.use(opponents,fighters,0,null);
         fighters = fightResult.get(1);
         opponents = fightResult.get(0);
         int animationType = spell.getAnimationType();

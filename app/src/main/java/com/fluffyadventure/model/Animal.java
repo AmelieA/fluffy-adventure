@@ -94,11 +94,8 @@ public class Animal extends Creature{
                 case AbstractSpell.DEBUFF:
                     spell = new DebuffSpell(inputJson);
                     break;
-                case AbstractSpell.STATE:
-                    spell = new StateSpell(inputJson);
-                    break;
                 default:
-                    spell = new StateSpell(inputJson);
+                    spell = new DamageSpell(inputJson);
 
             }
             activeSpells.add(spell);
@@ -122,11 +119,8 @@ public class Animal extends Creature{
                 case AbstractSpell.DEBUFF:
                     spell = new DebuffSpell(inputJson);
                     break;
-                case AbstractSpell.STATE:
-                    spell = new StateSpell(inputJson);
-                    break;
                 default:
-                    spell = new StateSpell(inputJson);
+                    spell = new DamageSpell(inputJson);
 
             }
            unusedSpells.add(spell);
