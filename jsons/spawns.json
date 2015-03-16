@@ -1,0 +1,121 @@
+[
+    { 
+        "Id":0,
+        "SpellReward":0,
+        "HealthReward":0,
+        "StrengthReward":0,
+        "Text":"Pourfendre le méchant zombie mangeur de carottes",
+        "Name":"Bwaaarg",
+        "Level":1,
+        "Type":"Spawn",
+        "Opponents":
+        [
+            {
+                "Id":0,
+                "Spells":
+                [
+                    {"Id":0},
+                    {"Id":2}
+                ]
+            }
+        ]
+    },
+    { 
+        "Id":1,
+        "SpellReward":0,
+        "HealthReward":0,
+        "StrengthReward":0,
+        "Text":"Des monstres s'amusent à chatouiller des chatons, sauve les vite !",
+        "Name":"Sauver les chatons !",
+        "Level":2,
+        "Type":"Spawn",
+        "Opponents":
+        [
+            {
+                "Id":0,
+                "Spells":
+                [
+                    {"Id":1},
+                    {"Id":2}
+                ]
+            }
+        ]
+
+    },
+    { 
+        "Id":2,
+        "SpellReward":0,
+        "HealthReward":0,
+        "StrengthReward":0,
+        "Text":"Un méchant sorcier a lancé une malédiction sur les arbres de la forêt",
+        "Name":"Activité bûcheronnage",
+        "Level":3,
+        "Type":"Spawn",
+        "Opponents":
+        [
+            {
+                "Id":0,
+                "Spells":
+                [
+                    {"Id":1},
+                    {"Id":2}
+                ]
+            }
+        ]
+
+    },
+    { 
+        "Id":3,
+        "SpellReward":0,
+        "HealthReward":0,
+        "StrengthReward":0,
+        "Text":"Des zombies échaffaudent un plan de conquète mondiale, arrête les !",
+        "Name":"Les non-génies du mal",
+        "Level":4,
+        "Type":"Spawn",
+        "Opponents":
+        [
+            {
+                "Id":0,
+                "Spells":
+                [
+                    {"Id":1},
+                    {"Id":2}
+                ]
+            }
+        ]
+
+    },
+    { 
+        "Id":4,
+        "SpellReward":0,
+        "HealthReward":0,
+        "StrengthReward":0,
+        "Text":"Much evil, such dungeon, so dangerous, very intense, wow",
+        "Name":"L'antre du mâle",
+        "Level":5,
+        "Type":"Dungeon",
+        "Opponents":
+        [
+            {
+                "Id":0,
+                "Spells":
+                [
+                    {"Id":1},
+                    {"Id":2}
+                ]
+            }
+        ]
+
+    },
+    { 
+        "Id":5,
+        "SpellReward":0,
+        "HealthReward":0,
+        "StrengthReward":0,
+        "Text":"Mon préééécieeeuux ...",
+        "Name":"Trésor enfoui",
+        "Level":0,
+        "Type":"Treasure"
+    }
+]
