@@ -181,8 +181,8 @@ public class Controller {
             return false;
         }
         //TODO Remplacer une fois que le serveur gèreras les spanws contenant des monstres
-        //setUpObjectivesWithHq();
-        setupObjectives();
+        setUpObjectivesWithHq();
+        //setupObjectives();
 
         return true;
     }
@@ -282,8 +282,8 @@ public class Controller {
 
     public static Boolean moveHQ(){
         Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
-        //setUpObjectivesWithHq();
-        setupObjectives();
+        setUpObjectivesWithHq();
+        //setupObjectives();
 
         return hasHQbeenMoved;
     }

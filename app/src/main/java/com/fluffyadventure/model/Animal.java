@@ -73,33 +73,11 @@ public class Animal extends Creature{
     }
 
     public Animal(JSONObject json) throws JSONException {
+        super(json);
+
         JSONObject spells = json.getJSONObject("Spells");
 
-        JSONArray active = spells.getJSONArray("Active");
-        Log.d("activeJson", active.toString());
-        for (int i = 0; i < active.length(); i++){
-            AbstractSpell spell;
-            JSONObject inputJson = active.getJSONObject(i);
-            Log.d("Type",active.getJSONObject(i).toString());
-            switch (inputJson.getInt("Type")){
-                case AbstractSpell.DAMAGE:
-                    spell = new DamageSpell(inputJson);
-                    break;
-                case AbstractSpell.HEAL:
-                    spell = new HealSpell(inputJson);
-                    break;
-                case AbstractSpell.BUFF:
-                    spell = new BuffSpell(inputJson);
-                    break;
-                case AbstractSpell.DEBUFF:
-                    spell = new DebuffSpell(inputJson);
-                    break;
-                default:
-                    spell = new DamageSpell(inputJson);
 
-            }
-            activeSpells.add(spell);
-        }
         JSONArray unused = spells.getJSONArray("Unused");
         for (int i = 0; i < unused.length(); i++){
             AbstractSpell spell;
@@ -129,14 +107,8 @@ public class Animal extends Creature{
 
         Log.d("activetoucour",activeSpells.toString());
 
-        this.name = json.getString("Name");
-        this.imagePath =  json.getString("ImgPath");
-        this.type = Integer.parseInt(json.getString("Type"));
-        this.health = json.getInt("Health");
-        this.strength = json.getInt("Strength");
-        this.accuracy = json.getInt("Accuracy");
-        this.evasiveness = json.getInt("Evasiveness");
 
+        this.imagePath =  json.getString("ImgPath");
         switch (type){
             case Creature.SHEEP:
                 this.QGImage = "grassicon";

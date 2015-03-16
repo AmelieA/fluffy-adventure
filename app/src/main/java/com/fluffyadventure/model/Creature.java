@@ -1,5 +1,11 @@
 package com.fluffyadventure.model;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +47,46 @@ public abstract class Creature {
         this.evasiveness = creature.getEvasiveness();
         this.QGImage = creature.getQGImage();
         this.activeSpells = new ArrayList<>(creature.getActiveSpells());
+    }
+    public Creature(JSONObject json) throws JSONException {
+        JSONObject spells = json.getJSONObject("Spells");
+
+        JSONArray active = spells.getJSONArray("Active");
+        Log.d("activeJson", active.toString());
+        for (int i = 0; i < active.length(); i++){
+            AbstractSpell spell;
+            JSONObject inputJson = active.getJSONObject(i);
+            Log.d("Type",active.getJSONObject(i).toString());
+            switch (inputJson.getInt("Type")){
+                case AbstractSpell.DAMAGE:
+                    spell = new DamageSpell(inputJson);
+                    break;
+                case AbstractSpell.HEAL:
+                    spell = new HealSpell(inputJson);
+                    break;
+                case AbstractSpell.BUFF:
+                    spell = new BuffSpell(inputJson);
+                    break;
+                case AbstractSpell.DEBUFF:
+                    spell = new DebuffSpell(inputJson);
+                    break;
+                default:
+                    spell = new DamageSpell(inputJson);
+
+            }
+            activeSpells.add(spell);
+        }
+
+        Log.d("activetoucour",activeSpells.toString());
+
+        this.name = json.getString("Name");
+        this.type = Integer.parseInt(json.getString("Type"));
+        this.health = json.getInt("Health");
+        this.strength = json.getInt("Strength");
+        this.accuracy = json.getInt("Accuracy");
+        this.evasiveness = json.getInt("Evasiveness");
+
+
     }
 
     public Creature(String imagePath, int type) {
@@ -92,6 +138,8 @@ public abstract class Creature {
         this.accuracy = accuracy;
         this.evasiveness = evasiveness;
     }
+
+
 
     public int getEvasiveness() {
         return evasiveness;

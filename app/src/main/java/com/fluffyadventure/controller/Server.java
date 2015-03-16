@@ -338,6 +338,54 @@ public class Server {
 
     }
 
+    private JSONObject connectWithoutAuth(URL url, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
+        //TODO: Get tokenz!
+        HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
+        if (input) {
+            urlConnection1.setDoInput(true);
+            urlConnection1.setRequestProperty("Accept", "application/json");
+        }
+
+
+        if (output){
+            urlConnection1.setDoOutput(true);
+            urlConnection1.setRequestMethod("POST");
+            urlConnection1.setRequestProperty("Content-Type", "application/json");
+
+            OutputStream out = urlConnection1.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            writer.write(outputJson.toString());
+            writer.flush();
+            writer.close();
+            out.close();
+        }
+        urlConnection1.connect();
+        if (urlConnection1.getResponseCode() == responseCode){
+            JSONObject inputJson = new JSONObject();
+            if (input){
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection1.getInputStream()));
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+                inputJson.put("json",new JSONObject(inputString.toString()));
+            }
+            inputJson.put("return",responseCode);
+            return  inputJson;
+        }
+        urlConnection1.disconnect();
+
+
+
+
+
+        return null;
+
+    }
+
+
     public String getToken(User user){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "get_token";
         try {
@@ -468,45 +516,30 @@ public class Server {
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spawns";
         try {
             URL url = new URL(uri);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-            urlConnection.setDoInput(true);
-            urlConnection.setRequestProperty("Accept", "application/json");
 
-            urlConnection.connect();
+            JSONObject jsonObject = this.connectWithoutAuth(url,HttpURLConnection.HTTP_OK,true,false,null);
 
-            int httpResult = urlConnection.getResponseCode();
-
-            if (httpResult == HttpURLConnection.HTTP_OK) {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder inputString = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    inputString.append(line + "\n");
+            ArrayList<AbstractSpawn> spawnList = new ArrayList<AbstractSpawn>();
+            JSONObject jsonObject1 = jsonObject.getJSONObject("json");
+            JSONArray array = jsonObject1.getJSONArray("Spawns");
+            for (int i = 0; i < array.length(); i++){
+                JSONObject object = array.getJSONObject(i);
+                AbstractSpawn abstractSpawn;
+                if (object.getString("Type").equals("Spawn")) {
+                    abstractSpawn = new Spawn(object);
                 }
-                bufferedReader.close();
-                ArrayList<AbstractSpawn> spawnList = new ArrayList<AbstractSpawn>();
-                Log.d("input", inputString.toString());
-
-                //JSONObject inputJson = new JSONObject(inputString.toString());
-                JSONArray array = new JSONArray(inputString.toString());
-                for (int i = 0; i < array.length(); i++){
-                    JSONObject object = array.getJSONObject(i);
-                    AbstractSpawn abstractSpawn;
-                    if (object.getString("Type").equals("Spawn")) {
-                        abstractSpawn = new Spawn(object);
-                    }
-                    else if (object.getString("Type").equals("Dungeon")){
-                        abstractSpawn = new Dungeon(object);
-                    }
-                    else {
-                        abstractSpawn = new Treasure(object);
-                    }
-                    spawnList.add(abstractSpawn);
+                else if (object.getString("Type").equals("Dungeon")){
+                    abstractSpawn = new Dungeon(object);
                 }
-                //System.out.println(inputJson.toString());
-                return spawnList;
+                else {
+                    abstractSpawn = new Treasure(object);
+                }
+                spawnList.add(abstractSpawn);
             }
+            //System.out.println(inputJson.toString());
+            return spawnList;
+
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (JSONException e) {
