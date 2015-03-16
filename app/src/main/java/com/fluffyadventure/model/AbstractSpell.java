@@ -28,6 +28,7 @@ public abstract class AbstractSpell {
     private int animationType;
     private String throwedObject;
     private int value;
+    private boolean hasHit = true;
 
     protected AbstractSpell(int id, String name, String description, boolean isAoE, int animationType, String throwedObject) {
         this.id = id;
@@ -69,6 +70,14 @@ public abstract class AbstractSpell {
 
     public String getThrowedObject() {
         return throwedObject;
+    }
+
+    public boolean hasHit() {
+        return hasHit;
+    }
+
+    public void setHasHit(boolean hasHit) {
+        this.hasHit = hasHit;
     }
 
     public JSONObject toJson() throws JSONException {

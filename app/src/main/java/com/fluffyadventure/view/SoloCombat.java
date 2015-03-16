@@ -230,15 +230,40 @@ public class SoloCombat extends Activity {
         ArrayList<ArrayList<Creature>> fightResult = spell.use(fighters,opponents,0,null);
         fighters = fightResult.get(0);
         opponents = fightResult.get(1);
+
+        Runnable ennemyTurn = new Runnable() {
+            @Override
+            public void run(){
+                ennemyTurn(); //<-- put your code in here.
+            }
+        };
+        Runnable missedDisclaimer = new Runnable() {
+            @Override
+            public void run(){
+                instruction.setText(opponents.get(0).getName() + " rate son attaque !");
+            }
+        };
+        Handler h = new Handler();
+
         int animationType = spell.getAnimationType();
         switch (animationType){
             case AbstractSpell.ATTACK:
                 attackFromFighterAnimation();
-                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                if (!spell.hasHit()) {
+                    h.postDelayed(missedDisclaimer, 1300);
+                    h.postDelayed(ennemyTurn, 2800);
+                } else {
+                    opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                }
                 break;
             case AbstractSpell.THROW:
                 throwObjectToOpponent(spell.getThrowedObject());
-                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                if (!spell.hasHit()) {
+                    h.postDelayed(missedDisclaimer, 1300);
+                    h.postDelayed(ennemyTurn, 2800);
+                } else {
+                    opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                }
                 break;
             case AbstractSpell.HEAL:
                 fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fightersGainLifeFilter);
@@ -248,7 +273,12 @@ public class SoloCombat extends Activity {
                 break;
             case AbstractSpell.DEBUFF:
                 attackFromFighterAnimation();
-                opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                if (!spell.hasHit()) {
+                    h.postDelayed(missedDisclaimer, 1300);
+                    h.postDelayed(ennemyTurn, 2800);
+                } else {
+                    opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                }
                 break;
             default:
                 attackFromFighterAnimation();
@@ -276,15 +306,42 @@ public class SoloCombat extends Activity {
         ArrayList<ArrayList<Creature>> fightResult = spell.use(opponents,fighters,0,null);
         fighters = fightResult.get(1);
         opponents = fightResult.get(0);
+
+        Runnable fighterTurn = new Runnable() {
+            @Override
+            public void run(){
+                setButtonsEnabled(true);
+                instruction.setText(getResources().getString(R.string.combat_instruction_1) + " " + animal.getName() + " " + getResources().getString(R.string.combat_instruction_2));
+            }
+        };
+        Runnable missedDisclaimer = new Runnable() {
+            @Override
+            public void run(){
+                instruction.setText(opponents.get(0).getName() + " rate son attaque !");
+            }
+        };
+
+        Handler h = new Handler();
+
         int animationType = spell.getAnimationType();
         switch (animationType){
             case AbstractSpell.ATTACK:
                 attackFromOpponentAnimation();
-                fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                if (!spell.hasHit()) {
+                    h.postDelayed(missedDisclaimer, 1300);
+                    h.postDelayed(fighterTurn, 2800);
+                } else {
+                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                }
                 break;
             case AbstractSpell.THROW:
                 throwObjectToFighter(spell.getThrowedObject());
-                fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                if (!spell.hasHit()) {
+                    h.postDelayed(missedDisclaimer, 1300);
+                    h.postDelayed(fighterTurn, 2800);
+                } else {
+                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                }
                 break;
             case AbstractSpell.HEAL:
                 opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
@@ -294,7 +351,12 @@ public class SoloCombat extends Activity {
                 break;
             case AbstractSpell.DEBUFF:
                 attackFromOpponentAnimation();
-                fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                if (!spell.hasHit()) {
+                    h.postDelayed(missedDisclaimer, 1300);
+                    h.postDelayed(fighterTurn, 2800);
+                } else {
+                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                }
                 break;
             default:
                 attackFromOpponentAnimation();
@@ -324,7 +386,7 @@ public class SoloCombat extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Ton animal s'éteint dans un mignon petit gazouilli.")
                 .setTitle("Défaite !")
-                .setPositiveButton(":'(", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Tant pis !", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         resetFight();
                         Intent intent = new Intent(getApplicationContext(), MapComponent.class);
@@ -486,7 +548,7 @@ public class SoloCombat extends Activity {
                     currentAnim = 0;
                     nbOfAnims = 0;
                     try {
-                        Thread.sleep(1500);
+                        Thread.sleep(1200);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

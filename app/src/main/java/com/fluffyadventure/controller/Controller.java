@@ -54,7 +54,7 @@ public class Controller {
         AbstractSpell evilSpell = new DamageSpell(42,"Attaque pas gentille", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut");
         ArrayList<AbstractSpell> spells = new ArrayList<>();
         spells.add(evilSpell);
-        opponents.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 15, spells));
+        opponents.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 50, spells));
 
         AbstractSpawn fightSpawn1 = new Spawn(0,0,0,0,45.780035, 4.856392,
                 "Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1,opponents);

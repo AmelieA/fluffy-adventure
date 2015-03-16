@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Johan on 09/03/2015.
@@ -30,12 +31,32 @@ public class DamageSpell extends AbstractSpell {
         ArrayList<ArrayList<Creature>> returnedArray = new ArrayList<>();
         returnedArray.add(fighters);
 
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(10000);
+
         if ( target != null ) {
-            opponents.get(target).setHealth(opponents.get(target).getHealth() - damage);
+            if (randomInt <= (100 - opponents.get(target).getEvasiveness()) * fighters.get(source).getAccuracy()) {
+                opponents.get(target).setHealth(opponents.get(target).getHealth() - damage);
+                setHasHit(true);
+            } else {
+                setHasHit(false);
+            }
         } else if ( target == null ) {
-            opponents.get(0).setHealth(opponents.get(0).getHealth() - damage);
-            if (opponents.size() > 1) {
-                opponents.get(1).setHealth(opponents.get(1).getHealth() - damage);
+            if (opponents.size() < 2 ) {
+                if (randomInt <= (100 - opponents.get(0).getEvasiveness()) * fighters.get(source).getAccuracy()) {
+                    opponents.get(0).setHealth(opponents.get(0).getHealth() - damage);
+                    setHasHit(true);
+                } else {
+                    setHasHit(false);
+                }
+            } else {
+                int hitChances = (((100 - opponents.get(0).getEvasiveness()) * fighters.get(source).getAccuracy()) + ((100 - opponents.get(1).getEvasiveness()) * fighters.get(source).getAccuracy())) / 2;
+                if (randomInt <= hitChances) {
+                    opponents.get(0).setHealth(opponents.get(0).getHealth() - damage);
+                    opponents.get(1).setHealth(opponents.get(1).getHealth() - damage);
+                } else {
+                    setHasHit(false);
+                }
             }
         }
 
