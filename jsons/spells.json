@@ -1,5 +1,13 @@
 [
     {
+        "Name":"VIDE",
+        "Id":0,
+        "Description":"Lance une noisette sur l'énemi" ,
+        "IsAoE":false ,
+        "Type":4 ,
+        "Health":12
+    },
+    {
         "Name":"Jet de noisettes",
         "Id":1,
         "Description":"Lance une noisette sur l'énemi" ,
