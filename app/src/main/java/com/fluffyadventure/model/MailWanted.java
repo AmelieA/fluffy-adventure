@@ -3,6 +3,9 @@ package com.fluffyadventure.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Jérémy on 11/03/2015.
  */
@@ -23,6 +26,23 @@ public class MailWanted extends Mail{
         this.animal2Name = animal2Name;
         this.animal1Pic = animal1Pic;
         this.animal2Pic = animal2Pic;
+    }
+
+    public MailWanted (JSONObject jsonObject) throws JSONException {
+        super (jsonObject);
+        animal1Name = jsonObject.getString("animal1Name");
+        animal2Name = jsonObject.getString("animal2Name");
+        animal1Pic = jsonObject.getString("animal1Pic");
+        animal2Pic = jsonObject.getString("animal2Pic");
+
+    }
+    public JSONObject toJson() throws JSONException {
+        JSONObject jsonObject = super.toJson();
+        jsonObject.put("animal1Name",animal1Name);
+        jsonObject.put("animal2Name",animal2Name);
+        jsonObject.put("animal1Pic",animal1Pic);
+        jsonObject.put("animal2Pic",animal2Pic);
+        return jsonObject;
     }
 
     public String getAnimal1Name() {
@@ -55,7 +75,7 @@ public class MailWanted extends Mail{
     }
 
     private MailWanted(Parcel in){
-        super(in.readInt(),in.readString(),in.readString(),in.readString(),in.readInt());
+        super(in.readInt(),in.readString(),in.readString(),in.readString(),in.readInt()); //id, sender, object, content, senderId
         animal1Name = in.readString();
         animal1Pic = in.readString();
         animal2Name = in.readString();

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +40,8 @@ public class MailBox extends Activity {
 
 
         mailAdapter = new MailAdapter(this, Controller.getMails());
+        //test Wanted
+            mailAdapter.add(new MailWanted(0,"Mission","Attaquez tartampion !","tartampion",0,"Alice","Bob","squirrel1","squirrel2"));
         ListView mailsView = (ListView) findViewById(R.id.MailBox);
         mailsView.setAdapter(mailAdapter);
         mailsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,9 +71,6 @@ public class MailBox extends Activity {
         });
     }
 
-
-
-
     public class MailAdapter extends ArrayAdapter<Mail> {
         private final Context context;
         private final ArrayList<Mail> values;
@@ -89,10 +89,13 @@ public class MailBox extends Activity {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.mail_box_row_layout, parent, false);
 
-            TextView mailHeader = (TextView) rowView.findViewById(R.id.MailSender);
-            mailHeader.setText(values.get(position).getSender());
-            TextView message = (TextView) rowView.findViewById(R.id.MailSubject);
-            message.setText(values.get(position).getObject());
+            TextView mailSender = (TextView) rowView.findViewById(R.id.MailSender);
+            mailSender.setText(values.get(position).getSender());
+            TextView subject = (TextView) rowView.findViewById(R.id.MailSubject);
+            subject.setText(values.get(position).getObject());
+            if (!values.get(position).getRead()){
+                //do sth
+            }
 
             return rowView;
         }
