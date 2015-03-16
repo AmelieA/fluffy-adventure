@@ -154,6 +154,8 @@ public abstract class AbstractSpawn {
 
     public abstract ArrayList<Creature> getOpponents();
 
+    public abstract void setOpponents(ArrayList<Creature> opponents);
+
     @Override
     public String toString() {
         return "AbstractSpawn{" +

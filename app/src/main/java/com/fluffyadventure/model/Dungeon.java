@@ -28,7 +28,9 @@ public class Dungeon extends AbstractSpawn {
         return opponents;
     };
 
-
+    public void setOpponents(ArrayList<Creature> opponents) {
+        this.opponents = opponents;
+    }
 
     @Override
     public String getStandardIcon() {

@@ -25,6 +25,8 @@ public class Treasure extends AbstractSpawn {
         return new ArrayList<>();
     };
 
+    public void setOpponents(ArrayList<Creature> opponents) {};
+
     @Override
     public String getStandardIcon() {
         return "treasure_icon";

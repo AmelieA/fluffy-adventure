@@ -33,6 +33,10 @@ public class Spawn extends AbstractSpawn {
             return opponents;
         }
 
+        public void setOpponents(ArrayList<Creature> opponents) {
+            this.opponents = opponents;
+        }
+
     @Override
         public String getStandardIcon() {
             return "spawn_icon";

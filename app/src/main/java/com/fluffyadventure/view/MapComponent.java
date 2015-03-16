@@ -284,15 +284,6 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
             button_go.setText("Commencer le donjon !");
             button_go.setEnabled(true);
         }
-
-
-        /* if (spawn.getStatus(animal1).equals(Spawn.SpawnStatus.AVAILABLE)) {
-            button_go.setText("Engager le combat !");
-            button_go.setEnabled(true);
-        }*/ /*else if (quete.getStatut(animal).equals(Spawn.Statut.COMPETENCES_INSUFFISANTES)) {
-            button_go.setText("Compétences insuffisantes");
-            button_go.setEnabled(false);
-        }*/
     }
 
     /**
