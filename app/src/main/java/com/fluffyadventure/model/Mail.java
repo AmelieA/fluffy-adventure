@@ -72,6 +72,10 @@ public class Mail implements Parcelable{
         return read;
     }
 
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -81,17 +85,17 @@ public class Mail implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(timestamp);
         dest.writeString(sender);
-        dest.writeInt(senderId);
         dest.writeString(object);
         dest.writeString(content);
+        dest.writeInt(senderId);
     }
 
     private Mail(Parcel in){
         timestamp = in.readInt();
         sender = in.readString();
-        senderId = in.readInt();
         object = in.readString();
         content = in.readString();
+        senderId = in.readInt();
     }
     public static final Parcelable.Creator<Mail> CREATOR = new Parcelable.Creator<Mail>() {
         public Mail createFromParcel(Parcel in){return new Mail(in);}
