@@ -51,6 +51,7 @@ public class ReadMailActivity extends Activity {
                 Intent intent = new Intent(ReadMailActivity.this, WriteMailActivity.class);
                 intent.putExtra("recipientId",mail.getSenderId());
                 intent.putExtra("recipientName",mail.getSender());
+                intent.putExtra("subject",mail.getObject());
                 startActivity(intent);
                 finish();
             }

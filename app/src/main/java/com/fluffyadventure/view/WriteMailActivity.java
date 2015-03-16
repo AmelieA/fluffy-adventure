@@ -38,18 +38,22 @@ public class WriteMailActivity extends Activity {
         mailObject = (EditText) findViewById(R.id.TextMailObject);
         btnSendMail = (Button)findViewById(R.id.BtnSendMail);
         btnCancelMail = (Button)findViewById(R.id.BtnCancelMail);
-            //Getting recipient from previous activity
+            //Getting recipient and subject from previous activity
         recipientId = getIntent().getIntExtra("recipientId",-1);
         recipientName = getIntent().getStringExtra("recipientName");
+        String subject = getIntent().getStringExtra("subject");
         if (recipientId == -1)
         {
-            textRecipient.setText("Internal Error: recipient not found");
+            Toast.makeText(WriteMailActivity.this, "Internal Error: recipient not found", Toast.LENGTH_LONG).show();
             btnSendMail.setEnabled(false);
         } else {
             if (recipientName != null) {
                 textRecipient.setText(recipientName);
             } else {
-                textRecipient.setText("Internal Error: recipient name not found");
+                Toast.makeText(WriteMailActivity.this, "Internal Error: recipient name not found", Toast.LENGTH_LONG).show();
+            }
+            if (subject!=null){
+                mailObject.setText("Re: "+subject);
             }
         }
         mailBody = (EditText)findViewById(R.id.TextMailBody);
@@ -74,6 +78,7 @@ public class WriteMailActivity extends Activity {
                 startActivity(intent);
             }
         });
+        mailBody.requestFocus();
     }
 
 
