@@ -1,0 +1,11 @@
+[
+    {
+        "Id":0,
+        "Name":"Evil Bunny",
+        "Type":4,
+        "Health":100,
+        "Strength":10,
+        "Accuraccy":90,
+        "Evasiveness":15
+    }
+]
