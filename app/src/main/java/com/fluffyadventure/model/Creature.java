@@ -57,6 +57,7 @@ public abstract class Creature {
             AbstractSpell spell;
             JSONObject inputJson = active.getJSONObject(i);
             Log.d("Type",active.getJSONObject(i).toString());
+            Log.d("TYPE??",Integer.toString(inputJson.getInt("Type")));
             switch (inputJson.getInt("Type")){
                 case AbstractSpell.DAMAGE:
                     spell = new DamageSpell(inputJson);
@@ -71,9 +72,12 @@ public abstract class Creature {
                     spell = new DebuffSpell(inputJson);
                     break;
                 default:
+                    Log.d("Default","why");
                     spell = new DamageSpell(inputJson);
+                    break;
 
             }
+            Log.d("Spell added",spell.toJson().toString());
             activeSpells.add(spell);
         }
 
