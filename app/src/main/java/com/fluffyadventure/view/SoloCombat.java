@@ -100,13 +100,89 @@ public class SoloCombat extends Activity {
 
     private Handler handler = new Handler();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("FA", "Solo fight...");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solo_combat);
+        setupActivity();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentOpponentIdx = 0;
+        animal = Controller.getAnimal1();
+        animal.clearSpells();
+        animal.addSpell(new HealSpell(0, "Soin", "zut", false, 15, AbstractSpell.HEAL, null, 5), true);
+        animal.addSpell(new DamageSpell(1, "Jet de noisette", "zut", false, 170, AbstractSpell.THROW, "hazelnut", 15), true);
+        animal.addSpell(new DamageSpell(2, "Charge", "zut", false, 130 , AbstractSpell.ATTACK, null, 30), true);
+        animal.addSpell(new BuffSpell(3, "Concentration", "Buff précision et force de 20%", false, 120, 120, 100, AbstractSpell.HEAL, null, 3), true);
+        tempAnimal = new Animal(Controller.getAnimal1());
+        fighters.add(animal);
+        opponents = Controller.getCurrentObjective().getOpponents();
+        for (Creature opponent : opponents) {
+            tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
+        }
+        currentOpponentIdx = 0;
+        if (opponents.size() > 0){
+            setupFight(currentOpponentIdx);
+        }
+        action1.setText((animal.getActiveSpells().get(0).getMaxUses()- animal.getActiveSpells().get(0).getUses()) +"/"+ animal.getActiveSpells().get(0).getMaxUses() +" "+animal.getActiveSpells().get(0).getName());
+        action1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                animationOffset=0;
+                useSpell(0);
+                opponnentsTurn = true;
+            }
+        });
+        if (animal.getActiveSpells().size() > 1) {
+            action2.setText((animal.getActiveSpells().get(1).getMaxUses()- animal.getActiveSpells().get(1).getUses()) +"/"+ animal.getActiveSpells().get(1).getMaxUses() +" "+animal.getActiveSpells().get(1).getName());
+            action2.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    animationOffset=0;
+                    useSpell(1);
+                    opponnentsTurn = true;
+                }
+            });
+        }else{
+            action2.setEnabled(false);
+            action2.setText("");
+        }
+        if (animal.getActiveSpells().size() > 2) {
+            action3.setText((animal.getActiveSpells().get(2).getMaxUses()- animal.getActiveSpells().get(2).getUses()) +"/"+ animal.getActiveSpells().get(2).getMaxUses() +" "+animal.getActiveSpells().get(2).getName());
+            action3.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    animationOffset=0;
+                    useSpell(2);
+                    opponnentsTurn = true;
+                }
+            });
+        }else{
+            action3.setEnabled(false);
+            action3.setText("");
+        }
+        if (animal.getActiveSpells().size() > 3) {
+            action4.setText((animal.getActiveSpells().get(3).getMaxUses()- animal.getActiveSpells().get(3).getUses()) +"/"+ animal.getActiveSpells().get(3).getMaxUses() +" "+animal.getActiveSpells().get(3).getName());
+            action4.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    animationOffset=0;
+                    useSpell(3);
+                    opponnentsTurn = true;
+                }
+            });
+        }else{
+            action4.setEnabled(false);
+            action4.setText("");
+        }
+    }
+
+    private void setupActivity() {
+        if(soloCombat){
+            setContentView(R.layout.activity_solo_combat);
+        }else{
+            setContentView(R.layout.activity_duo_combat);
+            setupFightDuo(1);
+        }
         opponentsName = (TextView) findViewById(R.id.OpponentsName);
         opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
         opponentImage = (ImageView) findViewById(R.id.OpponentImage);
@@ -122,100 +198,9 @@ public class SoloCombat extends Activity {
         action2 = (Button) findViewById(R.id.Action2);
         action3 = (Button) findViewById(R.id.Action3);
         action4 = (Button) findViewById(R.id.Action4);
-
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        currentOpponentIdx = 0;
-        animal = Controller.getAnimal1();
-        animal.clearSpells();
-        animal.addSpell(new HealSpell(0, "Soin", "zut", false, 15, AbstractSpell.HEAL, null, 5), true);
-        animal.addSpell(new DamageSpell(1, "Jet de noisette", "zut", false, 170, AbstractSpell.THROW, "hazelnut", 15), true);
-        animal.addSpell(new DamageSpell(2, "Charge", "zut", false, 130 , AbstractSpell.ATTACK, null, 30), true);
-        animal.addSpell(new BuffSpell(3, "Concentration", "Buff précision et force de 20%", false, 120, 120, 100, AbstractSpell.HEAL, null, 3), true);
-        tempAnimal = new Animal(Controller.getAnimal1());
-        fighters.add(animal);
-
-        opponents = Controller.getCurrentObjective().getOpponents();
-        for (Creature opponent : opponents) {
-            tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
-        }
-        currentOpponentIdx = 0;
-
-        //bind the activity
-        if(soloCombat){
-            setContentView(R.layout.activity_solo_combat);
-        }else{
-            setContentView(R.layout.activity_duo_combat);
-        }
-
-        instruction = (TextView) findViewById(R.id.Instruction);
-
-        //Set up the combat
-        if (opponents.size() > 0){
-            setupFight(currentOpponentIdx);
-            if (!soloCombat) {
-                setupFightDuo(1);
-            }
-        }
-
-        action1.setText((animal.getActiveSpells().get(0).getMaxUses()- animal.getActiveSpells().get(0).getUses()) +"/"+ animal.getActiveSpells().get(0).getMaxUses() +" "+animal.getActiveSpells().get(0).getName());
-        action1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                animationOffset=0;
-                useSpell(0);
-                opponnentsTurn = true;
-            }
-        });
-
-        if (animal.getActiveSpells().size() > 1) {
-            action2.setText((animal.getActiveSpells().get(1).getMaxUses()- animal.getActiveSpells().get(1).getUses()) +"/"+ animal.getActiveSpells().get(1).getMaxUses() +" "+animal.getActiveSpells().get(1).getName());
-            action2.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    animationOffset=0;
-                    useSpell(1);
-                    opponnentsTurn = true;
-                }
-            });
-        }else{
-            action2.setEnabled(false);
-            action2.setText("");
-        }
-
-        if (animal.getActiveSpells().size() > 2) {
-            action3.setText((animal.getActiveSpells().get(2).getMaxUses()- animal.getActiveSpells().get(2).getUses()) +"/"+ animal.getActiveSpells().get(2).getMaxUses() +" "+animal.getActiveSpells().get(2).getName());
-            action3.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    animationOffset=0;
-                    useSpell(2);
-                    opponnentsTurn = true;
-                }
-            });
-        }else{
-            action3.setEnabled(false);
-            action3.setText("");
-        }
-
-        if (animal.getActiveSpells().size() > 3) {
-            action4.setText((animal.getActiveSpells().get(3).getMaxUses()- animal.getActiveSpells().get(3).getUses()) +"/"+ animal.getActiveSpells().get(3).getMaxUses() +" "+animal.getActiveSpells().get(3).getName());
-            action4.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    animationOffset=0;
-                    useSpell(3);
-                    opponnentsTurn = true;
-                }
-            });
-        }else{
-            action4.setEnabled(false);
-            action4.setText("");
-        }
-   }
-
     private void setupFight(int opponentIdx){
-
         opponentsLifePoint = opponents.get(opponentIdx).getHealth();
         opponentsLife.setMax(opponentsLifePoint);
         opponentsName.setText(opponents.get(opponentIdx).getName());
@@ -230,7 +215,6 @@ public class SoloCombat extends Activity {
         fighterImage.setImageResource(
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
-
         instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+animal.getName()+" "+getResources().getString(R.string.combat_instruction_2));
     }
 

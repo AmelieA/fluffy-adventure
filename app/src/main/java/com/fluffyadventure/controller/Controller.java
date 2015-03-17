@@ -182,8 +182,8 @@ public class Controller {
             return false;
         }
         //TODO Remplacer une fois que le serveur gèreras les spanws contenant des monstres
-        //setUpObjectivesWithHq();
-        setupObjectives();
+        setUpObjectivesWithHq();
+        //setupObjectives();
 
         return true;
     }
