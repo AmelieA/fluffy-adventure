@@ -2,6 +2,7 @@ package com.fluffyadventure.model;
 
 import android.location.Location;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,6 +28,11 @@ public class Spawn extends AbstractSpawn {
         }
         public  Spawn(JSONObject jsonObject) throws JSONException {
             super(jsonObject);
+            JSONArray opponentsJSONArray = jsonObject.getJSONArray("Opponents");
+            for (int i = 0; i < opponentsJSONArray.length(); i++ ){
+                opponents.add(new Monster(opponentsJSONArray.getJSONObject(i)));
+            }
+
         }
 
         public ArrayList<Creature> getOpponents() {

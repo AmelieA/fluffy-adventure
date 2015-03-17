@@ -1,5 +1,6 @@
 package com.fluffyadventure.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,6 +23,10 @@ public class Dungeon extends AbstractSpawn {
 
     public Dungeon(JSONObject jsonObject) throws JSONException {
         super(jsonObject);
+        JSONArray opponentsJSONArray = jsonObject.getJSONArray("Opponents");
+        for (int i = 0; i < opponentsJSONArray.length(); i++ ){
+            opponents.add(new Monster(opponentsJSONArray.getJSONObject(i)));
+        }
     }
 
     public ArrayList<Creature> getOpponents() {

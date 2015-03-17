@@ -6,6 +6,11 @@
         "Health":100,
         "Strength":10,
         "Accuraccy":90,
-        "Evasiveness":15
+        "Evasiveness":15,
+        "Spells":
+        [
+            {"Id":1},
+            {"Id":2}
+        ]
     }
 ]
