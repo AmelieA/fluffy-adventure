@@ -79,13 +79,12 @@ public class SoloCombat extends Activity {
     private Button action2;
     private Button action3;
     private Button action4;
-    private Animal animal;
 
     //needed for services part
     private Animal animal;
     private boolean opponnentsTurn = false;
 //    private boolean soloCombat=Controller.getCurrentObjective().isSoloFight();
-    private boolean soloCombat=false;
+    private boolean soloCombat=true;
     private Animal tempAnimal;
     private ArrayList<Creature> tempOpponents = new ArrayList<>();
     private int currentOpponentIdx;
@@ -105,13 +104,12 @@ public class SoloCombat extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("FA", "Solo fight...");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solo_combat);
 
         //Controller.setupBob();
-        Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
-        opponents.add(opponent);
-        opponent = new Monster("Bob Twin", 1, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
-        opponents.add(opponent);
+//        Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
+//        opponents.add(opponent);
+//        opponent = new Monster("Bob Twin", 1, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
+//        opponents.add(opponent);
 
         //opponents = Controller.getCurrentObjective().getOpponents();
         currentOpponentIdx = 0;
@@ -151,6 +149,8 @@ public class SoloCombat extends Activity {
                 setupFightDuo(1);
             }
         }
+
+        //TODO: loop (after the end of Amelie's testing)
 
         action1.setText((animal.getActiveSpells().get(0).getMaxUses()- animal.getActiveSpells().get(0).getUses()) +"/"+ animal.getActiveSpells().get(0).getMaxUses() +" "+animal.getActiveSpells().get(0).getName());
         action1.setOnClickListener(new View.OnClickListener() {
@@ -267,9 +267,6 @@ public class SoloCombat extends Activity {
                         imagePath, "drawable", getPackageName()));
     }
 
-
-    private int useSpell(int spellIndex) {
-        ArrayList<ArrayList<Creature>> fightResult = animal.getActiveSpells().get(spellIndex).use(fighters,opponents,null);
     private void updateSpellNames() {
         action1.setText((animal.getActiveSpells().get(0).getMaxUses()- animal.getActiveSpells().get(0).getUses()) +"/"+ animal.getActiveSpells().get(0).getMaxUses() +" "+animal.getActiveSpells().get(0).getName());
 
@@ -323,6 +320,7 @@ public class SoloCombat extends Activity {
         fighters = fightResult.get(0);
         opponents = fightResult.get(1);
         updateSpellNames();
+        int animalPosition=0;
 
         Runnable ennemyTurn = new Runnable() {
             @Override
@@ -341,7 +339,7 @@ public class SoloCombat extends Activity {
         int animationType = spell.getAnimationType();
         switch (animationType){
             case AbstractSpell.ATTACK:
-                attackFromFighterAnimation();
+                attackFromFighterAnimation(animalPosition);
                 if (!spell.hasHit()) {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(ennemyTurn, 2800);
@@ -350,7 +348,7 @@ public class SoloCombat extends Activity {
                 }
                 break;
             case AbstractSpell.THROW:
-                throwObjectToOpponent(spell.getThrowedObject());
+                throwObjectToOpponent(spell.getThrowedObject(),animalPosition);
                 if (!spell.hasHit()) {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(ennemyTurn, 2800);
@@ -367,7 +365,7 @@ public class SoloCombat extends Activity {
                 fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fightersGainLifeFilter);
                 break;
             case AbstractSpell.DEBUFF:
-                attackFromFighterAnimation();
+                attackFromFighterAnimation(animalPosition);
                 if (!spell.hasHit()) {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(ennemyTurn, 2800);
@@ -376,7 +374,7 @@ public class SoloCombat extends Activity {
                 }
                 break;
             default:
-                attackFromFighterAnimation();
+                attackFromFighterAnimation(animalPosition);
                 opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
         }
     }
@@ -406,6 +404,7 @@ public class SoloCombat extends Activity {
         ArrayList<ArrayList<Creature>> fightResult = spell.use(opponents,fighters,0,null);
         fighters = fightResult.get(1);
         opponents = fightResult.get(0);
+        int animalPosition=0;
 
         Runnable fighterTurn = new Runnable() {
             @Override
@@ -426,7 +425,7 @@ public class SoloCombat extends Activity {
         int animationType = spell.getAnimationType();
         switch (animationType){
             case AbstractSpell.ATTACK:
-                attackFromOpponentAnimation();
+                attackFromOpponentAnimation(animalPosition);
                 if (!spell.hasHit()) {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(fighterTurn, 2800);
@@ -435,7 +434,7 @@ public class SoloCombat extends Activity {
                 }
                 break;
             case AbstractSpell.THROW:
-                throwObjectToFighter(spell.getThrowedObject());
+                throwObjectToFighter(spell.getThrowedObject(),animalPosition);
                 if (!spell.hasHit()) {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(fighterTurn, 2800);
@@ -450,7 +449,7 @@ public class SoloCombat extends Activity {
                 opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
                 break;
             case AbstractSpell.DEBUFF:
-                attackFromOpponentAnimation();
+                attackFromOpponentAnimation(animalPosition);
                 if (!spell.hasHit()) {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(fighterTurn, 2800);
@@ -459,7 +458,7 @@ public class SoloCombat extends Activity {
                 }
                 break;
             default:
-                attackFromOpponentAnimation();
+                attackFromOpponentAnimation(animalPosition);
                 fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
         }
     }
