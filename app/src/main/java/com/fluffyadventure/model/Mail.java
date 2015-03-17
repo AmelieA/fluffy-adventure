@@ -7,6 +7,8 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Comparator;
+
 /**
  * Created by amelie on 2/27/15.
  */
@@ -117,6 +119,13 @@ public class Mail implements Parcelable{
     public static final Parcelable.Creator<Mail> CREATOR = new Parcelable.Creator<Mail>() {
         public Mail createFromParcel(Parcel in){return new Mail(in);}
         public Mail[] newArray(int size){return new Mail[size];}
+    };
+
+    public static final Comparator<Mail> mailComparator = new Comparator<Mail>() {
+        @Override
+        public int compare(Mail lhs, Mail rhs) {
+            return rhs.getTimestamp()-lhs.getTimestamp();
+        }
     };
 
 }

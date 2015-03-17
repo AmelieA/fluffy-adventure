@@ -24,6 +24,7 @@ import com.fluffyadventure.model.Mail;
 import com.fluffyadventure.model.MailWanted;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.concurrent.ExecutionException;
 
 
@@ -41,6 +42,7 @@ public class MailBox extends Activity {
 
 
         mailAdapter = new MailAdapter(this, Controller.getMails());
+        mailAdapter.sort(Mail.mailComparator);
         //test Wanted
         //    mailAdapter.add(new MailWanted(0,"Mission","Attaquez tartampion !","tartampion",0,"Alice","Bob","squirrel1","squirrel2"));
         ListView mailsView = (ListView) findViewById(R.id.MailBox);
@@ -96,7 +98,7 @@ public class MailBox extends Activity {
             subject.setText(values.get(position).getObject());
             ImageView imgUnread = (ImageView)rowView.findViewById(R.id.imgUnread);
             imgUnread.setImageResource(getResources().getIdentifier(
-                    (values.get(position).getRead()?"mailopened":"newmail"), "drawable", getPackageName()));
+                    (values.get(position).getRead() ? "mailopened" : "newmail"), "drawable", getPackageName()));
             return rowView;
         }
     }
