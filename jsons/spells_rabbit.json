@@ -1,0 +1,28 @@
+
+[
+    {
+        "Name":"Poing de lapin",
+        "Description":"Libère ta rage intérieure" ,
+        "IsAoE":false ,
+        "Type":4 ,
+        "Health":10,
+        "Animation":6,
+        "Projectile":"",
+        "Uses":20
+
+    },
+    {
+        "Name":"Carottes sacrées",
+        "Description":"Mange une carrote pour augmenter tes statistiques" ,
+        "IsAoE":false ,
+        "Type":1 ,
+        "Strength":12,
+        "Accuracy":2,
+        "Evasiveness":80,
+        "Animation":3,
+        "Projectile":"",
+        "Uses":5
+
+    }
+
+]

@@ -1,0 +1,25 @@
+
+[
+    {
+        "Name":"Manger HERBE !!!",
+        "Description":"Le pouvoir des fibres végétales te redonne la vie" ,
+        "IsAoE":false ,
+        "Type":3 ,
+        "Health":10,
+        "Animation":3,
+        "Projectile":"",
+        "Uses":20
+
+    },
+    {
+        "Name":"Roulade",
+        "Description":"Utilise ta laine pour former une boule et anhilier l'adversaire" ,
+        "IsAoE":false ,
+        "Type":4 ,
+        "Health":1000,
+        "Animation":6,
+        "Projectile":"",
+        "Uses":10
+
+    }
+]

@@ -1,0 +1,28 @@
+
+[
+    {
+        "Name":"Jet de noisettes",
+        "Description":"Lance une noisette sur l'énemi" ,
+        "IsAoE":false ,
+        "Type":4 ,
+        "Health":12,
+        "Animation":7,
+        "Projectile":"hazelnut",
+        "Uses":20
+
+    },
+
+    {
+        "Name":"Jet de feuille",
+        "Description":"Lance une feuille sur l'ennemi" ,
+        "IsAoE":false ,
+        "Type":2 ,
+        "Strength":0,
+        "Accuracy":12,
+        "Evasiveness":0,
+        "Animation":7,
+        "Projectile":"leaves",
+        "Uses":5
+
+    }
+]
