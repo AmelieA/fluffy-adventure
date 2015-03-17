@@ -72,9 +72,6 @@ public class Server {
             json.put("password", password);
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
             writer.write(json.toString());
-            System.out.println(json.toString());
-            System.out.println("yy");
-            //System.out.println(out.toString());
             writer.flush();
             writer.close();
             out.close();
@@ -96,7 +93,6 @@ public class Server {
                 bufferedReader.close();
 
                 JSONObject inputJson = new JSONObject(inputString.toString());
-                System.out.println(inputJson.toString());
                 User user = new User(name, password, inputJson.getInt("Id"));
 
                 String token = this.getToken(user);
@@ -140,7 +136,6 @@ public class Server {
                 bufferedReader.close();
 
                 JSONObject inputJson = new JSONObject(inputString.toString());
-                System.out.println(inputJson.toString());
                 User user = new User(name, password, inputJson.getInt("Id"));
 
                 String token = this.getToken(user);
@@ -203,27 +198,10 @@ public class Server {
         Animal animal = new Animal(in_animal);
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/add_animal";
         try {
-            int spell_id;
-            switch (animal.getType()){
-                case Creature.SQUIRREL :
-                    spell_id = 1;
-                    break;
-
-                case Creature.RABBIT :
-                    spell_id = 2;
-                    break;
-
-                case Creature.SHEEP :
-                    spell_id = 3;
-                    break;
-
-                default:
-                    spell_id = 2;
-                    return  null;
-            }
-            AbstractSpell spell = this.getSpell(spell_id);
+            AbstractSpell spell = this.getSpell(0,animal.getType());
             animal.addSpell(spell, true);
-            spell = this.getSpell(spell_id+4);
+            //Log.d("Spell",spell.toJson().toString());
+            spell = this.getSpell(1,animal.getType());
             animal.addSpell(spell, true);
             animal.setName(name);
 
@@ -413,7 +391,6 @@ public class Server {
                 bufferedReader.close();
 
                 JSONObject inputJson = new JSONObject(inputString.toString());
-                System.out.println(inputJson.toString());
                 String token = inputJson.getString("Token");
                 return token;
             }
@@ -460,30 +437,20 @@ public class Server {
         return false;
     }
 
-    public AbstractSpell getSpell(int id){
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(id);
+    public AbstractSpell getSpell(int id, int type){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(type) + "/"+ Integer.toString(id);
         try {
             URL url = new URL(uri);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-            urlConnection.setDoInput(true);
-            urlConnection.setRequestProperty("Accept", "application/json");
+            JSONObject returnJson = this.connectWithoutAuth(url, HttpURLConnection.HTTP_OK, true, false, null);
 
-            urlConnection.connect();
+            Log.d("inputJson",returnJson.toString());
 
-            int httpResult = urlConnection.getResponseCode();
 
-            if (httpResult == HttpURLConnection.HTTP_OK) {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder inputString = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    inputString.append(line + "\n");
-                }
-                bufferedReader.close();
+            if (returnJson != null) {
 
-                JSONObject inputJson = new JSONObject(inputString.toString());
-                System.out.println(inputJson.toString());
+                JSONObject inputJson = returnJson.getJSONObject("json");
+                Log.d("inputJson",inputJson.toString());
                 AbstractSpell spell;
                 switch (inputJson.getInt("Type")){
                     case AbstractSpell.DAMAGE:
@@ -537,7 +504,6 @@ public class Server {
                 }
                 spawnList.add(abstractSpawn);
             }
-            //System.out.println(inputJson.toString());
             return spawnList;
 
         } catch (IOException ex) {

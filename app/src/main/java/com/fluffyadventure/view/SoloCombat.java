@@ -275,6 +275,19 @@ public class SoloCombat extends Activity {
     }
 
     private void setButtonsEnabled(boolean value) {
+
+
+//        ArrayList<Button> buttonsList = new ArrayList<>();
+//        buttonsList.add(action1);
+//        buttonsList.add(action2);
+//        buttonsList.add(action3);
+//        buttonsList.add(action4);
+//
+//        for (int i = 0; i < animal.getActiveSpells().size();i++){
+//            if (animal.getActiveSpells().get(i).getUses() != animal.getActiveSpells().get(i).getMaxUses())
+//                buttonsList.get(i).setEnabled(value);
+//        }
+
         switch (animal.getActiveSpells().size()) {
             case 1:
                 if (animal.getActiveSpells().get(0).getUses() != animal.getActiveSpells().get(0).getMaxUses())
