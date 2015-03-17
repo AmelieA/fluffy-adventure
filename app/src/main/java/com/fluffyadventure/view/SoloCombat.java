@@ -520,6 +520,11 @@ public class SoloCombat extends Activity {
         as.addAnimation(injuryAnimation);
 
         animationOffset += 400;
+        if (lifeProgressBarPoint >= 100 && lifePointLost == 0) {
+            LosePointAnimation(lifeProgressBar, lifeProgressBarPoint, lifeProgressBarPoint);
+            return lifeProgressBarPoint;
+        }
+
         Integer[] listTriggerPoints = {100, 40, 20, 0};
         Integer[] listProgressBarColors = {R.drawable.orange_progress_bar, R.drawable.red_progress_bar, R.drawable.red_progress_bar};
         for (int i = 0; i < listProgressBarColors.length; i++) {
