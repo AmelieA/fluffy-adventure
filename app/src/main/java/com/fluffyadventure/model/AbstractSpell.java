@@ -29,14 +29,17 @@ public abstract class AbstractSpell {
     private String throwedObject;
     private int value;
     private boolean hasHit = true;
+    private int maxUses;
+    private int uses = 0;
 
-    protected AbstractSpell(int id, String name, String description, boolean isAoE, int animationType, String throwedObject) {
+    protected AbstractSpell(int id, String name, String description, boolean isAoE, int animationType, String throwedObject, int maxUses) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.isAoE = isAoE;
         this.animationType = animationType;
         this.throwedObject = throwedObject;
+        this.maxUses = maxUses;
     }
     protected AbstractSpell(JSONObject json) throws JSONException {
         this.id = json.getInt("Id");
@@ -45,6 +48,7 @@ public abstract class AbstractSpell {
         this.isAoE = isAoE = json.getBoolean("IsAoE");
         //this.animationType = json.getBoolean("AnimationType");
         //this.throwedObject = json.getBoolean("ThrowedObject");
+        //this.maxUses = json.getBoolean("MaxUses");
     }
 
 
@@ -78,6 +82,22 @@ public abstract class AbstractSpell {
 
     public void setHasHit(boolean hasHit) {
         this.hasHit = hasHit;
+    }
+
+    public int getMaxUses() {
+        return maxUses;
+    }
+
+    public int getUses() {
+        return uses;
+    }
+
+    protected void addUse(){
+        uses++;
+    }
+
+    public void resetUses() {
+        uses = 0;
     }
 
     public JSONObject toJson() throws JSONException {

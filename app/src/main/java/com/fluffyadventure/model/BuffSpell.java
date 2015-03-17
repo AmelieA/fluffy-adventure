@@ -15,8 +15,8 @@ public class BuffSpell extends AbstractSpell {
     private int accuModif;
     private int evaModif;
 
-    public BuffSpell(int id, String name, String description, boolean isAoE, int strModif, int accuModif, int evaModif, int animationType,  String throwedObject) {
-        super(id, name, description, isAoE, animationType, throwedObject);
+    public BuffSpell(int id, String name, String description, boolean isAoE, int strModif, int accuModif, int evaModif, int animationType,  String throwedObject, int maxUses) {
+        super(id, name, description, isAoE, animationType, throwedObject, maxUses);
         this.strModif = strModif;
         this.accuModif = accuModif;
         this.evaModif = evaModif;
@@ -31,19 +31,20 @@ public class BuffSpell extends AbstractSpell {
 
     public  ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer source, Integer target) {
         ArrayList<ArrayList<Creature>> returnedArray = new ArrayList<>();
+        addUse();
 
         if ( target != null ) {
-            fighters.get(target).setStrength(fighters.get(target).getStrength() + strModif);
-            fighters.get(target).setAccuracy(fighters.get(target).getAccuracy() + accuModif);
-            fighters.get(target).setEvasiveness(fighters.get(target).getEvasiveness() + evaModif);
+            fighters.get(target).setStrength((int)Math.round((double)fighters.get(target).getStrength() * (double)strModif/100.0));
+            fighters.get(target).setAccuracy((int)Math.round((double)fighters.get(target).getAccuracy() * (double)accuModif/100.0));
+            fighters.get(target).setEvasiveness((int)Math.round((double)fighters.get(target).getEvasiveness() * (double)evaModif/100.0));
         } else if ( target == null ) {
-            fighters.get(0).setStrength(fighters.get(0).getStrength() + strModif);
-            fighters.get(0).setAccuracy(fighters.get(0).getAccuracy() + accuModif);
-            fighters.get(0).setEvasiveness(fighters.get(0).getEvasiveness() + evaModif);
+            fighters.get(0).setStrength((int)Math.round((double)fighters.get(0).getStrength() * (double)strModif/100.0));
+            fighters.get(0).setAccuracy((int)Math.round((double)fighters.get(0).getAccuracy() * (double)accuModif/100.0));
+            fighters.get(0).setEvasiveness((int)Math.round((double)fighters.get(0).getEvasiveness() * (double)evaModif/100.0));
             if (fighters.size() > 1) {
-                fighters.get(1).setStrength(fighters.get(1).getStrength() + strModif);
-                fighters.get(1).setAccuracy(fighters.get(1).getAccuracy() + accuModif);
-                fighters.get(1).setEvasiveness(fighters.get(1).getEvasiveness() + evaModif);
+                fighters.get(1).setStrength((int)Math.round((double)fighters.get(1).getStrength() * (double)strModif/100.0));
+                fighters.get(1).setAccuracy((int)Math.round((double)fighters.get(1).getAccuracy() * (double)accuModif/100.0));
+                fighters.get(1).setEvasiveness((int)Math.round((double)fighters.get(1).getEvasiveness() * (double)evaModif/100.0));
             }
         }
 

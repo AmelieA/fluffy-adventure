@@ -25,8 +25,10 @@ import android.widget.Toast;
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.BuffSpell;
 import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.DamageSpell;
+import com.fluffyadventure.model.DebuffSpell;
 import com.fluffyadventure.model.HealSpell;
 import com.fluffyadventure.model.Monster;
 
@@ -113,11 +115,11 @@ public class SoloCombat extends Activity {
         currentOpponentIdx = 0;
         animal = Controller.getAnimal1();
         animal.clearSpells();
-        animal.addSpell(new HealSpell(0, "Soin", "zut", false, 15, AbstractSpell.HEAL, null), true);
-        animal.addSpell(new DamageSpell(1, "Jet de noisette", "zut", false, 150, AbstractSpell.THROW, "hazelnut"), true);
-        animal.addSpell(new DamageSpell(2, "Charge", "zut", false, 500 , AbstractSpell.ATTACK, null), true);
-
-        tempAnimal = Controller.getAnimal1();
+        animal.addSpell(new HealSpell(0, "Soin", "zut", false, 15, AbstractSpell.HEAL, null, 5), true);
+        animal.addSpell(new DamageSpell(1, "Jet de noisette", "zut", false, 170, AbstractSpell.THROW, "hazelnut", 15), true);
+        animal.addSpell(new DamageSpell(2, "Charge", "zut", false, 130 , AbstractSpell.ATTACK, null, 30), true);
+        animal.addSpell(new BuffSpell(3, "Concentration", "Buff précision et force de 20%", false, 120, 120, 100, AbstractSpell.HEAL, null, 3), true);
+        tempAnimal = new Animal(Controller.getAnimal1());
         fighters.add(animal);
 
         opponents = Controller.getCurrentObjective().getOpponents();
@@ -130,7 +132,7 @@ public class SoloCombat extends Activity {
             setupFight(currentOpponentIdx);
         }
 
-        action1.setText(animal.getActiveSpells().get(0).getName());
+        action1.setText((animal.getActiveSpells().get(0).getMaxUses()- animal.getActiveSpells().get(0).getUses()) +"/"+ animal.getActiveSpells().get(0).getMaxUses() +" "+animal.getActiveSpells().get(0).getName());
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 animationOffset=0;
@@ -140,7 +142,7 @@ public class SoloCombat extends Activity {
         });
 
         if (animal.getActiveSpells().size() > 1) {
-            action2.setText(animal.getActiveSpells().get(1).getName());
+            action2.setText((animal.getActiveSpells().get(1).getMaxUses()- animal.getActiveSpells().get(1).getUses()) +"/"+ animal.getActiveSpells().get(1).getMaxUses() +" "+animal.getActiveSpells().get(1).getName());
             action2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
@@ -154,7 +156,7 @@ public class SoloCombat extends Activity {
         }
 
         if (animal.getActiveSpells().size() > 2) {
-            action3.setText(animal.getActiveSpells().get(2).getName());
+            action3.setText((animal.getActiveSpells().get(2).getMaxUses()- animal.getActiveSpells().get(2).getUses()) +"/"+ animal.getActiveSpells().get(2).getMaxUses() +" "+animal.getActiveSpells().get(2).getName());
             action3.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
@@ -168,7 +170,7 @@ public class SoloCombat extends Activity {
         }
 
         if (animal.getActiveSpells().size() > 3) {
-            action4.setText(animal.getActiveSpells().get(3).getName());
+            action4.setText((animal.getActiveSpells().get(3).getMaxUses()- animal.getActiveSpells().get(3).getUses()) +"/"+ animal.getActiveSpells().get(3).getMaxUses() +" "+animal.getActiveSpells().get(3).getName());
             action4.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     animationOffset=0;
@@ -201,25 +203,48 @@ public class SoloCombat extends Activity {
         instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+animal.getName()+" "+getResources().getString(R.string.combat_instruction_2));
     }
 
+    private void updateSpellNames() {
+        action1.setText((animal.getActiveSpells().get(0).getMaxUses()- animal.getActiveSpells().get(0).getUses()) +"/"+ animal.getActiveSpells().get(0).getMaxUses() +" "+animal.getActiveSpells().get(0).getName());
+
+        if (animal.getActiveSpells().size() > 1)
+            action2.setText((animal.getActiveSpells().get(1).getMaxUses()- animal.getActiveSpells().get(1).getUses()) +"/"+ animal.getActiveSpells().get(1).getMaxUses() +" "+animal.getActiveSpells().get(1).getName());
+
+        if (animal.getActiveSpells().size() > 2)
+            action3.setText((animal.getActiveSpells().get(2).getMaxUses()- animal.getActiveSpells().get(2).getUses()) +"/"+ animal.getActiveSpells().get(2).getMaxUses() +" "+animal.getActiveSpells().get(2).getName());
+
+        if (animal.getActiveSpells().size() > 3)
+            action4.setText((animal.getActiveSpells().get(3).getMaxUses()- animal.getActiveSpells().get(3).getUses()) +"/"+ animal.getActiveSpells().get(3).getMaxUses() +" "+animal.getActiveSpells().get(3).getName());
+    }
+
     private void setButtonsEnabled(boolean value) {
         switch (animal.getActiveSpells().size()) {
             case 1:
-                action1.setEnabled(value);
+                if (animal.getActiveSpells().get(0).getUses() != animal.getActiveSpells().get(0).getMaxUses())
+                    action1.setEnabled(value);
                 break;
             case 2:
-                action1.setEnabled(value);
-                action2.setEnabled(value);
+                if (animal.getActiveSpells().get(0).getUses() != animal.getActiveSpells().get(0).getMaxUses())
+                    action1.setEnabled(value);
+                if (animal.getActiveSpells().get(1).getUses() != animal.getActiveSpells().get(1).getMaxUses())
+                    action2.setEnabled(value);
                 break;
             case 3:
-                action1.setEnabled(value);
-                action2.setEnabled(value);
-                action3.setEnabled(value);
+                if (animal.getActiveSpells().get(0).getUses() != animal.getActiveSpells().get(0).getMaxUses())
+                    action1.setEnabled(value);
+                if (animal.getActiveSpells().get(1).getUses() != animal.getActiveSpells().get(1).getMaxUses())
+                    action2.setEnabled(value);
+                if (animal.getActiveSpells().get(2).getUses() != animal.getActiveSpells().get(2).getMaxUses())
+                    action3.setEnabled(value);
                 break;
             case 4:
-                action1.setEnabled(value);
-                action2.setEnabled(value);
-                action3.setEnabled(value);
-                action4.setEnabled(value);
+                if (animal.getActiveSpells().get(0).getUses() != animal.getActiveSpells().get(0).getMaxUses())
+                    action1.setEnabled(value);
+                if (animal.getActiveSpells().get(1).getUses() != animal.getActiveSpells().get(1).getMaxUses())
+                    action2.setEnabled(value);
+                if (animal.getActiveSpells().get(2).getUses() != animal.getActiveSpells().get(2).getMaxUses())
+                    action3.setEnabled(value);
+                if (animal.getActiveSpells().get(3).getUses() != animal.getActiveSpells().get(3).getMaxUses())
+                    action4.setEnabled(value);
         }
     }
 
@@ -230,6 +255,7 @@ public class SoloCombat extends Activity {
         ArrayList<ArrayList<Creature>> fightResult = spell.use(fighters,opponents,0,null);
         fighters = fightResult.get(0);
         opponents = fightResult.get(1);
+        updateSpellNames();
 
         Runnable ennemyTurn = new Runnable() {
             @Override
@@ -240,7 +266,7 @@ public class SoloCombat extends Activity {
         Runnable missedDisclaimer = new Runnable() {
             @Override
             public void run(){
-                instruction.setText(opponents.get(0).getName() + " rate son attaque !");
+                instruction.setText(animal.getName() + " rate son attaque !");
             }
         };
         Handler h = new Handler();
@@ -267,6 +293,8 @@ public class SoloCombat extends Activity {
                 break;
             case AbstractSpell.HEAL:
                 fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fightersGainLifeFilter);
+                if (animal.getHealth() > tempAnimal.getHealth())
+                    animal.setHealth(tempAnimal.getHealth());
                 break;
             case AbstractSpell.BUFF:
                 fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fightersGainLifeFilter);
@@ -298,10 +326,15 @@ public class SoloCombat extends Activity {
     }
 
     private void ennemyAttack() {
-        Random randomGenerator = new Random();
         int numberOfSpells = opponents.get(0).getActiveSpells().size();
-        int randomInt = randomGenerator.nextInt(numberOfSpells);
-        spell = opponents.get(0).getActiveSpells().get(randomInt);
+        boolean usableSpell = false;
+        Random randomGenerator = new Random();
+        while(!usableSpell) {
+            int randomInt = randomGenerator.nextInt(numberOfSpells);
+            spell = opponents.get(0).getActiveSpells().get(randomInt);
+            if (spell.getUses() != spell.getMaxUses() - 1)
+                usableSpell = true;
+        }
         instruction.setText(opponents.get(0).getName() + " lance " + spell.getName() + " !");
         ArrayList<ArrayList<Creature>> fightResult = spell.use(opponents,fighters,0,null);
         fighters = fightResult.get(1);
@@ -371,6 +404,7 @@ public class SoloCombat extends Activity {
                 .setPositiveButton("Youpi !", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         resetFight();
+                        setButtonsEnabled(false);
                         Intent intent = new Intent(getApplicationContext(), MapComponent.class);
                         startActivity(intent);
                         finish();
@@ -381,7 +415,6 @@ public class SoloCombat extends Activity {
     }
 
 
-
     private void lose(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Ton animal s'éteint dans un mignon petit gazouilli.")
@@ -389,6 +422,7 @@ public class SoloCombat extends Activity {
                 .setPositiveButton("Tant pis !", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         resetFight();
+                        setButtonsEnabled(false);
                         Intent intent = new Intent(getApplicationContext(), MapComponent.class);
                         startActivity(intent);
                         finish();
@@ -400,6 +434,11 @@ public class SoloCombat extends Activity {
 
     private void resetFight() {
         Controller.setAnimal1(tempAnimal);
+        for (int i = 0; i < tempOpponents.size(); i++) {
+            for (int j = 0; j < tempOpponents.get(i).getActiveSpells().size(); j++) {
+                tempOpponents.get(i).getActiveSpells().get(j).resetUses();
+            }
+        }
         Controller.getCurrentObjective().setOpponents(tempOpponents);
     }
 

@@ -8,6 +8,7 @@ import com.fluffyadventure.model.Animal;
 import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.Friend;
 import com.fluffyadventure.model.DamageSpell;
+import com.fluffyadventure.model.HealSpell;
 import com.fluffyadventure.model.Mail;
 import com.fluffyadventure.model.MailWanted;
 import com.fluffyadventure.model.Monster;
@@ -51,10 +52,12 @@ public class Controller {
 
         objectives = new ArrayList<AbstractSpawn>();
         ArrayList<Creature> opponents = new ArrayList<Creature>();
-        AbstractSpell evilSpell = new DamageSpell(42,"Attaque pas gentille", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut");
+        AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut",100);
+        AbstractSpell evilHeal = new HealSpell(43,"Carotte Nom Nom", "Om nm nom", false, 25, AbstractSpell.HEAL, null, 2);
         ArrayList<AbstractSpell> spells = new ArrayList<>();
         spells.add(evilSpell);
-        opponents.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 50, spells));
+        spells.add(evilHeal);
+        opponents.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 35, spells));
 
         AbstractSpawn fightSpawn1 = new Spawn(0,0,0,0,45.780035, 4.856392,
                 "Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1,opponents);

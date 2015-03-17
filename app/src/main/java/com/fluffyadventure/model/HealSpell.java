@@ -13,8 +13,8 @@ public class HealSpell extends AbstractSpell {
 
     private int heal;
 
-    public HealSpell(int id, String name, String description, boolean isAoE, int heal, int animationType, String throwedObject) {
-        super(id, name, description, isAoE, animationType, throwedObject);
+    public HealSpell(int id, String name, String description, boolean isAoE, int heal, int animationType, String throwedObject, int maxUses) {
+        super(id, name, description, isAoE, animationType, throwedObject, maxUses);
         this.heal = heal;
     }
     public HealSpell(JSONObject json) throws JSONException {
@@ -23,6 +23,7 @@ public class HealSpell extends AbstractSpell {
     }
 
     public  ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer source, Integer target) {
+        addUse();
         ArrayList<ArrayList<Creature>> returnedArray = new ArrayList<>();
 
         if ( target != null ) {

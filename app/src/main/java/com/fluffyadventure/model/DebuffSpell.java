@@ -15,8 +15,8 @@ public class DebuffSpell extends AbstractSpell {
     private int accuModif;
     private int evaModif;
 
-    public DebuffSpell(int id, String name, String description, boolean isAoE, int strModif, int accuModif, int evaModif, int animationType, String throwedObject) {
-        super(id, name, description, isAoE, animationType, throwedObject);
+    public DebuffSpell(int id, String name, String description, boolean isAoE, int strModif, int accuModif, int evaModif, int animationType, String throwedObject, int maxUses) {
+        super(id, name, description, isAoE, animationType, throwedObject, maxUses);
         this.strModif = strModif;
         this.accuModif = accuModif;
         this.evaModif = evaModif;
@@ -30,6 +30,7 @@ public class DebuffSpell extends AbstractSpell {
     }
 
     public  ArrayList<ArrayList<Creature>> use(ArrayList<Creature> fighters, ArrayList<Creature> opponents, Integer source, Integer target) {
+        addUse();
         ArrayList<ArrayList<Creature>> returnedArray = new ArrayList<>();
         returnedArray.add(fighters);
 
