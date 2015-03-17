@@ -83,6 +83,7 @@ public class Status extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(Status.this, MoveQGActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -93,7 +94,7 @@ public class Status extends Activity {
                 Intent intent = new Intent(Status.this, MapComponent.class);
 
                 startActivity(intent);
-
+                finish();
             }
         });
 
@@ -179,7 +180,7 @@ public class Status extends Activity {
 
             Intent intent = new Intent(ctx, MailBox.class);
             startActivity(intent);
-
+            finish();
         }
 
 
