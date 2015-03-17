@@ -121,16 +121,8 @@ public class Controller {
 
     public static void setupBob() {
         animal1 = new Animal("Bob","rabbit1", Creature.RABBIT);
-        animal1.addSpell(new DamageSpell(1, "Soin", "zut", true, 0), true);
-        animal1.addSpell(new DamageSpell(1, "Jet de noisette", "zut", true, 0), true);
-        animal1.addSpell(new DamageSpell(1, "Charge", "zut", true, 0), true);
-        animal1.addSpell(new DamageSpell(1, "-25 bibi", "zut", true, 0), true);
 
         animal2 = new Animal("BobTwin","rabbit2", Creature.RABBIT);
-        animal2.addSpell(new DamageSpell(1, "Soin", "zut", true, 0), true);
-        animal2.addSpell(new DamageSpell(1, "Jet de noisette", "zut", true, 0), true);
-        animal2.addSpell(new DamageSpell(1, "Charge", "zut", true, 0), true);
-        animal2.addSpell(new DamageSpell(1, "-25 bibi", "zut", true, 0), true);
     }
 
     public static void createAnimal1(String name, String imagePath, int type) {
