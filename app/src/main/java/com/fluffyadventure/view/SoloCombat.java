@@ -80,6 +80,7 @@ public class SoloCombat extends Activity {
     private Button action3;
     private Button action4;
 
+
     //needed for services part
     private Animal animal;
     private boolean opponnentsTurn = false;
@@ -104,14 +105,30 @@ public class SoloCombat extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("FA", "Solo fight...");
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_solo_combat);
 
-        //Controller.setupBob();
-//        Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
-//        opponents.add(opponent);
-//        opponent = new Monster("Bob Twin", 1, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
-//        opponents.add(opponent);
+        opponentsName = (TextView) findViewById(R.id.OpponentsName);
+        opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
+        opponentImage = (ImageView) findViewById(R.id.OpponentImage);
+        opponentsGainLifeFilter = (ImageView) findViewById(R.id.OpponentsLifeFilter);
+        fightersName = (TextView) findViewById(R.id.FightersName);
+        fightersLife = (ProgressBar) findViewById(R.id.FightersLife);
+        fighterImage = (ImageView) findViewById(R.id.FighterImage);
+        fightersGainLifeFilter = (ImageView) findViewById(R.id.FightersLifeFilter);
+        instruction = (TextView) findViewById(R.id.Instruction);
+        throwableObjectToOpponent = (ImageView) findViewById(R.id.ThrowableObjectToOpponent);
+        throwableObjectToFighter = (ImageView) findViewById(R.id.ThrowableObjectToFighter);
+        action1 = (Button) findViewById(R.id.Action1);
+        action2 = (Button) findViewById(R.id.Action2);
+        action3 = (Button) findViewById(R.id.Action3);
+        action4 = (Button) findViewById(R.id.Action4);
 
-        //opponents = Controller.getCurrentObjective().getOpponents();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         currentOpponentIdx = 0;
         animal = Controller.getAnimal1();
         animal.clearSpells();
@@ -136,11 +153,6 @@ public class SoloCombat extends Activity {
         }
 
         instruction = (TextView) findViewById(R.id.Instruction);
-        action1 = (Button) findViewById(R.id.Action1);
-        action2 = (Button) findViewById(R.id.Action2);
-        action3 = (Button) findViewById(R.id.Action3);
-        action4 = (Button) findViewById(R.id.Action4);
-
 
         //Set up the combat
         if (opponents.size() > 0){
@@ -149,8 +161,6 @@ public class SoloCombat extends Activity {
                 setupFightDuo(1);
             }
         }
-
-        //TODO: loop (after the end of Amelie's testing)
 
         action1.setText((animal.getActiveSpells().get(0).getMaxUses()- animal.getActiveSpells().get(0).getUses()) +"/"+ animal.getActiveSpells().get(0).getMaxUses() +" "+animal.getActiveSpells().get(0).getName());
         action1.setOnClickListener(new View.OnClickListener() {
@@ -206,20 +216,6 @@ public class SoloCombat extends Activity {
 
     private void setupFight(int opponentIdx){
 
-        opponentsName = (TextView) findViewById(R.id.OpponentsName);
-        opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
-        opponentImage = (ImageView) findViewById(R.id.OpponentImage);
-        opponentsGainLifeFilter= (ImageView) findViewById(R.id.OpponentsLifeFilter);
-        fightersName = (TextView) findViewById(R.id.FightersName);
-        fightersLife = (ProgressBar) findViewById(R.id.FightersLife);
-        fighterImage = (ImageView) findViewById(R.id.FighterImage);
-        fightersGainLifeFilter = (ImageView) findViewById(R.id.FightersLifeFilter);
-
-        throwableObjectToOpponent = (ImageView) findViewById(R.id.ThrowableObjectToOpponent);
-        throwableObjectToFighter = (ImageView) findViewById(R.id.ThrowableObjectToFighter);
-
-
-
         opponentsLifePoint = opponents.get(opponentIdx).getHealth();
         opponentsLife.setMax(opponentsLifePoint);
         opponentsName.setText(opponents.get(opponentIdx).getName());
@@ -248,8 +244,6 @@ public class SoloCombat extends Activity {
         fightersLife2 = (ProgressBar) findViewById(R.id.FightersLife2);
         fighterImage2 = (ImageView) findViewById(R.id.FighterImage2);
         fightersGainLifeFilter2 = (ImageView) findViewById(R.id.FightersLifeFilter2);
-
-
 
         opponentsLifePoint2 = opponents.get(opponentIdx).getHealth();
         opponentsLife2.setMax(opponentsLifePoint2);
@@ -357,8 +351,12 @@ public class SoloCombat extends Activity {
                 }
                 break;
             case AbstractSpell.HEAL:
-                fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fightersGainLifeFilter);
-                if (animal.getHealth() > tempAnimal.getHealth())
+                if (animal.getHealth() > tempAnimal.getHealth()) {
+                    int value = animal.getHealth() - tempAnimal.getHealth();
+                    fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, spell.getValue() - value, fightersGainLifeFilter);
+                } else {
+                    fightersLifePoint = GainLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fightersGainLifeFilter);
+                }
                     animal.setHealth(tempAnimal.getHealth());
                 break;
             case AbstractSpell.BUFF:
@@ -443,7 +441,12 @@ public class SoloCombat extends Activity {
                 }
                 break;
             case AbstractSpell.HEAL:
-                opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
+                if (opponents.get(currentOpponentIdx).getHealth() > tempOpponents.get(currentOpponentIdx).getHealth()) {
+                    int value = opponents.get(currentOpponentIdx).getHealth() - tempOpponents.get(currentOpponentIdx).getHealth();
+                    opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue() - value, opponentsGainLifeFilter);
+                } else {
+                    opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
+                }
                 break;
             case AbstractSpell.BUFF:
                 opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
@@ -520,11 +523,6 @@ public class SoloCombat extends Activity {
         as.addAnimation(injuryAnimation);
 
         animationOffset += 400;
-        if (lifeProgressBarPoint >= 100 && lifePointLost == 0) {
-            LosePointAnimation(lifeProgressBar, lifeProgressBarPoint, lifeProgressBarPoint);
-            return lifeProgressBarPoint;
-        }
-
         Integer[] listTriggerPoints = {100, 40, 20, 0};
         Integer[] listProgressBarColors = {R.drawable.orange_progress_bar, R.drawable.red_progress_bar, R.drawable.red_progress_bar};
         for (int i = 0; i < listProgressBarColors.length; i++) {
@@ -593,6 +591,11 @@ public class SoloCombat extends Activity {
         Animation lifeAnimation = AnimationUtils.loadAnimation(this, R.anim.gain_life_animation);
         lifeAnimation.setStartOffset(animationOffset);
         lifeFilter.startAnimation(lifeAnimation);
+
+        if (lifeProgressBarPoint >= 100 && lifePointGain == 0) {
+            LosePointAnimation(lifeProgressBar, lifeProgressBarPoint, lifeProgressBarPoint);
+            return lifeProgressBarPoint;
+        }
 
         animationOffset += 800;
         Integer[] listTriggerPoints = {0, 20, 40, 100};
