@@ -77,6 +77,23 @@ public class Mail implements Parcelable{
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Mail)) return false;
+
+        Mail mail = (Mail) o;
+
+        if (read != mail.read) return false;
+        if (senderId != mail.senderId) return false;
+        if (timestamp != mail.timestamp) return false;
+        if (content != null ? !content.equals(mail.content) : mail.content != null) return false;
+        if (!object.equals(mail.object)) return false;
+        if (!sender.equals(mail.sender)) return false;
+
+        return true;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

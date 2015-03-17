@@ -98,6 +98,8 @@ public class Status extends Activity {
         });
 
         btnMailbox = (ImageButton)findViewById(R.id.BtnMail);
+        btnMailbox.setImageResource(getResources().getIdentifier(
+                (Controller.checkForUnreadMails()?"newmail":"mail"), "drawable", getPackageName()));
         btnMailbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

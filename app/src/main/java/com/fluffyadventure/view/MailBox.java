@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +42,7 @@ public class MailBox extends Activity {
 
         mailAdapter = new MailAdapter(this, Controller.getMails());
         //test Wanted
-            mailAdapter.add(new MailWanted(0,"Mission","Attaquez tartampion !","tartampion",0,"Alice","Bob","squirrel1","squirrel2"));
+        //    mailAdapter.add(new MailWanted(0,"Mission","Attaquez tartampion !","tartampion",0,"Alice","Bob","squirrel1","squirrel2"));
         ListView mailsView = (ListView) findViewById(R.id.MailBox);
         mailsView.setAdapter(mailAdapter);
         mailsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,10 +94,9 @@ public class MailBox extends Activity {
             mailSender.setText(values.get(position).getSender());
             TextView subject = (TextView) rowView.findViewById(R.id.MailSubject);
             subject.setText(values.get(position).getObject());
-            if (!values.get(position).getRead()){
-                //do sth
-            }
-
+            ImageView imgUnread = (ImageView)rowView.findViewById(R.id.imgUnread);
+            imgUnread.setImageResource(getResources().getIdentifier(
+                    (values.get(position).getRead()?"mailopened":"newmail"), "drawable", getPackageName()));
             return rowView;
         }
     }
