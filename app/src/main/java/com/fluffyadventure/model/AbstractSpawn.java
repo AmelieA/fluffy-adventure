@@ -37,6 +37,7 @@ public abstract class AbstractSpawn {
     public int healthReward;
     public int spellReward;
 
+    private boolean soloFight;
 
     public AbstractSpawn(){
     }
@@ -164,6 +165,14 @@ public abstract class AbstractSpawn {
                 ", longitude=" + longitude +
                 ", icon='" + icon + '\'' +
                 '}';
+    }
+
+    public boolean isSoloFight() {
+        return soloFight;
+    }
+
+    public void setSoloFight(boolean soloFight) {
+        this.soloFight = soloFight;
     }
 }
 

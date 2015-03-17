@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ProgressBar;
@@ -40,19 +41,33 @@ import java.util.ResourceBundle;
 
 public class SoloCombat extends Activity {
 
-    //opponent
+    //opponent 1
     private TextView opponentsName;
     private ProgressBar opponentsLife;
     private int opponentsLifePoint;
     private ImageView opponentImage;
     private ImageView opponentsGainLifeFilter;
 
-    //fighter
+    //opponent 2
+    private TextView opponentsName2;
+    private ProgressBar opponentsLife2;
+    private int opponentsLifePoint2;
+    private ImageView opponentImage2;
+    private ImageView opponentsGainLifeFilter2;
+
+    //fighter 1
     private TextView fightersName;
     private ProgressBar fightersLife;
     private int fightersLifePoint;
     private ImageView fighterImage;
     private ImageView fightersGainLifeFilter;
+
+    //fighter 2
+    private TextView fightersName2;
+    private ProgressBar fightersLife2;
+    private int fightersLifePoint2;
+    private ImageView fighterImage2;
+    private ImageView fightersGainLifeFilter2;
 
     //animation components
     private ImageView throwableObjectToOpponent;
@@ -64,11 +79,13 @@ public class SoloCombat extends Activity {
     private Button action2;
     private Button action3;
     private Button action4;
-
+    private Animal animal;
 
     //needed for services part
     private Animal animal;
     private boolean opponnentsTurn = false;
+//    private boolean soloCombat=Controller.getCurrentObjective().isSoloFight();
+    private boolean soloCombat=false;
     private Animal tempAnimal;
     private ArrayList<Creature> tempOpponents = new ArrayList<>();
     private int currentOpponentIdx;
@@ -90,28 +107,13 @@ public class SoloCombat extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solo_combat);
 
-        opponentsName = (TextView) findViewById(R.id.OpponentsName);
-        opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
-        opponentImage = (ImageView) findViewById(R.id.OpponentImage);
-        opponentsGainLifeFilter = (ImageView) findViewById(R.id.OpponentsLifeFilter);
-        fightersName = (TextView) findViewById(R.id.FightersName);
-        fightersLife = (ProgressBar) findViewById(R.id.FightersLife);
-        fighterImage = (ImageView) findViewById(R.id.FighterImage);
-        fightersGainLifeFilter = (ImageView) findViewById(R.id.FightersLifeFilter);
-        instruction = (TextView) findViewById(R.id.Instruction);
-        throwableObjectToOpponent = (ImageView) findViewById(R.id.ThrowableObjectToOpponent);
-        throwableObjectToFighter = (ImageView) findViewById(R.id.ThrowableObjectToFighter);
-        action1 = (Button) findViewById(R.id.Action1);
-        action2 = (Button) findViewById(R.id.Action2);
-        action3 = (Button) findViewById(R.id.Action3);
-        action4 = (Button) findViewById(R.id.Action4);
+        //Controller.setupBob();
+        Monster opponent = new Monster("Bob", 0, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
+        opponents.add(opponent);
+        opponent = new Monster("Bob Twin", 1, 100, 100, 100, 100,  new ArrayList<AbstractSpell>());
+        opponents.add(opponent);
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+        //opponents = Controller.getCurrentObjective().getOpponents();
         currentOpponentIdx = 0;
         animal = Controller.getAnimal1();
         animal.clearSpells();
@@ -128,8 +130,26 @@ public class SoloCombat extends Activity {
         }
         currentOpponentIdx = 0;
 
+        //bind the activity
+        if(soloCombat){
+            setContentView(R.layout.activity_solo_combat);
+        }else{
+            setContentView(R.layout.activity_duo_combat);
+        }
+
+        instruction = (TextView) findViewById(R.id.Instruction);
+        action1 = (Button) findViewById(R.id.Action1);
+        action2 = (Button) findViewById(R.id.Action2);
+        action3 = (Button) findViewById(R.id.Action3);
+        action4 = (Button) findViewById(R.id.Action4);
+
+
+        //Set up the combat
         if (opponents.size() > 0){
             setupFight(currentOpponentIdx);
+            if (!soloCombat) {
+                setupFightDuo(1);
+            }
         }
 
         action1.setText((animal.getActiveSpells().get(0).getMaxUses()- animal.getActiveSpells().get(0).getUses()) +"/"+ animal.getActiveSpells().get(0).getMaxUses() +" "+animal.getActiveSpells().get(0).getName());
@@ -185,6 +205,21 @@ public class SoloCombat extends Activity {
    }
 
     private void setupFight(int opponentIdx){
+
+        opponentsName = (TextView) findViewById(R.id.OpponentsName);
+        opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
+        opponentImage = (ImageView) findViewById(R.id.OpponentImage);
+        opponentsGainLifeFilter= (ImageView) findViewById(R.id.OpponentsLifeFilter);
+        fightersName = (TextView) findViewById(R.id.FightersName);
+        fightersLife = (ProgressBar) findViewById(R.id.FightersLife);
+        fighterImage = (ImageView) findViewById(R.id.FighterImage);
+        fightersGainLifeFilter = (ImageView) findViewById(R.id.FightersLifeFilter);
+
+        throwableObjectToOpponent = (ImageView) findViewById(R.id.ThrowableObjectToOpponent);
+        throwableObjectToFighter = (ImageView) findViewById(R.id.ThrowableObjectToFighter);
+
+
+
         opponentsLifePoint = opponents.get(opponentIdx).getHealth();
         opponentsLife.setMax(opponentsLifePoint);
         opponentsName.setText(opponents.get(opponentIdx).getName());
@@ -203,6 +238,38 @@ public class SoloCombat extends Activity {
         instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+animal.getName()+" "+getResources().getString(R.string.combat_instruction_2));
     }
 
+    private void setupFightDuo(int opponentIdx){
+
+        opponentsName2 = (TextView) findViewById(R.id.OpponentsName2);
+        opponentsLife2 = (ProgressBar) findViewById(R.id.OpponentsLife2);
+        opponentImage2 = (ImageView) findViewById(R.id.OpponentImage2);
+        opponentsGainLifeFilter2 = (ImageView) findViewById(R.id.OpponentsLifeFilter2);
+        fightersName2 = (TextView) findViewById(R.id.FightersName2);
+        fightersLife2 = (ProgressBar) findViewById(R.id.FightersLife2);
+        fighterImage2 = (ImageView) findViewById(R.id.FighterImage2);
+        fightersGainLifeFilter2 = (ImageView) findViewById(R.id.FightersLifeFilter2);
+
+
+
+        opponentsLifePoint2 = opponents.get(opponentIdx).getHealth();
+        opponentsLife2.setMax(opponentsLifePoint2);
+        opponentsName2.setText(opponents.get(opponentIdx).getName());
+        String imagePath = "evilbunny";
+        opponentImage2.setImageResource(
+                getResources().getIdentifier(
+                        imagePath, "drawable", getPackageName()));
+        fightersLifePoint2 = animal.getHealth();
+        fightersLife2.setMax(fightersLifePoint2);
+        fightersName2.setText(Controller.getAnimal1().getName());
+        imagePath = animal.getImagePath();
+        fighterImage2.setImageResource(
+                getResources().getIdentifier(
+                        imagePath, "drawable", getPackageName()));
+    }
+
+
+    private int useSpell(int spellIndex) {
+        ArrayList<ArrayList<Creature>> fightResult = animal.getActiveSpells().get(spellIndex).use(fighters,opponents,null);
     private void updateSpellNames() {
         action1.setText((animal.getActiveSpells().get(0).getMaxUses()- animal.getActiveSpells().get(0).getUses()) +"/"+ animal.getActiveSpells().get(0).getMaxUses() +" "+animal.getActiveSpells().get(0).getName());
 
@@ -414,7 +481,6 @@ public class SoloCombat extends Activity {
         dialog.show();
     }
 
-
     private void lose(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Ton animal s'éteint dans un mignon petit gazouilli.")
@@ -519,10 +585,12 @@ public class SoloCombat extends Activity {
 
     public int GainLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointGain, ImageView lifeFilter) {
 
+        lifeFilter.setImageResource(R.drawable.life4);
         Animation lifeAnimation = AnimationUtils.loadAnimation(this, R.anim.gain_life_animation);
         lifeAnimation.setStartOffset(animationOffset);
         lifeFilter.startAnimation(lifeAnimation);
 
+        animationOffset += 800;
         Integer[] listTriggerPoints = {0, 20, 40, 100};
         Integer[] listProgressBarColors = {R.drawable.orange_progress_bar, R.drawable.green_progress_bar, R.drawable.green_progress_bar};
         for (int i = 0; i < listProgressBarColors.length; i++) {
@@ -612,34 +680,69 @@ public class SoloCombat extends Activity {
         });
     }
 
-    public void throwObjectToOpponent(String imageNameToThrow){
+    public void throwObjectToOpponent(String imageNameToThrow, int positionOffset){
         throwableObjectToOpponent.setImageResource(getResources().getIdentifier(
                 imageNameToThrow, "drawable", getPackageName()));
-        Animation throwObjectAnimation = AnimationUtils.loadAnimation(this, R.anim.throw_object_to_opponent_animation);
+
+        String animationPath="throw_object_to_opponent_animation";
+        if (positionOffset>0){
+            animationPath +="_right";
+        }if (positionOffset<0){
+            animationPath +="_left";
+        }
+
+        int animationId = getResources().getIdentifier(animationPath, "anim", getPackageName());
+        Animation throwObjectAnimation = AnimationUtils.loadAnimation(this, animationId);
         throwableObjectToOpponent.startAnimation(throwObjectAnimation);
         animationOffset += 400;
     }
 
-    public void throwObjectToFighter(String imageNameToThrow){
+    public void throwObjectToFighter(String imageNameToThrow, int positionOffset){
         throwableObjectToFighter.setImageResource(getResources().getIdentifier(
                 imageNameToThrow, "drawable", getPackageName()));
-        Animation throwObjectAnimation = AnimationUtils.loadAnimation(this, R.anim.throw_object_to_fighter_animation);
+
+        String animationPath="throw_object_to_fighter_animation";
+        if (positionOffset>0){
+            animationPath +="_right";
+        }if (positionOffset<0){
+            animationPath +="_left";
+        }
+
+        int animationId = getResources().getIdentifier(animationPath, "anim", getPackageName());
+        Animation throwObjectAnimation = AnimationUtils.loadAnimation(this, animationId);
         throwableObjectToFighter.startAnimation(throwObjectAnimation);
         animationOffset += 400;
     }
 
-    public void attackFromFighterAnimation(){
+    public void attackFromFighterAnimation(int fighterPosition){
         Animation attackAnimation = AnimationUtils.loadAnimation(this, R.anim.attack_fighter_animation);
-        fighterImage.startAnimation(attackAnimation);
+        if (fighterPosition==0) {
+            fighterImage.startAnimation(attackAnimation);
+        }else{
+            fighterImage2.startAnimation(attackAnimation);
+        }
         animationOffset += 100;
     }
 
-    public void attackFromOpponentAnimation(){
+    public void attackFromOpponentAnimation(int opponentPosition){
         Animation attackAnimation = AnimationUtils.loadAnimation(this, R.anim.attack_opponent_animation);
-        opponentImage.startAnimation(attackAnimation);
+        if (opponentPosition==0) {
+            opponentImage.startAnimation(attackAnimation);
+        }else{
+            opponentImage2.startAnimation(attackAnimation);
+        }
         animationOffset += 100;
     }
 
+    public void buffAnimation(ImageView lifeFilter){
+
+        lifeFilter.setImageResource(R.drawable.buff);
+        Animation lifeAnimation = AnimationUtils.loadAnimation(this, R.anim.buff_animation);
+        lifeAnimation.setStartOffset(animationOffset);
+        lifeFilter.startAnimation(lifeAnimation);
+
+        animationOffset += 800;
+    }
     @Override
     public void onBackPressed() {
         return;

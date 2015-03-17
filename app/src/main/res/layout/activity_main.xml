@@ -27,7 +27,7 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="0px"
-                android:layout_weight="2.5"
+                android:layout_weight="2.7"
                 android:gravity="center"
                 android:src="@drawable/bunny1"/>
         </LinearLayout>
@@ -41,7 +41,7 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="0px"
-                android:layout_weight="3.4"
+                android:layout_weight="3.2"
                 android:gravity="center"
                 android:src="@drawable/squirrel1"/>
         </LinearLayout>

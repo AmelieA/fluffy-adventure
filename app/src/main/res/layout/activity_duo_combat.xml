@@ -23,7 +23,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/forest4" />
 
-            <!--opponent (fighter and panel) + name-->
+            <!--opponent panel-->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/fight_rectangle"/>
+                            android:src="@drawable/fight_rectangles"/>
                         <!--Opponent's name-->
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -61,7 +61,80 @@
                             <ImageView
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:layout_weight="7"/>
+                                android:layout_weight="9"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="10"
+                                android:layout_weight="3">
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="8"/>
+                                <TextView
+                                    android:id="@+id/OpponentsName2"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_alignTop="@+id/OpponentPanel"
+                                    android:gravity="left"
+                                    android:text="Opponent"
+                                    android:textSize="23sp"
+                                    android:textColor="#ff000000" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Life progress bar-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="6.5"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="9"
+                                android:weightSum="10">
+
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4"/>
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4.4"
+                                    android:text="PV"
+                                    android:textSize="12sp"
+                                    android:textColor="#ff000000"/>
+                                <ProgressBar
+                                    android:layout_weight="1.8"
+                                    android:id="@+id/OpponentsLife2"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:max="100"
+                                    android:progress="100"
+                                    android:layout_marginTop="3.5dp"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:progressDrawable="@drawable/green_progress_bar"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Opponent's name-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="5.2"/>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -79,7 +152,7 @@
                                     android:layout_alignTop="@+id/OpponentPanel"
                                     android:gravity="left"
                                     android:text="Opponent"
-                                    android:textSize="20sp"
+                                    android:textSize="23sp"
                                     android:textColor="#ff000000" />
                             </LinearLayout>
                         </LinearLayout>
@@ -93,7 +166,7 @@
                             <ImageView
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:layout_weight="4.75"/>
+                                android:layout_weight="3"/>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -104,7 +177,7 @@
                                 <ImageView
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
-                                    android:layout_weight="4"/>
+                                    android:layout_weight="4.4"/>
                                 <TextView
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
@@ -131,12 +204,25 @@
                         android:layout_weight="7"/>
 
                 </LinearLayout>
+                </LinearLayout>
 
-                <!--opponent image-->
+
+            <!--opponent image-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10">
+
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:layout_weight="5"
+                    android:layout_weight="4"
+                    android:orientation="vertical"/>
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
                     android:orientation="vertical"
                     android:weightSum="10"
                     android:gravity="top">
@@ -151,12 +237,34 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
                         android:layout_weight="5">
+
+                        <ImageView
+                            android:id="@+id/OpponentImage2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:interpolator="@anim/death_opponent_animation"
+                            android:gravity="bottom"
+                            android:layout_marginLeft="-100dp"
+                            android:layout_marginBottom="20dp"
+                            android:src="@drawable/evilbunny"/>
+
+                        <ImageView
+                            android:id="@+id/OpponentsLifeFilter2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:visibility="invisible"
+                            android:layout_marginLeft="-100dp"
+                            android:layout_marginBottom="20dp"
+                            android:src="@drawable/life4"/>
+
                         <ImageView
                             android:id="@+id/OpponentImage"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:interpolator="@anim/death_opponent_animation"
                             android:gravity="bottom"
+                            android:layout_marginLeft="100dp"
+                            android:layout_marginTop="20dp"
                             android:src="@drawable/evilbunny"/>
 
                         <ImageView
@@ -164,7 +272,11 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:visibility="invisible"
+                            android:layout_marginLeft="100dp"
+                            android:layout_marginTop="20dp"
                             android:src="@drawable/life4"/>
+
+
 
                     </RelativeLayout>
 
@@ -182,8 +294,8 @@
                 android:id="@+id/ThrowableObjectToOpponent"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="350dp"
+                android:layout_marginTop="300dp"
+                android:layout_marginLeft="75dp"
                 android:visibility="invisible"
                 android:gravity="bottom"
                 android:src="@drawable/interrogation"/>
@@ -193,8 +305,8 @@
                 android:id="@+id/ThrowableObjectToFighter"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginLeft="250dp"
-                android:layout_marginTop="150dp"
+                android:layout_marginLeft="220dp"
+                android:layout_marginTop="120dp"
                 android:visibility="invisible"
                 android:gravity="bottom"
                 android:src="@drawable/interrogation"/>
@@ -230,17 +342,37 @@
                             android:layout_height="fill_parent">
 
                             <ImageView
+                                android:id="@+id/FighterImage2"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_marginBottom="-30dp"
+                                android:layout_marginLeft="70dp"
+                                android:gravity="bottom"
+                                android:src="@drawable/squirrel5"/>
+                            <ImageView
+                                android:id="@+id/FightersLifeFilter2"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:visibility="invisible"
+                                android:layout_marginBottom="-60dp"
+                                android:layout_marginLeft="70dp"
+                                android:src="@drawable/life4"/>
+
+                            <ImageView
                                 android:id="@+id/FighterImage"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:layout_marginLeft="-40dp"
+                                android:layout_marginLeft="-100dp"
+                                android:layout_marginTop="-30dp"
                                 android:gravity="bottom"
-                                android:src="@drawable/sheep2"/>
+                                android:src="@drawable/sheep1"/>
                             <ImageView
                                 android:id="@+id/FightersLifeFilter"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
                                 android:visibility="invisible"
+                                android:layout_marginLeft="-100dp"
+                                android:layout_marginTop="-30dp"
                                 android:src="@drawable/life4"/>
                         </RelativeLayout>
                     </LinearLayout>
@@ -259,52 +391,54 @@
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:layout_weight="4"/>
+                    android:layout_weight="5"/>
 
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:layout_weight="6"
+                    android:layout_weight="5"
                     android:orientation="vertical"
                     android:weightSum="10"
                     android:gravity="top">
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
-                        android:layout_weight="7.3"/>
+                        android:layout_weight="5.6"/>
 
                     <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="0px"
-                        android:layout_weight="3">
+                        android:layout_weight="5">
 
                         <ImageView
                             android:id="@+id/FighterPanel"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/fight_rectangle"/>
+                            android:layout_marginTop="60dp"
+                            android:src="@drawable/fight_rectangles"/>
                         <!--Opponent's name-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:weightSum="10">
+                            android:weightSum="10"
+                            android:layout_marginTop="60dp">
 
                             <ImageView
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:layout_weight="7.65"/>
+                                android:layout_weight="8.2"/>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:weightSum="10"
-                                android:layout_weight="2">
+                                android:layout_weight="8">
                                 <ImageView
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
-                                    android:layout_weight="9"/>
+                                    android:layout_weight="8"/>
 
                                 <TextView
                                     android:id="@+id/FightersName"
@@ -313,7 +447,7 @@
                                     android:layout_alignTop="@+id/FighterPanel"
                                     android:gravity="left"
                                     android:text="Fighter"
-                                    android:textSize="25sp"
+                                    android:textSize="23sp"
                                     android:textColor="#ff000000" />
                             </LinearLayout>
                         </LinearLayout>
@@ -327,18 +461,18 @@
                             <ImageView
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:layout_weight="4.75"/>
+                                android:layout_weight="4.70"/>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="8.8"
+                                android:layout_weight="9.3"
                                 android:weightSum="10">
 
                                 <ImageView
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
-                                    android:layout_weight="4.1"/>
+                                    android:layout_weight="3.5"/>
                                 <TextView
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
@@ -346,8 +480,83 @@
                                     android:text="PV"
                                     android:textColor="#ff000000"/>
                                 <ProgressBar
-                                    android:layout_weight="1.7"
+                                    android:layout_weight="2.2"
                                     android:id="@+id/FightersLife"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:max="100"
+                                    android:progress="100"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:progressDrawable="@drawable/green_progress_bar"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!--Opponent's name-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10"
+                            android:layout_marginTop="60dp">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="5.2"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="10"
+                                android:layout_weight="8">
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="8.8"/>
+
+                                <TextView
+                                    android:id="@+id/FightersName2"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_alignTop="@+id/FighterPanel"
+                                    android:gravity="left"
+                                    android:text="Fighter"
+                                    android:textSize="23sp"
+                                    android:textColor="#ff000000" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Life progress bar-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="2.5"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="9.3"
+                                android:weightSum="10">
+
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4"/>
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="4.5"
+                                    android:text="PV"
+                                    android:textColor="#ff000000"/>
+                                <ProgressBar
+                                    android:layout_weight="2.1"
+                                    android:id="@+id/FightersLife2"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:layout_marginTop="5dp"
