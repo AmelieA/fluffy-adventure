@@ -73,6 +73,7 @@ public class Status extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(Status.this, AttackChoice.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -121,6 +122,7 @@ public class Status extends Activity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("EXIT", true);
                         startActivity(intent);
+                        finish();
                     }
                 })
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -134,6 +136,7 @@ public class Status extends Activity {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                        finish();
                     }
                 });
         AlertDialog dialog = builder.create();
