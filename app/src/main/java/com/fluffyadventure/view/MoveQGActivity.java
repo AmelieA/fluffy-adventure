@@ -3,6 +3,7 @@ package com.fluffyadventure.view;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -53,6 +54,7 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
     private GoogleMap currentMap;
     private String homeType;
     private boolean firstTime;
+    private LatLng initialPosition;
 
 
     @Override
@@ -110,6 +112,7 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
         Log.i("FA", "---------------  MAP READY -----------------");
 
         currentMap = map;
+        initialPosition = Controller.getQGLocation();
 
         configureMapOptions(map);
         placeQGOnMap();
@@ -218,11 +221,11 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
     }
 
     private boolean newPlaceFarEnough(LatLng newPlace) {
-        if (Controller.getQGLocation() == null) {
+        if (initialPosition == null) {
             return true;
         } else {
             float[] results = new float[3];
-            Location.distanceBetween(Controller.getQGLocation().latitude,Controller.getQGLocation().longitude,newPlace.latitude,newPlace.longitude,results);
+            Location.distanceBetween(initialPosition.latitude,initialPosition.longitude,newPlace.latitude,newPlace.longitude,results);
             return results[0] > 999;
         }
     }
@@ -230,7 +233,12 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
     private void showTooFarDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Le nouvel emplacement est trop près de l'ancien (moins d'1km).")
-                .setTitle("Déménagement impossible");
+                .setTitle("Déménagement impossible")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });;
 
         AlertDialog dialog = builder.create();
         dialog.show();

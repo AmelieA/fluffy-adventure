@@ -219,7 +219,8 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         List<AbstractSpawn> spawns = Controller.getObjectives();
 
         for (AbstractSpawn spawn : spawns) {
-            addSpawnToMap(map, resources, spawn);
+            if(!Controller.hasSucceeded(spawn.getSpawnId()))
+                addSpawnToMap(map, resources, spawn);
         }
 
         if (Controller.getQGLocation() != null) {

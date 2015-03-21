@@ -120,6 +120,15 @@ public class SoloCombat extends Activity {
         tempAnimal = new Animal(Controller.getAnimal1());
         fighters.add(animal);
         opponents = Controller.getCurrentObjective().getOpponents();
+
+        //TODO Remove when no more messed up fourberie
+        AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut",100);
+        AbstractSpell evilHeal = new HealSpell(43,"Carotte Nom Nom", "Om nm nom", false, 25, AbstractSpell.HEAL, null, 2);
+        ArrayList<AbstractSpell> spells = new ArrayList<>();
+        spells.add(evilSpell);
+        spells.add(evilHeal);
+
+        opponents.get(0).setActiveSpells(spells);
         for (Creature opponent : opponents) {
             tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
         }
@@ -444,6 +453,7 @@ public class SoloCombat extends Activity {
                 } else {
                     opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
                 }
+                opponents.get(currentOpponentIdx).setHealth(tempOpponents.get(currentOpponentIdx).getHealth());
                 break;
             case AbstractSpell.BUFF:
                 opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
@@ -465,12 +475,20 @@ public class SoloCombat extends Activity {
 
     private void win(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Tu as gagné les récompenses suivantes : Rien")
+        setButtonsEnabled(false);
+        resetFight();
+        Controller.success(Controller.getCurrentObjective().getSpawnId());
+        String message = "Tu as gagné les récompenses suivantes : \n";
+        if (Controller.getCurrentObjective().getHealthReward() > 0)
+            message += " + " + Controller.getCurrentObjective().getHealthReward() + " pv max \n";
+        if (Controller.getCurrentObjective().getHealthReward() > 0)
+            message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
+        if (Controller.getCurrentObjective().getHealthReward() >= 0)
+            message += " Le sort " + Controller.getCurrentObjective().getSpellReward();
+        builder.setMessage(message)
                 .setTitle("Victoire !")
                 .setPositiveButton("Youpi !", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        resetFight();
-                        setButtonsEnabled(false);
                         Intent intent = new Intent(getApplicationContext(), MapComponent.class);
                         startActivity(intent);
                         finish();
