@@ -1,6 +1,7 @@
 
 [
     {
+        "Id":0,
         "Name":"Poing de lapin",
         "Description":"Libère ta rage intérieure" ,
         "IsAoE":false ,
@@ -12,6 +13,7 @@
 
     },
     {
+        "Id":1,
         "Name":"Carottes sacrées",
         "Description":"Mange une carrote pour augmenter tes statistiques" ,
         "IsAoE":false ,

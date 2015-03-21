@@ -1,6 +1,7 @@
 
 [
     {
+        "Id":0,
         "Name":"Niark Niark",
         "Description":"L'ennemi utilise les ténèbres pour te faire mal" ,
         "IsAoE":false ,
@@ -11,6 +12,7 @@
         "Uses":20
     },
     {
+        "Id":1,
         "Name":"Fourberie",
         "Description":"L'ennemi utilise ta nouriture pour se revigorifier" ,
         "IsAoE":false ,

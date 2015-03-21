@@ -1,6 +1,7 @@
 
 [
     {
+        "Id":0,
         "Name":"Jet de noisettes",
         "Description":"Lance une noisette sur l'énemi" ,
         "IsAoE":false ,
@@ -13,6 +14,7 @@
     },
 
     {
+        "Id":1,
         "Name":"Jet de feuille",
         "Description":"Lance une feuille sur l'ennemi" ,
         "IsAoE":false ,
