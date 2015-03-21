@@ -104,38 +104,14 @@ public class SoloCombat extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("FA", "Solo fight...");
         super.onCreate(savedInstanceState);
-        setupActivity();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        currentOpponentIdx = 0;
-        animal = Controller.getAnimal1();
-        animal.clearSpells();
-        animal.addSpell(new HealSpell(0, "Soin", "zut", false, 15, AbstractSpell.HEAL, null, 5), true);
-        animal.addSpell(new DamageSpell(1, "Jet de noisette", "zut", false, 170, AbstractSpell.THROW, "hazelnut", 15), true);
-        animal.addSpell(new DamageSpell(2, "Charge", "zut", false, 130 , AbstractSpell.ATTACK, null, 30), true);
-        animal.addSpell(new BuffSpell(3, "Concentration", "Buff précision et force de 20%", false, 120, 120, 100, AbstractSpell.HEAL, null, 3), true);
-        tempAnimal = new Animal(Controller.getAnimal1());
-        fighters.add(animal);
-        opponents = Controller.getCurrentObjective().getOpponents();
+        setupActivity();
+        setupFight();
 
-        //TODO Remove when no more messed up fourberie
-        AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut",100);
-        AbstractSpell evilHeal = new HealSpell(43,"Carotte Nom Nom", "Om nm nom", false, 25, AbstractSpell.HEAL, null, 2);
-        ArrayList<AbstractSpell> spells = new ArrayList<>();
-        spells.add(evilSpell);
-        spells.add(evilHeal);
-
-        opponents.get(0).setActiveSpells(spells);
-        for (Creature opponent : opponents) {
-            tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
-        }
-        currentOpponentIdx = 0;
-        if (opponents.size() > 0){
-            setupFight(currentOpponentIdx);
-        }
         action1.setText((animal.getActiveSpells().get(0).getMaxUses()- animal.getActiveSpells().get(0).getUses()) +"/"+ animal.getActiveSpells().get(0).getMaxUses() +" "+animal.getActiveSpells().get(0).getName());
         action1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -186,12 +162,12 @@ public class SoloCombat extends Activity {
     }
 
     private void setupActivity() {
-        if(soloCombat){
+        soloCombat = Controller.getCurrentObjective().isSoloFight();
+        if(soloCombat)
             setContentView(R.layout.activity_solo_combat);
-        }else{
+        else
             setContentView(R.layout.activity_duo_combat);
-            setupFightDuo(1);
-        }
+
         opponentsName = (TextView) findViewById(R.id.OpponentsName);
         opponentsLife = (ProgressBar) findViewById(R.id.OpponentsLife);
         opponentImage = (ImageView) findViewById(R.id.OpponentImage);
@@ -207,28 +183,12 @@ public class SoloCombat extends Activity {
         action2 = (Button) findViewById(R.id.Action2);
         action3 = (Button) findViewById(R.id.Action3);
         action4 = (Button) findViewById(R.id.Action4);
+
+        if(!soloCombat)
+            setupActivityDuo();
     }
 
-    private void setupFight(int opponentIdx){
-        opponentsLifePoint = opponents.get(opponentIdx).getHealth();
-        opponentsLife.setMax(opponentsLifePoint);
-        opponentsName.setText(opponents.get(opponentIdx).getName());
-        String imagePath = "evilbunny";
-        opponentImage.setImageResource(
-                getResources().getIdentifier(
-                        imagePath, "drawable", getPackageName()));
-        fightersLifePoint = animal.getHealth();
-        fightersLife.setMax(fightersLifePoint);
-        fightersName.setText(Controller.getAnimal1().getName());
-        imagePath = animal.getImagePath();
-        fighterImage.setImageResource(
-                getResources().getIdentifier(
-                        imagePath, "drawable", getPackageName()));
-        instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+animal.getName()+" "+getResources().getString(R.string.combat_instruction_2));
-    }
-
-    private void setupFightDuo(int opponentIdx){
-
+    private void setupActivityDuo(){
         opponentsName2 = (TextView) findViewById(R.id.OpponentsName2);
         opponentsLife2 = (ProgressBar) findViewById(R.id.OpponentsLife2);
         opponentImage2 = (ImageView) findViewById(R.id.OpponentImage2);
@@ -237,21 +197,79 @@ public class SoloCombat extends Activity {
         fightersLife2 = (ProgressBar) findViewById(R.id.FightersLife2);
         fighterImage2 = (ImageView) findViewById(R.id.FighterImage2);
         fightersGainLifeFilter2 = (ImageView) findViewById(R.id.FightersLifeFilter2);
+    }
 
-        opponentsLifePoint2 = opponents.get(opponentIdx).getHealth();
-        opponentsLife2.setMax(opponentsLifePoint2);
-        opponentsName2.setText(opponents.get(opponentIdx).getName());
-        String imagePath = "evilbunny";
-        opponentImage2.setImageResource(
-                getResources().getIdentifier(
-                        imagePath, "drawable", getPackageName()));
-        fightersLifePoint2 = animal.getHealth();
-        fightersLife2.setMax(fightersLifePoint2);
-        fightersName2.setText(Controller.getAnimal1().getName());
-        imagePath = animal.getImagePath();
-        fighterImage2.setImageResource(
-                getResources().getIdentifier(
-                        imagePath, "drawable", getPackageName()));
+    private void setupFight(){
+
+        currentOpponentIdx = 0;
+
+        animal = Controller.getAnimal1();
+        animal.clearSpells();
+        animal.addSpell(new HealSpell(0, "Soin", "zut", false, 15, AbstractSpell.HEAL, null, 5), true);
+        animal.addSpell(new DamageSpell(1, "Jet de noisette", "zut", false, 170, AbstractSpell.THROW, "hazelnut", 15), true);
+        animal.addSpell(new DamageSpell(2, "Charge", "zut", false, 130 , AbstractSpell.ATTACK, null, 30), true);
+        animal.addSpell(new BuffSpell(3, "Concentration", "Buff précision et force de 20%", false, 120, 120, 100, AbstractSpell.HEAL, null, 3), true);
+        tempAnimal = new Animal(Controller.getAnimal1());
+        fighters.add(animal);
+        opponents = Controller.getCurrentObjective().getOpponents();
+
+        //TODO Remove when no more messed up fourberie
+        AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut",100);
+        AbstractSpell evilHeal = new HealSpell(43,"Carotte Nom Nom", "Om nm nom", false, 25, AbstractSpell.HEAL, null, 2);
+        ArrayList<AbstractSpell> spells = new ArrayList<>();
+        spells.add(evilSpell);
+        spells.add(evilHeal);
+        opponents.get(0).setActiveSpells(spells);
+
+        for (Creature opponent : opponents) {
+            tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
+        }
+
+        setupOpponent(0);
+        if (!soloCombat)
+            setupOpponent(1);
+
+    }
+
+    private void setupOpponent(int opponentIndex){
+        if (opponentIndex == 0) {
+            opponentsLifePoint = opponents.get(opponentIndex).getHealth();
+            opponentsLife.setMax(opponentsLifePoint);
+            opponentsName.setText(opponents.get(opponentIndex).getName());
+            String imagePath = "evilbunny";
+            opponentImage.setImageResource(
+                    getResources().getIdentifier(
+                            imagePath, "drawable", getPackageName()));
+            fightersLifePoint = animal.getHealth();
+            fightersLife.setMax(fightersLifePoint);
+            fightersName.setText(Controller.getAnimal1().getName());
+            imagePath = animal.getImagePath();
+            fighterImage.setImageResource(
+                    getResources().getIdentifier(
+                            imagePath, "drawable", getPackageName()));
+        } else if (opponentIndex == 1){
+            opponentsLifePoint2 = opponents.get(opponentIndex).getHealth();
+            opponentsLife2.setMax(opponentsLifePoint2);
+            opponentsName2.setText(opponents.get(opponentIndex).getName());
+            String imagePath = "evilbunny";
+            opponentImage2.setImageResource(
+                    getResources().getIdentifier(
+                            imagePath, "drawable", getPackageName()));
+            fightersLifePoint2 = animal.getHealth();
+            fightersLife2.setMax(fightersLifePoint2);
+            fightersName2.setText(Controller.getAnimal1().getName());
+            imagePath = animal.getImagePath();
+            fighterImage2.setImageResource(
+                    getResources().getIdentifier(
+                            imagePath, "drawable", getPackageName()));
+        }
+        instruction.setText(getResources().getString(R.string.combat_instruction_1) + " " + animal.getName() + " " + getResources().getString(R.string.combat_instruction_2));
+    }
+
+
+    private void setupSecondOpponent(){
+
+
     }
 
     private void updateSpellNames() {
@@ -389,9 +407,6 @@ public class SoloCombat extends Activity {
             ennemyAttack();
         else
             win();
-
-        if (fighters.get(0).getHealth() <= 0)
-            lose();
     }
 
     private void ennemyAttack() {
@@ -500,7 +515,13 @@ public class SoloCombat extends Activity {
 
     private void lose(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Ton animal s'éteint dans un mignon petit gazouilli.")
+        String message = "";
+        if(soloCombat)
+            message = "Ton animal s'évanoui dans un mignon petit gazouilli.";
+        else
+            message = "Tes animaux s'évanouissent dans un mignon petit gazouilli.";
+
+        builder.setMessage(message)
                 .setTitle("Défaite !")
                 .setPositiveButton("Tant pis !", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -584,6 +605,16 @@ public class SoloCombat extends Activity {
                 public void onAnimationEnd(Animation animation) {
                     if (opponnentsTurn)
                         ennemyTurn();
+                    else if (soloCombat) {
+                        if (fighters.get(0).getHealth() <= 0) {
+                            lose();
+                        }
+                    } else {
+                        if (fighters.get(0).getHealth() <= 0 && fighters.get(1).getHealth() <= 0) {
+                            lose();
+                        }
+                    }
+
                 }
 
                 @Override
@@ -681,8 +712,10 @@ public class SoloCombat extends Activity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if (opponnentsTurn)
-                        ennemyTurn();
+                    if (opponnentsTurn) {
+                        if (opponents.get(currentOpponentIdx).getHealth() > 0)
+                            ennemyTurn();
+                    }
                     else {
                         setButtonsEnabled(true);
                         instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+animal.getName()+" "+getResources().getString(R.string.combat_instruction_2));

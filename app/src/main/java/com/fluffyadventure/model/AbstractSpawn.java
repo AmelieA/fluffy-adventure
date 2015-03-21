@@ -60,7 +60,7 @@ public abstract class AbstractSpawn {
         this.level = 0;
     }
 
-    protected AbstractSpawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double latitude, double longitude, String text, String name, Integer level) {
+    protected AbstractSpawn( Integer spawnId, int spellReward, int healthReward, int strengthReward, double latitude, double longitude, String text, String name, Integer level, boolean isSoloFight) {
         this.spellReward = spellReward;
         this.healthReward = healthReward;
         this.strengthReward = strengthReward;
@@ -70,6 +70,7 @@ public abstract class AbstractSpawn {
         this.name = name;
         this.spawnId = spawnId;
         this.level = level;
+        this.soloFight = isSoloFight;
     }
 
     protected AbstractSpawn(JSONObject json) throws JSONException {
@@ -80,6 +81,7 @@ public abstract class AbstractSpawn {
         this.name = json.getString("Name");
         this.spawnId = json.getInt("Id");
         this.level = json.getInt("Level");
+        //this.soloFight  = json.getBoolean("soloFight") ;
     }
 
     public void setCoordinates(double latitude, double longitude){
@@ -169,10 +171,6 @@ public abstract class AbstractSpawn {
 
     public boolean isSoloFight() {
         return soloFight;
-    }
-
-    public void setSoloFight(boolean soloFight) {
-        this.soloFight = soloFight;
     }
 }
 
