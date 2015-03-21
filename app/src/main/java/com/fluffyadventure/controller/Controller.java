@@ -185,8 +185,8 @@ public class Controller {
             return false;
         }
 
-        //setUpObjectivesWithHq();
-        setupObjectives();
+        setUpObjectivesWithHq();
+        //setupObjectives();
 
         return true;
     }

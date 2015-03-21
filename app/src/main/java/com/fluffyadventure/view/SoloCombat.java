@@ -214,18 +214,19 @@ public class SoloCombat extends Activity {
         opponents = Controller.getCurrentObjective().getOpponents();
 
         //TODO Remove when no more messed up fourberie
-        AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut",100);
-        AbstractSpell evilHeal = new HealSpell(43,"Carotte Nom Nom", "Om nm nom", false, 25, AbstractSpell.HEAL, null, 2);
-        ArrayList<AbstractSpell> spells = new ArrayList<>();
-        spells.add(evilSpell);
-        spells.add(evilHeal);
-        opponents.get(0).setActiveSpells(spells);
+//        AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut",100);
+//        AbstractSpell evilHeal = new HealSpell(43,"Carotte Nom Nom", "Om nm nom", false, 25, AbstractSpell.HEAL, null, 2);
+//        ArrayList<AbstractSpell> spells = new ArrayList<>();
+//        spells.add(evilSpell);
+//        spells.add(evilHeal);
+//        opponents.get(0).setActiveSpells(spells);
 
         for (Creature opponent : opponents) {
             tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
         }
 
         setupOpponent(0);
+        Log.d("SoloCombat:", Boolean.toString(soloCombat));
         if (!soloCombat)
             setupOpponent(1);
 

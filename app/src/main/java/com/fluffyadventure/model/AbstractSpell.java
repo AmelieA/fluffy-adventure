@@ -46,9 +46,9 @@ public abstract class AbstractSpell {
         this.name = json.getString("Name");
         this.description = json.getString("Description");
         this.isAoE = isAoE = json.getBoolean("IsAoE");
-//        this.animationType = json.getInt("Animation");
-//        this.throwedObject = json.getString("Projectile");
-//        this.maxUses = json.getInt("Uses");
+        this.animationType = json.getInt("Animation");
+        this.throwedObject = json.getString("Projectile");
+        this.maxUses = json.getInt("Uses");
     }
 
 
@@ -106,6 +106,9 @@ public abstract class AbstractSpell {
         json.put("Id",id);
         json.put("Description", description);
         json.put("IsAoE",isAoE);
+        json.put("Animation", animationType);
+        json.put("Projectile", throwedObject);
+        json.put("Uses",maxUses);
         return json;
     }
 
