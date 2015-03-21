@@ -81,7 +81,7 @@ public abstract class AbstractSpawn {
         this.name = json.getString("Name");
         this.spawnId = json.getInt("Id");
         this.level = json.getInt("Level");
-        //this.soloFight  = json.getBoolean("soloFight") ;
+        this.soloFight  = json.getBoolean("Solo") ;
     }
 
     public void setCoordinates(double latitude, double longitude){

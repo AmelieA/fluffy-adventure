@@ -7,6 +7,7 @@
         "Text":"Pourfendre le méchant zombie mangeur de carottes",
         "Name":"Bwaaarg",
         "Level":1,
+        "Solo":true,
         "Type":"Spawn",
         "Opponents":
         [
@@ -28,6 +29,7 @@
         "Text":"Des monstres s'amusent à chatouiller des chatons, sauve les vite !",
         "Name":"Sauver les chatons !",
         "Level":2,
+        "Solo":true,
         "Type":"Spawn",
         "Opponents":
         [
@@ -50,6 +52,7 @@
         "Text":"Un méchant sorcier a lancé une malédiction sur les arbres de la forêt",
         "Name":"Activité bûcheronnage",
         "Level":3,
+        "Solo":true,
         "Type":"Spawn",
         "Opponents":
         [
@@ -72,6 +75,7 @@
         "Text":"Des zombies échaffaudent un plan de conquète mondiale, arrête les !",
         "Name":"Les non-génies du mal",
         "Level":4,
+        "Solo":true,
         "Type":"Spawn",
         "Opponents":
         [
@@ -94,6 +98,7 @@
         "Text":"Much evil, such dungeon, so dangerous, very intense, wow",
         "Name":"L'antre du mâle",
         "Level":5,
+        "Solo":true,
         "Type":"Dungeon",
         "Opponents":
         [
@@ -115,6 +120,7 @@
         "StrengthReward":0,
         "Text":"Mon préééécieeeuux ...",
         "Name":"Trésor enfoui",
+        "Solo":true,
         "Level":0,
         "Type":"Treasure"
     }
