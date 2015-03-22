@@ -9,8 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -100,7 +98,7 @@ public class LoginActivity extends Activity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Boolean result = Controller.login(username, password);
+            Boolean result = Controller.new_login(username, password);
 
 
             return result;

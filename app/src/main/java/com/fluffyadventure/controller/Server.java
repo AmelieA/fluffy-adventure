@@ -37,6 +37,13 @@ import java.util.ArrayList;
 /**
  * Created by denis on 23/02/15.
  */
+
+//TODO: MOVE TO CONTROLLER EVERYTHING THAT CAN BE MOVED TO CONTROLLER :
+//NOT TO BE MOVED :
+// JSONObject connectWithAuth(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException
+// JSONObject connectWithoutAuth(URL url, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException
+// Boolean testConnection()
+//
 public class Server {
     private String ipAddress;
     private int port;
@@ -48,7 +55,13 @@ public class Server {
         this.port = port;
     }
 
+    public String getIpAddress() {
+        return ipAddress;
+    }
 
+    public int getPort() {
+        return port;
+    }
 
     public User createUser(String name, String password) {
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/new";
@@ -198,11 +211,18 @@ public class Server {
         Animal animal = new Animal(in_animal);
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/add_animal";
         try {
-            AbstractSpell spell = this.getSpell(0,animal.getType());
-            animal.addSpell(spell, true);
+
+            ArrayList<Integer> ids = new ArrayList<>();
+            ids.add(0);
+            ids.add(1);
+            for (AbstractSpell spell : this.getSpells(ids,animal.getType())){
+                animal.addSpell(spell, true);
+            }
+            //AbstractSpell spell = this.getSpell(0,animal.getType());
+
             //Log.d("Spell",spell.toJson().toString());
-            spell = this.getSpell(1,animal.getType());
-            animal.addSpell(spell, true);
+            //spell = this.getSpell(1,animal.getType());
+            //animal.addSpell(spell, true);
             animal.setName(name);
 
             URL url = new URL(uri);
@@ -223,7 +243,7 @@ public class Server {
 
         }
 
-    private JSONObject connectWithAuth(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
+    public JSONObject connectWithAuth(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
         //TODO: Get tokenz!
         HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
         if (input) {
@@ -316,7 +336,57 @@ public class Server {
 
     }
 
-    private JSONObject connectWithoutAuth(URL url, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
+    public JSONObject connectWithPassword(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
+        HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
+
+        urlConnection1 = (HttpURLConnection) url.openConnection();
+        if (input) {
+            urlConnection1.setDoInput(true);
+            urlConnection1.setRequestProperty("Accept", "application/json");
+        }
+
+
+        if (output){
+            urlConnection1.setDoOutput(true);
+            urlConnection1.setRequestMethod("POST");
+            urlConnection1.setRequestProperty("Content-Type", "application/json");
+        }
+
+
+        String encoded = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
+        urlConnection1.setRequestProperty("Authorization", String.format("Basic %s", encoded));
+        if (output){
+            OutputStream out = urlConnection1.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            writer.write(outputJson.toString());
+            writer.flush();
+            writer.close();
+            out.close();
+        }
+        urlConnection1.connect();
+        if (urlConnection1.getResponseCode() == responseCode){
+            JSONObject inputJson = new JSONObject();
+            if (input){
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection1.getInputStream()));
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+                inputJson.put("json",new JSONObject(inputString.toString()));
+            }
+            inputJson.put("return",responseCode);
+            String token = this.getToken(user);
+            user.setToken(token);
+            return  inputJson;
+        }
+
+        return null;
+
+    }
+
+    public JSONObject connectWithoutAuth(URL url, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
         //TODO: Get tokenz!
         HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
         if (input) {
@@ -437,39 +507,51 @@ public class Server {
         return false;
     }
 
-    public AbstractSpell getSpell(int id, int type){
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(type) + "/"+ Integer.toString(id);
+
+
+    public ArrayList<AbstractSpell> getSpells(ArrayList<Integer> ids, int type){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/type/"  + Integer.toString(type) ;
         try {
             URL url = new URL(uri);
 
-            JSONObject returnJson = this.connectWithoutAuth(url, HttpURLConnection.HTTP_OK, true, false, null);
+            JSONArray spellIds = new JSONArray(ids);
+            JSONObject json = new JSONObject();
+            json.put("Ids",spellIds);
 
-            Log.d("inputJson",returnJson.toString());
+            JSONObject returnJson = this.connectWithoutAuth(url, HttpURLConnection.HTTP_OK, true, true, json);
+
+            Log.d("inputJson", returnJson.toString());
 
 
             if (returnJson != null) {
 
                 JSONObject inputJson = returnJson.getJSONObject("json");
-                Log.d("inputJson",inputJson.toString());
+                Log.d("inputJson", inputJson.toString());
+                JSONArray array = inputJson.getJSONArray("Spells");
+                ArrayList<AbstractSpell> spells = new ArrayList<>();
                 AbstractSpell spell;
-                switch (inputJson.getInt("Type")){
-                    case AbstractSpell.DAMAGE:
-                        spell = new DamageSpell(inputJson);
-                        break;
-                    case AbstractSpell.HEAL:
-                        spell = new HealSpell(inputJson);
-                        break;
-                    case AbstractSpell.BUFF:
-                        spell = new BuffSpell(inputJson);
-                        break;
-                    case AbstractSpell.DEBUFF:
-                        spell = new DebuffSpell(inputJson);
-                        break;
-                    default:
-                        spell = new DamageSpell(inputJson);
+                for (int i = 0; i < array.length();i++) {
+                    JSONObject spellJson = array.getJSONObject(i);
+                    switch (spellJson.getInt("Type")) {
+                        case AbstractSpell.DAMAGE:
+                            spell = new DamageSpell(spellJson);
+                            break;
+                        case AbstractSpell.HEAL:
+                            spell = new HealSpell(spellJson);
+                            break;
+                        case AbstractSpell.BUFF:
+                            spell = new BuffSpell(spellJson);
+                            break;
+                        case AbstractSpell.DEBUFF:
+                            spell = new DebuffSpell(spellJson);
+                            break;
+                        default:
+                            spell = new DamageSpell(spellJson);
 
+                    }
+                    spells.add(spell);
                 }
-                return spell;
+                return spells;
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -715,6 +797,53 @@ public class Server {
         }
         return null;
     }
+
+
+    //TODO Delete stuff below
+    public AbstractSpell getSpell(int id, int type){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(type) + "/"+ Integer.toString(id);
+        try {
+            URL url = new URL(uri);
+
+            JSONObject returnJson = this.connectWithoutAuth(url, HttpURLConnection.HTTP_OK, true, false, null);
+
+            Log.d("inputJson", returnJson.toString());
+
+
+            if (returnJson != null) {
+
+                JSONObject inputJson = returnJson.getJSONObject("json");
+                Log.d("inputJson", inputJson.toString());
+                AbstractSpell spell;
+                switch (inputJson.getInt("Type")){
+                    case AbstractSpell.DAMAGE:
+                        spell = new DamageSpell(inputJson);
+                        break;
+                    case AbstractSpell.HEAL:
+                        spell = new HealSpell(inputJson);
+                        break;
+                    case AbstractSpell.BUFF:
+                        spell = new BuffSpell(inputJson);
+                        break;
+                    case AbstractSpell.DEBUFF:
+                        spell = new DebuffSpell(inputJson);
+                        break;
+                    default:
+                        spell = new DamageSpell(inputJson);
+
+                }
+                return spell;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
 
 
 

@@ -4,11 +4,13 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -37,7 +39,6 @@ import com.fluffyadventure.model.Monster;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 
 public class SoloCombat extends Activity {
 
@@ -82,7 +83,6 @@ public class SoloCombat extends Activity {
 
 
     //needed for services part
-    //private Animal animal;
     private boolean waitingForTarget = false;
     private boolean opponnentsTurn = false;
     private boolean soloCombat;
@@ -611,6 +611,8 @@ public class SoloCombat extends Activity {
                 });
         AlertDialog dialog = builder.create();
         dialog.show();
+        SaveTask task = new SaveTask();
+        task.execute();
     }
 
     private void lose(){
@@ -927,6 +929,34 @@ public class SoloCombat extends Activity {
     @Override
     public void onBackPressed() {
         return;
+    }
+
+
+    private class SaveTask extends AsyncTask<Void, Void, Boolean> {
+
+        public SaveTask() {
+
+        }
+
+        protected void onPreExecute(){
+
+        }
+        protected Boolean doInBackground(Void... params){
+            Boolean result = Controller.saveGame();
+            return result;
+        }
+        protected  void onPostExecute(Boolean login) {
+
+            if (!login){
+                Toast.makeText(SoloCombat.this, "Echec de la sauvegarde" +
+                        "", Toast.LENGTH_LONG).show();
+
+            }
+
+        }
+
+
+
     }
 
 }

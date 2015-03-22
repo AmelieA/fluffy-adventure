@@ -20,13 +20,24 @@ import com.fluffyadventure.model.Treasure;
 import com.google.android.gms.internal.m;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Created by Johan on 17/02/2015.
  */
 public class Controller {
+    //TODO QG -> HQ
 
     private static Animal animal1;
     private static Animal animal2 = null;
@@ -38,6 +49,8 @@ public class Controller {
     private static AbstractSpawn currentObjective;
     private static ArrayList<Friend> friends = new ArrayList<>();
     private static ArrayList<Mail> mails = new ArrayList<>();
+
+    private static final double COORDINATES_COEFFICIENT = 0.005;
 
     public static Boolean createUser(String name, String password) {
         user = server.createUser(name,password);
@@ -106,15 +119,23 @@ public class Controller {
         }
     }
 
+
     public  static  void setUpObjectivesWithHq() {
         objectives = server.get_spawns();
         Log.d("Objectives","Received");
+        Random randomGenerator = new Random();
+
         if (objectives != null && QGLocation != null){
             for (int i = 0; i < objectives.size(); i++){
-                double coefLat = Math.cos(i);
-                double coefLong = Math.sin(i);
-                objectives.get(i).setCoordinates(QGLocation.latitude + coefLat * 0.005, QGLocation.longitude + coefLong * 0.005);
-                Log.d("Objective " + Integer.toString(i),objectives.get(i).toString());
+                double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT;
+                double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT;
+                double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT * 0.5);
+                double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT;// * 0.0025;
+                objectives.get(i).setCoordinates(
+                        QGLocation.latitude + coefLat + randLat,
+                        QGLocation.longitude + coefLong + randLong
+                );
+                Log.d("Objective " + Integer.toString(i), objectives.get(i).toString());
             }
         }
     }
@@ -157,37 +178,6 @@ public class Controller {
         return objectives;
     }
     public static User getUser() { return user; }
-
-    public static Boolean login(String name, String password) {
-        user =  server.login(name,password);
-        if (user == null) {
-            return false;
-        }
-        animal1 = server.getAnimal(user);
-        if (animal1 == null) {
-            return false;
-        }
-
-        QGLocation = server.getHQ(user);
-        if (QGLocation == null){
-            return false;
-        }
-        friends = server.getFriends(user);
-        if (friends == null){
-            return false;
-        }
-        mails = server.getMails(user);
-        Log.d("Mails login", mails.toString());
-        if (mails == null) {
-            return false;
-        }
-
-        //setUpObjectivesWithHq();
-        setupObjectives();
-
-        return true;
-    }
-
     public static Boolean sendAnimalToServer(String name){
         Animal my_animal = server.createAnimal(user,animal1,name);
         if (my_animal != null){
@@ -269,7 +259,7 @@ public class Controller {
         }
         Log.d("ordre","bon");
 
-        Boolean hasHQbeenMoved = moveHQ();
+        Boolean hasHQbeenMoved = moveHQ2();
         if (!hasHQbeenMoved){
             server.deleteUser(user);
             Log.d("ERROR","HQ CREATION");
@@ -281,13 +271,8 @@ public class Controller {
 
     }
 
-    public static Boolean moveHQ(){
-        Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
-        setUpObjectivesWithHq();
-        //setupObjectives();
 
-        return hasHQbeenMoved;
-    }
+
     public static Boolean retrieveMailsFromServer(){
         ArrayList<Mail> mails2 = server.getMails(user);
         if (mails2 == null) {
@@ -320,6 +305,8 @@ public class Controller {
         return server.sendMail(user,receiver,object,content);
     }
 
+
+
     public static void flush(){
         animal1 = null;
         animal2 = null;
@@ -329,6 +316,288 @@ public class Controller {
         QGLocation =  null;
         succeededSpawns= new ArrayList<>();
 
+    }
+
+
+//METHODS BELOW THIS POINT CONNECT TO SERVER, PLEASE USE INSIDE ASYNCTASKS
+
+
+
+    public static Boolean login(String name, String password) {
+        user =  server.login(name,password);
+        if (user == null) {
+            return false;
+        }
+        animal1 = server.getAnimal(user);
+        if (animal1 == null) {
+            return false;
+        }
+
+        QGLocation = server.getHQ(user);
+        if (QGLocation == null){
+            return false;
+        }
+        friends = server.getFriends(user);
+        if (friends == null){
+            return false;
+        }
+        mails = server.getMails(user);
+        Log.d("Mails login", mails.toString());
+        if (mails == null) {
+            return false;
+        }
+
+        setUpObjectivesWithHq();
+        //setupObjectives();
+
+        return true;
+    }
+
+    public static Boolean new_login(String name, String password) {
+        user =  server.login(name,password);
+        String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "login2";
+        JSONObject returnJson;
+        try {
+            URL url = new URL(uri);
+            User user1 = new User(name,password);
+            JSONObject outputJson =  server.connectWithPassword(url,user1,HttpURLConnection.HTTP_OK,true,false,null);
+
+            if (outputJson == null) {
+                Log.e("HTTP LOGIN :", Integer.toString(HttpURLConnection.HTTP_OK));
+                return false;
+            }
+            returnJson = outputJson.getJSONObject("json");
+        } catch (IOException | JSONException ex) {
+            Log.e("LOGIN :",ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        }
+
+        //GET ID BLOCK :
+        try {
+            user = new User(name,password,returnJson.getInt("Id"));
+        } catch (JSONException e) {
+
+            Log.e("LOGIN ID :",e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+        if (user == null) {
+            return false;
+        }
+
+        //GET ANIMALS BLOCK
+        try {
+            animal1 = new Animal(returnJson.getJSONArray("Animals").getJSONObject(0));
+            if (returnJson.getJSONArray("Animals").length() > 1){
+                animal2 = new Animal(returnJson.getJSONArray("Animals").getJSONObject(1));
+            }
+        } catch (JSONException e) {
+            Log.e("LOGIN Animals :", e.getMessage());
+            e.printStackTrace();
+        }
+        if (animal1 == null) {
+            return false;
+        }
+
+
+        //GET HQ BLOCK
+        try {
+            QGLocation = new LatLng(returnJson.getJSONObject("HQ").getDouble("Latitude"), returnJson.getJSONObject("HQ").getDouble("Longitude"));
+        } catch (JSONException e) {
+            Log.e("LOGIN HQ :", e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+        if (QGLocation == null){
+            return false;
+        }
+
+        //GET FRIENDLIST BLOCK
+        friends = server.getFriends(user);
+
+        try {
+            JSONArray friendsArray = returnJson.getJSONArray("Friends");
+            for (int i = 0; i < friendsArray.length(); i++){
+                Friend friend = new Friend(friendsArray.getJSONObject(i));
+                friends.add(friend);
+            }
+        } catch (JSONException e) {
+
+            Log.e("LOGIN FRIENDS :", e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+        if (friends == null){
+            return false;
+        }
+
+        //MAILSBLOCK
+        JSONArray mailsArray = null;
+        try {
+            mailsArray = returnJson.getJSONArray("Mails");
+            for (int i = 0; i < mailsArray.length(); i++) {
+                Mail mail = new Mail(mailsArray.getJSONObject(i));
+                mails.add(mail);
+            }
+
+        } catch (JSONException e) {
+            Log.e("LOGIN MAILS :", e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+        Log.d("Mails login", mails.toString());
+        if (mails == null) {
+            return false;
+        }
+
+        //SPAWNSBLOCK
+        JSONArray array = null;
+        objectives = new ArrayList<>();
+        try {
+            array = returnJson.getJSONArray("Spawns");
+
+            Random randomGenerator = new Random();
+            for (int i = 0; i < array.length(); i++){
+                JSONObject object = array.getJSONObject(i);
+                AbstractSpawn abstractSpawn;
+                Log.d("Spawn",object.toString());
+                String type = object.getString("Type");
+
+
+
+                //TODO: REPLACE WITH SWITCH
+                if (type.equals("Spawn")) {
+                    abstractSpawn = new Spawn(object);
+                }
+                else if (type.equals("Dungeon")){
+                    abstractSpawn = new Dungeon(object);
+                }
+                else {
+                    abstractSpawn = new Treasure(object);
+                }
+                if (abstractSpawn == null){
+                    Log.e("Spawn", "is null");
+                }
+
+                if (object.has("Location")){
+                    abstractSpawn.setCoordinates(
+                            object.getJSONObject("Location").getDouble("Latitude"),
+                            object.getJSONObject("Location").getDouble("Longitude")
+                    );
+                }
+                else {
+                    double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT;
+                    double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT;
+                    double randLat = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT/2;
+                    double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT;
+                    abstractSpawn.setCoordinates(
+                            QGLocation.latitude + coefLat + randLat,
+                            QGLocation.longitude + coefLong + randLong
+                    );
+                }
+                objectives.add(abstractSpawn);
+            }
+        } catch (JSONException e) {
+            Log.e("LOGIN SPAWNS :", e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+
+
+        //SUCCEEDED SPAWNS BLOCK
+        succeededSpawns = new ArrayList<>();
+        try {
+            JSONArray succeededArray = returnJson.getJSONArray("Progress");
+
+            for (int i = 0; i < succeededArray.length(); i++){
+                succeededSpawns.add(succeededArray.getInt(i));
+            }
+        } catch (JSONException e) {
+            Log.e("LOGIN SUCCEEDED SPAWNS:", e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+
+        //setupObjectives();
+
+        return true;
+    }
+
+    public static Boolean moveHQ(){
+        Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
+        setUpObjectivesWithHq();
+        //setupObjectives();
+
+        return hasHQbeenMoved;
+    }
+
+    public static Boolean moveHQ2(){
+        //Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
+        setUpObjectivesWithHq();
+
+        String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "users/move_HQ2";
+        try {
+
+            URL url = new URL(uri);
+            JSONObject HQAndSpawns = moveHQSpawns();
+            JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, HQAndSpawns);
+            if (returnJson == null){
+                return false;
+            }
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+        return true;
+    }
+
+    public static JSONObject moveHQSpawns() throws JSONException {
+        JSONObject HQLocation = new JSONObject();
+        HQLocation.put("Latitude",QGLocation.latitude);
+        HQLocation.put("Longitude",QGLocation.longitude);
+
+        JSONArray spawnsLocationsJson = new JSONArray();
+            for (AbstractSpawn spawn: objectives){
+                JSONObject spawnJson = new JSONObject();
+                //Todo: Make AbstractSpawn.toJson()
+                spawnJson.put("Id",spawn.getSpawnId());
+                spawnJson.put("Latitude", spawn.getLocation().getLatitude());
+                spawnJson.put("Longitude", spawn.getLocation().getLongitude());
+                spawnsLocationsJson.put(spawnJson);
+            }
+        JSONObject returnJson = new JSONObject();
+        returnJson.put("HQ",HQLocation);
+        returnJson.put("Spawns",spawnsLocationsJson);
+
+        return returnJson;
+
+    }
+
+    public static Boolean saveGame(){
+        String uri  = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "save";
+        try {
+
+            URL url = new URL(uri);
+            JSONObject json = new JSONObject();
+            JSONArray succeededIds = new JSONArray(succeededSpawns);
+            Log.d("Succeeded spawns:", succeededIds.toString());
+            json.put("Progress",succeededIds);
+            JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
+
+            if (returnJson != null){
+                return true;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return false;
     }
 
 

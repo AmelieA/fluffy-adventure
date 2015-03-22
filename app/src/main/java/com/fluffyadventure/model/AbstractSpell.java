@@ -1,5 +1,7 @@
 package com.fluffyadventure.model;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,6 +44,7 @@ public abstract class AbstractSpell {
         this.maxUses = maxUses;
     }
     protected AbstractSpell(JSONObject json) throws JSONException {
+        Log.d("AbstractSpell",json.toString());
         this.id = json.getInt("Id");
         this.name = json.getString("Name");
         this.description = json.getString("Description");
