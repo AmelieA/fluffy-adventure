@@ -560,6 +560,7 @@ public class Controller {
 
         JSONArray spawnsLocationsJson = new JSONArray();
             for (AbstractSpawn spawn: objectives){
+                Log.d("moved spawn",spawn.getName());
                 JSONObject spawnJson = new JSONObject();
                 //Todo: Make AbstractSpawn.toJson()
                 spawnJson.put("Id",spawn.getSpawnId());

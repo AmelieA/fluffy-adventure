@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.AbstractSpell;
@@ -948,8 +949,7 @@ public class SoloCombat extends Activity {
         protected  void onPostExecute(Boolean login) {
 
             if (!login){
-                Toast.makeText(SoloCombat.this, "Echec de la sauvegarde" +
-                        "", Toast.LENGTH_LONG).show();
+                Toast.makeText(SoloCombat.this, "Echec de la sauvegarde", Toast.LENGTH_LONG).show();
 
             }
 
