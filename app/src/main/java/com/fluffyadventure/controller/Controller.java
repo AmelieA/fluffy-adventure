@@ -118,15 +118,23 @@ public class Controller {
 
     }
 
+
     public  static  void setUpObjectivesWithHq() {
         objectives = server.get_spawns();
         Log.d("Objectives","Received");
+        Random randomGenerator = new Random();
+
         if (objectives != null && QGLocation != null){
             for (int i = 0; i < objectives.size(); i++){
-                double coefLat = Math.cos(i);
-                double coefLong = Math.sin(i);
-                objectives.get(i).setCoordinates(QGLocation.latitude + coefLat * 0.005, QGLocation.longitude + coefLong * 0.005);
-                Log.d("Objective " + Integer.toString(i),objectives.get(i).toString());
+                double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT;
+                double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT;
+                double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT * 0.5);
+                double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT;// * 0.0025;
+                objectives.get(i).setCoordinates(
+                        QGLocation.latitude + coefLat + randLat,
+                        QGLocation.longitude + coefLong + randLong
+                );
+                Log.d("Objective " + Integer.toString(i), objectives.get(i).toString());
             }
 
         }
