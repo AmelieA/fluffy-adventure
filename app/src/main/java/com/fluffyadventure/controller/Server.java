@@ -48,7 +48,13 @@ public class Server {
         this.port = port;
     }
 
+    public String getIpAddress() {
+        return ipAddress;
+    }
 
+    public int getPort() {
+        return port;
+    }
 
     public User createUser(String name, String password) {
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/new";
@@ -223,6 +229,7 @@ public class Server {
 
         }
 
+    public JSONObject connectWithAuth(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
     private JSONObject connectWithAuth(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
         //TODO: Get tokenz!
         HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
@@ -316,7 +323,57 @@ public class Server {
 
     }
 
-    private JSONObject connectWithoutAuth(URL url, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
+    public JSONObject connectWithPassword(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
+        HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
+
+        urlConnection1 = (HttpURLConnection) url.openConnection();
+        if (input) {
+            urlConnection1.setDoInput(true);
+            urlConnection1.setRequestProperty("Accept", "application/json");
+        }
+
+
+        if (output){
+            urlConnection1.setDoOutput(true);
+            urlConnection1.setRequestMethod("POST");
+            urlConnection1.setRequestProperty("Content-Type", "application/json");
+        }
+
+
+        String encoded = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
+        urlConnection1.setRequestProperty("Authorization", String.format("Basic %s", encoded));
+        if (output){
+            OutputStream out = urlConnection1.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            writer.write(outputJson.toString());
+            writer.flush();
+            writer.close();
+            out.close();
+        }
+        urlConnection1.connect();
+        if (urlConnection1.getResponseCode() == responseCode){
+            JSONObject inputJson = new JSONObject();
+            if (input){
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection1.getInputStream()));
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+                inputJson.put("json",new JSONObject(inputString.toString()));
+            }
+            inputJson.put("return",responseCode);
+            String token = this.getToken(user);
+            user.setToken(token);
+            return  inputJson;
+        }
+
+        return null;
+
+    }
+
+    public JSONObject connectWithoutAuth(URL url, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
         //TODO: Get tokenz!
         HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
         if (input) {
