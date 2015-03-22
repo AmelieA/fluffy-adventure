@@ -29,7 +29,7 @@
         "Text":"Des monstres s'amusent à chatouiller des chatons, sauve les vite !",
         "Name":"Sauver les chatons !",
         "Level":2,
-        "Solo":true,
+        "Solo":false,
         "Type":"Spawn",
         "Opponents":
         [
@@ -37,8 +37,16 @@
                 "Id":0,
                 "Spells":
                 [
-                    {"Id":1},
-                    {"Id":2}
+                    {"Id":0},
+                    {"Id":1}
+                ]
+            },
+             {
+                "Id":0,
+                "Spells":
+                [
+                    {"Id":0},
+                    {"Id":1}
                 ]
             }
         ]
@@ -60,8 +68,8 @@
                 "Id":0,
                 "Spells":
                 [
-                    {"Id":1},
-                    {"Id":2}
+                    {"Id":0},
+                    {"Id":1}
                 ]
             }
         ]
@@ -83,8 +91,8 @@
                 "Id":0,
                 "Spells":
                 [
-                    {"Id":1},
-                    {"Id":2}
+                    {"Id":0},
+                    {"Id":1}
                 ]
             }
         ]
@@ -106,8 +114,8 @@
                 "Id":0,
                 "Spells":
                 [
-                    {"Id":1},
-                    {"Id":2}
+                    {"Id":0},
+                    {"Id":1}
                 ]
             }
         ]

@@ -3,10 +3,10 @@
         "Id":0,
         "Name":"Evil Bunny",
         "Type":4,
-        "Health":100,
-        "Strength":10,
+        "Health":110,
+        "Strength":12,
         "Accuracy":90,
-        "Evasiveness":15,
+        "Evasiveness":25,
         "Spells":
         [
             {"Id":0},
