@@ -272,13 +272,8 @@ public class Controller {
 
     }
 
-    public static Boolean moveHQ(){
-        Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
-        setUpObjectivesWithHq();
-        //setupObjectives();
 
-        return hasHQbeenMoved;
-    }
+
     public static Boolean retrieveMailsFromServer(){
         ArrayList<Mail> mails2 = server.getMails(user);
         if (mails2 == null) {
@@ -310,6 +305,8 @@ public class Controller {
     public static Boolean sendMail(String receiver, String object, String content){
         return server.sendMail(user,receiver,object,content);
     }
+
+
 
     public static void flush(){
         animal1 = null;
@@ -527,6 +524,59 @@ public class Controller {
 
         return true;
     }
+
+    public static Boolean moveHQ(){
+        Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
+        setUpObjectivesWithHq();
+        //setupObjectives();
+
+        return hasHQbeenMoved;
+    }
+
+    public static Boolean moveHQ2(){
+        //Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
+        setUpObjectivesWithHq();
+
+        String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "users/move_HQ2";
+        try {
+
+            URL url = new URL(uri);
+            JSONObject HQAndSpawns = moveHQSpawns();
+            JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, HQAndSpawns);
+            if (returnJson == null){
+                return false;
+            }
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+        return true;
+    }
+
+    public static JSONObject moveHQSpawns() throws JSONException {
+        JSONObject HQLocation = new JSONObject();
+        HQLocation.put("Latitude",QGLocation.latitude);
+        HQLocation.put("Longitude",QGLocation.longitude);
+
+        JSONArray spawnsLocationsJson = new JSONArray();
+            for (AbstractSpawn spawn: objectives){
+                JSONObject spawnJson = new JSONObject();
+                //Todo: Make AbstractSpawn.toJson()
+                spawnJson.put("Id",spawn.getSpawnId());
+                spawnJson.put("Latitude", spawn.getLocation().getLatitude());
+                spawnJson.put("Longitude", spawn.getLocation().getLongitude());
+                spawnsLocationsJson.put(spawnJson);
+            }
+        JSONObject returnJson = new JSONObject();
+        returnJson.put("HQ",HQLocation);
+        returnJson.put("Spawns",spawnsLocationsJson);
+
+        return returnJson;
+
+    }
+
     public static Boolean saveGame(){
         String uri  = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "save";
         try {
