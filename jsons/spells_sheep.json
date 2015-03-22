@@ -2,9 +2,9 @@
 [
     {
         "Id":0,
-        "Name":"Manger HERBE !!!",
-        "Description":"Le pouvoir des fibres végétales te redonne la vie" ,
-        "IsAoE":false ,
+        "Name":"Brouter",
+        "Description":"Le pouvoir des fibres végétales restaure 20 pv à ton équipe" ,
+        "IsAoE":true ,
         "Type":3 ,
         "Health":20,
         "Animation":3,
@@ -15,42 +15,42 @@
     {
         "Id":1,
         "Name":"Roulade",
-        "Description":"Utilise ta laine pour former une boule et anhilier l'adversaire" ,
+        "Description":"Roule sur les adversaires, les blessant pour 140% de ta force" ,
         "IsAoE":false ,
         "Type":4 ,
-        "Health":100,
+        "Health":140,
         "Animation":6,
         "Projectile":"",
-        "Uses":10
+        "Uses":20
 
     },
     {
         "Id":2,
         "Name":"Auto-dessin",
-        "Description":"re-dessine toi en plus féroce et augmente ta force" ,
+        "Description":"Re-dessine toi en plus féroce et augmente ta force de 25%" ,
         "IsAoE":false ,
         "Type":4 ,
         "Health":100,
         "Type":1 ,
-        "Strength":150,
+        "Strength":125,
         "Accuracy":100,
         "Evasiveness":100,
-        "Animation":3,
+        "Animation":1,
         "Projectile":"",
         "Uses":5
     },
     {
         "Id":3,
         "Name":"Bêlement",
-        "Description":"Utilise ta voix pour distraire l'adversaire et baisser sa précision" ,
+        "Description":"Distrait l'adversaire et baisse sa précision et son évasion de 15%" ,
         "IsAoE":false ,
         "Type":4 ,
         "Health":100,
         "Type":2,
         "Strength":100,
-        "Accuracy":80,
-        "Evasiveness":100,
-        "Animation":3,
+        "Accuracy":85,
+        "Evasiveness":85,
+        "Animation":6,
         "Projectile":"",
         "Uses":5
     }

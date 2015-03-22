@@ -66,7 +66,7 @@ public class Controller {
         objectives = new ArrayList<AbstractSpawn>();
         ArrayList<Creature> opponentSolo = new ArrayList<Creature>();
         ArrayList<Creature> opponentsDuo = new ArrayList<Creature>();
-        AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut",100);
+        AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "dynamite",100);
         AbstractSpell evilHeal = new HealSpell(43,"Carotte Nom Nom", "Om nm nom", false, 25, AbstractSpell.HEAL, null, 2);
         ArrayList<AbstractSpell> spells = new ArrayList<>();
         spells.add(evilSpell);

@@ -9,7 +9,7 @@
         "Health":190,
         "Animation":6,
         "Projectile":"",
-        "Uses":20
+        "Uses":5
 
     },
     {
@@ -21,7 +21,7 @@
         "Strength":120,
         "Accuracy":120,
         "Evasiveness":100,
-        "Animation":3,
+        "Animation":1,
         "Projectile":"",
         "Uses":5
 
@@ -40,14 +40,14 @@
     },
     {
         "Id":3,
-        "Name":"Rapide attaque",
+        "Name":"Attaque choupie",
         "Description":"Attaque plus vite que ton ombre" ,
         "IsAoE":false ,
         "Type":4 ,
-        "Health":120,
+        "Health":110,
         "Animation":6,
         "Projectile":"",
-        "Uses":20
+        "Uses":30
 
     }
 

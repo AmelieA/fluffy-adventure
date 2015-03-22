@@ -3,20 +3,20 @@
     {
         "Id":0,
         "Name":"Jet de noisettes",
-        "Description":"Lance une noisette sur l'ennemi" ,
+        "Description":"Lance une noisettes sur l'ennemi, le blessant pour 170% de ta force" ,
         "IsAoE":false,
         "Type":4,
         "Health":170,
         "Animation":7,
         "Projectile":"hazelnut",
-        "Uses":20
+        "Uses":10
 
     },
 
     {
         "Id":1,
         "Name":"Jet de feuille",
-        "Description":"Lance une feuille sur l'ennemi" ,
+        "Description":"Lance une feuille sur l'ennemi, réduisant sa précision de 20%" ,
         "IsAoE":false ,
         "Type":2 ,
         "Strength":100,
@@ -30,25 +30,24 @@
     {
         "Id":2,
         "Name":"Griffe",
-        "Description":"Griffe l'ennemi" ,
+        "Description":"Griffe l'ennemi, le blessant pour 130% de ta force" ,
         "IsAoE":false,
         "Type":4,
         "Health":130,
-        "Animation":,
-        "Projectile":"hazelnut",
-        "Uses":20
+        "Animation":6,
+        "Projectile":"",
+        "Uses":30
 
     },
     {
         "Id":3,
-        "Name":"Miam",
-        "Description":"Mange la noisette pour te soigner" ,
+        "Name":"Noisette miam",
+        "Description":"Mange une noisette pour te soigner de 17 pv" ,
         "IsAoE":false,
         "Type":3,
         "Health":17,
         "Animation":3,
         "Projectile":"",
         "Uses":5
-
     }
 ]

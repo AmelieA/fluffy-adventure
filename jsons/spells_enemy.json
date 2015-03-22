@@ -2,25 +2,25 @@
 [
     {
         "Id":0,
-        "Name":"Niark Niark",
-        "Description":"L'ennemi utilise les ténèbres pour te faire mal" ,
+        "Name":"Dynamite",
+        "Description":"Blesse une cible ennemie pour 120% de l'attaque" ,
         "IsAoE":false ,
         "Type":4 ,
         "Health":120,
-        "Animation":6,
-        "Projectile":"",
-        "Uses":20
+        "Animation":7,
+        "Projectile":"dynamite",
+        "Uses":100
     },
     {
         "Id":1,
-        "Name":"Fourberie",
-        "Description":"L'ennemi utilise ta nouriture pour se revigorifier" ,
-        "IsAoE":false ,
+        "Name":"Carotte Nom Nom",
+        "Description":"Om n0m nom" ,
+        "IsAoE":true ,
         "Type":3 ,
         "Health":25,
         "Animation":3,
         "Projectile":"",
-        "Uses":5
+        "Uses":3
     }
 
 ]
