@@ -354,7 +354,6 @@ public class Controller {
     }
 
     public static Boolean new_login(String name, String password) {
-        user =  server.login(name,password);
         String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "login2";
         JSONObject returnJson;
         try {
@@ -561,6 +560,7 @@ public class Controller {
 
         JSONArray spawnsLocationsJson = new JSONArray();
             for (AbstractSpawn spawn: objectives){
+                Log.d("moved spawn",spawn.getName());
                 JSONObject spawnJson = new JSONObject();
                 //Todo: Make AbstractSpawn.toJson()
                 spawnJson.put("Id",spawn.getSpawnId());

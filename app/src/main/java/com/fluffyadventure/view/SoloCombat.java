@@ -949,8 +949,7 @@ public class SoloCombat extends Activity {
         protected  void onPostExecute(Boolean login) {
 
             if (!login){
-                Toast.makeText(SoloCombat.this, "Echec de la sauvegarde" +
-                        "", Toast.LENGTH_LONG).show();
+                Toast.makeText(SoloCombat.this, "Echec de la sauvegarde", Toast.LENGTH_LONG).show();
 
             }
 

@@ -215,6 +215,8 @@ public class Server {
             ArrayList<Integer> ids = new ArrayList<>();
             ids.add(0);
             ids.add(1);
+            ids.add(2);
+            ids.add(3);
             for (AbstractSpell spell : this.getSpells(ids,animal.getType())){
                 animal.addSpell(spell, true);
             }
