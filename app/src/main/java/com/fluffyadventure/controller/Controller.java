@@ -519,4 +519,29 @@ public class Controller {
 
         return true;
     }
+    public static Boolean saveGame(){
+        String uri  = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "save";
+        try {
+
+            URL url = new URL(uri);
+            JSONObject json = new JSONObject();
+            JSONArray succeededIds = new JSONArray(succeededSpawns);
+            Log.d("Succeeded spawns:", succeededIds.toString());
+            json.put("Progress",succeededIds);
+            JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
+
+            if (returnJson != null){
+                return true;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
+
 }
