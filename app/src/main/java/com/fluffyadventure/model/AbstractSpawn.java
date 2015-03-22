@@ -12,7 +12,11 @@ import java.util.ArrayList;
 /**
  * Created by Johan on 18/02/2015.
  */
+//TODO: INT VALUES FOR SPAWNS
+    //MOVE OPPONENT LIST IN ABSTRACT SPAWN
+    //ADD SWITCH IN CONTROLLER WHEN NEEDED
 public abstract class AbstractSpawn {
+
 
     public final class SpawnStatus {
         public static final String DONE = "done";
@@ -22,6 +26,8 @@ public abstract class AbstractSpawn {
     }
 
     protected Integer spawnId;
+
+
 
     public Integer requirement = null;
 
@@ -82,8 +88,26 @@ public abstract class AbstractSpawn {
         this.spawnId = json.getInt("Id");
         this.level = json.getInt("Level");
         this.soloFight  = json.getBoolean("Solo") ;
+//        this.latitude = json.getJSONObject("Location").getDouble("Latitude");
+//        this.longitude = json.getJSONObject("Location").getDouble("Longitude");
     }
 
+   /* public JSONObject toJson() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("SpellReward", this.spellReward);
+        jsonObject.put("HealthReward", this.healthReward);
+        jsonObject.put("StrengthReward", this.strengthReward);
+        jsonObject.put("Text", this.text);
+        jsonObject.put("Name", this.name);
+        jsonObject.put("Id", this.spawnId );
+        jsonObject.put("Level", this.level);
+        jsonObject.put("Solo", this.soloFight);
+        JSONObject location = new JSONObject();
+        location.put("Latitude", this.latitude);
+        location.put("Longitude", this.longitude);
+        jsonObject.put("Location",location);
+        return jsonObject;
+    }*/
     public void setCoordinates(double latitude, double longitude){
         this.latitude = latitude;
         this.longitude = longitude;

@@ -37,6 +37,7 @@ import java.util.Random;
  * Created by Johan on 17/02/2015.
  */
 public class Controller {
+    //TODO QG -> HQ
 
     private static Animal animal1;
     private static Animal animal2;
@@ -50,6 +51,7 @@ public class Controller {
     private static ArrayList<Mail> mails = new ArrayList<>();
 
     private static final double COORDINATES_COEFFICIENT = 0.005;
+
     public static Boolean createUser(String name, String password) {
         user = server.createUser(name,password);
         if (user == null) {
@@ -260,7 +262,7 @@ public class Controller {
         }
         Log.d("ordre","bon");
 
-        Boolean hasHQbeenMoved = moveHQ();
+        Boolean hasHQbeenMoved = moveHQ2();
         if (!hasHQbeenMoved){
             server.deleteUser(user);
             Log.d("ERROR","HQ CREATION");

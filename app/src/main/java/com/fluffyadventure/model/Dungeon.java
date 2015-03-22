@@ -29,6 +29,8 @@ public class Dungeon extends AbstractSpawn {
         }
     }
 
+
+
     public ArrayList<Creature> getOpponents() {
         return opponents;
     };

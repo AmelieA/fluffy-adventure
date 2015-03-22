@@ -283,7 +283,7 @@ public class MoveQGActivity extends FragmentActivity implements OnMapReadyCallba
             Log.d("FirstTime",Boolean.toString(firstTime));
             if (!firstTime){
                 Log.d("FIRSTTIME","NO");
-                result = Controller.moveHQ();
+                result = Controller.moveHQ2();
             }
             else {
                 this.ret = Controller.createUserAnimalHQ();
