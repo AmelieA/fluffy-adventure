@@ -354,7 +354,6 @@ public class Controller {
     }
 
     public static Boolean new_login(String name, String password) {
-        user =  server.login(name,password);
         String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "login2";
         JSONObject returnJson;
         try {
