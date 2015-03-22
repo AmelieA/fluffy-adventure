@@ -232,10 +232,10 @@ public class SoloCombat extends Activity {
         if (!soloCombat) {
             currentOpponentIdx = 1;
             Animal animal2 = Controller.getAnimal(2);
-          /*  animal2.clearSpells();
+            animal2.clearSpells();
             animal2.addSpell(new HealSpell(0, "Soin de groupe", "Soigne tout le groupe pour 10 pv", true, 10, AbstractSpell.HEAL, null, 5), true);
             animal2.addSpell(new DebuffSpell(1, "Jet de boue", "Réduit l'esquive et la précision de 20 %", false, 100, 80, 80, AbstractSpell.DEBUFF, null, 5), true);
-            animal2.addSpell(new DamageSpell(2, "Charge", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);*/
+            animal2.addSpell(new DamageSpell(2, "Charge", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
             tempAnimals.add(new Animal(Controller.getAnimal(2)));
             fighters.add(animal2);
         }
@@ -251,6 +251,8 @@ public class SoloCombat extends Activity {
         opponents.get(0).setActiveSpells(spells);
         if (!soloCombat)
             opponents.get(1).setActiveSpells(spells);*/
+        opponents.get(0).setHealth(100);
+        opponents.get(1).setHealth(100);
 
         for (Creature opponent : opponents) {
             tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
@@ -392,7 +394,7 @@ public class SoloCombat extends Activity {
             currentOpponentIdx = 0;
         spell = fighters.get(currentFighterIdx).getActiveSpells().get(spellIndex);
 
-        if (spell.getIsAoE() || spell.getAnimationType() == AbstractSpell.BUFF ||  spell.getAnimationType() == AbstractSpell.HEAL)
+        if (spell.getIsAoE() || spell.getAnimationType() == AbstractSpell.BUFF ||  spell.getAnimationType() == AbstractSpell.HEAL || soloCombat)
             useSpellOnEnnemy(null);
         else {
             waitingForTarget = true;
@@ -419,7 +421,7 @@ public class SoloCombat extends Activity {
         Runnable ennemyTurn = new Runnable() {
             @Override
             public void run(){
-                ennemyTurn(); //<-- put your code in here.
+                ennemyTurn();
             }
         };
         Runnable missedDisclaimer = new Runnable() {
