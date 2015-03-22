@@ -220,11 +220,11 @@ public class SoloCombat extends Activity {
         currentFighterIdx = 0;
 
         Animal animal = Controller.getAnimal(1);
-        animal.clearSpells();
+      /*  animal.clearSpells();
         animal.addSpell(new HealSpell(0, "Soin", "Soigne 15 pv", false, 15, AbstractSpell.HEAL, null, 5), true);
         animal.addSpell(new DamageSpell(1, "Jet de noisette", "Lance une noisettes sur l'ennemi, le blessant pour 170% de ta force", false, 170, AbstractSpell.THROW, "hazelnut", 15), true);
         animal.addSpell(new DamageSpell(2, "Charge", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
-        animal.addSpell(new BuffSpell(3, "Concentration", "Améliore la précision et la force de 20%", false, 120, 120, 100, AbstractSpell.HEAL, null, 3), true);
+        animal.addSpell(new BuffSpell(3, "Concentration", "Améliore la précision et la force de 20%", false, 120, 120, 100, AbstractSpell.HEAL, null, 3), true);*/
 
         tempAnimals.add(new Animal(Controller.getAnimal1()));
         fighters.add(animal);
@@ -232,24 +232,25 @@ public class SoloCombat extends Activity {
         if (!soloCombat) {
             currentOpponentIdx = 1;
             Animal animal2 = Controller.getAnimal(2);
-            animal2.clearSpells();
+          /*  animal2.clearSpells();
             animal2.addSpell(new HealSpell(0, "Soin de groupe", "Soigne tout le groupe pour 10 pv", true, 10, AbstractSpell.HEAL, null, 5), true);
             animal2.addSpell(new DebuffSpell(1, "Jet de boue", "Réduit l'esquive et la précision de 20 %", false, 100, 80, 80, AbstractSpell.DEBUFF, null, 5), true);
-            animal2.addSpell(new DamageSpell(2, "Charge", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
+            animal2.addSpell(new DamageSpell(2, "Charge", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);*/
             tempAnimals.add(new Animal(Controller.getAnimal(2)));
             fighters.add(animal2);
         }
 
         opponents = Controller.getCurrentObjective().getOpponents();
 
-        //TODO Remove when no more messed up fourberie
+      /*  //TODO Remove when no more messed up fourberie
         AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut",100);
         AbstractSpell evilHeal = new HealSpell(43,"Carotte Nom Nom", "Om nm nom", true, 20, AbstractSpell.HEAL, null, 2);
         ArrayList<AbstractSpell> spells = new ArrayList<>();
         spells.add(evilSpell);
         spells.add(evilHeal);
         opponents.get(0).setActiveSpells(spells);
-        opponents.get(1).setActiveSpells(spells);
+        if (!soloCombat)
+            opponents.get(1).setActiveSpells(spells);*/
 
         for (Creature opponent : opponents) {
             tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
