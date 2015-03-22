@@ -29,7 +29,7 @@ import java.util.Arrays;
 public class Controller {
 
     private static Animal animal1;
-    private static Animal animal2;
+    private static Animal animal2 = null;
     private static Server server;
     private static User user;
     private static ArrayList<AbstractSpawn> objectives;
@@ -58,9 +58,9 @@ public class Controller {
         ArrayList<AbstractSpell> spells = new ArrayList<>();
         spells.add(evilSpell);
         spells.add(evilHeal);
-        opponentSolo.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 35, spells));
-        opponentsDuo.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 35, spells));
-        opponentsDuo.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 35, spells));
+        opponentSolo.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 25, spells));
+        opponentsDuo.add(new Monster("Evil Bunny A",Creature.EVILBUNNY, 100, 10, 90, 25, spells));
+        opponentsDuo.add(new Monster("Evil Bunny B",Creature.EVILBUNNY, 100, 10, 90, 25, spells));
 
         AbstractSpawn fightSpawn1 = new Spawn(0,0,0,0,45.780035, 4.856392,
                 "Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1,opponentSolo, true);
@@ -104,7 +104,6 @@ public class Controller {
             objectives.get(4).setCoordinates(45.7853447, 4.8563660);
             objectives.get(5).setCoordinates(45.773716, 4.856081);
         }
-
     }
 
     public  static  void setUpObjectivesWithHq() {
@@ -117,9 +116,7 @@ public class Controller {
                 objectives.get(i).setCoordinates(QGLocation.latitude + coefLat * 0.005, QGLocation.longitude + coefLong * 0.005);
                 Log.d("Objective " + Integer.toString(i),objectives.get(i).toString());
             }
-
         }
-
     }
 
     public static void setupBob() {
@@ -185,8 +182,8 @@ public class Controller {
             return false;
         }
 
-        setUpObjectivesWithHq();
-        //setupObjectives();
+        //setUpObjectivesWithHq();
+        setupObjectives();
 
         return true;
     }

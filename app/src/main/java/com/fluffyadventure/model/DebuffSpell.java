@@ -35,17 +35,17 @@ public class DebuffSpell extends AbstractSpell {
         returnedArray.add(fighters);
 
         if ( target != null ) {
-            opponents.get(target).setStrength(opponents.get(target).getStrength() - strModif);
-            opponents.get(target).setAccuracy(opponents.get(target).getAccuracy() - accuModif);
-            opponents.get(target).setEvasiveness(opponents.get(target).getEvasiveness() - evaModif);
+            opponents.get(target).setStrength((int)Math.round((double)opponents.get(target).getStrength() * (double)strModif/100.0));
+            opponents.get(target).setAccuracy((int)Math.round((double)opponents.get(target).getAccuracy() * (double)accuModif/100.0));
+            opponents.get(target).setEvasiveness((int)Math.round((double)opponents.get(target).getEvasiveness() * (double)evaModif/100.0));
         } else if ( target == null ) {
-            opponents.get(0).setStrength(opponents.get(0).getStrength() - strModif);
-            opponents.get(0).setAccuracy(opponents.get(0).getAccuracy() - accuModif);
-            opponents.get(0).setEvasiveness(opponents.get(0).getEvasiveness() - evaModif);
-            if (opponents.size() > 1) {
-                opponents.get(1).setStrength(opponents.get(1).getStrength() - strModif);
-                opponents.get(1).setAccuracy(opponents.get(1).getAccuracy() - accuModif);
-                opponents.get(1).setEvasiveness(opponents.get(1).getEvasiveness() - evaModif);
+            opponents.get(0).setStrength((int)Math.round((double)opponents.get(0).getStrength() * (double)strModif/100.0));
+            opponents.get(0).setAccuracy((int)Math.round((double)opponents.get(0).getAccuracy() * (double)accuModif/100.0));
+            opponents.get(0).setEvasiveness((int)Math.round((double)opponents.get(0).getEvasiveness() * (double)evaModif/100.0));
+            if (fighters.size() > 1) {
+                opponents.get(1).setStrength((int)Math.round((double)opponents.get(1).getStrength() * (double)strModif/100.0));
+                opponents.get(1).setAccuracy((int)Math.round((double)opponents.get(1).getAccuracy() * (double)accuModif/100.0));
+                opponents.get(1).setEvasiveness((int)Math.round((double)opponents.get(1).getEvasiveness() * (double)evaModif/100.0));
             }
         }
 

@@ -137,6 +137,20 @@ public abstract class Creature {
         this.strength = strength;
         this.accuracy = accuracy;
         this.evasiveness = evasiveness;
+        switch (type) {
+            case Creature.EVILBUNNY:
+                this.imagePath = "evilbunny";
+                break;
+            case Creature.ZOMBIE:
+                this.imagePath = "zombie";
+                break;
+            case Creature.TREANT:
+                this.imagePath = "treant";
+                break;
+            default:
+                this.imagePath = "evilbunny";
+                break;
+        }
     }
 
 

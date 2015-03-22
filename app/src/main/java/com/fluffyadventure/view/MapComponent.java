@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -250,16 +254,39 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
 
         Bitmap icon = BitmapFactory.decodeResource(resources, iconId);
 
-       /* if (spawn.getStatus(animal).equals(Spawn.SpawnStatus.COMPETENCES_INSUFFISANTES)) {
+        if (!spawn.isSoloFight() && Controller.getAnimal(2) == null) {
             icon = convertToGrayscale(icon);
-        }*/
-
+        }
         Marker marker = map.addMarker(new MarkerOptions()
                 .position(new LatLng(spawn.latitude, spawn.longitude))
                 .title(spawn.getStatus() + " - " + spawn.getName())
                 .snippet(spawn.getText())
                 .icon(BitmapDescriptorFactory.fromBitmap(icon)));
         spawnMarkers.put(marker.getId(), spawn);
+    }
+
+    /**
+     * Convert a spawn icon to greyscale
+     */
+    private Bitmap convertToGrayscale(Bitmap icone) {
+
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+
+
+        Paint p = new Paint();
+        ColorMatrix cm = new ColorMatrix();
+
+        cm.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        p.setColorFilter(filter);
+
+        Bitmap iconeNB = Bitmap.createBitmap(icone.getWidth(), icone.getHeight(), icone.getConfig());
+        Canvas canvas = new Canvas(iconeNB);
+
+        canvas.drawBitmap(icone, 0f, 0f, p);
+
+        return iconeNB;
     }
 
     /**
@@ -273,8 +300,13 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         } else if (spawn instanceof Spawn) {
             if (spawn.getSpawnId() != -1) {
                 Controller.setCurrentObjective(spawn);
-                button_go.setText("Engager le combat !");
-                button_go.setEnabled(true);
+                if (!spawn.isSoloFight() && Controller.getAnimal(2) == null) {
+                    button_go.setText("Ce combat nécessite 2 compagnons !");
+                    button_go.setEnabled(false);
+                } else {
+                    button_go.setText("Engager le combat !");
+                    button_go.setEnabled(true);
+                }
             } else {
                 Controller.setCurrentObjective(null);
                 button_go.setText("Choisis un objectif sur la carte !");
