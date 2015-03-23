@@ -20,10 +20,8 @@ import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Treasure;
 import com.fluffyadventure.model.WanderingSpawn;
-import com.google.android.gms.internal.m;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +46,7 @@ public class Controller {
     private static Server server;
     private static User user;
     private static ArrayList<AbstractSpawn> objectives;
-    private static ArrayList<Creature> enemies= new ArrayList<>();
+    private static ArrayList<Creature> monsters = new ArrayList<>();
     private static LatLng QGLocation;
     private static ArrayList<Integer> succeededSpawns= new ArrayList<>();
     private static AbstractSpawn currentObjective;
@@ -80,14 +78,14 @@ public class Controller {
     public  static  void setUpWanderingSpawns() {
         Random randomGenerator = new Random();
 
-        if (!enemies.isEmpty()) {
+        if (!monsters.isEmpty()) {
             for (int i = 0; i < 10; i++) {
                 double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT;
                 double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT;
                 double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT * 0.5);
                 double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT;
 
-                ArrayList<Creature> randomEnemies = new ArrayList<>(Arrays.asList(enemies.get(randomGenerator.nextInt(enemies.size()))));
+                ArrayList<Creature> randomEnemies = new ArrayList<>(Arrays.asList(monsters.get(randomGenerator.nextInt(monsters.size()))));
                 WanderingSpawn spawn = new WanderingSpawn(1000 + i, 0, 0, 0, QGLocation.latitude + coefLat + randLat,
                         QGLocation.longitude + coefLong + randLong, "text", "name", 0, randomEnemies, true);
                 objectives.add(spawn);
@@ -342,7 +340,7 @@ public class Controller {
     public static Boolean moveHQ2(){
         //Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
         setUpObjectivesWithHq();
-        getEnemies();
+        getMonsters();
         setUpWanderingSpawns();
 
         String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "users/move_HQ2";
@@ -643,8 +641,8 @@ public class Controller {
         return null;
     }
 
-    private static boolean getEnemies(){
-        String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/enemies" ;
+    private static boolean getMonsters(){
+        String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/monsters" ;
         try {
             URL url = new URL(uri);
 
@@ -652,12 +650,13 @@ public class Controller {
 
             if (returnJson != null) {
                 JSONObject inputJson = returnJson.getJSONObject("json");
-                Log.d("inputJson", inputJson.toString());
-                JSONArray array = inputJson.getJSONArray("Enemies");
-                enemies = new ArrayList<>();
+                Log.d("Monsters", inputJson.toString());
+                JSONArray array = inputJson.getJSONArray("Monsters");
+                monsters = new ArrayList<>();
                 for (int i = 0; i < array.length();i++) {
                     JSONObject jSonEnemy = array.getJSONObject(i);
-                    Monster enemy = new Monster(jSonEnemy);
+                    Monster monster = new Monster(jSonEnemy);
+                    monsters.add(monster);
                 }
                 return true;
             }
