@@ -148,6 +148,27 @@ public class Controller {
         return mails;
     }
 
+    public static Boolean checkForUnreadMails(){
+        Boolean result = false;
+        for (Mail m:mails){
+            if(!m.getRead()){
+                result=true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public static void setMailAsRead(Boolean read, Mail mail){
+        for (Mail m:mails){
+            if (m.equals(mail)){
+                m.setRead(read);
+                //save mail ?
+                break;
+            }
+        }
+    }
+
     public static void flush(){
         animal1 = null;
         animal2 = null;
@@ -676,25 +697,41 @@ public class Controller {
         return false;
     }
 
-    public static Boolean checkForUnreadMails(){
-        Boolean result = false;
-        for (Mail m:mails){
-            if(!m.getRead()){
-                result=true;
-                break;
+    public static Boolean saveMails(){
+        String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "mails/save";
+        try {
+            URL url = new URL(uri);
+            JSONObject json = new JSONObject();
+            JSONArray mailsJson = new JSONArray();
+            for (Mail m:mails){
+                mailsJson.put(m.toJson());
             }
-        }
-        return result;
-    }
+            json.put("Mails",mailsJson);
+            JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
 
-    public static void setMailAsRead(Boolean read, Mail mail){
-        for (Mail m:mails){
-            if (m.equals(mail)){
-                m.setRead(read);
-                //save mail ?
-                break;
+            if (returnJson != null){
+                ArrayList<Mail> mailsTemp = new ArrayList<>();
+                Log.d("Mails get",returnJson.toString());
+                if (returnJson.getJSONObject("json").get("Mails") != null) {
+
+                    JSONArray mailsArray = returnJson.getJSONObject("json").getJSONArray("Mails");
+                    Log.d("Mail Array",Integer.toString(mailsArray.length()));
+                    for (int i = 0; i < mailsArray.length(); i++) {
+                        Mail mail = new Mail(mailsArray.getJSONObject(i));
+                        mailsTemp.add(mail);
+                        Log.d("Mail:",mail.toJson().toString());
+                    }
+                    mails = mailsTemp;
+                    return true;
+
+                }
+
             }
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+            return false;
         }
+        return false;
     }
 
     public static Boolean addFriend(String name){
