@@ -456,12 +456,12 @@ public class SoloCombat extends Activity {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(ennemyTurn, 2800);
                 } else {
-                    if (target == null){
+                    if (target == 0 || soloCombat)
+                        opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                    else if (target == null){
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                         opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
-                    } else if (target == 0)
-                        opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
-                    else
+                    } else
                         opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
                 }
                 break;
@@ -483,23 +483,23 @@ public class SoloCombat extends Activity {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(ennemyTurn, 2800);
                 } else {
-                    if (target == null){
+                    if (target == 0 || soloCombat)
+                        opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                    else if (target == null){
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                         opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
-                    } else if (target == 0)
-                        opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
-                    else
+                    } else
                         opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
                 }
                 break;
             default:
                 attackFromFighterAnimation(currentFighterIdx);
-                if (target == null){
+                if (target == 0 || soloCombat)
+                    opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                else if (target == null){
                     opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                     opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
-                } else if (target == 0)
-                    opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
-                else
+                } else
                     opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
         }
     }

@@ -44,7 +44,7 @@ public class Status extends Activity {
 
         imgPC1 = (ImageView) findViewById(R.id.imgPC1);
 
-        String imagePath = Controller.getAnimal1().getImagePath();
+        String imagePath = Controller.getAnimal(1).getImagePath();
 
         imgPC1.setImageResource(
                 getResources().getIdentifier(
