@@ -3,13 +3,13 @@
     {
         "Id":0,
         "Name":"Brouter",
-        "Description":"Le pouvoir des fibres végétales restaure 20 pv à ton équipe" ,
+        "Description":"Le pouvoir des fibres végétales restaure 30 pv à ton équipe" ,
         "IsAoE":true ,
         "Type":3 ,
-        "Health":20,
+        "Health":30,
         "Animation":3,
         "Projectile":"",
-        "Uses":20
+        "Uses":5
 
     },
     {
@@ -21,7 +21,7 @@
         "Health":140,
         "Animation":6,
         "Projectile":"",
-        "Uses":5
+        "Uses":10
 
     },
     {
@@ -42,7 +42,7 @@
     {
         "Id":3,
         "Name":"Charge mignonne",
-        "Description":"Charge l'ennemi, le blessant pour 130% de ta force" ,
+        "Description":"Charge l'ennemi, le blessant pour 160% de ta force" ,
         "IsAoE":false ,
         "Type":4 ,
         "Health":130,

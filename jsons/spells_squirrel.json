@@ -37,8 +37,20 @@
         "Uses":30
 
     },
-    {
+        {
         "Id":3,
+        "Name":"Pluie de noisettes",
+        "Description":"Lance des noisettes sur les ennemis, les blessant pour 140% de ta force" ,
+        "IsAoE":true,
+        "Type":4,
+        "Health":140,
+        "Animation":7,
+        "Projectile":"hazelnut",
+        "Uses":10
+
+    },
+    {
+        "Id":4,
         "Name":"Noisette miam",
         "Description":"Mange une noisette pour te soigner de 17 pv" ,
         "IsAoE":false,
@@ -49,7 +61,7 @@
         "Uses":5
     },
     {
-        "Id":4,
+        "Id":5,
         "Name":"Jet de feuille",
         "Description":"Lance une feuille sur l'ennemi, réduisant sa précision de 20%" ,
         "IsAoE":false ,
@@ -60,17 +72,5 @@
         "Animation":7,
         "Projectile":"leaves",
         "Uses":5
-    },
-    {
-        "Id":5,
-        "Name":"Pluie de noisettes",
-        "Description":"Lance des noisettes sur les ennemis, les blessant pour 140% de ta force" ,
-        "IsAoE":true,
-        "Type":4,
-        "Health":140,
-        "Animation":7,
-        "Projectile":"hazelnut",
-        "Uses":10
-
     }
 ]
