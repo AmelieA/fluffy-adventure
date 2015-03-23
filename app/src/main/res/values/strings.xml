@@ -44,6 +44,7 @@
     <string name="text_port">Port</string>
     <string name="signin_button_text">Se connecter</string>
     <string name="signup_button_text">S\'inscrire</string>
+    <string name="missing_text">champ obligatoire</string>
 
     <string name="title_activity_attack_choice">AttackChoice</string>
 

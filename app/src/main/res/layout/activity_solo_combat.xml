@@ -180,8 +180,8 @@
             <!--Throwable object to Opponent -->
             <ImageView
                 android:id="@+id/ThrowableObjectToOpponent"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="100dp"
                 android:layout_marginTop="350dp"
                 android:visibility="invisible"
@@ -191,8 +191,8 @@
             <!--Throwable object to Fighter -->
             <ImageView
                 android:id="@+id/ThrowableObjectToFighter"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="250dp"
                 android:layout_marginTop="150dp"
                 android:visibility="invisible"

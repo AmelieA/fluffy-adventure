@@ -39,7 +39,7 @@ public class SignUpActivity extends Activity {
         etUserName.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                enableSubmitIfReady();
+                    enableSubmitIfReady();
             }
 
             @Override
@@ -52,8 +52,25 @@ public class SignUpActivity extends Activity {
         });
 
         etPass = (EditText)findViewById(R.id.etPass);
+        etPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                enableSubmitIfReady();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         btnSignIn = (Button)findViewById(R.id.btnAddFriend);
         btnSignIn.setTypeface(font);
+        btnSignIn.setEnabled(false);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,9 +86,16 @@ public class SignUpActivity extends Activity {
     }
 
     public void enableSubmitIfReady() {
-        boolean isReady = etUserName.getText().toString().length() > 0;
-        btnSignIn.setEnabled(isReady);
-
+        btnSignIn.setEnabled(false);
+        if( etUserName.getText().toString().length() == 0 ){
+            etUserName.setError("Champ requis");
+        }else{
+            if( etPass.getText().toString().length() == 0 )
+                etPass.setError( "Champ requis" );
+            else{
+                btnSignIn.setEnabled(true);
+            }
+        }
     }
 
     private class CreateUserTask extends AsyncTask<Void, Void, Boolean> {

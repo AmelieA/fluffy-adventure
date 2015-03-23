@@ -36,9 +36,9 @@ public class AttackChoice extends Activity {
     AttackChoiceAdapter inactiveAdapter;
 
     // List of attacks
-    ArrayList<AbstractSpell> activeAttack;// = new ArrayList<>(Arrays.asList(spell));
+    ArrayList<AbstractSpell> activeAttack;
 
-    ArrayList<AbstractSpell> inactiveAttack;// = new ArrayList<>(Arrays.asList(spell2));
+    ArrayList<AbstractSpell> inactiveAttack;
     Button saveBtn;
 
 
