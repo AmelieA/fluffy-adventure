@@ -3,10 +3,10 @@
     {
         "Id":0,
         "Name":"Dynamite",
-        "Description":"Blesse les ennemis pour 140% de l'attaque" ,
+        "Description":"Blesse les ennemis pour 160% de l'attaque" ,
         "IsAoE":true ,
         "Type":4 ,
-        "Health":140,
+        "Health":160,
         "Animation":7,
         "Projectile":"dynamite",
         "Uses":5
@@ -25,13 +25,26 @@
     {
         "Id":2,
         "Name":"Charge",
-        "Description":"Blesse une cible ennemie pour 120% de l'attaque" ,
+        "Description":"Blesse une cible ennemie pour 130% de l'attaque" ,
         "IsAoE":false ,
         "Type":4 ,
-        "Health":120,
+        "Health":130,
         "Animation":6,
         "Projectile":"",
         "Uses":100
+    },
+    {
+        "Id":3,
+        "Name":"Concentration",
+        "Description":"Améliore la précision et la force de 20%" ,
+        "IsAoE":false ,
+        "Type":1 ,
+        "Strength":120,
+        "Accuracy":120,
+        "Evasiveness":100,
+        "Animation":1,
+        "Projectile":"",
+        "Uses": 5
     }
 
 ]
