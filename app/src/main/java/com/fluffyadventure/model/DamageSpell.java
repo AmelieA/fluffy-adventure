@@ -74,7 +74,7 @@ public class DamageSpell extends AbstractSpell {
         JSONObject json = super.toJson();
 
         json.put("Type",AbstractSpell.DAMAGE);
-        json.put("Health",damage);
+        json.put("Health",damagePercent);
         return json;
     }
 }
