@@ -78,8 +78,9 @@ public class MailBox extends Activity {
         btnReload.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                GetMailsTask task = new GetMailsTask(MailBox.this);
-                task.execute();
+                //TODO: uncomment when save Mails method on server is implemented
+//                SyncMailsTask task = new SyncMailsTask(MailBox.this);
+//                task.execute();
             }
         });
     }
@@ -118,17 +119,17 @@ public class MailBox extends Activity {
         }
     }
 
-    private class GetMailsTask extends AsyncTask<Void, Void, Boolean> {
+    private class SyncMailsTask extends AsyncTask<Void, Void, Boolean> {
         ProgressDialog dialog;
         Context ctx;
 
-        public GetMailsTask(Context ctx) {
+        public SyncMailsTask(Context ctx) {
             this.ctx = ctx;
             this.dialog = new ProgressDialog(this.ctx);
         }
 
         protected void onPreExecute(){
-            this.dialog.setTitle("Récupération des mails...");
+            this.dialog.setTitle("Synchronisation des mails...");
             this.dialog.show();
         }
 
@@ -138,7 +139,7 @@ public class MailBox extends Activity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Boolean result = Controller.retrieveMailsFromServer();
+            Boolean result = Controller.saveMails();
             return result;
         }
 
@@ -155,13 +156,13 @@ public class MailBox extends Activity {
     }
 
     public void onBackPressed() {
+        //TODO: uncomment when save Mails method on server is implemented
+//      SyncMailsTask task = new SyncMailsTask(MailBox.this);
+//      task.execute();
         Intent intent = new Intent(MailBox.this, Status.class);
         startActivity(intent);
         finish();
 
     }
-
-
-
 
 }
