@@ -19,10 +19,9 @@ import com.fluffyadventure.model.User;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Treasure;
-import com.google.android.gms.internal.m;
+import com.fluffyadventure.model.WanderingSpawn;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +46,7 @@ public class Controller {
     private static Server server;
     private static User user;
     private static ArrayList<AbstractSpawn> objectives;
+    private static ArrayList<Creature> monsters = new ArrayList<>();
     private static LatLng QGLocation;
     private static ArrayList<Integer> succeededSpawns= new ArrayList<>();
     private static AbstractSpawn currentObjective;
@@ -72,6 +72,38 @@ public class Controller {
                 );
                 Log.d("Objective " + Integer.toString(i), objectives.get(i).toString());
             }
+        }
+    }
+
+    public  static  void setUpWanderingSpawns() {
+        Random randomGenerator = new Random();
+
+        if (!monsters.isEmpty()) {
+            for (int i = 0; i < 10; i++) {
+                double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT;
+                double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT;
+                double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT * 0.5);
+                double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT;
+
+                ArrayList<Creature> randomEnemies = new ArrayList<>(Arrays.asList(monsters.get(randomGenerator.nextInt(monsters.size()))));
+                WanderingSpawn spawn = new WanderingSpawn(1000 + i, 0, 0, 0, QGLocation.latitude + coefLat + randLat,
+                        QGLocation.longitude + coefLong + randLong, "text", "name", 0, randomEnemies, true);
+                objectives.add(spawn);
+                Log.d("Objective " + Integer.toString(i), objectives.get(i).toString());
+            }
+        }
+    }
+
+    public static void moveWanderingSpawns(){
+        Random randomGenerator = new Random();
+
+        for(int i=0; i<10; i++) {
+            double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT;
+            double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT;
+            double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT * 0.5);
+            double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT;
+
+            objectives.get(1000+i).setCoordinates(QGLocation.latitude + coefLat + randLat, QGLocation.longitude + coefLong + randLong);
         }
     }
 
@@ -308,6 +340,8 @@ public class Controller {
     public static Boolean moveHQ2(){
         //Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
         setUpObjectivesWithHq();
+        getMonsters();
+        setUpWanderingSpawns();
 
         String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "users/move_HQ2";
         try {
@@ -329,7 +363,7 @@ public class Controller {
 
     private static JSONObject moveHQSpawns() throws JSONException {
         JSONObject HQLocation = new JSONObject();
-        HQLocation.put("Latitude",QGLocation.latitude);
+        HQLocation.put("Latitude", QGLocation.latitude);
         HQLocation.put("Longitude",QGLocation.longitude);
 
         JSONArray spawnsLocationsJson = new JSONArray();
@@ -607,6 +641,33 @@ public class Controller {
         return null;
     }
 
+    private static boolean getMonsters(){
+        String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/monsters" ;
+        try {
+            URL url = new URL(uri);
+
+            JSONObject returnJson = server.connectWithoutAuth(url, HttpURLConnection.HTTP_OK, true, false, null);
+
+            if (returnJson != null) {
+                JSONObject inputJson = returnJson.getJSONObject("json");
+                Log.d("Monsters", inputJson.toString());
+                JSONArray array = inputJson.getJSONArray("Monsters");
+                monsters = new ArrayList<>();
+                for (int i = 0; i < array.length();i++) {
+                    JSONObject jSonEnemy = array.getJSONObject(i);
+                    Monster monster = new Monster(jSonEnemy);
+                    monsters.add(monster);
+                }
+                return true;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private static ArrayList<AbstractSpawn> get_spawns(){
         String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "spawns";
         try {
@@ -690,6 +751,7 @@ public class Controller {
             json.put("Object",object);
             json.put("Content",content);
             json.put("Timestamp",System.currentTimeMillis());
+            json.put("Type","Mail");
             JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
 
             if (returnJson != null){

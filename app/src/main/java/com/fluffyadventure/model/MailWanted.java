@@ -30,19 +30,25 @@ public class MailWanted extends Mail{
 
     public MailWanted (JSONObject jsonObject) throws JSONException {
         super (jsonObject);
-        animal1Name = jsonObject.getString("animal1Name");
-        animal2Name = jsonObject.getString("animal2Name");
-        animal1Pic = jsonObject.getString("animal1Pic");
-        animal2Pic = jsonObject.getString("animal2Pic");
+        JSONObject animal1 = jsonObject.getJSONObject("Animal1");
+        JSONObject animal2 = jsonObject.getJSONObject("Animal2");
+        animal1Name = animal1.getString("Name");
+        animal2Name = animal2.getString("Name");
+        animal1Pic = animal1.getString("ImgPath");
+        animal2Pic = animal2.getString("ImgPath");
 
     }
     public JSONObject toJson() throws JSONException {
         JSONObject jsonObject = super.toJson();
         jsonObject.put("Type","Wanted");
-        jsonObject.put("animal1Name",animal1Name);
-        jsonObject.put("animal2Name",animal2Name);
-        jsonObject.put("animal1Pic",animal1Pic);
-        jsonObject.put("animal2Pic",animal2Pic);
+        JSONObject animal1 = new JSONObject();
+        JSONObject animal2 = new JSONObject();
+        animal1.put("Name",animal1Name);
+        animal2.put("Name",animal2Name);
+        animal1.put("ImgPath",animal1Pic);
+        animal2.put("ImgPath",animal2Pic);
+        jsonObject.put("Animal1",animal1);
+        jsonObject.put("Animal2",animal2);
         return jsonObject;
     }
 
