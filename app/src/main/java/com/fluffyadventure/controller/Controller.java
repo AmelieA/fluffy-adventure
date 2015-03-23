@@ -676,6 +676,27 @@ public class Controller {
         return false;
     }
 
+    public static Boolean checkForUnreadMails(){
+        Boolean result = false;
+        for (Mail m:mails){
+            if(!m.getRead()){
+                result=true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public static void setMailAsRead(Boolean read, Mail mail){
+        for (Mail m:mails){
+            if (m.equals(mail)){
+                m.setRead(read);
+                //save mail ?
+                break;
+            }
+        }
+    }
+
     public static Boolean addFriend(String name){
         String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "friends/add";
         try {

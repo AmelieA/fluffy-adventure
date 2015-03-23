@@ -25,6 +25,7 @@
     <ImageButton
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:scaleType="fitXY"
         android:text="@string/mail_button_text"
         android:id="@+id/BtnMail"
         android:layout_margin="15dp"

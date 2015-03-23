@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,12 +24,14 @@ import com.fluffyadventure.model.Mail;
 import com.fluffyadventure.model.MailWanted;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.concurrent.ExecutionException;
 
 
 public class MailBox extends Activity {
 
     ImageButton btnCompose;
+    ImageButton btnReload;
     MailAdapter mailAdapter;
 
     @Override
@@ -40,8 +43,9 @@ public class MailBox extends Activity {
 
 
         mailAdapter = new MailAdapter(this, Controller.getMails());
+        mailAdapter.sort(Mail.mailComparator);
         //test Wanted
-            mailAdapter.add(new MailWanted(0,"Mission","Attaquez tartampion !","tartampion",0,"Alice","Bob","squirrel1","squirrel2"));
+        //    mailAdapter.add(new MailWanted(0,"Mission","Attaquez tartampion !","tartampion",0,"Alice","Bob","squirrel1","squirrel2"));
         ListView mailsView = (ListView) findViewById(R.id.MailBox);
         mailsView.setAdapter(mailAdapter);
         mailsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,6 +73,15 @@ public class MailBox extends Activity {
                 startActivity(intent);
             }
         });
+
+        btnReload = (ImageButton)findViewById(R.id.BtnReload);
+        btnReload.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                GetMailsTask task = new GetMailsTask(MailBox.this);
+                task.execute();
+            }
+        });
     }
 
     public class MailAdapter extends ArrayAdapter<Mail> {
@@ -93,11 +106,51 @@ public class MailBox extends Activity {
             mailSender.setText(values.get(position).getSender());
             TextView subject = (TextView) rowView.findViewById(R.id.MailSubject);
             subject.setText(values.get(position).getObject());
-            if (!values.get(position).getRead()){
-                //do sth
-            }
-
+            ImageView imgUnread = (ImageView)rowView.findViewById(R.id.imgUnread);
+            imgUnread.setImageResource(getResources().getIdentifier(
+                    (values.get(position).getRead() ? "mailopened" : "newmail"), "drawable", getPackageName()));
             return rowView;
+        }
+
+        public void updateData(ArrayList<Mail> values){
+            this.clear();
+            this.addAll(values);
+        }
+    }
+
+    private class GetMailsTask extends AsyncTask<Void, Void, Boolean> {
+        ProgressDialog dialog;
+        Context ctx;
+
+        public GetMailsTask(Context ctx) {
+            this.ctx = ctx;
+            this.dialog = new ProgressDialog(this.ctx);
+        }
+
+        protected void onPreExecute(){
+            this.dialog.setTitle("Récupération des mails...");
+            this.dialog.show();
+        }
+
+        protected Boolean doInBackground(Void... params){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Boolean result = Controller.retrieveMailsFromServer();
+            return result;
+        }
+
+        protected  void onPostExecute(Boolean login) {
+            System.out.println("done");
+            dialog.dismiss();
+            if (!login){
+                Toast.makeText(ctx, "Impossible de récupérer les mails", Toast.LENGTH_LONG).show();
+            }
+            mailAdapter.updateData(Controller.getMails());
+            mailAdapter.sort(Mail.mailComparator);
+            mailAdapter.notifyDataSetChanged();
         }
     }
 

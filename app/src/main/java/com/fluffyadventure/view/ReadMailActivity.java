@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.Mail;
 
 public class ReadMailActivity extends Activity {
@@ -34,8 +35,7 @@ public class ReadMailActivity extends Activity {
             textMailSender.setText(mail.getSender());
             textMailBody.setText(mail.getContent());
             textMailSubject.setText(mail.getObject());
-            mail.setRead(true);
-            //save mail here ?
+            Controller.setMailAsRead(true,mail);
         } else {
             textMailSender.clearComposingText();
             textMailBody.clearComposingText();

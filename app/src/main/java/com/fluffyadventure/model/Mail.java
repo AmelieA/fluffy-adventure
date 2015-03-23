@@ -7,6 +7,8 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Comparator;
+
 /**
  * Created by amelie on 2/27/15.
  */
@@ -77,6 +79,23 @@ public class Mail implements Parcelable{
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Mail)) return false;
+
+        Mail mail = (Mail) o;
+
+        if (read != mail.read) return false;
+        if (senderId != mail.senderId) return false;
+        if (timestamp != mail.timestamp) return false;
+        if (content != null ? !content.equals(mail.content) : mail.content != null) return false;
+        if (!object.equals(mail.object)) return false;
+        if (!sender.equals(mail.sender)) return false;
+
+        return true;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -100,6 +119,13 @@ public class Mail implements Parcelable{
     public static final Parcelable.Creator<Mail> CREATOR = new Parcelable.Creator<Mail>() {
         public Mail createFromParcel(Parcel in){return new Mail(in);}
         public Mail[] newArray(int size){return new Mail[size];}
+    };
+
+    public static final Comparator<Mail> mailComparator = new Comparator<Mail>() {
+        @Override
+        public int compare(Mail lhs, Mail rhs) {
+            return rhs.getTimestamp()-lhs.getTimestamp();
+        }
     };
 
 }
