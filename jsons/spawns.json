@@ -24,7 +24,7 @@
     },
     { 
         "Id":1,
-        "SpellReward":4,
+        "SpellReward":5,
         "HealthReward":0,
         "StrengthReward":0,
         "Text":"Des monstres s'amusent à chatouiller des chatons, sauve les vite !",
@@ -81,7 +81,7 @@
     },
     { 
         "Id":3,
-        "SpellReward":4,
+        "SpellReward":5,
         "HealthReward":0,
         "StrengthReward":0,
         "Text":"Des zombies échaffaudent un plan de conquète mondiale, arrête les !",
