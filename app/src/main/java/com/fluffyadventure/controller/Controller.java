@@ -87,7 +87,7 @@ public class Controller {
 
                 ArrayList<Creature> randomEnemies = new ArrayList<>(Arrays.asList(monsters.get(randomGenerator.nextInt(monsters.size()))));
                 WanderingSpawn spawn = new WanderingSpawn(1000 + i, 0, 0, 0, QGLocation.latitude + coefLat + randLat,
-                        QGLocation.longitude + coefLong + randLong, "text", "name", 0, randomEnemies, true);
+                        QGLocation.longitude + coefLong + randLong, "Auras-tu le courage de vaincre ce monstre ?", "Combat aléatoire", 0, randomEnemies, true);
                 objectives.add(spawn);
                 Log.d("Objective " + Integer.toString(i), objectives.get(i).toString());
             }
@@ -103,7 +103,8 @@ public class Controller {
             double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT * 0.5);
             double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT;
 
-            objectives.get(1000+i).setCoordinates(QGLocation.latitude + coefLat + randLat, QGLocation.longitude + coefLong + randLong);
+            //change location of the last 10 spawns (wich should be le random spawn)
+            objectives.get(objectives.size()-1-i).setCoordinates(QGLocation.latitude + coefLat + randLat, QGLocation.longitude + coefLong + randLong);
         }
     }
 
@@ -340,8 +341,6 @@ public class Controller {
     public static Boolean moveHQ2(){
         //Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
         setUpObjectivesWithHq();
-        getMonsters();
-        setUpWanderingSpawns();
 
         String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "users/move_HQ2";
         try {
@@ -550,6 +549,10 @@ public class Controller {
         }
 
         //setupObjectives();
+
+        //random spawns
+        getMonsters();
+        setUpWanderingSpawns();
 
         return true;
     }
