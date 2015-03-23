@@ -80,8 +80,8 @@ public class MailBox extends Activity {
             @Override
             public void onClick(View v){
                 //TODO: uncomment when save Mails method on server is implemented
-//                SyncMailsTask task = new SyncMailsTask(MailBox.this);
-//                task.execute();
+                SyncMailsTask task = new SyncMailsTask(MailBox.this);
+                task.execute();
             }
         });
     }

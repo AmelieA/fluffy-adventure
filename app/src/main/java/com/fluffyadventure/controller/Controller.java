@@ -42,6 +42,7 @@ public class Controller {
     //TODO QG -> HQ
 
     private static Animal animal1;
+    private static final int MAX_SPAWN = 1000;
     private static Animal animal2 = null;
     private static Server server;
     private static User user;
@@ -578,6 +579,7 @@ public class Controller {
                     JSONObject spellJson = array.getJSONObject(i);
                     switch (spellJson.getInt("Type")) {
                         case AbstractSpell.DAMAGE:
+                            Log.e("Damage",spellJson.toString());
                             spell = new DamageSpell(spellJson);
                             break;
                         case AbstractSpell.HEAL:
