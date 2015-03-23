@@ -3,7 +3,7 @@
     {
         "Id":0,
         "Name":"Poing de lapin",
-        "Description":"Libère ta rage intérieure" ,
+        "Description":"Libère ta rage intérieure, blessant un ennemi pour 190% de ta force" ,
         "IsAoE":false ,
         "Type":4 ,
         "Health":190,
@@ -15,7 +15,7 @@
     {
         "Id":1,
         "Name":"Carottes sacrées",
-        "Description":"Mange une carrote pour augmenter tes statistiques" ,
+        "Description":"Augmente ta force et ta précision de 20%" ,
         "IsAoE":false ,
         "Type":1 ,
         "Strength":120,
@@ -29,10 +29,10 @@
     {
         "Id":2,
         "Name":"Sommeil",
-        "Description":"cache toi dans ton terrier et dors" ,
+        "Description":"Cache toi dans ton terrier et dors, regagnant 17 pv" ,
         "IsAoE":false ,
         "Type":3 ,
-        "Health":15,
+        "Health":17,
         "Animation":3,
         "Projectile":"",
         "Uses":5
@@ -41,14 +41,25 @@
     {
         "Id":3,
         "Name":"Attaque choupie",
-        "Description":"Attaque plus vite que ton ombre" ,
+        "Description":"Attaque plus vite que ton ombre, blessant pour 110% de ta force" ,
         "IsAoE":false ,
         "Type":4 ,
         "Health":110,
         "Animation":6,
         "Projectile":"",
         "Uses":30
-
+    },
+    {
+        "Id":4,
+        "Name":"Etre mignon",
+        "Description":"L'ennemi n'a plus envie de t'attaquer, ce qui baisse sa force de 20%" ,
+        "IsAoE":false ,
+        "Type":2,
+        "Strength":80,
+        "Accuracy":100,
+        "Evasiveness":100,
+        "Animation":6,
+        "Projectile":"",
+        "Uses":5
     }
-
 ]

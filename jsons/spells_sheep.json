@@ -16,12 +16,12 @@
         "Id":1,
         "Name":"Roulade",
         "Description":"Roule sur les adversaires, les blessant pour 140% de ta force" ,
-        "IsAoE":false ,
+        "IsAoE":true ,
         "Type":4 ,
         "Health":140,
         "Animation":6,
         "Projectile":"",
-        "Uses":20
+        "Uses":5
 
     },
     {
@@ -41,11 +41,20 @@
     },
     {
         "Id":3,
+        "Name":"Charge mignonne",
+        "Description":"Charge l'ennemi, le blessant pour 130% de ta force" ,
+        "IsAoE":false ,
+        "Type":4 ,
+        "Health":130,
+        "Animation":6,
+        "Projectile":"",
+        "Uses":30
+    },
+    {
+        "Id":4,
         "Name":"Bêlement",
         "Description":"Distrait l'adversaire et baisse sa précision et son évasion de 15%" ,
         "IsAoE":false ,
-        "Type":4 ,
-        "Health":100,
         "Type":2,
         "Strength":100,
         "Accuracy":85,

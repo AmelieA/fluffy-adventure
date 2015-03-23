@@ -14,17 +14,16 @@
     },
     {
         "Id":1,
-        "Name":"Jet de feuille",
-        "Description":"Lance une feuille sur l'ennemi, réduisant sa précision de 20%" ,
+        "Name":"Concentration",
+        "Description":"Améliore la précision et la force de 20%" ,
         "IsAoE":false ,
-        "Type":2 ,
-        "Strength":100,
-        "Accuracy":80,
+        "Type":1 ,
+        "Strength":120,
+        "Accuracy":120,
         "Evasiveness":100,
-        "Animation":7,
-        "Projectile":"leaves",
-        "Uses":5
-
+        "Animation":1,
+        "Projectile":"",
+        "Uses": 4
     },
     {
         "Id":2,
@@ -48,5 +47,19 @@
         "Animation":3,
         "Projectile":"",
         "Uses":5
-    }
+    },
+    {
+        "Id":4,
+        "Name":"Jet de feuille",
+        "Description":"Lance une feuille sur l'ennemi, réduisant sa précision de 20%" ,
+        "IsAoE":false ,
+        "Type":2 ,
+        "Strength":100,
+        "Accuracy":80,
+        "Evasiveness":100,
+        "Animation":7,
+        "Projectile":"leaves",
+        "Uses":5
+
+    },
 ]
