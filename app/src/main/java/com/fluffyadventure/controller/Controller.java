@@ -465,24 +465,6 @@ public class Controller {
             return false;
         }
 
-        //MAILSBLOCK
-        JSONArray mailsArray = null;
-        try {
-            mailsArray = returnJson.getJSONArray("Mails");
-            for (int i = 0; i < mailsArray.length(); i++) {
-                Mail mail = new Mail(mailsArray.getJSONObject(i));
-                mails.add(mail);
-            }
-
-        } catch (JSONException e) {
-            Log.e("LOGIN MAILS :", e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-        Log.d("Mails login", mails.toString());
-        if (mails == null) {
-            return false;
-        }
 
         //SPAWNSBLOCK
         JSONArray array = null;
@@ -535,6 +517,38 @@ public class Controller {
         } catch (JSONException e) {
             Log.e("LOGIN SPAWNS :", e.getMessage());
             e.printStackTrace();
+            return false;
+        }
+
+
+        //MAILSBLOCK
+        JSONArray mailsArray = null;
+        try {
+            mailsArray = returnJson.getJSONArray("Mails");
+            Log.d("Mail Array",Integer.toString(mailsArray.length()));
+            for (int i = 0; i < mailsArray.length(); i++) {
+                JSONObject object = mailsArray.getJSONObject(i);
+                Mail mail;
+                if (object.getString("Type").equals("Mail")){
+                    mail = new Mail(object);
+                }
+                else {
+
+                    mail = makeWanted(object);
+                }
+                mails.add(mail);
+                Log.d("Mail:",mail.toJson().toString());
+            }
+
+
+
+        } catch (JSONException e) {
+            Log.e("LOGIN MAILS :", e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+        Log.d("Mails login", mails.toString());
+        if (mails == null) {
             return false;
         }
 

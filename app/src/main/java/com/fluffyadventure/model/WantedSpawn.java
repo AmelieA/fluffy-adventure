@@ -14,7 +14,7 @@ public class WantedSpawn extends AbstractSpawn{
                        String text, String name, Integer level,
                        ArrayList<Creature> opponents, boolean isSoloFight) {
 
-        super(-1, spellReward, healthReward, strengthReward, latitude, longitude, text, name, level, isSoloFight);
+        super(-100, spellReward, healthReward, strengthReward, latitude, longitude, text, name, level, isSoloFight);
         this.opponents = opponents;
     }
 
