@@ -27,6 +27,7 @@ public class Status extends Activity {
 
     ImageButton btnMap;
     ImageButton btnMailbox;
+    ImageButton btnFriends;
     Button btnMngSkills;
     Button btnMoveHQ;
     ImageView imgPC1;
@@ -108,6 +109,16 @@ public class Status extends Activity {
 
                 GetMailsTask task = new GetMailsTask(Status.this);
                 task.execute();
+            }
+        });
+
+        btnFriends = (ImageButton)findViewById(R.id.BtnFriends);
+        btnFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Status.this, FriendListActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
