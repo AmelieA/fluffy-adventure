@@ -746,14 +746,16 @@ public class SoloCombat extends Activity {
 
     public int GainLifeAnimation(ProgressBar lifeProgressBar, int lifeProgressBarPoint, int lifePointGain, ImageView lifeFilter) {
 
+        Animation lifeAnimation;
         if (spell.getAnimationType() == AbstractSpell.BUFF) {
-            buffAnimation(lifeFilter);
+            lifeFilter.setImageResource(R.drawable.buff);
+            lifeAnimation = AnimationUtils.loadAnimation(this, R.anim.buff_animation);
         } else {
             lifeFilter.setImageResource(R.drawable.life4);
-            Animation lifeAnimation = AnimationUtils.loadAnimation(this, R.anim.gain_life_animation);
-            lifeAnimation.setStartOffset(animationOffset);
-            lifeFilter.startAnimation(lifeAnimation);
+            lifeAnimation = AnimationUtils.loadAnimation(this, R.anim.gain_life_animation);
         }
+        lifeAnimation.setStartOffset(animationOffset);
+        lifeFilter.startAnimation(lifeAnimation);
 
         if (lifeProgressBarPoint >= 100 && lifePointGain == 0) {
             LosePointAnimation(lifeProgressBar, lifeProgressBarPoint, lifeProgressBarPoint);
@@ -920,15 +922,6 @@ public class SoloCombat extends Activity {
             opponentImage2.startAnimation(attackAnimation);
         }
         animationOffset += 100;
-    }
-
-    public void buffAnimation(ImageView lifeFilter){
-
-        lifeFilter.setImageResource(R.drawable.buff);
-        Animation lifeAnimation = AnimationUtils.loadAnimation(this, R.anim.buff_animation);
-        lifeAnimation.setStartOffset(animationOffset);
-        lifeFilter.startAnimation(lifeAnimation);
-
     }
 
     @Override

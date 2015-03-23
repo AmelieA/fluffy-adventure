@@ -441,10 +441,10 @@
                                     android:layout_weight="8"/>
 
                                 <TextView
-                                    android:id="@+id/FightersName"
+                                    android:id="@+id/FightersName2"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
-                                    android:layout_alignTop="@+id/FighterPanel"
+                                    android:layout_alignTop="@+id/FighterPanel2"
                                     android:gravity="left"
                                     android:text="Fighter"
                                     android:textSize="23sp"
@@ -481,7 +481,7 @@
                                     android:textColor="#ff000000"/>
                                 <ProgressBar
                                     android:layout_weight="2.2"
-                                    android:id="@+id/FightersLife"
+                                    android:id="@+id/FightersLife2"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:layout_marginTop="5dp"
@@ -516,7 +516,7 @@
                                     android:layout_weight="8.8"/>
 
                                 <TextView
-                                    android:id="@+id/FightersName2"
+                                    android:id="@+id/FightersName"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:layout_alignTop="@+id/FighterPanel"
@@ -556,7 +556,7 @@
                                     android:textColor="#ff000000"/>
                                 <ProgressBar
                                     android:layout_weight="2.1"
-                                    android:id="@+id/FightersLife2"
+                                    android:id="@+id/FightersLife"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:layout_marginTop="5dp"

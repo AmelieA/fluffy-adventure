@@ -17,9 +17,8 @@
 
     <TextView android:text="@string/chose_name"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:maxLength="13"
-        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:gravity="center"
         android:id="@+id/nameChoiceDisclaimer"
         style="@style/information"/>
 
@@ -47,7 +46,7 @@
             android:layout_above="@+id/BtnOkName"
             android:id="@+id/name_choice"
             android:inputType="textPersonName|textCapSentences"
-            android:maxLength="15"
+            android:maxLength="13"
             android:hint="Nom"
             android:gravity="center"/>
 
