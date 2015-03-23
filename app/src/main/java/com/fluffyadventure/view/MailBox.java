@@ -44,8 +44,6 @@ public class MailBox extends Activity {
 
         mailAdapter = new MailAdapter(this, Controller.getMails());
         mailAdapter.sort(Mail.mailComparator);
-        //test Wanted
-        //    mailAdapter.add(new MailWanted(0,"Mission","Attaquez tartampion !","tartampion",0,"Alice","Bob","squirrel1","squirrel2"));
         ListView mailsView = (ListView) findViewById(R.id.MailBox);
         mailsView.setAdapter(mailAdapter);
         mailsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,6 +67,9 @@ public class MailBox extends Activity {
         btnCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO: uncomment when save Mails method on server is implemented
+//                SyncMailsTask task = new SyncMailsTask(MailBox.this);
+//                task.execute();
                 Intent intent = new Intent(MailBox.this, FriendListActivity.class);
                 startActivity(intent);
             }
