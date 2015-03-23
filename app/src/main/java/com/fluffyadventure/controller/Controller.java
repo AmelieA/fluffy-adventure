@@ -554,7 +554,7 @@ public class Controller {
 
     }
 
-    private static ArrayList<AbstractSpell> getSpells(ArrayList<Integer> ids, int type){
+    public static ArrayList<AbstractSpell> getSpells(ArrayList<Integer> ids, int type){
         String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "spells/type/"  + Integer.toString(type) ;
         try {
             URL url = new URL(uri);

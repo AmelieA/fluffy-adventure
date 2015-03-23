@@ -1,7 +1,7 @@
 [
     { 
         "Id":0,
-        "SpellReward":0,
+        "SpellReward":4,
         "HealthReward":0,
         "StrengthReward":0,
         "Text":"Pourfendre le méchant zombie mangeur de carottes",
@@ -24,7 +24,7 @@
     },
     { 
         "Id":1,
-        "SpellReward":0,
+        "SpellReward":4,
         "HealthReward":0,
         "StrengthReward":0,
         "Text":"Des monstres s'amusent à chatouiller des chatons, sauve les vite !",
@@ -57,7 +57,7 @@
     },
     { 
         "Id":2,
-        "SpellReward":0,
+        "SpellReward":4,
         "HealthReward":0,
         "StrengthReward":0,
         "Text":"Un méchant sorcier a lancé une malédiction sur les arbres de la forêt",
@@ -81,7 +81,7 @@
     },
     { 
         "Id":3,
-        "SpellReward":0,
+        "SpellReward":4,
         "HealthReward":0,
         "StrengthReward":0,
         "Text":"Des zombies échaffaudent un plan de conquète mondiale, arrête les !",
@@ -105,7 +105,7 @@
     },
     { 
         "Id":4,
-        "SpellReward":0,
+        "SpellReward":4,
         "HealthReward":0,
         "StrengthReward":0,
         "Text":"Much evil, such dungeon, so dangerous, very intense, wow",
@@ -129,7 +129,7 @@
     },
     { 
         "Id":5,
-        "SpellReward":0,
+        "SpellReward":-1,
         "HealthReward":0,
         "StrengthReward":0,
         "Text":"Mon préééécieeeuux ...",

@@ -40,9 +40,9 @@
     },
     {
         "Id":3,
-        "Name":"Attaque choupie",
-        "Description":"Attaque plus vite que ton ombre, blessant pour 110% de ta force" ,
-        "IsAoE":false ,
+        "Name":"Double attaque",
+        "Description":"Attaque pouvant toucher 2 ennemis, les blessant pour 110% de ta force" ,
+        "IsAoE":true ,
         "Type":4 ,
         "Health":110,
         "Animation":6,
@@ -51,6 +51,17 @@
     },
     {
         "Id":4,
+        "Name":"Attaque choupie",
+        "Description":"Attaque plus vite que ton ombre, blessant pour 130% de ta force" ,
+        "IsAoE":false ,
+        "Type":4 ,
+        "Health":130,
+        "Animation":6,
+        "Projectile":"",
+        "Uses":30
+    },
+    {
+        "Id":5,
         "Name":"Etre mignon",
         "Description":"L'ennemi n'a plus envie de t'attaquer, ce qui baisse sa force de 20%" ,
         "IsAoE":false ,
@@ -62,4 +73,5 @@
         "Projectile":"",
         "Uses":5
     }
+
 ]

@@ -54,7 +54,6 @@ public abstract class AbstractSpell {
         this.maxUses = json.getInt("Uses");
     }
 
-
     public String getName() {
         return name;
     }

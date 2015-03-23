@@ -2,8 +2,8 @@
 [
     {
         "Id":0,
-        "Name":"Jet de noisettes",
-        "Description":"Lance une noisettes sur l'ennemi, le blessant pour 170% de ta force" ,
+        "Name":"Jet de noisette",
+        "Description":"Lance une noisette sur l'ennemi, le blessant pour 170% de ta force" ,
         "IsAoE":false,
         "Type":4,
         "Health":170,
@@ -60,6 +60,17 @@
         "Animation":7,
         "Projectile":"leaves",
         "Uses":5
-
     },
+    {
+        "Id":0,
+        "Name":"Pluie de noisettes",
+        "Description":"Lance des noisettes sur les ennemis, les blessant pour 140% de ta force" ,
+        "IsAoE":true,
+        "Type":4,
+        "Health":140,
+        "Animation":7,
+        "Projectile":"hazelnut",
+        "Uses":10
+
+    }
 ]

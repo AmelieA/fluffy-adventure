@@ -62,5 +62,18 @@
         "Animation":6,
         "Projectile":"",
         "Uses":5
+    },
+    {
+        "Id":5,
+        "Name":"Jet d'herbe'",
+        "Description":"Lance de l'herbe sur l'ennemi, réduisant sa précision de 20%" ,
+        "IsAoE":false ,
+        "Type":2 ,
+        "Strength":100,
+        "Accuracy":80,
+        "Evasiveness":100,
+        "Animation":7,
+        "Projectile":"leaves",
+        "Uses":5
     }
 ]

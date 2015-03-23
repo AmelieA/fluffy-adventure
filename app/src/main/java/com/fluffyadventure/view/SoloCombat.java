@@ -251,9 +251,6 @@ public class SoloCombat extends Activity {
         opponents.get(0).setActiveSpells(spells);
         if (!soloCombat)
             opponents.get(1).setActiveSpells(spells);*/
-        opponents.get(0).setHealth(100);
-        if (!soloCombat)
-            opponents.get(1).setHealth(100);
 
         for (Creature opponent : opponents) {
             tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
@@ -269,6 +266,7 @@ public class SoloCombat extends Activity {
         if (opponentIndex == 0) {
             opponentsLifePoint = opponents.get(opponentIndex).getHealth();
             opponentsLife.setMax(opponentsLifePoint);
+            opponentsLife.setProgress(opponentsLifePoint);
             opponentsName.setText(opponents.get(opponentIndex).getName());
             String imagePath = opponents.get(opponentIndex).getImagePath();
             opponentImage.setImageResource(
@@ -285,6 +283,7 @@ public class SoloCombat extends Activity {
             });
             fightersLifePoint = fighters.get(0).getHealth();
             fightersLife.setMax(fightersLifePoint);
+            fightersLife.setProgress(fightersLifePoint);
             fightersName.setText(Controller.getAnimal(1).getName());
             imagePath = fighters.get(0).getImagePath();
             fighterImage.setImageResource(
@@ -293,6 +292,7 @@ public class SoloCombat extends Activity {
         } else if (opponentIndex == 1){
             opponentsLifePoint2 = opponents.get(opponentIndex).getHealth();
             opponentsLife2.setMax(opponentsLifePoint2);
+            opponentsLife2.setProgress(opponentsLifePoint2);
             opponentsName2.setText(opponents.get(opponentIndex).getName());
             String imagePath = opponents.get(opponentIndex).getImagePath();
             opponentImage2.setImageResource(
@@ -314,6 +314,7 @@ public class SoloCombat extends Activity {
             });
             fightersLifePoint2 = fighters.get(1).getHealth();
             fightersLife2.setMax(fightersLifePoint2);
+            fightersLife2.setProgress(fightersLifePoint2);
             fightersName2.setText(Controller.getAnimal(2).getName());
             imagePath = fighters.get(1).getImagePath();
             fighterImage2.setImageResource(
@@ -644,8 +645,13 @@ public class SoloCombat extends Activity {
             message += " + " + Controller.getCurrentObjective().getHealthReward() + " pv max \n";
         if (Controller.getCurrentObjective().getHealthReward() > 0)
             message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
-        if (Controller.getCurrentObjective().getHealthReward() >= 0)
-            message += " Le sort " + Controller.getCurrentObjective().getSpellReward();
+        if (Controller.getCurrentObjective().getHealthReward() >= 0) {
+            ArrayList<Integer> spellRewardQuery = new ArrayList<>();
+            spellRewardQuery.add(Controller.getCurrentObjective().getSpellReward());
+            AbstractSpell spellReward = Controller.getSpells(spellRewardQuery, Controller.getAnimal(1).getType()).get(0);
+            Controller.getAnimal(1).addSpell(spellReward,false);
+            message += " Le sort " + spellReward.getName();
+        }
         builder.setMessage(message)
                 .setTitle("Victoire !")
                 .setPositiveButton("Youpi !", new DialogInterface.OnClickListener() {
@@ -685,6 +691,13 @@ public class SoloCombat extends Activity {
     }
 
     private void resetFight() {
+
+        for (int k = 0; k < 2; k++) {
+            for (int i = 0; i < tempAnimals.get(k).getActiveSpells().size(); i++) {
+                tempAnimals.get(k).getActiveSpells().get(i).resetUses();
+            }
+        }
+
         Controller.setAnimal1(tempAnimals.get(0));
         if (!soloCombat)
             Controller.setAnimal2(tempAnimals.get(1));
