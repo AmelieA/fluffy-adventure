@@ -220,11 +220,6 @@ public class SoloCombat extends Activity {
         currentFighterIdx = 0;
 
         Animal animal = Controller.getAnimal(1);
-      /*  animal.clearSpells();
-        animal.addSpell(new HealSpell(0, "Soin", "Soigne 15 pv", false, 15, AbstractSpell.HEAL, null, 5), true);
-        animal.addSpell(new DamageSpell(1, "Jet de noisette", "Lance une noisettes sur l'ennemi, le blessant pour 170% de ta force", false, 170, AbstractSpell.THROW, "hazelnut", 15), true);
-        animal.addSpell(new DamageSpell(2, "Charge", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
-        animal.addSpell(new BuffSpell(3, "Concentration", "Améliore la précision et la force de 20%", false, 120, 120, 100, AbstractSpell.HEAL, null, 3), true);*/
 
         tempAnimals.add(new Animal(Controller.getAnimal1()));
         fighters.add(animal);
@@ -242,15 +237,6 @@ public class SoloCombat extends Activity {
 
         opponents = Controller.getCurrentObjective().getOpponents();
 
-      /*  //TODO Remove when no more messed up fourberie
-        AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "hazelnut",100);
-        AbstractSpell evilHeal = new HealSpell(43,"Carotte Nom Nom", "Om nm nom", true, 20, AbstractSpell.HEAL, null, 2);
-        ArrayList<AbstractSpell> spells = new ArrayList<>();
-        spells.add(evilSpell);
-        spells.add(evilHeal);
-        opponents.get(0).setActiveSpells(spells);
-        if (!soloCombat)
-            opponents.get(1).setActiveSpells(spells);*/
 
         for (Creature opponent : opponents) {
             tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
@@ -416,9 +402,12 @@ public class SoloCombat extends Activity {
         int offset = -1;
         if (target == null) {
             offset = 0;
+            targetIdx = 0;
         } else if (target == 0) {
             offset = 1;
-        }
+            targetIdx = 0;
+        } else if (target == 1)
+            targetIdx = 1;
 
         Runnable ennemyTurn = new Runnable() {
             @Override
@@ -538,9 +527,11 @@ public class SoloCombat extends Activity {
         Integer target;
         if (spell.getIsAoE() || soloCombat || fighters.size() == 1) {
             target = null;
+            targetIdx = 0;
         } else {
             Random randomGenerator2 = new Random();
             target = randomGenerator2.nextInt(2);
+            targetIdx = target;
         }
 
         ArrayList<ArrayList<Creature>> fightResult = spell.use(opponents,fighters,currentOpponentIdx,target);
@@ -862,7 +853,35 @@ public class SoloCombat extends Activity {
             public void onAnimationStart(Animator animation) {
                 if (currentAnim == 0) {
                     int value = spell.getValue();
-                    if (spell.getAnimationType() != AbstractSpell.HEAL) {
+                    if (spell.getAnimationType() == AbstractSpell.BUFF) {
+                        if (opponnentsTurn) {
+                            if (!spell.getIsAoE() || soloCombat) {
+                                instruction.setText("Les caractéristiques de " + fighters.get(targetIdx).getName() + " augmentent !");
+                            } else {
+                                instruction.setText("Les caractéristiques de tes compagnons augmentent !");
+                            }
+                        } else {
+                            if (!spell.getIsAoE() || soloCombat) {
+                                instruction.setText("Les caractéristiques de " + opponents.get(targetIdx).getName() + " augmentent !");
+                            } else {
+                                instruction.setText("Les caractéristiques des ennemis augmentent !");
+                            }
+                        }
+                    } else if (spell.getAnimationType() == AbstractSpell.DEBUFF) {
+                        if (opponnentsTurn) {
+                            if (!spell.getIsAoE() || soloCombat) {
+                                instruction.setText("Les caractéristiques de " + opponents.get(targetIdx).getName() + " diminuent !");
+                            } else {
+                                instruction.setText("Les caractéristiques des ennemis diminuent !");
+                            }
+                        } else {
+                            if (!spell.getIsAoE() || soloCombat) {
+                                instruction.setText("Les caractéristiques de " + fighters.get(targetIdx).getName() + " diminuent !");
+                            } else {
+                                instruction.setText("Les caractéristiques de tes compagnons diminuent !");
+                            }
+                        }
+                    } else if (spell.getAnimationType() != AbstractSpell.HEAL) {
                         if (opponnentsTurn) {
                             if (!spell.getIsAoE() || soloCombat) {
                                 instruction.setText(opponents.get(targetIdx).getName() + " perd " + value + "pv");
