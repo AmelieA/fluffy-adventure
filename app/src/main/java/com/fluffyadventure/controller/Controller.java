@@ -744,109 +744,12 @@ public class Controller {
 
 
     //TO BE DELETED
-    public static Boolean moveHQ(){
-        Boolean hasHQbeenMoved = server.moveHQ(user, QGLocation.latitude, QGLocation.longitude);
-        setUpObjectivesWithHq();
-        //setupObjectives();
 
-        return hasHQbeenMoved;
-    }
 
     public static void setupBob() {
         animal1 = new Animal("Bob","rabbit1", Creature.RABBIT);
 
         animal2 = new Animal("BobTwin","rabbit2", Creature.RABBIT);
-    }
-
-    public static void setupObjectives() {
-        Log.i("FA", "Setting up objectives");
-
-        objectives = new ArrayList<AbstractSpawn>();
-        ArrayList<Creature> opponentSolo = new ArrayList<Creature>();
-        ArrayList<Creature> opponentsDuo = new ArrayList<Creature>();
-        AbstractSpell evilSpell = new DamageSpell(42,"Dynamite", "Blesse une cible ennemie pour 120% de l'attaque", false, 120, AbstractSpell.THROW, "dynamite",100);
-        AbstractSpell evilHeal = new HealSpell(43,"Carotte Nom Nom", "Om nm nom", false, 25, AbstractSpell.HEAL, null, 2);
-        ArrayList<AbstractSpell> spells = new ArrayList<>();
-        spells.add(evilSpell);
-        spells.add(evilHeal);
-        opponentSolo.add(new Monster("Evil Bunny",Creature.EVILBUNNY, 100, 10, 90, 25, spells));
-        opponentsDuo.add(new Monster("Evil Bunny A",Creature.EVILBUNNY, 100, 10, 90, 25, spells));
-        opponentsDuo.add(new Monster("Evil Bunny B",Creature.EVILBUNNY, 100, 10, 90, 25, spells));
-
-        AbstractSpawn fightSpawn1 = new Spawn(0,0,0,0,45.780035, 4.856392,
-                "Pourfendre le méchant zombie mangeur de carottes","Bwaaarg",1,opponentSolo, true);
-        objectives.add(fightSpawn1);
-        Log.i("FA", fightSpawn1.toString());
-
-        AbstractSpawn fightSpawn2 = new Spawn(1,0,0,0,45.7767953, 4.8482761,
-                "Des monstres s'amusent à chatouiller des chatons, sauve les vite !","Sauver les chatons !",2,opponentsDuo, false);
-        objectives.add(fightSpawn2);
-        Log.i("FA", fightSpawn2.toString());
-
-        AbstractSpawn fightSpawn3 = new Spawn(2,0,0,0,45.7813447, 4.8513660,
-                "Un méchant sorcier a lancé une malédiction sur les arbres de la forêt","Activité bûcheronnage",3,opponentSolo, true);
-        objectives.add(fightSpawn3);
-        Log.i("FA", fightSpawn3.toString());
-
-        AbstractSpawn fightSpawn4 = new Spawn(3,0,0,0,45.780666, 4.856438,
-                "Des zombies échaffaudent un plan de conquète mondiale, arrête les !","Les non-génies du mal",4,opponentSolo, true);
-        objectives.add(fightSpawn4);
-        Log.i("FA", fightSpawn4.toString());
-
-        AbstractSpawn dungeon1 = new Dungeon(4,0,0,0,45.7853447, 4.8563660,
-                "Much evil, such dungeon, so dangerous, very intense, wow","L'antre du mal",5,opponentSolo, true);
-        objectives.add(dungeon1);
-        Log.i("FA", dungeon1.toString());
-
-        AbstractSpawn treasure1 = new Treasure(5,0,0,0,45.773716, 4.856081,
-                "Mon préééécieeeuux ...","Trésor enfoui",0, true);
-        objectives.add(treasure1);
-        Log.i("FA", treasure1.toString());
-
-    }
-
-    public  static  void setUpObjectivesFromServer() {
-        objectives = get_spawns();
-        if (objectives != null ){
-            objectives.get(0).setCoordinates(45.780035,4.856392);
-            objectives.get(1).setCoordinates(45.7767953,4.8482761);
-            objectives.get(2).setCoordinates(45.7813447, 4.8513660);
-            objectives.get(3).setCoordinates(45.780666, 4.856438);
-            objectives.get(4).setCoordinates(45.7853447, 4.8563660);
-            objectives.get(5).setCoordinates(45.773716, 4.856081);
-        }
-    }
-
-
-
-    public static Boolean login(String name, String password) {
-        user =  server.login(name,password);
-        if (user == null) {
-            return false;
-        }
-        animal1 = server.getAnimal(user);
-        if (animal1 == null) {
-            return false;
-        }
-
-        QGLocation = server.getHQ(user);
-        if (QGLocation == null){
-            return false;
-        }
-        friends = server.getFriends(user);
-        if (friends == null){
-            return false;
-        }
-        mails = server.getMails(user);
-        Log.d("Mails login", mails.toString());
-        if (mails == null) {
-            return false;
-        }
-
-        setUpObjectivesWithHq();
-        //setupObjectives();
-
-        return true;
     }
 
 
