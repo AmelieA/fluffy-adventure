@@ -252,7 +252,8 @@ public class SoloCombat extends Activity {
         if (!soloCombat)
             opponents.get(1).setActiveSpells(spells);*/
         opponents.get(0).setHealth(100);
-        opponents.get(1).setHealth(100);
+        if (!soloCombat)
+            opponents.get(1).setHealth(100);
 
         for (Creature opponent : opponents) {
             tempOpponents.add(new Monster(opponent.getName(), opponent.getType(), opponent.getHealth(), opponent.getStrength(), opponent.getAccuracy(),opponent.getEvasiveness(), opponent.getActiveSpells()));
