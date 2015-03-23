@@ -236,7 +236,7 @@ public class SoloCombat extends Activity {
             animal2.addSpell(new HealSpell(0, "Soin de groupe", "Soigne tout le groupe pour 10 pv", true, 10, AbstractSpell.HEAL, null, 5), true);
             animal2.addSpell(new DebuffSpell(1, "Jet de boue", "Réduit l'esquive et la précision de 20 %", false, 100, 80, 80, AbstractSpell.DEBUFF, null, 5), true);
             animal2.addSpell(new DamageSpell(2, "Charge", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
-            tempAnimals.add(new Animal(Controller.getAnimal(2)));
+            tempAnimals.add(new Animal(animal2));
             fighters.add(animal2);
         }
 
@@ -439,8 +439,8 @@ public class SoloCombat extends Activity {
             case AbstractSpell.ATTACK:
                 attackFromFighterAnimation(currentFighterIdx);
                 if (!spell.hasHit()) {
-                    h.postDelayed(missedDisclaimer, 1300);
-                    h.postDelayed(ennemyTurn, 2800);
+                    h.postDelayed(missedDisclaimer, 1400);
+                    h.postDelayed(ennemyTurn, 3000);
                 } else {
                     if ((target == null && soloCombat) || soloCombat)
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
@@ -456,8 +456,8 @@ public class SoloCombat extends Activity {
             case AbstractSpell.THROW:
                 throwObjectToOpponent(spell.getThrowedObject(),offset);
                 if (!spell.hasHit()) {
-                    h.postDelayed(missedDisclaimer, 1300);
-                    h.postDelayed(ennemyTurn, 2800);
+                    h.postDelayed(missedDisclaimer, 1400);
+                    h.postDelayed(ennemyTurn, 3000);
                 } else {
                     if ((target == null && soloCombat) || soloCombat)
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
@@ -485,8 +485,8 @@ public class SoloCombat extends Activity {
             case AbstractSpell.DEBUFF:
                 attackFromFighterAnimation(currentFighterIdx);
                 if (!spell.hasHit()) {
-                    h.postDelayed(missedDisclaimer, 1300);
-                    h.postDelayed(ennemyTurn, 2800);
+                    h.postDelayed(missedDisclaimer, 1400);
+                    h.postDelayed(ennemyTurn, 3000);
                 } else {
                     if ((target == null && soloCombat) || soloCombat)
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
@@ -569,8 +569,8 @@ public class SoloCombat extends Activity {
             case AbstractSpell.ATTACK:
                 attackFromOpponentAnimation(currentOpponentIdx);
                 if (!spell.hasHit()) {
-                    h.postDelayed(missedDisclaimer, 1300);
-                    h.postDelayed(fighterTurn, 2800);
+                    h.postDelayed(missedDisclaimer, 1400);
+                    h.postDelayed(fighterTurn, 3000);
                 } else {
                     if ((target == null && soloCombat) || soloCombat)
                         fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
@@ -586,8 +586,8 @@ public class SoloCombat extends Activity {
             case AbstractSpell.THROW:
                 throwObjectToFighter(spell.getThrowedObject(),currentOpponentIdx);
                 if (!spell.hasHit()) {
-                    h.postDelayed(missedDisclaimer, 1300);
-                    h.postDelayed(fighterTurn, 2800);
+                    h.postDelayed(missedDisclaimer, 1400);
+                    h.postDelayed(fighterTurn, 3000);
                 } else {
                     if ((target == null && soloCombat) || soloCombat)
                         fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
@@ -615,8 +615,8 @@ public class SoloCombat extends Activity {
             case AbstractSpell.DEBUFF:
                 attackFromOpponentAnimation(currentOpponentIdx);
                 if (!spell.hasHit()) {
-                    h.postDelayed(missedDisclaimer, 1300);
-                    h.postDelayed(fighterTurn, 2800);
+                    h.postDelayed(missedDisclaimer, 1400);
+                    h.postDelayed(fighterTurn, 3000);
                 } else {
                     fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
                 }
@@ -636,35 +636,34 @@ public class SoloCombat extends Activity {
     }
 
     private void win(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         setButtonsEnabled(false);
         resetFight();
         Controller.success(Controller.getCurrentObjective().getSpawnId());
-        String message = "Tu as gagné les récompenses suivantes : \n";
-        if (Controller.getCurrentObjective().getHealthReward() > 0)
-            message += " + " + Controller.getCurrentObjective().getHealthReward() + " pv max \n";
-        if (Controller.getCurrentObjective().getHealthReward() > 0)
-            message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
+
         if (Controller.getCurrentObjective().getHealthReward() >= 0) {
-            ArrayList<Integer> spellRewardQuery = new ArrayList<>();
-            spellRewardQuery.add(Controller.getCurrentObjective().getSpellReward());
-            AbstractSpell spellReward = Controller.getSpells(spellRewardQuery, Controller.getAnimal(1).getType()).get(0);
-            Controller.getAnimal(1).addSpell(spellReward,false);
-            message += " Le sort " + spellReward.getName();
+            GetSpellTask spellTask = new GetSpellTask();
+            spellTask.execute();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            String message = "Tu as gagné les récompenses suivantes : \n";
+            if (Controller.getCurrentObjective().getHealthReward() > 0)
+                message += " + " + Controller.getCurrentObjective().getHealthReward() + " pv max \n";
+            if (Controller.getCurrentObjective().getHealthReward() > 0)
+                message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
+            builder.setMessage(message)
+                    .setTitle("Victoire !")
+                    .setPositiveButton("Youpi !", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(getApplicationContext(), MapComponent.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            SaveTask task = new SaveTask();
+            task.execute();
         }
-        builder.setMessage(message)
-                .setTitle("Victoire !")
-                .setPositiveButton("Youpi !", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(getApplicationContext(), MapComponent.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        SaveTask task = new SaveTask();
-        task.execute();
     }
 
     private void lose(){
@@ -692,7 +691,11 @@ public class SoloCombat extends Activity {
 
     private void resetFight() {
 
-        for (int k = 0; k < 2; k++) {
+        int nbFighters = 1;
+        if (!soloCombat)
+            nbFighters = 2;
+
+        for (int k = 0; k < nbFighters; k++) {
             for (int i = 0; i < tempAnimals.get(k).getActiveSpells().size(); i++) {
                 tempAnimals.get(k).getActiveSpells().get(i).resetUses();
             }
@@ -897,19 +900,24 @@ public class SoloCombat extends Activity {
                 if (currentAnim == nbOfAnims) {
                     currentAnim = 0;
                     nbOfAnims = 0;
-                    try {
-                        Thread.sleep(1200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (opponnentsTurn) {
-                        if (opponents.get(currentOpponentIdx).getHealth() > 0)
-                            ennemyTurn();
-                    }
-                    else {
-                        setButtonsEnabled(true);
-                        instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+fighters.get(currentFighterIdx).getName()+" "+getResources().getString(R.string.combat_instruction_2));
-                    }
+
+                    Runnable endTurn = new Runnable() {
+                        @Override
+                        public void run(){
+                            if (opponnentsTurn) {
+                                if (opponents.size() > 0 && opponents.get(currentOpponentIdx).getHealth() > 0)
+                                    ennemyTurn();
+                            }
+                            else {
+                                setButtonsEnabled(true);
+                                instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+fighters.get(currentFighterIdx).getName()+" "+getResources().getString(R.string.combat_instruction_2));
+                            }
+                        }
+                    };
+
+                    Handler h = new Handler();
+                    h.postDelayed(endTurn, 1700);
+
                 }
             }
 
@@ -1006,9 +1014,51 @@ public class SoloCombat extends Activity {
             }
 
         }
+    }
 
+    private class GetSpellTask extends AsyncTask<Void, Void, Boolean> {
 
+        AlertDialog.Builder builder;
 
+        public GetSpellTask() {
+
+        }
+
+        protected void onPreExecute(){
+
+        }
+
+        protected Boolean doInBackground(Void... params){
+            builder = new AlertDialog.Builder(SoloCombat.this);
+            String message = "Tu as gagné les récompenses suivantes : \n";
+            if (Controller.getCurrentObjective().getHealthReward() > 0)
+                message += " + " + Controller.getCurrentObjective().getHealthReward() + " pv max \n";
+            if (Controller.getCurrentObjective().getHealthReward() > 0)
+                message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
+            ArrayList<Integer> spellRewardQuery = new ArrayList<>();
+            spellRewardQuery.add(Controller.getCurrentObjective().getSpellReward());
+            AbstractSpell spellReward = Controller.getSpells(spellRewardQuery, Controller.getAnimal(1).getType()).get(0);
+            Controller.getAnimal(1).addSpell(spellReward,false);
+            message += "Le sort \"" + spellReward.getName() +"\" !";
+            builder.setMessage(message)
+                    .setTitle("Victoire !")
+                    .setPositiveButton("Youpi !", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(getApplicationContext(), MapComponent.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+
+            return true;
+        }
+
+        protected  void onPostExecute(Boolean login) {
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            SaveTask task = new SaveTask();
+            task.execute();
+        }
     }
 
 }
