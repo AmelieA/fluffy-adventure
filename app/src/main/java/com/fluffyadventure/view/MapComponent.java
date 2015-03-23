@@ -225,6 +225,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         Resources resources = getResources();
 
         List<AbstractSpawn> spawns = Controller.getObjectives();
+        Controller.moveWanderingSpawns();
 
         for (AbstractSpawn spawn : spawns) {
             if(!Controller.hasSucceeded(spawn.getSpawnId()))
@@ -336,7 +337,7 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         Class targetActivity;
         if (Controller.getCurrentObjective() instanceof Dungeon) {
             targetActivity = SoloCombat.class;
-        } else if (Controller.getCurrentObjective() instanceof Spawn) {
+        } else if (Controller.getCurrentObjective() instanceof Spawn || Controller.getCurrentObjective() instanceof WanderingSpawn) {
             targetActivity = SoloCombat.class;
         } else {
             return;

@@ -17,7 +17,8 @@ public class WanderingSpawn extends AbstractSpawn{
 
     @Override
     public String getStandardIcon() {
-        return "interrogation";
+        return opponents.get(0).getImagePath()+"_black";
+//        return "interrogation";
     }
 
     @Override
