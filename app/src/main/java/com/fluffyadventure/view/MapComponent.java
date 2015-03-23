@@ -30,6 +30,7 @@ import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Treasure;
 import com.fluffyadventure.model.WanderingSpawn;
+import com.fluffyadventure.model.WantedSpawn;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -156,7 +157,11 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
                 }else if (spawn instanceof WanderingSpawn) {
                     ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
                     ((TextView) v.findViewById(R.id.tooltip_level)).setVisibility(View.GONE);
+                }else if (spawn instanceof WantedSpawn) {
+                    ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
+                    ((TextView) v.findViewById(R.id.tooltip_level)).setVisibility(View.GONE);
                 }
+
 
 
                 return v;
@@ -325,6 +330,12 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
             Controller.setCurrentObjective(spawn);
             button_go.setText("Commencer le combat !");
             button_go.setEnabled(true);
+        }else if (spawn instanceof WantedSpawn) {
+            Controller.setCurrentObjective(spawn);
+            button_go.setText("Commencer le combat !");
+            button_go.setEnabled(true);
+
+
         }
     }
 
@@ -339,6 +350,10 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
             targetActivity = SoloCombat.class;
         } else if (Controller.getCurrentObjective() instanceof Spawn || Controller.getCurrentObjective() instanceof WanderingSpawn) {
             targetActivity = SoloCombat.class;
+
+        }else if(Controller.getCurrentObjective() instanceof WantedSpawn) {
+            targetActivity = SoloCombat.class;
+
         } else {
             return;
         }

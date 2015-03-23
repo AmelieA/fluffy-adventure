@@ -15,6 +15,15 @@ public class MailWanted extends Mail{
     private String animal2Name;
     private String animal1Pic;
     private String animal2Pic;
+    private double latitude;
+    private double longitude;
+    private String enemyName;
+    private Animal animal1;
+    private Animal animal2;
+    private Boolean solo;
+
+
+
 
     public MailWanted(int id, String sender, String object, String message, int senderId) {
         super(id, sender, object, message, senderId);
@@ -30,25 +39,29 @@ public class MailWanted extends Mail{
 
     public MailWanted (JSONObject jsonObject) throws JSONException {
         super (jsonObject);
-        JSONObject animal1 = jsonObject.getJSONObject("Animal1");
-        JSONObject animal2 = jsonObject.getJSONObject("Animal2");
-        animal1Name = animal1.getString("Name");
-        animal2Name = animal2.getString("Name");
-        animal1Pic = animal1.getString("ImgPath");
-        animal2Pic = animal2.getString("ImgPath");
+        animal1 = new Animal(jsonObject.getJSONObject("Animal1"));
+        animal2 = new Animal(jsonObject.getJSONObject("Animal2"));
+        animal1Name = animal1.getName();
+        animal2Name = animal2.getName();
+        animal1Pic = animal1.getImagePath();
+        animal2Pic = animal2.getImagePath();
+        latitude = jsonObject.getJSONObject("Location").getDouble("Latitude");
+        longitude = jsonObject.getJSONObject("Location").getDouble("Longitude");
+        enemyName = jsonObject.getString("Name");
+        solo = jsonObject.getBoolean("Solo");
 
     }
     public JSONObject toJson() throws JSONException {
         JSONObject jsonObject = super.toJson();
         jsonObject.put("Type","Wanted");
-        JSONObject animal1 = new JSONObject();
-        JSONObject animal2 = new JSONObject();
-        animal1.put("Name",animal1Name);
-        animal2.put("Name",animal2Name);
-        animal1.put("ImgPath",animal1Pic);
-        animal2.put("ImgPath",animal2Pic);
-        jsonObject.put("Animal1",animal1);
-        jsonObject.put("Animal2",animal2);
+        jsonObject.put("Animal1",animal1.toJson());
+        jsonObject.put("Animal2",animal2.toJson());
+        JSONObject location = new JSONObject();
+        location.put("Latitude", latitude);
+        location.put("Longitude", longitude);
+        jsonObject.put("Location",location);
+        jsonObject.put("Name",enemyName);
+        jsonObject.put("Solo",solo);
         return jsonObject;
     }
 

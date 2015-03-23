@@ -20,6 +20,7 @@ import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Treasure;
 import com.fluffyadventure.model.WanderingSpawn;
+import com.fluffyadventure.model.WantedSpawn;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -731,7 +732,8 @@ public class Controller {
                             mail = new Mail(object);
                         }
                         else {
-                            mail = new MailWanted(object);
+
+                            mail = makeWanted(object);
                         }
                         mails.add(mail);
                         Log.d("Mail:",mail.toJson().toString());
@@ -747,6 +749,69 @@ public class Controller {
             mails = new ArrayList<>();
         }
         return false;
+    }
+
+
+    public static Boolean saveMails(){
+        String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "mails/save";
+        try {
+            URL url = new URL(uri);
+            JSONObject json = new JSONObject();
+            JSONArray mailsJson = new JSONArray();
+            for (Mail m:mails){
+                mailsJson.put(m.toJson());
+            }
+            json.put("Mails",mailsJson);
+            JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
+
+            if (returnJson != null){
+                ArrayList<Mail> mailsTemp = new ArrayList<>();
+                Log.d("Mails get",returnJson.toString());
+                if (returnJson.getJSONObject("json").get("Mails") != null) {
+
+                    JSONArray mailsArray = returnJson.getJSONObject("json").getJSONArray("Mails");
+                    Log.d("Mail Array",Integer.toString(mailsArray.length()));
+                    for (int i = 0; i < mailsArray.length(); i++) {
+                        JSONObject object = mailsArray.getJSONObject(i);
+                        Mail mail;
+                        if (object.getString("Type").equals("Mail")){
+                            mail = new Mail(object);
+                        }
+                        else {
+
+                            mail = makeWanted(object);
+                        }
+                        mailsTemp.add(mail);
+                        Log.d("Mail:",mail.toJson().toString());
+                    }
+                    mails = mailsTemp;
+                    return true;
+
+                }
+
+            }
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
+    private static MailWanted makeWanted(JSONObject object) throws JSONException {
+        Animal enemyAnimal1 = new Animal(object.getJSONObject("Animal1"));
+        ArrayList<Creature> enemyAnimals = new ArrayList<>();
+        enemyAnimals.add(enemyAnimal1);
+        Boolean solo = object.getBoolean("Solo");
+        if (!solo){
+            Animal enemyAnimal2 = new Animal(object.getJSONObject("Animal2"));
+            enemyAnimals.add(enemyAnimal2);
+        }
+        WantedSpawn spawn = new WantedSpawn(0,0,0,object.getJSONObject("Location").getDouble("Latitude"),
+                object.getJSONObject("Location").getDouble("Longitude"),
+                "Voici ta cible, détruit le", object.getString("Name"), 2, enemyAnimals,solo);
+        objectives.add(spawn);
+        MailWanted mail = new MailWanted(object);
+        return mail;
     }
 
     public static Boolean sendMail(String receiver, String object, String content){
@@ -775,49 +840,6 @@ public class Controller {
         return false;
     }
 
-    public static Boolean saveMails(){
-        String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "mails/save";
-        try {
-            URL url = new URL(uri);
-            JSONObject json = new JSONObject();
-            JSONArray mailsJson = new JSONArray();
-            for (Mail m:mails){
-                mailsJson.put(m.toJson());
-            }
-            json.put("Mails",mailsJson);
-            JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
-
-            if (returnJson != null){
-                ArrayList<Mail> mailsTemp = new ArrayList<>();
-                Log.d("Mails get",returnJson.toString());
-                if (returnJson.getJSONObject("json").get("Mails") != null) {
-
-                    JSONArray mailsArray = returnJson.getJSONObject("json").getJSONArray("Mails");
-                    Log.d("Mail Array",Integer.toString(mailsArray.length()));
-                    for (int i = 0; i < mailsArray.length(); i++) {
-                        JSONObject object = mailsArray.getJSONObject(i);
-                        Mail mail;
-                        if (object.getString("Type").equals("Mail")){
-                            mail = new Mail(object);
-                        }
-                        else {
-                            mail = new MailWanted(object);
-                        }
-                        mailsTemp.add(mail);
-                        Log.d("Mail:",mail.toJson().toString());
-                    }
-                    mails = mailsTemp;
-                    return true;
-
-                }
-
-            }
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return false;
-    }
 
     public static Boolean addFriend(String name){
         String uri = "http://" + server.getIpAddress() + ":" + Integer.toString(server.getPort()) + "/api/" + "friends/add";
