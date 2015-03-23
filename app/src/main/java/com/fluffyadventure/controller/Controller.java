@@ -655,7 +655,14 @@ public class Controller {
                     JSONArray mailsArray = returnJson.getJSONObject("json").getJSONArray("Mails");
                     Log.d("Mail Array",Integer.toString(mailsArray.length()));
                     for (int i = 0; i < mailsArray.length(); i++) {
-                        Mail mail = new Mail(mailsArray.getJSONObject(i));
+                        JSONObject object = mailsArray.getJSONObject(i);
+                        Mail mail;
+                        if (object.getString("Type").equals("Mail")){
+                            mail = new Mail(object);
+                        }
+                        else {
+                            mail = new MailWanted(object);
+                        }
                         mails.add(mail);
                         Log.d("Mail:",mail.toJson().toString());
                     }
@@ -717,7 +724,14 @@ public class Controller {
                     JSONArray mailsArray = returnJson.getJSONObject("json").getJSONArray("Mails");
                     Log.d("Mail Array",Integer.toString(mailsArray.length()));
                     for (int i = 0; i < mailsArray.length(); i++) {
-                        Mail mail = new Mail(mailsArray.getJSONObject(i));
+                        JSONObject object = mailsArray.getJSONObject(i);
+                        Mail mail;
+                        if (object.getString("Type").equals("Mail")){
+                            mail = new Mail(object);
+                        }
+                        else {
+                            mail = new MailWanted(object);
+                        }
                         mailsTemp.add(mail);
                         Log.d("Mail:",mail.toJson().toString());
                     }

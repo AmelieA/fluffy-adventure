@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.fluffyadventure.view.AnimalName"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:id="@+id/Background_foret"
+        android:src="@drawable/forest" />
+
+    <TextView
+        android:text="@string/newAnimalNew"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="center"
+        android:id="@+id/newAnimalDisclaimer"
+        style="@style/information"/>
+
+
+    <ImageView
+        android:id="@+id/newAnimalImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/newAnimalDisclaimer"
+        android:src="@drawable/squirrel2" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/newAnimalImageView"
+        android:id="@+id/newAnimalListView"
+        android:layout_above="@+id/newAnimalButtonsBlock"/>
+
+    <LinearLayout
+        android:id="@+id/newAnimalButtonsBlock"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:gravity="center_horizontal">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Oui"
+                style="@style/btnStyleOrangePetit"
+                android:layout_margin="5dp"
+                android:id="@+id/btnNewAnimalYes"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Non"
+                style="@style/btnStyleOrangePetit"
+                android:layout_margin="5dp"
+                android:id="@+id/btnNewAnimalNo"/>
+            </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_button_ok"
+            android:id="@+id/btnNewAnimalOK"
+            style="@style/btnStyleOrangePetit"/>
+    </LinearLayout>
+
+</RelativeLayout>
