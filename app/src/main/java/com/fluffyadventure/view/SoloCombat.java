@@ -456,7 +456,7 @@ public class SoloCombat extends Activity {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(ennemyTurn, 2800);
                 } else {
-                    if (target == 0 || soloCombat)
+                    if ((target == null && soloCombat) || target == 0 || soloCombat)
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                     else if (target == null){
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
@@ -483,7 +483,7 @@ public class SoloCombat extends Activity {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(ennemyTurn, 2800);
                 } else {
-                    if (target == 0 || soloCombat)
+                    if ((target == null && soloCombat) || target == 0 || soloCombat)
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                     else if (target == null){
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
@@ -494,7 +494,7 @@ public class SoloCombat extends Activity {
                 break;
             default:
                 attackFromFighterAnimation(currentFighterIdx);
-                if (target == 0 || soloCombat)
+                if ((target == null && soloCombat) || target == 0 || soloCombat)
                     opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                 else if (target == null){
                     opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
@@ -526,7 +526,15 @@ public class SoloCombat extends Activity {
         }
         instruction.setText(opponents.get(currentOpponentIdx).getName() + " lance " + spell.getName() + " !");
 
-        ArrayList<ArrayList<Creature>> fightResult = spell.use(opponents,fighters,currentOpponentIdx,null);
+        ArrayList<ArrayList<Creature>> fightResult = new ArrayList<>();
+        if (spell.getIsAoE() || soloCombat || fighters.size() == 1) {
+            fightResult = spell.use(opponents,fighters,currentOpponentIdx,null);
+        } else {
+            Random randomGenerator2 = new Random();
+            int randomInt = randomGenerator2.nextInt(2);
+            fightResult = spell.use(opponents,fighters,currentOpponentIdx,randomInt);
+        }
+
         fighters = fightResult.get(1);
         opponents = fightResult.get(0);
 
