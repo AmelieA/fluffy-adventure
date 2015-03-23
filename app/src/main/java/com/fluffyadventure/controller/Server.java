@@ -43,6 +43,7 @@ import java.util.ArrayList;
 // JSONObject connectWithAuth(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException
 // JSONObject connectWithoutAuth(URL url, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException
 // Boolean testConnection()
+//GETOKEN
 //
 public class Server {
     private String ipAddress;
@@ -63,98 +64,15 @@ public class Server {
         return port;
     }
 
-    public User createUser(String name, String password) {
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/new";
+    public String getToken(User user){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "get_token";
         try {
             URL url = new URL(uri);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            JSONObject returnJson = this.connectWithPassword(url, user, HttpURLConnection.HTTP_OK, true, false, null,false);
+            JSONObject inputJson = returnJson.getJSONObject("json");
+            String token = inputJson.getString("Token");
+            return token;
 
-
-            //construction du header
-            urlConnection.setDoOutput(true);
-            urlConnection.setDoInput(true);
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Accept", "application/json");
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-
-
-            //construction du json
-            OutputStream out = urlConnection.getOutputStream();
-            JSONObject json = new JSONObject();
-            json.put("username", name);
-            json.put("password", password);
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-            writer.write(json.toString());
-            writer.flush();
-            writer.close();
-            out.close();
-
-
-            //envoi des données
-            urlConnection.connect();
-
-            int httpResult = urlConnection.getResponseCode();
-
-            if (httpResult == HttpURLConnection.HTTP_CREATED) {
-                //utilisateur créé sur le server
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder inputString = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    inputString.append(line + "\n");
-                }
-                bufferedReader.close();
-
-                JSONObject inputJson = new JSONObject(inputString.toString());
-                User user = new User(name, password, inputJson.getInt("Id"));
-
-                String token = this.getToken(user);
-                user.setToken(token);
-                return user;
-
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-
-    public User login(String name, String password) {
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "login";
-        try {
-            URL url = new URL(uri);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            urlConnection.setDoInput(true);
-            urlConnection.setRequestProperty("Accept", "application/json");
-
-
-            String encoded = Base64.encodeToString((String.format("%s:%s", name, password)).getBytes(), Base64.NO_WRAP);
-            urlConnection.setRequestProperty("Authorization", String.format("Basic %s", encoded));
-
-            urlConnection.connect();
-
-            int httpResult = urlConnection.getResponseCode();
-
-            if (httpResult == HttpURLConnection.HTTP_OK) {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder inputString = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    inputString.append(line + "\n");
-                }
-                bufferedReader.close();
-
-                JSONObject inputJson = new JSONObject(inputString.toString());
-                User user = new User(name, password, inputJson.getInt("Id"));
-
-                String token = this.getToken(user);
-                user.setToken(token);
-                return user;
-            }
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (JSONException e) {
@@ -164,86 +82,27 @@ public class Server {
 
     }
 
-
-
-
-    public Animal getAnimal(User user) {
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/get_animal";
+    public Boolean testConnection(){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "online";
         try {
             URL url = new URL(uri);
-            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, false, null);
-            if (returnJson != null){
-                JSONObject animalJson = returnJson.getJSONObject("json");
-                Log.d("Animal FROM SERVER",animalJson.toString());
-                Animal animal = new Animal(animalJson);
-                return animal;
-            }
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
+            urlConnection.connect();
 
-    public Boolean deleteUser(User user) {
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/delete";
-        try {
-            URL url = new URL(uri);
-            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, false, null);
-            if (returnJson != null){
-                int ret = returnJson.getInt("return");
+            int httpResult = urlConnection.getResponseCode();
+
+            if (httpResult == HttpURLConnection.HTTP_OK) {
+
                 return true;
-            }
 
+            }
         } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (JSONException ex) {
             ex.printStackTrace();
         }
         return false;
+
     }
-
-
-
-    public Animal createAnimal(User user, Animal in_animal, String name) {
-        Animal animal = new Animal(in_animal);
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/add_animal";
-        try {
-
-            ArrayList<Integer> ids = new ArrayList<>();
-            ids.add(0);
-            ids.add(1);
-            ids.add(2);
-            ids.add(3);
-            for (AbstractSpell spell : this.getSpells(ids,animal.getType())){
-                animal.addSpell(spell, true);
-            }
-            //AbstractSpell spell = this.getSpell(0,animal.getType());
-
-            //Log.d("Spell",spell.toJson().toString());
-            //spell = this.getSpell(1,animal.getType());
-            //animal.addSpell(spell, true);
-            animal.setName(name);
-
-            URL url = new URL(uri);
-            JSONObject json = animal.toJson();
-            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
-
-            if (returnJson != null){
-                return animal;
-            }
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-
-
-        }
 
     public JSONObject connectWithAuth(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
         //TODO: Get tokenz!
@@ -338,7 +197,7 @@ public class Server {
 
     }
 
-    public JSONObject connectWithPassword(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
+    public JSONObject connectWithPassword(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson, Boolean needToken) throws IOException, JSONException {
         HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
 
         urlConnection1 = (HttpURLConnection) url.openConnection();
@@ -379,8 +238,10 @@ public class Server {
                 inputJson.put("json",new JSONObject(inputString.toString()));
             }
             inputJson.put("return",responseCode);
-            String token = this.getToken(user);
-            user.setToken(token);
+            if (needToken){
+                String token = this.getToken(user);
+                user.setToken(token);
+            }
             return  inputJson;
         }
 
@@ -436,8 +297,169 @@ public class Server {
     }
 
 
-    public String getToken(User user){
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "get_token";
+
+    //TODO Delete stuff below
+    public AbstractSpell getSpell(int id, int type){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(type) + "/"+ Integer.toString(id);
+        try {
+            URL url = new URL(uri);
+
+            JSONObject returnJson = this.connectWithoutAuth(url, HttpURLConnection.HTTP_OK, true, false, null);
+
+            Log.d("inputJson", returnJson.toString());
+
+
+            if (returnJson != null) {
+
+                JSONObject inputJson = returnJson.getJSONObject("json");
+                Log.d("inputJson", inputJson.toString());
+                AbstractSpell spell;
+                switch (inputJson.getInt("Type")){
+                    case AbstractSpell.DAMAGE:
+                        spell = new DamageSpell(inputJson);
+                        break;
+                    case AbstractSpell.HEAL:
+                        spell = new HealSpell(inputJson);
+                        break;
+                    case AbstractSpell.BUFF:
+                        spell = new BuffSpell(inputJson);
+                        break;
+                    case AbstractSpell.DEBUFF:
+                        spell = new DebuffSpell(inputJson);
+                        break;
+                    default:
+                        spell = new DamageSpell(inputJson);
+
+                }
+                return spell;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User createUser(String name, String password) {
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/new";
+        try {
+            URL url = new URL(uri);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+
+            //construction du header
+            urlConnection.setDoOutput(true);
+            urlConnection.setDoInput(true);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Accept", "application/json");
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+
+
+            //construction du json
+            OutputStream out = urlConnection.getOutputStream();
+            JSONObject json = new JSONObject();
+            json.put("username", name);
+            json.put("password", password);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            writer.write(json.toString());
+            writer.flush();
+            writer.close();
+            out.close();
+
+
+            //envoi des données
+            urlConnection.connect();
+
+            int httpResult = urlConnection.getResponseCode();
+
+            if (httpResult == HttpURLConnection.HTTP_CREATED) {
+                //utilisateur créé sur le server
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                StringBuilder inputString = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    inputString.append(line + "\n");
+                }
+                bufferedReader.close();
+
+                JSONObject inputJson = new JSONObject(inputString.toString());
+                User user = new User(name, password, inputJson.getInt("Id"));
+
+                String token = this.getToken(user);
+                user.setToken(token);
+                return user;
+
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public Boolean moveHQ(User user, double latitude, double longitude){
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/move_HQ";
+        try {
+
+            URL url = new URL(uri);
+            JSONObject json = new JSONObject();
+            json.put("Latitude",latitude);
+            json.put("Longitude",longitude);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
+
+            if (returnJson != null){
+
+                return true;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public Animal createAnimal(User user, Animal in_animal, String name) {
+        Animal animal = new Animal(in_animal);
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/add_animal";
+        try {
+
+            ArrayList<Integer> ids = new ArrayList<>();
+            ids.add(0);
+            ids.add(1);
+            ids.add(2);
+            ids.add(3);
+            for (AbstractSpell spell : this.getSpells(ids,animal.getType())){
+                animal.addSpell(spell, true);
+            }
+            animal.setName(name);
+
+            URL url = new URL(uri);
+            JSONObject json = animal.toJson();
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
+
+            if (returnJson != null){
+                return animal;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+
+
+    }
+
+
+
+    public User login(String name, String password) {
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "login";
         try {
             URL url = new URL(uri);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -446,7 +468,7 @@ public class Server {
             urlConnection.setRequestProperty("Accept", "application/json");
 
 
-            String encoded = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
+            String encoded = Base64.encodeToString((String.format("%s:%s", name, password)).getBytes(), Base64.NO_WRAP);
             urlConnection.setRequestProperty("Authorization", String.format("Basic %s", encoded));
 
             urlConnection.connect();
@@ -463,8 +485,11 @@ public class Server {
                 bufferedReader.close();
 
                 JSONObject inputJson = new JSONObject(inputString.toString());
-                String token = inputJson.getString("Token");
-                return token;
+                User user = new User(name, password, inputJson.getInt("Id"));
+
+                String token = this.getToken(user);
+                user.setToken(token);
+                return user;
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -475,6 +500,43 @@ public class Server {
 
     }
 
+    public Animal getAnimal(User user) {
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/get_animal";
+        try {
+            URL url = new URL(uri);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, false, null);
+            if (returnJson != null){
+                JSONObject animalJson = returnJson.getJSONObject("json");
+                Log.d("Animal FROM SERVER",animalJson.toString());
+                Animal animal = new Animal(animalJson);
+                return animal;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public Boolean deleteUser(User user) {
+        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/delete";
+        try {
+            URL url = new URL(uri);
+            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, false, null);
+            if (returnJson != null){
+                int ret = returnJson.getInt("return");
+                return true;
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
     public Boolean changeSpells(User user, ArrayList<AbstractSpell> active, ArrayList<AbstractSpell> unused){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/change_spells";
@@ -508,7 +570,6 @@ public class Server {
         }
         return false;
     }
-
 
 
     public ArrayList<AbstractSpell> getSpells(ArrayList<Integer> ids, int type){
@@ -598,27 +659,6 @@ public class Server {
         return null;
     }
 
-    public Boolean testConnection(){
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "online";
-        try {
-            URL url = new URL(uri);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            urlConnection.connect();
-
-            int httpResult = urlConnection.getResponseCode();
-
-            if (httpResult == HttpURLConnection.HTTP_OK) {
-
-                return true;
-
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return false;
-
-    }
 
     public Boolean getUser(String username){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/search/"+username;
@@ -637,29 +677,6 @@ public class Server {
             }
             Log.d("HTTP ERRROR",Integer.toString(httpResult));
         } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return false;
-    }
-
-    public Boolean moveHQ(User user, double latitude, double longitude){
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "users/move_HQ";
-        try {
-
-            URL url = new URL(uri);
-            JSONObject json = new JSONObject();
-            json.put("Latitude",latitude);
-            json.put("Longitude",longitude);
-            JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
-
-            if (returnJson != null){
-
-                return true;
-            }
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (JSONException ex) {
             ex.printStackTrace();
         }
         return false;
@@ -690,13 +707,13 @@ public class Server {
 
             URL url = new URL(uri);
             JSONObject json = new JSONObject();
-            json.put("Name",friendName);
+            json.put("Name", friendName);
             JSONObject returnJson = connectWithAuth(url, user, HttpURLConnection.HTTP_OK, true, true, json);
 
 
-            if (returnJson != null){
+            if (returnJson != null) {
                 JSONObject jsonObject = returnJson.getJSONObject("json");
-                Log.d("Friend",returnJson.toString());
+                Log.d("Friend", returnJson.toString());
                 Friend friend = new Friend(jsonObject);
                 return friend;
             }
@@ -765,6 +782,7 @@ public class Server {
         return false;
     }
 
+
     public ArrayList<Mail> getMails(User user){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "mails";
         try {
@@ -800,56 +818,6 @@ public class Server {
         return null;
     }
 
-
-    //TODO Delete stuff below
-    public AbstractSpell getSpell(int id, int type){
-        String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "spells/"  + Integer.toString(type) + "/"+ Integer.toString(id);
-        try {
-            URL url = new URL(uri);
-
-            JSONObject returnJson = this.connectWithoutAuth(url, HttpURLConnection.HTTP_OK, true, false, null);
-
-            Log.d("inputJson", returnJson.toString());
-
-
-            if (returnJson != null) {
-
-                JSONObject inputJson = returnJson.getJSONObject("json");
-                Log.d("inputJson", inputJson.toString());
-                AbstractSpell spell;
-                switch (inputJson.getInt("Type")){
-                    case AbstractSpell.DAMAGE:
-                        spell = new DamageSpell(inputJson);
-                        break;
-                    case AbstractSpell.HEAL:
-                        spell = new HealSpell(inputJson);
-                        break;
-                    case AbstractSpell.BUFF:
-                        spell = new BuffSpell(inputJson);
-                        break;
-                    case AbstractSpell.DEBUFF:
-                        spell = new DebuffSpell(inputJson);
-                        break;
-                    default:
-                        spell = new DamageSpell(inputJson);
-
-                }
-                return spell;
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-
-
-
-
-    
 
 }
 

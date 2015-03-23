@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,11 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
-import com.fluffyadventure.view.R;
 
 public class AnimalName extends Activity {
 
@@ -111,54 +108,4 @@ public class AnimalName extends Activity {
 
 
 
-    private class SendAnimalTask extends AsyncTask<Void, Void, Boolean> {
-        private String name;
-        ProgressDialog dialog;
-        Context ctx;
-
-        public SendAnimalTask(String name, Context ctx) {
-            this.name = name;
-            this.ctx = ctx;
-            this.dialog = new ProgressDialog(this.ctx);
-            //this.dialog.setCancelable(true);
-
-        }
-
-        protected void onPreExecute(){
-            this.dialog.setTitle("Création...");
-            this.dialog.show();
-
-        }
-        protected Boolean doInBackground(Void... params){
-
-            Boolean result = Controller.sendAnimalToServer(this.name);
-            //Boolean result = true;
-
-
-            return result;
-        }
-        protected  void onPostExecute(Boolean login) {
-            System.out.println("done");
-            dialog.dismiss();
-
-            if (!login){
-                Toast.makeText(AnimalName.this, "Echec de la création de l'animal", Toast.LENGTH_LONG).show();
-
-            }
-            else
-            {
-                Toast.makeText(AnimalName.this, "Animal Créé", Toast.LENGTH_LONG).show();
-            }
-
-            Intent intent = new Intent(AnimalName.this, Status.class);
-            startActivity(intent);
-            finish();
-
-
-
-        }
-
-
-
-    }
 }
