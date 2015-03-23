@@ -752,6 +752,7 @@ public class Controller {
             json.put("Object",object);
             json.put("Content",content);
             json.put("Timestamp",System.currentTimeMillis());
+            json.put("Type","Mail");
             JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
 
             if (returnJson != null){
