@@ -38,6 +38,7 @@ public class MailWanted extends Mail{
     }
     public JSONObject toJson() throws JSONException {
         JSONObject jsonObject = super.toJson();
+        jsonObject.put("Type","Wanted");
         jsonObject.put("animal1Name",animal1Name);
         jsonObject.put("animal2Name",animal2Name);
         jsonObject.put("animal1Pic",animal1Pic);

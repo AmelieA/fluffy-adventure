@@ -47,6 +47,7 @@ public class Mail implements Parcelable{
         jsonObject.put("Object",object);
         jsonObject.put("Content",content);
         jsonObject.put("Read",read);
+        jsonObject.put("Type","Mail");
         return jsonObject;
     }
 
