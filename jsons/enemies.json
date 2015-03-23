@@ -4,9 +4,9 @@
         "Name":"Evil Bunny",
         "Type":4,
         "Health":100,
-        "Strength":12,
+        "Strength":11,
         "Accuracy":90,
-        "Evasiveness":25,
+        "Evasiveness":20,
         "Spells":
         [
             {"Id":0},
@@ -20,9 +20,9 @@
         "Name":"Evil Bunny A",
         "Type":4,
         "Health":100,
-        "Strength":12,
+        "Strength":11,
         "Accuracy":90,
-        "Evasiveness":25,
+        "Evasiveness":20,
         "Spells":
         [
             {"Id":0},
@@ -36,9 +36,9 @@
         "Name":"Evil Bunny B",
         "Type":4,
         "Health":100,
-        "Strength":12,
+        "Strength":11,
         "Accuracy":90,
-        "Evasiveness":25,
+        "Evasiveness":20,
         "Spells":
         [
             {"Id":0},
