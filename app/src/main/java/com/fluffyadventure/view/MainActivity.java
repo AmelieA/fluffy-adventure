@@ -214,10 +214,6 @@ public class MainActivity extends Activity {
                 Intent intent;
                 intent = new Intent(MainActivity.this, MapComponent.class);
                 startActivity(intent);
-
-            }
-            else {
-                Controller.setupBob();
             }
 
         }

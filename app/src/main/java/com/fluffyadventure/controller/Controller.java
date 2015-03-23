@@ -265,6 +265,10 @@ public class Controller {
         }
         Log.d("User Created","TRUE");
 
+        //random spawns
+        getMonsters();
+        setUpWanderingSpawns();
+
         return 0;
 
     }
@@ -880,16 +884,4 @@ public class Controller {
         }
         return false;
     }
-
-
-    //TO BE DELETED
-
-
-    public static void setupBob() {
-        animal1 = new Animal("Bob","rabbit1", Creature.RABBIT);
-
-        animal2 = new Animal("BobTwin","rabbit2", Creature.RABBIT);
-    }
-
-
 }
