@@ -441,12 +441,14 @@ public class SoloCombat extends Activity {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(ennemyTurn, 2800);
                 } else {
-                    if (target == null){
+                    if ((target == null && soloCombat) || soloCombat)
+                        opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                    else if (target == null){
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                         opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
                     } else if (target == 0)
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
-                     else
+                    else
                         opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
                 }
                 break;
@@ -456,12 +458,14 @@ public class SoloCombat extends Activity {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(ennemyTurn, 2800);
                 } else {
-                    if ((target == null && soloCombat) || target == 0 || soloCombat)
+                    if ((target == null && soloCombat) || soloCombat)
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                     else if (target == null){
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                         opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
-                    } else
+                    } else if (target == 0)
+                        opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                    else
                         opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
                 }
                 break;
@@ -483,23 +487,27 @@ public class SoloCombat extends Activity {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(ennemyTurn, 2800);
                 } else {
-                    if ((target == null && soloCombat) || target == 0 || soloCombat)
+                    if ((target == null && soloCombat) || soloCombat)
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                     else if (target == null){
                         opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                         opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
-                    } else
+                    } else if (target == 0)
+                        opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                    else
                         opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
                 }
                 break;
             default:
                 attackFromFighterAnimation(currentFighterIdx);
-                if ((target == null && soloCombat) || target == 0 || soloCombat)
+                if ((target == null && soloCombat) || soloCombat)
                     opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                 else if (target == null){
                     opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
                     opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
-                } else
+                } else if (target == 0)
+                    opponentsLifePoint = LosesLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentImage, true);
+                  else
                     opponentsLifePoint2 = LosesLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentImage2, true);
         }
     }
@@ -526,14 +534,15 @@ public class SoloCombat extends Activity {
         }
         instruction.setText(opponents.get(currentOpponentIdx).getName() + " lance " + spell.getName() + " !");
 
-        ArrayList<ArrayList<Creature>> fightResult = new ArrayList<>();
+        Integer target;
         if (spell.getIsAoE() || soloCombat || fighters.size() == 1) {
-            fightResult = spell.use(opponents,fighters,currentOpponentIdx,null);
+            target = null;
         } else {
             Random randomGenerator2 = new Random();
-            int randomInt = randomGenerator2.nextInt(2);
-            fightResult = spell.use(opponents,fighters,currentOpponentIdx,randomInt);
+            target = randomGenerator2.nextInt(2);
         }
+
+        ArrayList<ArrayList<Creature>> fightResult = spell.use(opponents,fighters,currentOpponentIdx,target);
 
         fighters = fightResult.get(1);
         opponents = fightResult.get(0);
@@ -562,7 +571,15 @@ public class SoloCombat extends Activity {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(fighterTurn, 2800);
                 } else {
-                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                    if ((target == null && soloCombat) || soloCombat)
+                        fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
+                    else if (target == null) {
+                        fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
+                        fightersLifePoint2 = LosesLifeAnimation(fightersLife2, fightersLifePoint2, spell.getValue(), fighterImage2, true);
+                    } else if (target == 0)
+                        fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
+                    else
+                        fightersLifePoint2 = LosesLifeAnimation(fightersLife2, fightersLifePoint2, spell.getValue(), fighterImage2, true);
                 }
                 break;
             case AbstractSpell.THROW:
@@ -571,7 +588,15 @@ public class SoloCombat extends Activity {
                     h.postDelayed(missedDisclaimer, 1300);
                     h.postDelayed(fighterTurn, 2800);
                 } else {
-                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                    if ((target == null && soloCombat) || soloCombat)
+                        fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
+                    else if (target == null) {
+                        fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
+                        fightersLifePoint2 = LosesLifeAnimation(fightersLife2, fightersLifePoint2, spell.getValue(), fighterImage2, true);
+                    } else if (target == 0)
+                        fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
+                    else
+                        fightersLifePoint2 = LosesLifeAnimation(fightersLife2, fightersLifePoint2, spell.getValue(), fighterImage2, true);
                 }
                 break;
             case AbstractSpell.HEAL:
@@ -597,7 +622,15 @@ public class SoloCombat extends Activity {
                 break;
             default:
                 attackFromOpponentAnimation(currentOpponentIdx);
-                fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, false);
+                if ((target == null && soloCombat) || soloCombat)
+                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
+                else if (target == null) {
+                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
+                    fightersLifePoint2 = LosesLifeAnimation(fightersLife2, fightersLifePoint2, spell.getValue(), fighterImage2, true);
+                } else if (target == 0)
+                    fightersLifePoint = LosesLifeAnimation(fightersLife, fightersLifePoint, spell.getValue(), fighterImage, true);
+                else
+                    fightersLifePoint2 = LosesLifeAnimation(fightersLife2, fightersLifePoint2, spell.getValue(), fighterImage2, true);
         }
     }
 
