@@ -31,6 +31,7 @@ import java.util.concurrent.ExecutionException;
 public class MailBox extends Activity {
 
     ImageButton btnCompose;
+    ImageButton btnReload;
     MailAdapter mailAdapter;
 
     @Override
@@ -72,6 +73,15 @@ public class MailBox extends Activity {
                 startActivity(intent);
             }
         });
+
+        btnReload = (ImageButton)findViewById(R.id.BtnReload);
+        btnReload.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                GetMailsTask task = new GetMailsTask(MailBox.this);
+                task.execute();
+            }
+        });
     }
 
     public class MailAdapter extends ArrayAdapter<Mail> {
@@ -100,6 +110,47 @@ public class MailBox extends Activity {
             imgUnread.setImageResource(getResources().getIdentifier(
                     (values.get(position).getRead() ? "mailopened" : "newmail"), "drawable", getPackageName()));
             return rowView;
+        }
+
+        public void updateData(ArrayList<Mail> values){
+            this.clear();
+            this.addAll(values);
+        }
+    }
+
+    private class GetMailsTask extends AsyncTask<Void, Void, Boolean> {
+        ProgressDialog dialog;
+        Context ctx;
+
+        public GetMailsTask(Context ctx) {
+            this.ctx = ctx;
+            this.dialog = new ProgressDialog(this.ctx);
+        }
+
+        protected void onPreExecute(){
+            this.dialog.setTitle("Récupération des mails...");
+            this.dialog.show();
+        }
+
+        protected Boolean doInBackground(Void... params){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Boolean result = Controller.retrieveMailsFromServer();
+            return result;
+        }
+
+        protected  void onPostExecute(Boolean login) {
+            System.out.println("done");
+            dialog.dismiss();
+            if (!login){
+                Toast.makeText(ctx, "Impossible de récupérer les mails", Toast.LENGTH_LONG).show();
+            }
+            mailAdapter.updateData(Controller.getMails());
+            mailAdapter.sort(Mail.mailComparator);
+            mailAdapter.notifyDataSetChanged();
         }
     }
 
