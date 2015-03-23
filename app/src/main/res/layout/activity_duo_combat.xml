@@ -292,10 +292,10 @@
             <!--Throwable object to Opponent -->
             <ImageView
                 android:id="@+id/ThrowableObjectToOpponent"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="300dp"
-                android:layout_marginLeft="75dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="350dp"
+                android:layout_marginLeft="150dp"
                 android:visibility="invisible"
                 android:gravity="bottom"
                 android:src="@drawable/interrogation"/>
@@ -303,10 +303,10 @@
             <!--Throwable object to Fighter -->
             <ImageView
                 android:id="@+id/ThrowableObjectToFighter"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="220dp"
-                android:layout_marginTop="120dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="265dp"
+                android:layout_marginTop="160dp"
                 android:visibility="invisible"
                 android:gravity="bottom"
                 android:src="@drawable/interrogation"/>
@@ -322,7 +322,7 @@
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:layout_weight="7.5"
+                    android:layout_weight="8"
                     android:orientation="vertical"
                     android:weightSum="10"
                     android:gravity="top">
@@ -338,15 +338,15 @@
                         android:layout_height="0px"
                         android:layout_weight="6">
                         <RelativeLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent">
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
                             <ImageView
                                 android:id="@+id/FighterImage2"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
                                 android:layout_marginBottom="-30dp"
-                                android:layout_marginLeft="70dp"
+                                android:layout_marginLeft="50dp"
                                 android:gravity="bottom"
                                 android:src="@drawable/squirrel5"/>
                             <ImageView
@@ -354,24 +354,24 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
                                 android:visibility="invisible"
-                                android:layout_marginBottom="-60dp"
-                                android:layout_marginLeft="70dp"
+                                android:layout_marginBottom="-30dp"
+                                android:layout_marginLeft="50dp"
                                 android:src="@drawable/life4"/>
 
                             <ImageView
                                 android:id="@+id/FighterImage"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:layout_marginLeft="-100dp"
+                                android:layout_marginLeft="-120dp"
                                 android:layout_marginTop="-30dp"
                                 android:gravity="bottom"
-                                android:src="@drawable/sheep1"/>
+                                android:src="@drawable/squirrel5"/>
                             <ImageView
                                 android:id="@+id/FightersLifeFilter"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
                                 android:visibility="invisible"
-                                android:layout_marginLeft="-100dp"
+                                android:layout_marginLeft="-120dp"
                                 android:layout_marginTop="-30dp"
                                 android:src="@drawable/life4"/>
                         </RelativeLayout>

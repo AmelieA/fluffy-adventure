@@ -87,7 +87,7 @@ public class SignUpActivity extends Activity {
 
     public void enableSubmitIfReady() {
         btnSignIn.setEnabled(false);
-        if( etUserName.getText().toString().length() == 0 ){
+        if( etUserName.getText().toString().length() == 0 || etUserName.getText().toString().equals(" ")) {
             etUserName.setError("Champ requis");
         }else{
             if( etPass.getText().toString().length() == 0 )

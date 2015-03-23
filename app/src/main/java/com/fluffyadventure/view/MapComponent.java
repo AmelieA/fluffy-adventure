@@ -29,6 +29,7 @@ import com.fluffyadventure.model.Creature;
 import com.fluffyadventure.model.Dungeon;
 import com.fluffyadventure.model.Spawn;
 import com.fluffyadventure.model.Treasure;
+import com.fluffyadventure.model.WanderingSpawn;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -150,6 +151,9 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
                         ((TextView) v.findViewById(R.id.tooltip_level)).setVisibility(View.GONE);
                     }
                 } else  if (spawn instanceof Treasure) {
+                    ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
+                    ((TextView) v.findViewById(R.id.tooltip_level)).setVisibility(View.GONE);
+                }else if (spawn instanceof WanderingSpawn) {
                     ((TextView) v.findViewById(R.id.tooltip_text)).setText(spawn.getText());
                     ((TextView) v.findViewById(R.id.tooltip_level)).setVisibility(View.GONE);
                 }
@@ -315,6 +319,10 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         } else if (spawn instanceof Dungeon) {
             Controller.setCurrentObjective(spawn);
             button_go.setText("Commencer le donjon !");
+            button_go.setEnabled(true);
+        }else if (spawn instanceof WanderingSpawn) {
+            Controller.setCurrentObjective(spawn);
+            button_go.setText("Commencer le combat !");
             button_go.setEnabled(true);
         }
     }
