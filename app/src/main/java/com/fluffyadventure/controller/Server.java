@@ -50,7 +50,12 @@ public class Server {
     private int port;
 
 
-
+    /**
+     * Constructor for Server Class
+     * @param ipAddress   of the server
+     * @param port of the server
+     *
+     */
     public Server(String ipAddress, int port) {
         this.ipAddress = ipAddress;
         this.port = port;
@@ -64,7 +69,14 @@ public class Server {
         return port;
     }
 
+
+    /**
+     * Create an identification token for authentication purposes
+     * @param user user to get token for
+     * @return token
+     */
     public String getToken(User user){
+
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "get_token";
         try {
             URL url = new URL(uri);
@@ -73,15 +85,17 @@ public class Server {
             String token = inputJson.getString("Token");
             return token;
 
-        } catch (IOException ex) {
+        } catch (IOException | JSONException ex) {
             ex.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
         return null;
 
     }
 
+    /**
+     * Test if server is online
+     * @return true if server is online
+     */
     public Boolean testConnection(){
         String uri = "http://" + this.ipAddress + ":" + Integer.toString(this.port) + "/api/" + "online";
         try {
@@ -104,8 +118,17 @@ public class Server {
 
     }
 
+    /**
+     * Connect to a given url using authentication
+     * @param user user to get token for.
+     * @param url to be accessed
+     * @param responseCode valid http response code
+     * @param input set to true if you are supposed to receive something from server
+     * @param output set to true if you want to send a JSON to server
+     * @param outputJson the JSON you want to send
+     * @return token
+     */
     public JSONObject connectWithAuth(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
-        //TODO: Get tokenz!
         HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
         if (input) {
             urlConnection1.setDoInput(true);
@@ -119,6 +142,8 @@ public class Server {
             urlConnection1.setRequestProperty("Content-Type", "application/json");
         }
 
+
+        //first try : with token
         if ((user.getToken() != null) && (user.getToken() != "")){
             String encoded = Base64.encodeToString((String.format("%s:%s", user.getToken(), "unused")).getBytes(), Base64.NO_WRAP);
             urlConnection1.setRequestProperty("Authorization", String.format("Basic %s", encoded));
@@ -150,6 +175,7 @@ public class Server {
 
         }
 
+        //second try : with password
         urlConnection1 = (HttpURLConnection) url.openConnection();
         if (input) {
             urlConnection1.setDoInput(true);
@@ -197,6 +223,17 @@ public class Server {
 
     }
 
+    /**
+     * Connect to a given url using password only authentication
+     * @param user user to get token for.
+     * @param url to be accessed
+     * @param responseCode valid http response code
+     * @param input set to true if you are supposed to receive something from server
+     * @param output set to true if you want to send a JSON to server
+     * @param outputJson the JSON you want to send
+     * @param needToken true if you want to get a token for your user
+     * @return token
+     */
     public JSONObject connectWithPassword(URL url, User user, int responseCode, Boolean input, Boolean output, JSONObject outputJson, Boolean needToken) throws IOException, JSONException {
         HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
 
@@ -212,7 +249,6 @@ public class Server {
             urlConnection1.setRequestMethod("POST");
             urlConnection1.setRequestProperty("Content-Type", "application/json");
         }
-
 
         String encoded = Base64.encodeToString((String.format("%s:%s", user.getName(), user.getPassword())).getBytes(), Base64.NO_WRAP);
         urlConnection1.setRequestProperty("Authorization", String.format("Basic %s", encoded));
@@ -249,6 +285,15 @@ public class Server {
 
     }
 
+    /**
+     * Connect to a given url
+     * @param url to be accessed
+     * @param responseCode valid http response code
+     * @param input set to true if you are supposed to receive something from server
+     * @param output set to true if you want to send a JSON to server
+     * @param outputJson the JSON you want to send
+     * @return token
+     */
     public JSONObject connectWithoutAuth(URL url, int responseCode, Boolean input, Boolean output, JSONObject outputJson) throws IOException, JSONException {
         //TODO: Get tokenz!
         HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
