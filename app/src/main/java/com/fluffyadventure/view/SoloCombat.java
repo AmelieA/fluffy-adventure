@@ -930,6 +930,7 @@ public class SoloCombat extends Activity {
         lifeFilter.startAnimation(lifeAnimation);
 
     }
+
     @Override
     public void onBackPressed() {
         return;

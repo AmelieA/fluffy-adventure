@@ -18,6 +18,7 @@
     <TextView android:text="@string/chose_name"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:maxLength="13"
         android:gravity="center_horizontal"
         android:id="@+id/nameChoiceDisclaimer"
         style="@style/information"/>

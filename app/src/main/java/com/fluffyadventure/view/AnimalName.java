@@ -47,6 +47,7 @@ public class AnimalName extends Activity {
 
         btnOkName = (Button) findViewById(R.id.BtnOkName);
         btnOkName.setTypeface(font);
+        btnOkName.setEnabled(false);
         btnOkName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +63,12 @@ public class AnimalName extends Activity {
         name.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                enableSubmitIfReady();
+                btnOkName.setEnabled(false);
+                if( name.getText().toString().length() == 0 ){
+                    name.setError("Champ requis");
+                }else{
+                    btnOkName.setEnabled(true);
+                }
             }
 
             @Override
