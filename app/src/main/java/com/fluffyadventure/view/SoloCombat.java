@@ -762,7 +762,7 @@ public class SoloCombat extends Activity {
         resetFight();
         Controller.success(Controller.getCurrentObjective().getSpawnId());
 
-        if (Controller.getCurrentObjective().getHealthReward() <= 0) {
+        if (Controller.getCurrentObjective().getSpellReward() >= 0) {
             GetSpellTask spellTask = new GetSpellTask();
             spellTask.execute();
         } else {
@@ -772,7 +772,7 @@ public class SoloCombat extends Activity {
                 message += " + " + Controller.getCurrentObjective().getHealthReward() + " pv max \n";
             if (Controller.getCurrentObjective().getStrengthReward() > 0) {
                 message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
-                int reward = Controller.rewardPercent() * Controller.getCurrentObjective().getStrengthReward();
+                Controller.getAnimal(1).gainStrength(Controller.gainReward());
             }
 
             builder.setMessage(message)
@@ -1209,7 +1209,7 @@ public class SoloCombat extends Activity {
             }
             if (Controller.getCurrentObjective().getStrengthReward() > 0) {
                 message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
-                Controller.getAnimal(1).gainStrength(Controller.getCurrentObjective().getStrengthReward());
+                Controller.getAnimal(1).gainStrength(Controller.gainReward());
             }
 
             ArrayList<Integer> spellRewardQuery = new ArrayList<>();

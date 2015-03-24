@@ -855,7 +855,7 @@ public class Controller {
         WantedSpawn spawn = new WantedSpawn(0,0,0,object.getJSONObject("Location").getDouble("Latitude"),
                 object.getJSONObject("Location").getDouble("Longitude"),
                 "Voici ta cible, détruit le", object.getString("Name"), 2, enemyAnimals,solo);
-        objectives.add(0,spawn);
+        objectives.add(0, spawn);
         MailWanted mail = new MailWanted(object);
         return mail;
     }
@@ -917,9 +917,19 @@ public class Controller {
 
             URL url = new URL(uri);
             JSONObject json = new JSONObject();
-            JSONArray succeededIds = new JSONArray(succeededSpawns);
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int spawn : succeededSpawns){
+                if (spawn < 1000){
+                    list.add(spawn);
+                }
+            }
+            JSONArray succeededIds = new JSONArray(list);
             Log.d("Succeeded spawns:", succeededIds.toString());
+            JSONArray animals = new JSONArray();
+            animals.put(animal1.toJson());
+            animals.put(animal2.toJson());
             json.put("Progress",succeededIds);
+            json.put("Animals",animals);
             JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
 
             if (returnJson != null){

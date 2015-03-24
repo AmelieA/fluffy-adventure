@@ -125,7 +125,7 @@ public abstract class Creature {
         switch (type) {
             case Creature.SHEEP:
                 this.health = 100;
-                this.strength = 9;
+                this.strength = 10;
                 this.accuracy = 100;
                 this.evasiveness = 10;
                 this.QGImage = "grassicon";
@@ -139,7 +139,7 @@ public abstract class Creature {
                 break;
             case Creature.RABBIT:
                 this.health = 100;
-                this.strength = 10;
+                this.strength = 11;
                 this.accuracy = 100;
                 this.evasiveness = 15;
                 this.QGImage = "carroticon";
