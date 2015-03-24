@@ -2,6 +2,7 @@ package com.fluffyadventure.view;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -48,7 +49,7 @@ import java.util.Map;
 public class MapComponent extends FragmentActivity implements OnMapReadyCallback {
     public final static String SPAWN_ID = "com.fluffyadventure.SPAWN_ID";
     //TODO : changer pour la release
-    private final static float MAX_DISTANCE_BETWEEN_QUEST_AND_PLAYER = 1000;
+    private final static float MAX_DISTANCE_BETWEEN_QUEST_AND_PLAYER = 2000;
     private final Map<String, AbstractSpawn> spawnMarkers = new HashMap<>();
     private Button button_go;
     private Button homeBtn;
@@ -406,7 +407,12 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
     private void showTooFarDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Tu es trop loin de l'objectif.")
-                .setTitle("Rapproche-toi !");
+                .setTitle("Rapproche-toi !")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });;;
 
         AlertDialog dialog = builder.create();
         dialog.show();

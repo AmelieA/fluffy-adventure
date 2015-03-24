@@ -581,7 +581,9 @@ public class SoloCombat extends Activity {
             spell = opponents.get(currentOpponentIdx).getActiveSpells().get(randomInt);
             if (spell.getUses() != spell.getMaxUses() - 1)
                 usableSpell = true;
-            if (spell.getAnimationType() == AbstractSpell.HEAL && opponents.get(currentOpponentIdx).getHealth() > 50)
+            if (spell.getAnimationType() == AbstractSpell.HEAL && opponents.get(currentOpponentIdx).getHealth() > 79)
+                usableSpell = false;
+            if (spell.getAnimationType() == AbstractSpell.HEAL && opponents.get(currentOpponentIdx).getHealth() < 52)
                 usableSpell = false;
         }
         instruction.setText(opponents.get(currentOpponentIdx).getName() + " lance " + spell.getName() + " !");
@@ -709,7 +711,6 @@ public class SoloCombat extends Activity {
                                 opponentsLifePoint2 = GainLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentsGainLifeFilter2);
                             opponents.get(currentOpponentIdx).setHealth(tempOpponents.get(currentOpponentIdx).getHealth());
                         } else {
-                            System.out.println("Ennemy Heal");
                             if (currentOpponentIdx == 0)
                                 opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
                             else
@@ -1161,10 +1162,10 @@ public class SoloCombat extends Activity {
         animationOffset += 100;
     }
 
-    @Override
+   /* @Override
     public void onBackPressed() {
         return;
-    }
+    }*/
 
 
     private class SaveTask extends AsyncTask<Void, Void, Boolean> {

@@ -931,7 +931,8 @@ public class Controller {
             Log.d("Succeeded spawns:", succeededIds.toString());
             JSONArray animals = new JSONArray();
             animals.put(animal1.toJson());
-            animals.put(animal2.toJson());
+            if (animal2 != null)
+             animals.put(animal2.toJson());
             json.put("Progress",succeededIds);
             json.put("Animals",animals);
             JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
