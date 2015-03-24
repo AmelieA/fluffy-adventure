@@ -96,7 +96,7 @@ public class Controller {
                 double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT;
 
                 ArrayList<Creature> randomEnemies = new ArrayList<>(Arrays.asList(monsters.get(randomGenerator.nextInt(monsters.size()))));
-                WanderingSpawn spawn = new WanderingSpawn(1000 + i, 0, 0, 0, QGLocation.latitude + coefLat + randLat,
+                WanderingSpawn spawn = new WanderingSpawn(1000 + i, -1, 0, 1, QGLocation.latitude + coefLat + randLat,
                         QGLocation.longitude + coefLong + randLong, "Auras-tu le courage de vaincre ce monstre ?", "Combat aléatoire", 0, randomEnemies, true);
                 objectives.add(spawn);
                 Log.d("Objective " + Integer.toString(i), objectives.get(i).toString());

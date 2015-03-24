@@ -22,7 +22,6 @@ public abstract class AbstractSpawn {
         public static final String DONE = "done";
         public static final String AVAILABLE = "available";
         public static final String REQUIREMENT_NOT_MET= "requirement not met";
-        //public static final String COMPETENCES_INSUFFISANTES= "competences insuffisantes";
     }
 
     protected Integer spawnId;
