@@ -27,14 +27,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="Attack Name"
-                    android:textColor="#ffffffff"
+                    android:textColor="@color/black"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/AttackDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#ffffffff"
+                    android:textColor="@color/black"
                     android:text="What the attack does like how many damage it does. What the attack does like how many damage it does. What the attack does like how many damage it does. What the attack does like how many damage it does."/>
 
             </LinearLayout>

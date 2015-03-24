@@ -32,10 +32,18 @@
         android:layout_below="@id/newAnimalDisclaimer"
         android:src="@drawable/squirrel2" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newAnimalName"
+        android:layout_below="@id/newAnimalImageView"
+        android:layout_centerHorizontal="true"
+        style="@style/information"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@id/newAnimalImageView"
+        android:layout_below="@id/newAnimalName"
         android:id="@+id/newAnimalListView"
         android:layout_above="@+id/newAnimalButtonsBlock"/>
 
