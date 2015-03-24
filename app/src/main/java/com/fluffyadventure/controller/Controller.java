@@ -59,7 +59,7 @@ public class Controller {
     private static final double COORDINATES_COEFFICIENT_WANDERING_SPAWN = 0.0015;
 
     public static int rewardPercent(){
-        double max = (objectives.size()+1)*2;;
+        double max = (objectives.size()+1)*2;
         int i = (int)Math.round((succeededSpawns.size())*2*100/max);
 
         return i;
