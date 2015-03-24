@@ -732,6 +732,7 @@ public class Controller {
             for (int i = 0; i < array.length(); i++){
                 JSONObject object = array.getJSONObject(i);
                 AbstractSpawn abstractSpawn;
+                Log.d("Order",object.toString());
                 if (object.getString("Type").equals("Spawn")) {
                     abstractSpawn = new Spawn(object);
                 }
@@ -856,7 +857,7 @@ public class Controller {
         }
         if (wantedSpawn != null)
             objectives.remove(wantedSpawn);
-        WantedSpawn spawn = new WantedSpawn(0,0,0,object.getJSONObject("Location").getDouble("Latitude"),
+        WantedSpawn spawn = new WantedSpawn(-1,0,1,object.getJSONObject("Location").getDouble("Latitude"),
                 object.getJSONObject("Location").getDouble("Longitude"),
                 "Voici ta cible, détruit le", object.getString("Name"), 2, enemyAnimals,solo);
         objectives.add(0, spawn);
