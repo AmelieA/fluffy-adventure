@@ -253,26 +253,32 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
      * Place a spawn marker
      */
     private void addSpawnToMap(GoogleMap map, Resources resources, AbstractSpawn spawn) {
+        if (spawn != null) {
+            int iconId = resources.getIdentifier(spawn.getIcon(), "drawable", getPackageName());
+            Animal animal = Controller.getAnimal1();
 
-        int iconId = resources.getIdentifier(spawn.getIcon(), "drawable", getPackageName());
-        Animal animal = Controller.getAnimal1();
+            if (spawn.getStatus().equals(AbstractSpawn.SpawnStatus.DONE) ||
+                    spawn.getStatus().equals(AbstractSpawn.SpawnStatus.REQUIREMENT_NOT_MET)) {
+                return;
+            }
 
-        if (spawn.getStatus().equals(AbstractSpawn.SpawnStatus.DONE) ||
-                spawn.getStatus().equals(AbstractSpawn.SpawnStatus.REQUIREMENT_NOT_MET)) {
-            return;
+            Bitmap icon = BitmapFactory.decodeResource(resources, iconId);
+
+            if (icon != null) {
+
+                if (!spawn.isSoloFight() && Controller.getAnimal(2) == null) {
+                    icon = convertToGrayscale(icon);
+                }
+
+                Marker marker = map.addMarker(new MarkerOptions()
+                        .position(new LatLng(spawn.latitude, spawn.longitude))
+                        .title(spawn.getStatus() + " - " + spawn.getName())
+                        .snippet(spawn.getText())
+                        .icon(BitmapDescriptorFactory.fromBitmap(icon)));
+                spawnMarkers.put(marker.getId(), spawn);
+
+            }
         }
-
-        Bitmap icon = BitmapFactory.decodeResource(resources, iconId);
-
-        if (!spawn.isSoloFight() && Controller.getAnimal(2) == null) {
-            icon = convertToGrayscale(icon);
-        }
-        Marker marker = map.addMarker(new MarkerOptions()
-                .position(new LatLng(spawn.latitude, spawn.longitude))
-                .title(spawn.getStatus() + " - " + spawn.getName())
-                .snippet(spawn.getText())
-                .icon(BitmapDescriptorFactory.fromBitmap(icon)));
-        spawnMarkers.put(marker.getId(), spawn);
     }
 
     /**
@@ -415,7 +421,6 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         Intent intent = new Intent(MapComponent.this, Status.class);
         startActivity(intent);
         finish();
-
     }
 
 

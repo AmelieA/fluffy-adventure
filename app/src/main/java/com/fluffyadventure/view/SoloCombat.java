@@ -774,11 +774,13 @@ public class SoloCombat extends Activity {
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             String message = "Tu as gagné les récompenses suivantes : \n";
-            if (Controller.getCurrentObjective().getHealthReward() > 0)
+            if (Controller.getCurrentObjective().getHealthReward() > 0) {
                 message += " + " + Controller.getCurrentObjective().getHealthReward() + " pv max \n";
+                Controller.getAnimal(1).gainHealth(Controller.getCurrentObjective().getHealthReward());
+            }
             if (Controller.getCurrentObjective().getStrengthReward() > 0) {
                 message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
-                int reward = Controller.rewardPercent() * Controller.getCurrentObjective().getStrengthReward();
+                Controller.getAnimal(1).gainStrength(Controller.getCurrentObjective().getStrengthReward());
             }
 
             builder.setMessage(message)
@@ -1167,7 +1169,8 @@ public class SoloCombat extends Activity {
 
     @Override
     public void onBackPressed() {
-        return;
+        if(soloCombat)
+            return;
     }
 
 
@@ -1209,10 +1212,15 @@ public class SoloCombat extends Activity {
         protected Boolean doInBackground(Void... params){
             builder = new AlertDialog.Builder(SoloCombat.this);
             String message = "Tu as gagné les récompenses suivantes : \n";
-            if (Controller.getCurrentObjective().getHealthReward() > 0)
+            if (Controller.getCurrentObjective().getHealthReward() > 0) {
                 message += " + " + Controller.getCurrentObjective().getHealthReward() + " pv max \n";
-            if (Controller.getCurrentObjective().getHealthReward() > 0)
+                Controller.getAnimal(1).gainHealth(Controller.getCurrentObjective().getHealthReward());
+            }
+            if (Controller.getCurrentObjective().getStrengthReward() > 0) {
                 message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
+                Controller.getAnimal(1).gainStrength(Controller.getCurrentObjective().getStrengthReward());
+            }
+
             ArrayList<Integer> spellRewardQuery = new ArrayList<>();
             spellRewardQuery.add(Controller.getCurrentObjective().getSpellReward());
             AbstractSpell spellReward = Controller.getSpells(spellRewardQuery, Controller.getAnimal(1).getType()).get(0);
