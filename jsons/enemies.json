@@ -4,9 +4,9 @@
         "Name":"Evil Bunny",
         "Type":4,
         "Health":100,
-        "Strength":11,
+        "Strength":10,
         "Accuracy":90,
-        "Evasiveness":20,
+        "Evasiveness":10,
         "Spells":
         [
             {"Id":0},
@@ -20,9 +20,9 @@
         "Name":"Evil Hamster",
         "Type":3,
         "Health":100,
-        "Strength":11,
+        "Strength":10,
         "Accuracy":90,
-        "Evasiveness":20,
+        "Evasiveness":10,
         "Spells":
         [
             {"Id":2},
@@ -36,9 +36,9 @@
         "Name":"Mean Monkey",
         "Type":5,
         "Health":100,
-        "Strength":11,
+        "Strength":10,
         "Accuracy":90,
-        "Evasiveness":20,
+        "Evasiveness":10,
         "Spells":
         [
             {"Id":12},
@@ -52,9 +52,9 @@
         "Name":"Evil Monkey",
         "Type":6,
         "Health":100,
-        "Strength":11,
+        "Strength":10,
         "Accuracy":90,
-        "Evasiveness":20,
+        "Evasiveness":10,
         "Spells":
         [
             {"Id":12},
@@ -68,9 +68,9 @@
         "Name":"Evil Teddy",
         "Type":7,
         "Health":100,
-        "Strength":11,
+        "Strength":10,
         "Accuracy":90,
-        "Evasiveness":20,
+        "Evasiveness":10,
         "Spells":
         [
             {"Id":4},
@@ -84,9 +84,9 @@
         "Name":"Mean Teddy",
         "Type":8,
         "Health":100,
-        "Strength":11,
+        "Strength":10,
         "Accuracy":90,
-        "Evasiveness":20,
+        "Evasiveness":10,
         "Spells":
         [
             {"Id":4},
