@@ -33,6 +33,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Random;
 
 /**
@@ -55,6 +56,14 @@ public class Controller {
     private static ArrayList<Mail> mails = new ArrayList<>();
 
     private static final double COORDINATES_COEFFICIENT = 0.005;
+
+    public static int rewardPercent(){
+        double max = (objectives.size()+1)*2;;
+        int i = (int)Math.round((succeededSpawns.size())*2*100/max);
+
+        return i;
+
+    }
 
     public  static  void setUpObjectivesWithHq() {
         objectives = get_spawns();

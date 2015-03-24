@@ -763,11 +763,16 @@ public class SoloCombat extends Activity {
         }
     }
 
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+    }
+
     private void win(){
         resetFight();
         Controller.success(Controller.getCurrentObjective().getSpawnId());
 
-        if (Controller.getCurrentObjective().getHealthReward() >= 0) {
+        if (Controller.getCurrentObjective().getHealthReward() <= 0) {
             GetSpellTask spellTask = new GetSpellTask();
             spellTask.execute();
         } else {
@@ -775,8 +780,11 @@ public class SoloCombat extends Activity {
             String message = "Tu as gagné les récompenses suivantes : \n";
             if (Controller.getCurrentObjective().getHealthReward() > 0)
                 message += " + " + Controller.getCurrentObjective().getHealthReward() + " pv max \n";
-            if (Controller.getCurrentObjective().getHealthReward() > 0)
+            if (Controller.getCurrentObjective().getStrengthReward() > 0) {
                 message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
+                int reward = Controller.rewardPercent() * Controller.getCurrentObjective().getStrengthReward();
+            }
+
             builder.setMessage(message)
                     .setTitle("Victoire !")
                     .setPositiveButton("Youpi !", new DialogInterface.OnClickListener() {
