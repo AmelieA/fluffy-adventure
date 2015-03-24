@@ -115,7 +115,7 @@
         "Uses":3
 	},
 	{
-		"Id":9,
+		"Id":12,
         "Name":"Jonglage regenerateur",
         "Description":"blop" ,
         "IsAoE":false ,
