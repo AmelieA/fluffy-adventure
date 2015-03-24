@@ -56,6 +56,7 @@ public class Controller {
     private static ArrayList<Mail> mails = new ArrayList<>();
 
     private static final double COORDINATES_COEFFICIENT = 0.005;
+    private static final double COORDINATES_COEFFICIENT_WANDERING_SPAWN = 0.0015;
 
     public static int rewardPercent(){
         double max = (objectives.size()+1)*2;;
@@ -72,10 +73,10 @@ public class Controller {
 
         if (objectives != null && QGLocation != null){
             for (int i = 0; i < objectives.size(); i++){
-                double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT/2;
-                double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT/2;
-                double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT/2 * 0.5);
-                double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT/2;// * 0.0025;
+                double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT;
+                double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT;
+                double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT * 0.5);
+                double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT;// * 0.0025;
                 objectives.get(i).setCoordinates(
                         QGLocation.latitude + coefLat + randLat,
                         QGLocation.longitude + coefLong + randLong
@@ -90,10 +91,10 @@ public class Controller {
 
         if (!monsters.isEmpty()) {
             for (int i = 0; i < 5; i++) {
-                double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT/2;
-                double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT/2;
-                double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT/2 * 0.5);
-                double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT/2;
+                double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT_WANDERING_SPAWN;
+                double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT_WANDERING_SPAWN;
+                double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT_WANDERING_SPAWN * 0.5);
+                double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT_WANDERING_SPAWN;
 
                 ArrayList<Creature> randomEnemies = new ArrayList<>(Arrays.asList(monsters.get(randomGenerator.nextInt(monsters.size()))));
                 WanderingSpawn spawn = new WanderingSpawn(1000 + i, -1, 0, 1, QGLocation.latitude + coefLat + randLat,
@@ -101,6 +102,13 @@ public class Controller {
                 objectives.add(spawn);
                 Log.d("Objective " + Integer.toString(i), objectives.get(i).toString());
             }
+
+            //Code for presentation
+            double coefLat = Math.cos(1) * COORDINATES_COEFFICIENT*5;
+            double coefLong = Math.sin(1) * COORDINATES_COEFFICIENT*5;
+            double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT*5 * 0.5);
+            double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT*5;
+            objectives.get(objectives.size()-1).setCoordinates(QGLocation.latitude + coefLat + randLat, QGLocation.longitude + coefLong + randLong);
         }
     }
 
@@ -108,14 +116,21 @@ public class Controller {
         Random randomGenerator = new Random();
 
         for(int i=0; i<5; i++) {
-            double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT;
-            double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT;
-            double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT * 0.5);
-            double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT;
+            double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT_WANDERING_SPAWN;
+            double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT_WANDERING_SPAWN;
+            double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT_WANDERING_SPAWN * 0.5);
+            double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT_WANDERING_SPAWN;
 
             //change location of the last 10 spawns (wich should be le random spawn)
             objectives.get(objectives.size()-1-i).setCoordinates(QGLocation.latitude + coefLat + randLat, QGLocation.longitude + coefLong + randLong);
         }
+
+        //Code for presentation
+        double coefLat = Math.cos(1) * COORDINATES_COEFFICIENT*5;
+        double coefLong = Math.sin(1) * COORDINATES_COEFFICIENT*5;
+        double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT*5 * 0.5);
+        double randLong = (randomGenerator.nextDouble() - 0.5) * COORDINATES_COEFFICIENT*5;
+        objectives.get(objectives.size()-1).setCoordinates(QGLocation.latitude + coefLat + randLat, QGLocation.longitude + coefLong + randLong);
     }
 
     public static void createAnimal1(String name, String imagePath, int type) {
