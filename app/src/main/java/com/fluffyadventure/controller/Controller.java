@@ -56,14 +56,14 @@ public class Controller {
     private static ArrayList<Mail> mails = new ArrayList<>();
 
     private static final double COORDINATES_COEFFICIENT = 0.005;
+    private static final int WANDERIN_NUMBER = 4;
     private static final double COORDINATES_COEFFICIENT_WANDERING_SPAWN = 0.0015;
 
-    public static int rewardPercent(){
-        double max = (objectives.size()+1)*2;
-        int i = (int)Math.round((succeededSpawns.size())*2*100/max);
-
-        return i;
-
+    public static int gainReward(){
+        if (succeededSpawns.size() < (objectives.size() - WANDERIN_NUMBER) -1){
+            return 1;
+        }
+        return 0;
     }
 
     public  static  void setUpObjectivesWithHq() {

@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -13,7 +12,6 @@ import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,11 +29,7 @@ import android.widget.Toast;
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.AbstractSpell;
 import com.fluffyadventure.model.Animal;
-import com.fluffyadventure.model.BuffSpell;
 import com.fluffyadventure.model.Creature;
-import com.fluffyadventure.model.DamageSpell;
-import com.fluffyadventure.model.DebuffSpell;
-import com.fluffyadventure.model.HealSpell;
 import com.fluffyadventure.model.Monster;
 
 import java.util.ArrayList;
@@ -774,13 +768,11 @@ public class SoloCombat extends Activity {
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             String message = "Tu as gagné les récompenses suivantes : \n";
-            if (Controller.getCurrentObjective().getHealthReward() > 0) {
+            if (Controller.getCurrentObjective().getHealthReward() > 0)
                 message += " + " + Controller.getCurrentObjective().getHealthReward() + " pv max \n";
-                Controller.getAnimal(1).gainHealth(Controller.getCurrentObjective().getHealthReward());
-            }
             if (Controller.getCurrentObjective().getStrengthReward() > 0) {
                 message += " + " + Controller.getCurrentObjective().getStrengthReward() + " force \n";
-                Controller.getAnimal(1).gainStrength(Controller.getCurrentObjective().getStrengthReward());
+                int reward = Controller.rewardPercent() * Controller.getCurrentObjective().getStrengthReward();
             }
 
             builder.setMessage(message)
@@ -1169,8 +1161,7 @@ public class SoloCombat extends Activity {
 
     @Override
     public void onBackPressed() {
-        if(soloCombat)
-            return;
+        return;
     }
 
 
