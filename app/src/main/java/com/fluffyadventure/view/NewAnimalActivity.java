@@ -58,6 +58,7 @@ public class NewAnimalActivity extends Activity {
             public void onClick(View v) {
                 Toast.makeText(NewAnimalActivity.this, "Compagnon ajouté", Toast.LENGTH_LONG).show();
                 Controller.setAnimal2(friend);
+                Controller.success(Controller.getCurrentObjective().getSpawnId());
                 Intent intent = new Intent(NewAnimalActivity.this, MapComponent.class);
                 startActivity(intent);
                 finish();
@@ -69,6 +70,7 @@ public class NewAnimalActivity extends Activity {
             public void onClick(View v) {
                 Toast.makeText(NewAnimalActivity.this, "Compagnon ajouté", Toast.LENGTH_LONG).show();
                 Controller.setAnimal2(friend);
+                Controller.success(Controller.getCurrentObjective().getSpawnId());
                 Intent intent = new Intent(NewAnimalActivity.this, MapComponent.class);
                 startActivity(intent);
                 finish();
