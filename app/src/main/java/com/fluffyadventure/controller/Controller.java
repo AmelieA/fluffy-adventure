@@ -137,6 +137,10 @@ public class Controller {
         animal1 = new Animal(name,imagePath,type);
     }
 
+    public static void createAnimal2(String name, String imagePath, int type) {
+        animal2 = new Animal(name,imagePath,type);
+    }
+
     public static void setAnimal1(Animal animal1) {
         Controller.animal1 = animal1;
     }
@@ -322,7 +326,7 @@ public class Controller {
         return true;
     }
 
-    private static Boolean createAnimal(String name, int id){
+    public static Boolean createAnimal(String name, int id){
         Animal animal;
         if (id == 1){
             animal = new Animal(animal1);

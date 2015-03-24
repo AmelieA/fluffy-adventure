@@ -1,8 +1,11 @@
 package com.fluffyadventure.view;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,16 +89,11 @@ public class NewAnimalActivity extends Activity {
             }
         });
 
-        friend = new Animal("Squeeky","squirrel4", Creature.SQUIRREL);
-        friend.clearSpells();
-        friend.addSpell(new HealSpell(0, "Soin de groupe", "Soigne tout le groupe pour 10 pv", true, 10, AbstractSpell.HEAL, null, 5), true);
-        friend.addSpell(new DebuffSpell(1, "Jet de boue", "Réduit l'esquive et la précision de 20 %", false, 100, 80, 80, AbstractSpell.DEBUFF, null, 5), true);
-        friend.addSpell(new DamageSpell(2, "Charge mignonne", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
-        friend.addSpell(new DamageSpell(3, "Pluie de noisettes", "Lance des noisettes sur les ennemis, les blessant pour 140% de ta force", true, 140 , AbstractSpell.THROW, "hazelnut", 10), true);
+
 
         newAnimalImageView = (ImageView) findViewById(R.id.newAnimalImageView);
 
-        String imagePath = friend.getImagePath();
+        String imagePath = "squirrel4";
 
         newAnimalImageView.setImageResource(
                 getResources().getIdentifier(
@@ -147,6 +145,33 @@ public class NewAnimalActivity extends Activity {
             attackDescription.setText(values.get(position).getDescription());
 
             return rowView;
+        }
+    }
+
+    private class CreateAnimalTask extends AsyncTask<Void, Void, Boolean> {
+
+
+        public CreateAnimalTask() {
+
+        }
+
+        protected void onPreExecute(){
+
+        }
+
+        protected Boolean doInBackground(Void... params){
+            Controller.createAnimal2("","squirrel4", Creature.SQUIRREL);
+            Controller.createAnimal("Squeezy",2);
+            friend = Controller.getAnimal(2);
+            friend.clearSpells();
+            friend.addSpell(new HealSpell(0, "Soin de groupe", "Soigne tout le groupe pour 10 pv", true, 10, AbstractSpell.HEAL, null, 5), true);
+            friend.addSpell(new DebuffSpell(1, "Jet de boue", "Réduit l'esquive et la précision de 20 %", false, 100, 80, 80, AbstractSpell.DEBUFF, null, 5), true);
+            friend.addSpell(new DamageSpell(2, "Charge mignonne", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
+            friend.addSpell(new DamageSpell(3, "Pluie de noisettes", "Lance des noisettes sur les ennemis, les blessant pour 140% de ta force", true, 140 , AbstractSpell.THROW, "hazelnut", 10), true);
+            return true;
+        }
+
+        protected  void onPostExecute(Boolean login) {
         }
     }
 }
