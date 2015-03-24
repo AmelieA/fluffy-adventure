@@ -844,10 +844,18 @@ public class Controller {
             Animal enemyAnimal2 = new Animal(object.getJSONObject("Animal2"));
             enemyAnimals.add(enemyAnimal2);
         }
+        AbstractSpawn wantedSpawn = null;
+        for (AbstractSpawn abstractSpawn: objectives){
+            if (abstractSpawn instanceof WantedSpawn){
+                wantedSpawn = abstractSpawn;
+            }
+        }
+        if (wantedSpawn != null)
+            objectives.remove(wantedSpawn);
         WantedSpawn spawn = new WantedSpawn(0,0,0,object.getJSONObject("Location").getDouble("Latitude"),
                 object.getJSONObject("Location").getDouble("Longitude"),
                 "Voici ta cible, détruit le", object.getString("Name"), 2, enemyAnimals,solo);
-        objectives.add(spawn);
+        objectives.add(0,spawn);
         MailWanted mail = new MailWanted(object);
         return mail;
     }
