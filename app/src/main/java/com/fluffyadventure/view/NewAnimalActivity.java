@@ -36,6 +36,7 @@ import java.util.ArrayList;
 public class NewAnimalActivity extends Activity {
 
     TextView newAnimalDisc;
+    TextView newAnimalName;
     Button btnNewAnimalYes;
     Button btnNewAnimalNo;
     Button btnNewAnimalOK;
@@ -51,6 +52,7 @@ public class NewAnimalActivity extends Activity {
         setContentView(R.layout.activity_new_animal);
 
         newAnimalDisc = (TextView)findViewById(R.id.newAnimalDisclaimer);
+        newAnimalName = (TextView)findViewById(R.id.newAnimalName);
         btnNewAnimalYes = (Button)findViewById(R.id.btnNewAnimalYes);
         btnNewAnimalNo = (Button)findViewById(R.id.btnNewAnimalNo);
         btnNewAnimalOK = (Button)findViewById(R.id.btnNewAnimalOK);
@@ -98,6 +100,8 @@ public class NewAnimalActivity extends Activity {
         newAnimalImageView.setImageResource(
                 getResources().getIdentifier(
                         imagePath, "drawable", getPackageName()));
+
+        newAnimalName.setText(friend.getName());
     }
 
     @Override
@@ -119,6 +123,8 @@ public class NewAnimalActivity extends Activity {
         }
         //afficher liste des sorts
         attackList = (ArrayList) friend.getActiveSpells();
+        attackAdapter = new AttackAdapter(this,attackList);
+        attackListView.setAdapter(attackAdapter);
     }
 
     public class AttackAdapter extends ArrayAdapter<AbstractSpell> {
