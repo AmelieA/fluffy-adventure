@@ -2,6 +2,7 @@ package com.fluffyadventure.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -74,11 +75,11 @@ public class NewAnimalActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(NewAnimalActivity.this, "Compagnon ajouté", Toast.LENGTH_LONG).show();
-                Controller.setAnimal2(friend);
-                Controller.success(Controller.getCurrentObjective().getSpawnId());
-                Intent intent = new Intent(NewAnimalActivity.this, MapComponent.class);
-                startActivity(intent);
-                finish();
+                //Controller.setAnimal2(friend);
+                //Controller.success(Controller.getCurrentObjective().getSpawnId());
+                CreateAnimalTask task = new CreateAnimalTask(NewAnimalActivity.this);
+                task.execute();
+
             }
         });
 
@@ -167,17 +168,24 @@ public class NewAnimalActivity extends Activity {
 
     private class CreateAnimalTask extends AsyncTask<Void, Void, Boolean> {
 
+        ProgressDialog dialog;
+        Context ctx;
 
-        public CreateAnimalTask() {
 
+        public CreateAnimalTask(Context ctx) {
+            this.ctx = ctx;
+            this.dialog = new ProgressDialog(this.ctx);
         }
 
         protected void onPreExecute(){
+            this.dialog.setTitle("Connexion...");
+            this.dialog.show();
+
 
         }
 
         protected Boolean doInBackground(Void... params){
-            Controller.createAnimal2("","squirrel4", Creature.SQUIRREL);
+            Controller.createAnimal2("", "squirrel4", Creature.SQUIRREL);
             Controller.createAnimal("Squeezy", 2);
 
             friend = new Animal("Squeezy","squirrel4", Creature.SQUIRREL);
@@ -190,6 +198,10 @@ public class NewAnimalActivity extends Activity {
         }
 
         protected  void onPostExecute(Boolean login) {
+            dialog.dismiss();
+            Intent intent = new Intent(ctx, MapComponent.class);
+            startActivity(intent);
+            finish();
         }
     }
 }
