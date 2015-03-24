@@ -17,7 +17,7 @@
         "Description":"Om nom nom" ,
         "IsAoE":false ,
         "Type":3 ,
-        "Health":20,
+        "Health":15,
         "Animation":3,
         "Projectile":"",
         "Uses":3
@@ -87,7 +87,7 @@
         "Description":"Je revie" ,
         "IsAoE":false ,
         "Type":3 ,
-        "Health":20,
+        "Health":15,
         "Animation":3,
         "Projectile":"",
         "Uses":3
@@ -109,7 +109,7 @@
         "Description":"Yeah" ,
         "IsAoE":false ,
         "Type":3 ,
-        "Health":20,
+        "Health":15,
         "Animation":3,
         "Projectile":"",
         "Uses":3
@@ -120,7 +120,7 @@
         "Description":"blop" ,
         "IsAoE":false ,
         "Type":3 ,
-        "Health":20,
+        "Health":15,
         "Animation":3,
         "Projectile":"",
         "Uses":3
