@@ -56,7 +56,7 @@ public class Controller {
     private static ArrayList<Mail> mails = new ArrayList<>();
 
     private static final double COORDINATES_COEFFICIENT = 0.005;
-    private static final int WANDERIN_NUMBER = 4;
+    private static final int WANDERIN_NUMBER = 5;
     private static final double COORDINATES_COEFFICIENT_WANDERING_SPAWN = 0.0015;
 
     public static int gainReward(){
@@ -90,7 +90,7 @@ public class Controller {
         Random randomGenerator = new Random();
 
         if (!monsters.isEmpty()) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < WANDERIN_NUMBER; i++) {
                 double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT_WANDERING_SPAWN;
                 double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT_WANDERING_SPAWN;
                 double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT_WANDERING_SPAWN * 0.5);
@@ -115,7 +115,7 @@ public class Controller {
     public static void moveWanderingSpawns(){
         Random randomGenerator = new Random();
 
-        for(int i=0; i<5; i++) {
+        for(int i=0; i<WANDERIN_NUMBER; i++) {
             double coefLat = Math.cos(i) * COORDINATES_COEFFICIENT_WANDERING_SPAWN;
             double coefLong = Math.sin(i) * COORDINATES_COEFFICIENT_WANDERING_SPAWN;
             double randLat = (randomGenerator.nextDouble() - 0.5) * (COORDINATES_COEFFICIENT_WANDERING_SPAWN * 0.5);
