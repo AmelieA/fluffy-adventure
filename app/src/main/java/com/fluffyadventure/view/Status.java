@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,13 @@ public class Status extends Activity {
     TextView textViewAccuracy1;
     TextView textViewEvasiveness1;
     TextView textViewName1;
+    ImageView imgPC2;
+    TextView textViewHealth2;
+    TextView textViewStrength2;
+    TextView textViewAccuracy2;
+    TextView textViewEvasiveness2;
+    TextView textViewName2;
+    LinearLayout animal2Block;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,19 +61,49 @@ public class Status extends Activity {
 
         textViewName1 = (TextView) findViewById(R.id.textViewName1);
         textViewName1.setTypeface(font);
-        textViewName1.setText(Controller.getAnimal1().getName());
+        textViewName1.setText(Controller.getAnimal(1).getName());
 
         textViewHealth1 = (TextView) findViewById(R.id.textViewHealth1);
-        textViewHealth1.setText(String.valueOf(Controller.getAnimal1().getHealth()));
+        textViewHealth1.setText(String.valueOf(Controller.getAnimal(1).getHealth()));
 
         textViewStrength1 = (TextView) findViewById(R.id.textViewStrength1);
-        textViewStrength1.setText(String.valueOf(Controller.getAnimal1().getStrength()));
+        textViewStrength1.setText(String.valueOf(Controller.getAnimal(1).getStrength()));
 
         textViewAccuracy1 = (TextView) findViewById(R.id.textViewAccuracy1);
-        textViewAccuracy1.setText(String.valueOf(Controller.getAnimal1().getAccuracy()));
+        textViewAccuracy1.setText(String.valueOf(Controller.getAnimal(1).getAccuracy()));
 
         textViewEvasiveness1 = (TextView) findViewById(R.id.textViewEvasiveness1);
-        textViewEvasiveness1.setText(String.valueOf(Controller.getAnimal1().getEvasiveness()));
+        textViewEvasiveness1.setText(String.valueOf(Controller.getAnimal(1).getEvasiveness()));
+
+        animal2Block = (LinearLayout)findViewById(R.id.animal2block);
+
+        if (Controller.getAnimal(2)!=null){
+            imgPC2 = (ImageView) findViewById(R.id.imgPC2);
+            String imagePath2 = Controller.getAnimal(2).getImagePath();
+            imgPC2.setImageResource(
+                    getResources().getIdentifier(
+                            imagePath2, "drawable", getPackageName()));
+
+            textViewName2 = (TextView) findViewById(R.id.textViewName2);
+            textViewName2.setTypeface(font);
+            textViewName2.setText(Controller.getAnimal(2).getName());
+
+            textViewHealth2 = (TextView) findViewById(R.id.textViewHealth2);
+            textViewHealth2.setText(String.valueOf(Controller.getAnimal(2).getHealth()));
+
+            textViewStrength2 = (TextView) findViewById(R.id.textViewStrength2);
+            textViewStrength2.setText(String.valueOf(Controller.getAnimal(2).getStrength()));
+
+            textViewAccuracy2 = (TextView) findViewById(R.id.textViewAccuracy2);
+            textViewAccuracy2.setText(String.valueOf(Controller.getAnimal(2).getAccuracy()));
+
+            textViewEvasiveness2 = (TextView) findViewById(R.id.textViewEvasiveness2);
+            textViewEvasiveness2.setText(String.valueOf(Controller.getAnimal(2).getEvasiveness()));
+
+            animal2Block.setVisibility(View.VISIBLE);
+        } else {
+            animal2Block.setVisibility(View.GONE);
+        }
 
         btnMngSkills = (Button) findViewById(R.id.BtnMngSkills);
         btnMngSkills.setTypeface(font);
