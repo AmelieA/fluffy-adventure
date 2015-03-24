@@ -27,7 +27,7 @@
         "SpellReward":5,
         "HealthReward":0,
         "StrengthReward":0,
-        "Text":"Des monstres s'amusent à chatouiller des chatons, sauve les vite !",
+        "Text":"Des ours en peluche s'amusent à chatouiller des chatons, sauve les vite !",
         "Name":"Sauver les chatons !",
         "Level":2,
         "Solo":false,
@@ -35,7 +35,7 @@
         "Opponents":
         [
             {
-                "Id":1,
+                "Id":7,
                 "Spells":
                 [
                     {"Id":0},
@@ -44,7 +44,7 @@
                 ]
             },
             {
-                "Id":2,
+                "Id":6,
                 "Spells":
                 [
                     {"Id":0},
@@ -60,7 +60,7 @@
         "SpellReward":4,
         "HealthReward":0,
         "StrengthReward":0,
-        "Text":"Un méchant sorcier a lancé une malédiction sur les arbres de la forêt",
+        "Text":"Un vilain hamster mange tous les arbres de la forêt",
         "Name":"Activité bûcheronnage",
         "Level":3,
         "Solo":true,
@@ -68,7 +68,7 @@
         "Opponents":
         [
             {
-                "Id":0,
+                "Id":3,
                 "Spells":
                 [
                     {"Id":0},
@@ -116,7 +116,7 @@
         "Opponents":
         [
             {
-                "Id":0,
+                "Id":5,
                 "Spells":
                 [
                     {"Id":0},

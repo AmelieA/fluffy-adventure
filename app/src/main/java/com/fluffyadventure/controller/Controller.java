@@ -56,14 +56,14 @@ public class Controller {
     private static ArrayList<Mail> mails = new ArrayList<>();
 
     private static final double COORDINATES_COEFFICIENT = 0.005;
+    private static final int WANDERIN_NUMBER = 4;
     private static final double COORDINATES_COEFFICIENT_WANDERING_SPAWN = 0.0015;
 
-    public static int rewardPercent(){
-        double max = (objectives.size()+1)*2;;
-        int i = (int)Math.round((succeededSpawns.size())*2*100/max);
-
-        return i;
-
+    public static int gainReward(){
+        if (succeededSpawns.size() < (objectives.size() - WANDERIN_NUMBER) -1){
+            return 1;
+        }
+        return 0;
     }
 
     public  static  void setUpObjectivesWithHq() {
@@ -848,10 +848,18 @@ public class Controller {
             Animal enemyAnimal2 = new Animal(object.getJSONObject("Animal2"));
             enemyAnimals.add(enemyAnimal2);
         }
+        AbstractSpawn wantedSpawn = null;
+        for (AbstractSpawn abstractSpawn: objectives){
+            if (abstractSpawn instanceof WantedSpawn){
+                wantedSpawn = abstractSpawn;
+            }
+        }
+        if (wantedSpawn != null)
+            objectives.remove(wantedSpawn);
         WantedSpawn spawn = new WantedSpawn(0,0,0,object.getJSONObject("Location").getDouble("Latitude"),
                 object.getJSONObject("Location").getDouble("Longitude"),
                 "Voici ta cible, détruit le", object.getString("Name"), 2, enemyAnimals,solo);
-        objectives.add(spawn);
+        objectives.add(0, spawn);
         MailWanted mail = new MailWanted(object);
         return mail;
     }
@@ -913,9 +921,19 @@ public class Controller {
 
             URL url = new URL(uri);
             JSONObject json = new JSONObject();
-            JSONArray succeededIds = new JSONArray(succeededSpawns);
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int spawn : succeededSpawns){
+                if (spawn < 1000){
+                    list.add(spawn);
+                }
+            }
+            JSONArray succeededIds = new JSONArray(list);
             Log.d("Succeeded spawns:", succeededIds.toString());
+            JSONArray animals = new JSONArray();
+            animals.put(animal1.toJson());
+            animals.put(animal2.toJson());
             json.put("Progress",succeededIds);
+            json.put("Animals",animals);
             JSONObject returnJson = server.connectWithAuth(url, user, HttpURLConnection.HTTP_OK, false, true, json);
 
             if (returnJson != null){
