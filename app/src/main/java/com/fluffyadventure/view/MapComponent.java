@@ -48,7 +48,7 @@ import java.util.Map;
 public class MapComponent extends FragmentActivity implements OnMapReadyCallback {
     public final static String SPAWN_ID = "com.fluffyadventure.SPAWN_ID";
     //TODO : changer pour la release
-    private final static float MAX_DISTANCE_BETWEEN_QUEST_AND_PLAYER = 30;
+    private final static float MAX_DISTANCE_BETWEEN_QUEST_AND_PLAYER = 1000;
     private final Map<String, AbstractSpawn> spawnMarkers = new HashMap<>();
     private Button button_go;
     private Button homeBtn;
@@ -364,22 +364,15 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
             return;
         }
 
-        Intent intent = new Intent(this, targetActivity);
-        intent.putExtra(SPAWN_ID, Controller.getCurrentObjective().getSpawnId());
-        startActivity(intent);
-        finish();
 
-        /*if (selectedSpawn == null) {
-            return;
-        }
-        if (isPlayerTooFar(selectedSpawn)) {
+        if (isPlayerTooFar(Controller.getCurrentObjective())) {
             showTooFarDialog();
         } else {
-
             Intent intent = new Intent(this, targetActivity);
-            intent.putExtra(QUETE_ID, selectedSpawn.getId());
+            intent.putExtra(SPAWN_ID, Controller.getCurrentObjective().getSpawnId());
             startActivity(intent);
-        }*/
+            finish();
+        }
     }
 
     /**

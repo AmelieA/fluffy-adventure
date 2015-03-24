@@ -585,8 +585,10 @@ public class SoloCombat extends Activity {
         while(!usableSpell) {
             int randomInt = randomGenerator.nextInt(numberOfSpells);
             spell = opponents.get(currentOpponentIdx).getActiveSpells().get(randomInt);
-            if (spell.getUses() != spell.getMaxUses() - 1 && (!((spell.getAnimationType() == AbstractSpell.HEAL) && opponents.get(currentOpponentIdx).getHealth() > 90)))
+            if (spell.getUses() != spell.getMaxUses() - 1)
                 usableSpell = true;
+            if (spell.getAnimationType() == AbstractSpell.HEAL && opponents.get(currentOpponentIdx).getHealth() > 50)
+                usableSpell = false;
         }
         instruction.setText(opponents.get(currentOpponentIdx).getName() + " lance " + spell.getName() + " !");
 
@@ -713,6 +715,7 @@ public class SoloCombat extends Activity {
                                 opponentsLifePoint2 = GainLifeAnimation(opponentsLife2, opponentsLifePoint2, spell.getValue(), opponentsGainLifeFilter2);
                             opponents.get(currentOpponentIdx).setHealth(tempOpponents.get(currentOpponentIdx).getHealth());
                         } else {
+                            System.out.println("Ennemy Heal");
                             if (currentOpponentIdx == 0)
                                 opponentsLifePoint = GainLifeAnimation(opponentsLife, opponentsLifePoint, spell.getValue(), opponentsGainLifeFilter);
                             else
@@ -1077,28 +1080,27 @@ public class SoloCombat extends Activity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (currentAnim == nbOfAnims) {
-                    currentAnim = 0;
-                    nbOfAnims = 0;
+
 
                     Runnable endTurn = new Runnable() {
                         @Override
                         public void run(){
-                            if (opponnentsTurn) {
-                                if (opponents.size() > 0 && opponents.get(currentOpponentIdx).getHealth() > 0)
-                                    ennemyTurn();
-                            }
-                            else {
-                                setButtonsEnabled(true);
-                                instruction.setText(getResources().getString(R.string.combat_instruction_1)+" "+fighters.get(currentFighterIdx).getName()+" "+getResources().getString(R.string.combat_instruction_2));
+                            if (currentAnim == nbOfAnims) {
+                                currentAnim = 0;
+                                nbOfAnims = 0;
+                                if (opponnentsTurn) {
+                                    if (opponents.size() > 0 && opponents.get(currentOpponentIdx).getHealth() > 0)
+                                        ennemyTurn();
+                                } else {
+                                    setButtonsEnabled(true);
+                                    instruction.setText(getResources().getString(R.string.combat_instruction_1) + " " + fighters.get(currentFighterIdx).getName() + " " + getResources().getString(R.string.combat_instruction_2));
+                                }
                             }
                         }
                     };
 
                     Handler h = new Handler();
                     h.postDelayed(endTurn, 1700);
-
-                }
             }
 
             @Override

@@ -92,10 +92,17 @@ public class NewAnimalActivity extends Activity {
         });
 
 
+        friend = new Animal("Squeeky","squirrel4", Creature.SQUIRREL);
+        friend.clearSpells();
+        friend.addSpell(new HealSpell(0, "Soin de groupe", "Soigne tout le groupe pour 10 pv", true, 10, AbstractSpell.HEAL, null, 5), true);
+        friend.addSpell(new DebuffSpell(1, "Jet de boue", "Réduit l'esquive et la précision de 20 %", false, 100, 80, 80, AbstractSpell.DEBUFF, null, 5), true);
+        friend.addSpell(new DamageSpell(2, "Charge mignonne", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
+        friend.addSpell(new DamageSpell(3, "Noisettes", "Lance des noisettes sur les ennemis, les blessant pour 140% de ta force", true, 140 , AbstractSpell.THROW, "hazelnut", 10), true);
+
 
         newAnimalImageView = (ImageView) findViewById(R.id.newAnimalImageView);
 
-        String imagePath = "squirrel4";
+        String imagePath = friend.getImagePath();
 
         newAnimalImageView.setImageResource(
                 getResources().getIdentifier(
@@ -122,7 +129,11 @@ public class NewAnimalActivity extends Activity {
             btnNewAnimalOK.setVisibility(View.GONE);
         }
         //afficher liste des sorts
-        attackList = (ArrayList) friend.getActiveSpells();
+        attackList = new ArrayList<>();
+        attackList.add(new HealSpell(0, "Soin de groupe", "Soigne tout le groupe pour 10 pv", true, 10, AbstractSpell.HEAL, null, 5));
+        attackList.add(new DebuffSpell(1, "Jet de boue", "Réduit l'esquive et la précision de 20 %", false, 100, 80, 80, AbstractSpell.DEBUFF, null, 5));
+        attackList.add(new DamageSpell(2, "Charge mignonne", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130, AbstractSpell.ATTACK, null, 30));
+        attackList.add(new DamageSpell(3, "Noisettes", "Lance des noisettes sur les ennemis, les blessant pour 140% de ta force", true, 140 , AbstractSpell.THROW, "hazelnut", 10));
         attackAdapter = new AttackAdapter(this,attackList);
         attackListView.setAdapter(attackAdapter);
     }
@@ -167,13 +178,14 @@ public class NewAnimalActivity extends Activity {
 
         protected Boolean doInBackground(Void... params){
             Controller.createAnimal2("","squirrel4", Creature.SQUIRREL);
-            Controller.createAnimal("Squeezy",2);
-            friend = Controller.getAnimal(2);
+            Controller.createAnimal("Squeezy", 2);
+
+            friend = new Animal("Squeezy","squirrel4", Creature.SQUIRREL);
             friend.clearSpells();
             friend.addSpell(new HealSpell(0, "Soin de groupe", "Soigne tout le groupe pour 10 pv", true, 10, AbstractSpell.HEAL, null, 5), true);
             friend.addSpell(new DebuffSpell(1, "Jet de boue", "Réduit l'esquive et la précision de 20 %", false, 100, 80, 80, AbstractSpell.DEBUFF, null, 5), true);
             friend.addSpell(new DamageSpell(2, "Charge mignonne", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
-            friend.addSpell(new DamageSpell(3, "Pluie de noisettes", "Lance des noisettes sur les ennemis, les blessant pour 140% de ta force", true, 140 , AbstractSpell.THROW, "hazelnut", 10), true);
+            friend.addSpell(new DamageSpell(3, "Noisettes", "Lance des noisettes sur les ennemis, les blessant pour 140% de ta force", true, 140 , AbstractSpell.THROW, "hazelnut", 10), true);
             return true;
         }
 
