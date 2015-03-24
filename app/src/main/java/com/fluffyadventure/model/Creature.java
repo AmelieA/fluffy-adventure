@@ -17,10 +17,12 @@ public abstract class Creature {
     public static final int SHEEP = 0;
     public static final int SQUIRREL = 1;
     public static final int RABBIT = 2;
-    public static final int ZOMBIE = 3;
+    public static final int EVILHAMSTER = 3;
     public static final int EVILBUNNY = 4;
-    public static final int TREANT = 5;
-    public static final int BLOB = 6;
+    public static final int EVILMONKEY1 = 5;
+    public static final int EVILMONKEY2 = 6;
+    public static final int EVILTEDDY1 = 7;
+    public static final int EVILTEDDY2 = 8;
 
     protected String name;
     protected String imagePath;
@@ -94,11 +96,20 @@ public abstract class Creature {
             case Creature.EVILBUNNY:
                 this.imagePath = "evilbunny";
                 break;
-            case Creature.ZOMBIE:
-                this.imagePath = "zombie";
+            case Creature.EVILMONKEY1:
+                this.imagePath = "evil_monkey";
                 break;
-            case Creature.TREANT:
-                this.imagePath = "treant";
+            case Creature.EVILMONKEY2:
+                this.imagePath = "evil_monkey2";
+                break;
+            case Creature.EVILHAMSTER:
+                this.imagePath = "evil_hamster";
+                break;
+            case Creature.EVILTEDDY1:
+                this.imagePath = "evil_teddy";
+                break;
+            case Creature.EVILTEDDY2:
+                this.imagePath = "evil_teddy2";
                 break;
             default:
                 this.imagePath = "evilbunny";
@@ -138,7 +149,6 @@ public abstract class Creature {
                 this.strength = 10;
                 this.accuracy = 100;
                 this.evasiveness = 10;
-                this.type = Creature.RABBIT;
                 this.QGImage = "carroticon";
                 break;
         }
@@ -160,10 +170,10 @@ public abstract class Creature {
             case Creature.EVILBUNNY:
                 this.imagePath = "evilbunny";
                 break;
-            case Creature.ZOMBIE:
+            case Creature.EVILHAMSTER:
                 this.imagePath = "zombie";
                 break;
-            case Creature.TREANT:
+            case Creature.EVILMONKEY1:
                 this.imagePath = "treant";
                 break;
             default:
