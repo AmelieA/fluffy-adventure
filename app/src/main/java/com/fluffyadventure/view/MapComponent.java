@@ -169,7 +169,9 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
         });
 
         LatLng location = getCurrentLocation();
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.latitude, location.longitude)));
+        Double longit = getIntent().getDoubleExtra("Longitude",location.longitude);
+        Double latit = getIntent().getDoubleExtra("Latitude",location.latitude);
+        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latit, longit)));
         map.moveCamera(CameraUpdateFactory.zoomTo(15));
     }
 

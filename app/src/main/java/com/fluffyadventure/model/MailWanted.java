@@ -80,6 +80,15 @@ public class MailWanted extends Mail{
     public String getAnimal2Pic() {
         return animal2Pic;
     }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -92,6 +101,10 @@ public class MailWanted extends Mail{
         dest.writeString(animal1Pic);
         dest.writeString(animal2Name);
         dest.writeString(animal2Pic);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeString(enemyName);
+        dest.writeInt(solo?1:0);
     }
 
     private MailWanted(Parcel in){
@@ -100,6 +113,10 @@ public class MailWanted extends Mail{
         animal1Pic = in.readString();
         animal2Name = in.readString();
         animal2Pic = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        enemyName = in.readString();
+        solo = (in.readInt()==1);
     }
     public static final Parcelable.Creator<Mail> CREATOR = new Parcelable.Creator<Mail>() {
         public MailWanted createFromParcel(Parcel in){return new MailWanted(in);}
