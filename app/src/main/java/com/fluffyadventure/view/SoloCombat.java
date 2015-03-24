@@ -1162,10 +1162,14 @@ public class SoloCombat extends Activity {
         animationOffset += 100;
     }
 
-   /* @Override
+    @Override
     public void onBackPressed() {
+        resetFight();
+        Intent intent = new Intent(getApplicationContext(), MapComponent.class);
+        startActivity(intent);
+        finish();
         return;
-    }*/
+    }
 
 
     private class SaveTask extends AsyncTask<Void, Void, Boolean> {
