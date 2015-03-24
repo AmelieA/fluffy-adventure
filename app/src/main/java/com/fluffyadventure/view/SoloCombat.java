@@ -239,10 +239,6 @@ public class SoloCombat extends Activity {
         if (!soloCombat) {
             currentOpponentIdx = 1;
             Animal animal2 = Controller.getAnimal(2);
-            animal2.clearSpells();
-            animal2.addSpell(new HealSpell(0, "Soin de groupe", "Soigne tout le groupe pour 10 pv", true, 10, AbstractSpell.HEAL, null, 5), true);
-            animal2.addSpell(new DebuffSpell(1, "Jet de boue", "Réduit l'esquive et la précision de 20 %", false, 100, 80, 80, AbstractSpell.DEBUFF, null, 5), true);
-            animal2.addSpell(new DamageSpell(2, "Charge", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
             tempAnimals.add(new Animal(animal2));
             fighters.add(animal2);
         }

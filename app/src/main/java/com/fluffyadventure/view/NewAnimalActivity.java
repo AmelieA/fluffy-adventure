@@ -2,6 +2,7 @@ package com.fluffyadventure.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,11 +14,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fluffyadventure.controller.Controller;
 import com.fluffyadventure.model.AbstractSpell;
+import com.fluffyadventure.model.Animal;
+import com.fluffyadventure.model.Creature;
+import com.fluffyadventure.model.DamageSpell;
+import com.fluffyadventure.model.DebuffSpell;
+import com.fluffyadventure.model.HealSpell;
 import com.fluffyadventure.view.R;
 
 import java.util.ArrayList;
@@ -29,6 +37,8 @@ public class NewAnimalActivity extends Activity {
     Button btnNewAnimalNo;
     Button btnNewAnimalOK;
     ListView attackListView;
+    ImageView newAnimalImageView;
+    Animal friend;
     AttackAdapter attackAdapter;
     ArrayList<AbstractSpell> attackList;
 
@@ -42,6 +52,52 @@ public class NewAnimalActivity extends Activity {
         btnNewAnimalNo = (Button)findViewById(R.id.btnNewAnimalNo);
         btnNewAnimalOK = (Button)findViewById(R.id.btnNewAnimalOK);
         attackListView = (ListView)findViewById(R.id.newAnimalListView);
+
+        btnNewAnimalYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(NewAnimalActivity.this, "Compagnon ajouté", Toast.LENGTH_LONG).show();
+                Controller.setAnimal2(friend);
+                Intent intent = new Intent(NewAnimalActivity.this, MapComponent.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        btnNewAnimalOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(NewAnimalActivity.this, "Compagnon ajouté", Toast.LENGTH_LONG).show();
+                Controller.setAnimal2(friend);
+                Intent intent = new Intent(NewAnimalActivity.this, MapComponent.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        btnNewAnimalNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewAnimalActivity.this, MapComponent.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        friend = new Animal("Squeeky","squirrel4", Creature.SQUIRREL);
+        friend.clearSpells();
+        friend.addSpell(new HealSpell(0, "Soin de groupe", "Soigne tout le groupe pour 10 pv", true, 10, AbstractSpell.HEAL, null, 5), true);
+        friend.addSpell(new DebuffSpell(1, "Jet de boue", "Réduit l'esquive et la précision de 20 %", false, 100, 80, 80, AbstractSpell.DEBUFF, null, 5), true);
+        friend.addSpell(new DamageSpell(2, "Charge mignonne", "Charge l'ennemi, le blessant pour 130% de ta force", false, 130 , AbstractSpell.ATTACK, null, 30), true);
+        friend.addSpell(new DamageSpell(3, "Pluie de noisettes", "Lance des noisettes sur les ennemis, les blessant pour 140% de ta force", true, 140 , AbstractSpell.THROW, "hazelnut", 10), true);
+
+        newAnimalImageView = (ImageView) findViewById(R.id.newAnimalImageView);
+
+        String imagePath = friend.getImagePath();
+
+        newAnimalImageView.setImageResource(
+                getResources().getIdentifier(
+                        imagePath, "drawable", getPackageName()));
     }
 
     @Override
@@ -62,7 +118,7 @@ public class NewAnimalActivity extends Activity {
             btnNewAnimalOK.setVisibility(View.GONE);
         }
         //afficher liste des sorts
-        //TODO: get new animal skills list
+        attackList = (ArrayList) friend.getActiveSpells();
     }
 
     public class AttackAdapter extends ArrayAdapter<AbstractSpell> {

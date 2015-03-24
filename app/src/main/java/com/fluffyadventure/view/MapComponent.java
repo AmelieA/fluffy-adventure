@@ -350,10 +350,10 @@ public class MapComponent extends FragmentActivity implements OnMapReadyCallback
             targetActivity = SoloCombat.class;
         } else if (Controller.getCurrentObjective() instanceof Spawn || Controller.getCurrentObjective() instanceof WanderingSpawn) {
             targetActivity = SoloCombat.class;
-
         }else if(Controller.getCurrentObjective() instanceof WantedSpawn) {
             targetActivity = SoloCombat.class;
-
+        } else if(Controller.getCurrentObjective() instanceof Treasure){
+            targetActivity = NewAnimalActivity.class;
         } else {
             return;
         }
